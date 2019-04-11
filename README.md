@@ -1,0 +1,2 @@
+# RivalProject
+Scratch-and-Win
