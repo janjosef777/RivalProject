@@ -1,2 +1,22 @@
 # RivalProject
 Scratch-and-Win
+
+![alt text](https://www.rivaltech.com/hs-fs/hubfs/zanati_new/Rivallogo.png?width=215&name=Rivallogo.png)
+
+Core App Features:
+1.	The app should support persistent storage of scratch pages - to this end users should be able to create, read, update, and delete scratch & win pages using the app.
+2.	Using the editing UI users should be able to execute the following authoring functions: a) Populate and crop a media asset (Image, GIF) that will appear under the scratch surface for a given card.  b) Customize the title message on a scratch card c) customize the completion message on a scratch card
+3.	From the inspect view the user should be able to launch a preview of the scratch card. 
+4.	From the inspect view the user should be able to publish a scratch page as a live entity that can be accessed from a URL.  Users should be able to unpublished a scratch card. 
+
+
+Love to have Features:
+1.	Users can assign multiple media assets to the scratch card and have one of those populate to the scratch card based on a randomization script.  On refresh, the page would populate the scratch card with a different prize image randomly.
+2.	Users should be able to “inspect" a scratch page. From the inspect view users should able to place the page it into a WSYWIG editable state to support authoring and content customization. 
+
+
+Nice to have Features: 
+1.	Users can populate the media in a scratch card through a native GIF search via a service like Giphy.
+2.	Users can archive scratch pages.
+3.	Users can monitor basic engagement stats for a scratch page - number of page hits, number of completed scratches, devices stats, etc.
+4.	Users can populate a video assets as a media asset in a scratch card.  
