@@ -25,7 +25,7 @@ Node.js
 
 React 
 
-MySql
+MySQL
 
 ### Core App Features:
 
