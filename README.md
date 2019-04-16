@@ -25,6 +25,8 @@ Node.js
 
 React 
 
+MySql
+
 ### Core App Features:
 
 1.	The app should support persistent storage of scratch pages - to this end users should be able to create, read, update, and delete scratch & win pages using the app.
