@@ -54,4 +54,11 @@ MySQL
 
 ![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/RivalProjectUseCase.jpg)
 
+# Wireframe
 
+![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture.PNG)
+![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture2.PNG)
+![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture3.PNG)
+![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture4.PNG)
+![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture5.PNG)
+![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture6.PNG)
