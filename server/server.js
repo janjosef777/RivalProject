@@ -15,7 +15,7 @@ const port = process.env.PORT || 4000;
 // });
 
 // Set static folder
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, '../build')));
 
 // Body parser middleware
 app.use(bodyParser.json());
