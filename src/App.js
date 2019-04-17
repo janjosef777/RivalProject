@@ -6,6 +6,7 @@ import Home from './components/Home';
 import CardCreation from './components/CardCreation';
 import FinalCreation from './components/FinalCreation';
 import RandomImages from './components/RandomImages';
+import Upload from './upload/Upload';
 
 import {
   Collapse,
@@ -22,6 +23,7 @@ import {
 
 import './App.css';
 
+
 const App = () => (
   <Router>
     <div>
@@ -36,7 +38,9 @@ const App = () => (
           <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
         </Nav>
       </Navbar>
-
+      <button><Link to="/upload">Upload</Link></button>
+      
+      <Route exact path="/upload" component={Upload} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/" component={Home} />
       <Route exact path="/cardcreation" component={CardCreation} />
