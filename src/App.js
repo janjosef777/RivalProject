@@ -32,24 +32,25 @@ const App = () => (
         <NavbarBrand>Rival Scratch Reward Manager</NavbarBrand>
         <Nav className="ml-auto" navbar>
           <NavItem><Link to="/login">Login</Link></NavItem>
-          <NavItem><Link to="/">Home</Link></NavItem>
-          <NavItem><Link to="/cardcreation">Card Creation</Link></NavItem>
-          <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
-          <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
+          <EnsureLoggedIn>
+            <NavItem><Link to="/">Home</Link></NavItem>
+            <NavItem><Link to="/cardcreation">Card Creation</Link></NavItem>
+            <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
+            <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
+            <button><Link to="/upload">Upload</Link></button>
+          </EnsureLoggedIn>
         </Nav>
       </Navbar>
 
-      <button><Link to="/upload">Upload</Link></button>
-
       <Switch>
         <Route exact path="/login" component={Login} />
-        <Route component={EnsureLoggedIn}>
+        <EnsureLoggedIn>
           <Route exact path="/" component={Home} />
           <Route exact path="/cardcreation" component={CardCreation} />
           <Route exact path="/finalcreation" component={FinalCreation} />
           <Route exact path="/randomimages" component={RandomImages} />
           <Route exact path="/upload" component={Upload} />
-        </Route>
+        </EnsureLoggedIn>
       </Switch>
     </div>
   </Router>

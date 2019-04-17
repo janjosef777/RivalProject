@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class EnsureLoggedIn extends React.Component {
-    isLoggedIn = false;
+    isLoggedIn = true;
 
     render() {
         if (this.isLoggedIn) {
