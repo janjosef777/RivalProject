@@ -13,8 +13,6 @@ require('./init')(con, function() {
     console.log("Database ready");
 });
 
-var db = {
+module.exports = {
     get ready() { return ready; }
 };
-
-return db;
