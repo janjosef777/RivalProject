@@ -37,8 +37,9 @@ const App = () => (
           <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
           <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
         </Nav>
+        <button><Link to="/upload">Upload</Link></button>
       </Navbar>
-      <button><Link to="/upload">Upload</Link></button>
+      
       
       <Route exact path="/upload" component={Upload} />
       <Route exact path="/login" component={Login} />
