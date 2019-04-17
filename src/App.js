@@ -6,8 +6,9 @@ import Home from './components/Home';
 import CardCreation from './components/CardCreation';
 import FinalCreation from './components/FinalCreation';
 import RandomImages from './components/RandomImages';
+import Upload from './upload/Upload';
 import './App.css';
-import CardCreation from './components/CardCreation';
+
 
 const App = () => (
   <Router>
@@ -23,7 +24,9 @@ const App = () => (
           <li><Link to="/randomimages">Random Images</Link></li>
         </ul>
       </div>
-
+      <button><Link to="/upload">Upload</Link></button>
+      
+      <Route exact path="/upload" component={Upload} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/" component={Home} />
       <Route exact path="/cardcreation" component={CardCreation} />

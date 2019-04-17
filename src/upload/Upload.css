@@ -33,8 +33,9 @@
   }
   
   .Title {
-    margin-bottom: 32px;
+    margin: 50px 0;
     color: #555;
+    font-size: 2rem;
   }
 
   .Filename {

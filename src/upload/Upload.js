@@ -80,7 +80,7 @@ class Upload extends Component {
       render() {
         return (
           <div className="Upload">
-            <span className="Title">Upload Files</span>
+            <span className="Title">Upload an Image Here</span>
             <div className="Content">
               <div>
                 <Dropzone
@@ -89,10 +89,10 @@ class Upload extends Component {
                 />
               </div>
               <div className="Files">
-                // Add this:
                 {this.state.files.map(file => {
                   return (
-                    <div key={file.name} className="Row">
+                    <div key={file.name} className="Row">  
+                      <img src="{file.name}" className="FileImage" />  
                       <span className="Filename">{file.name}</span>
                     </div>
                   );
@@ -128,4 +128,5 @@ class Upload extends Component {
           );
         }
       }
-  }
+  } 
+  export default Upload;
