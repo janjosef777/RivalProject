@@ -6,6 +6,7 @@ import CardCreation from './components/CardCreation';
 import FinalCreation from './components/FinalCreation';
 import RandomImages from './components/RandomImages';
 import EnsureLoggedIn from './EnsureLoggedIn';
+import Upload from './upload/Upload';
 
 import {
   Collapse,
@@ -22,6 +23,7 @@ import {
 
 import './App.css';
 
+
 const App = () => (
   <Router>
     <div>
@@ -37,6 +39,8 @@ const App = () => (
         </Nav>
       </Navbar>
 
+      <button><Link to="/upload">Upload</Link></button>
+
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route component={EnsureLoggedIn}>
@@ -44,9 +48,9 @@ const App = () => (
           <Route exact path="/cardcreation" component={CardCreation} />
           <Route exact path="/finalcreation" component={FinalCreation} />
           <Route exact path="/randomimages" component={RandomImages} />
+          <Route exact path="/upload" component={Upload} />
         </Route>
       </Switch>
-      
     </div>
   </Router>
 )
