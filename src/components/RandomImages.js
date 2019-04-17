@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button } from 'reactstrap';
+    CardTitle, CardSubtitle, Button, Container, Row, Col } from 'reactstrap';
 import '../styles/randomImage.css';
 
 
@@ -9,7 +9,12 @@ class RandomImage extends React.Component {
         return(
             <div className="RandomImage">
 
-            <div className="container">
+            {/* Number step icons */}
+            <div>O</div>
+            <div>O</div>
+            <div>O</div>
+
+                <div className="container">
                 <Card className="items">
                     <CardBody>
                         <CardTitle>Card title</CardTitle>
@@ -39,7 +44,12 @@ class RandomImage extends React.Component {
                         <Button>+</Button>
                     </CardBody> 
                 </Card>
-            </div>
+                </div>
+
+                <Row className="nextStepButton">
+                    <Col sm="12" md={{ size: 6, offset: 3 }}><Button color="success" >Done</Button></Col>
+                </Row>
+
             </div>
         )
     }

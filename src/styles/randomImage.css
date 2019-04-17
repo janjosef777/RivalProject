@@ -1,3 +1,9 @@
+.RandomImage {
+    width: 100%;
+    height: 100vh;
+    background-color: #282c34;
+}
+
 .container {
     padding-top: 200px;
     display:grid;
@@ -10,4 +16,9 @@
 .items {
     height: 350px;
     text-align: center;
+}
+
+.nextStepButton {
+    padding: 300px;
+    padding-top: 200px;
 }
