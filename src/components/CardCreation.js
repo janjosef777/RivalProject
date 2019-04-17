@@ -7,13 +7,6 @@ class CardCreation extends React.Component {
         return(
             <div className="CardCreation">
 
-                <Dropzone
-                    multiple={false}
-                    accept="image/*"
-                    onDrop={this.onImageDrop.bind(this)}>
-                    <p>Drop an image or click to select a file to upload.</p>
-                </Dropzone>
-
             </div>
         )
     }
