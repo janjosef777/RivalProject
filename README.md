@@ -1,7 +1,7 @@
 # RivalProject
 Scratch-and-Win
 
-![alt text](https://www.rivaltech.com/hs-fs/hubfs/zanati_new/Rivallogo.png?width=215&name=Rivallogo.png)
+![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Rivallogo.png)
 
 
 ## Overview
@@ -48,10 +48,10 @@ MySQL
 
 # ERD
 
-![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_images/RivalProjectERD.jpg)
+![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/RivalProjectERD.jpg)
 
 # Use Case Diagram
 
-![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_images/RivalProjectUseCase.jpg)
+![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/RivalProjectUseCase.jpg)
 
 
