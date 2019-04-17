@@ -37,10 +37,8 @@ const App = () => (
             <NavItem><Link to="/cardcreation">Card Creation</Link></NavItem>
             <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
             <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
-            <button><Link to="/upload">Upload</Link></button>
           </EnsureLoggedIn>
         </Nav>
-        <button><Link to="/upload">Upload</Link></button>
       </Navbar>
       <Switch>
         <Route exact path="/login" component={Login} />
