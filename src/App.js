@@ -37,11 +37,16 @@ const App = () => (
         </Nav>
       </Navbar>
 
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/cardcreation" component={CardCreation} />
-      <Route exact path="/finalcreation" component={FinalCreation} />
-      <Route exact path="/randomimages" component={RandomImages} />
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route component={EnsureLoggedIn}>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/cardcreation" component={CardCreation} />
+          <Route exact path="/finalcreation" component={FinalCreation} />
+          <Route exact path="/randomimages" component={RandomImages} />
+        </Route>
+      </Switch>
+      
     </div>
   </Router>
 )
