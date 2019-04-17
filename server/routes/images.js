@@ -3,7 +3,7 @@ var router = express.Router();
 
 // get
 router.get("/images", (req, res, next) => {
-    res.send("working")
+    res.send("server is working");
 });
 
 module.exports = router;

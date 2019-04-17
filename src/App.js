@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
 import CardCreation from './components/CardCreation';
 import FinalCreation from './components/FinalCreation';
 import RandomImages from './components/RandomImages';
+import EnsureLoggedIn from './EnsureLoggedIn';
 import './App.css';
 
 const App = () => (
@@ -22,12 +22,15 @@ const App = () => (
           <li><Link to="/randomimages">Random Images</Link></li>
         </ul>
       </div>
-
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/cardcreation" component={CardCreation} />
-      <Route exact path="/finalcreation" component={FinalCreation} />
-      <Route exact path="/randomimages" component={RandomImages} />
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <EnsureLoggedIn>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/cardcreation" component={CardCreation} />
+          <Route exact path="/finalcreation" component={FinalCreation} />
+          <Route exact path="/randomimages" component={RandomImages} />
+        </EnsureLoggedIn>
+      </Switch>
     </div>
   </Router>
 )
