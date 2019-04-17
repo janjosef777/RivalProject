@@ -79,11 +79,11 @@ module.exports = function(con, onSuccess) {
         if(idx >= argsArray.length)
             return onSuccess ? onSuccess() : null;
 
-        var args = argsArray[idx];
+        let args = argsArray[idx];
         args = Array.isArray(args) ? args : [args];
-        var query    = args[0];
-        var values   = args[1];
-        var callback = args[2] || defaultCallback;
+        const query    = args[0];
+        const values   = args[1];
+        const callback = args[2] || defaultCallback;
         con.query(query, values, function(err, result) {
             callback(err, result);
             multiQuery(argsArray, onSuccess, idx + 1);
