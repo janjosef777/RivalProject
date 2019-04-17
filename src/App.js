@@ -7,6 +7,20 @@ import CardCreation from './components/CardCreation';
 import FinalCreation from './components/FinalCreation';
 import RandomImages from './components/RandomImages';
 import Upload from './upload/Upload';
+
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem } from 'reactstrap';
+
 import './App.css';
 
 
@@ -14,16 +28,16 @@ const App = () => (
   <Router>
     <div>
 
-      <div>
-        <h1>Rival Scratch Reward Manager</h1>
-        <ul>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/cardcreation">Card Creation</Link></li>
-          <li><Link to="/finalcreation">Final Creation</Link></li>
-          <li><Link to="/randomimages">Random Images</Link></li>
-        </ul>
-      </div>
+      <Navbar color="light" light expand="md">
+        <NavbarBrand>Rival Scratch Reward Manager</NavbarBrand>
+        <Nav className="ml-auto" navbar>
+          <NavItem><Link to="/login">Login</Link></NavItem>
+          <NavItem><Link to="/">Home</Link></NavItem>
+          <NavItem><Link to="/cardcreation">Card Creation</Link></NavItem>
+          <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
+          <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
+        </Nav>
+      </Navbar>
       <button><Link to="/upload">Upload</Link></button>
       
       <Route exact path="/upload" component={Upload} />

@@ -1,0 +1,23 @@
+body {
+    background-image: url("../images/sunset-downtown-vancouver.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.loginPage {
+    width: 20%;
+    border: 1px solid black;
+    margin: 0 auto;
+    border-radius: 20px;
+    text-align: center;
+    background-color: white;
+    padding: 50px;
+}
+
+.buttonLogin  {
+    margin: 0 auto;
+}
+
+.logoImage {
+    margin: 0 auto;
+}
