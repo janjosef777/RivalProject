@@ -18,7 +18,7 @@
     "superagent": "^5.0.2"
   },
   "scripts": {
-    "dev": "concurrently \"node ./server/server.js\" \"react-scripts start\"",
+    "dev": "concurrently \"node ./server/server.js\" \"SET PORT=3100 && react-scripts start\"",
     "server": "node ./server/server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
