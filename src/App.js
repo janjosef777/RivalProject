@@ -40,8 +40,8 @@ const App = () => (
             <button><Link to="/upload">Upload</Link></button>
           </EnsureLoggedIn>
         </Nav>
+        <button><Link to="/upload">Upload</Link></button>
       </Navbar>
-
       <Switch>
         <Route exact path="/login" component={Login} />
         <EnsureLoggedIn>
