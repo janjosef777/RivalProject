@@ -5,7 +5,7 @@ const images = require("./routes/images");
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 4000;
-require('./db');
+const db = require('./db');
 
 // To enable CORS
 // app.use(function (req, res, next) {
