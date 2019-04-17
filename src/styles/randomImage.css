@@ -1,0 +1,13 @@
+.container {
+    padding-top: 200px;
+    display:grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-rows: 80px auto 80px; 
+    grid-column-gap: 10px;
+    grid-row-gap: 15px;
+}
+
+.items {
+    height: 350px;
+    text-align: center;
+}

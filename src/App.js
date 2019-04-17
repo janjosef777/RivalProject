@@ -6,31 +6,42 @@ import CardCreation from './components/CardCreation';
 import FinalCreation from './components/FinalCreation';
 import RandomImages from './components/RandomImages';
 import EnsureLoggedIn from './EnsureLoggedIn';
+
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem } from 'reactstrap';
+
 import './App.css';
 
 const App = () => (
   <Router>
     <div>
 
-      <div>
-        <h1>Rival Scratch Reward Manager</h1>
-        <ul>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/cardcreation">Card Creation</Link></li>
-          <li><Link to="/finalcreation">Final Creation</Link></li>
-          <li><Link to="/randomimages">Random Images</Link></li>
-        </ul>
-      </div>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <EnsureLoggedIn>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/cardcreation" component={CardCreation} />
-          <Route exact path="/finalcreation" component={FinalCreation} />
-          <Route exact path="/randomimages" component={RandomImages} />
-        </EnsureLoggedIn>
-      </Switch>
+      <Navbar color="light" light expand="md">
+        <NavbarBrand>Rival Scratch Reward Manager</NavbarBrand>
+        <Nav className="ml-auto" navbar>
+          <NavItem><Link to="/login">Login</Link></NavItem>
+          <NavItem><Link to="/">Home</Link></NavItem>
+          <NavItem><Link to="/cardcreation">Card Creation</Link></NavItem>
+          <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
+          <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
+        </Nav>
+      </Navbar>
+
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/" component={Home} />
+      <Route exact path="/cardcreation" component={CardCreation} />
+      <Route exact path="/finalcreation" component={FinalCreation} />
+      <Route exact path="/randomimages" component={RandomImages} />
     </div>
   </Router>
 )

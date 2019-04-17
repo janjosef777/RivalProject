@@ -7,12 +7,24 @@ var con = mysql.createConnection({
     database: env.DB_NAME !== undefined ? env.DB_NAME : 'database',
 });
 var ready = false;
+var queue = [];
 
 require('./init')(con, function() {
     ready = true;
     console.log("Database ready");
+    for(var callback of queue)
+        callback();
 });
 
 module.exports = {
-    get isReady() { return ready; }
+    get isReady() { return ready; },
+    set onReady(func) {
+        if(typeof func !== 'function')
+            throw TypeError('Function expected');
+
+        if(ready)
+            func();
+        else
+            queue.push(func);
+    }
 };
