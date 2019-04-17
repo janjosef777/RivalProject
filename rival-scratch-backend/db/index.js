@@ -14,5 +14,5 @@ require('./init')(con, function() {
 });
 
 module.exports = {
-    get ready() { return ready; }
+    get isReady() { return ready; }
 };
