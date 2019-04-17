@@ -8,15 +8,6 @@ import FinalCreation from './components/FinalCreation';
 import RandomImages from './components/RandomImages';
 import './App.css';
 
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//       </div>
-//     );
-//   }
-// }
-
 const App = () => (
   <Router>
     <div>
