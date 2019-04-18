@@ -5,12 +5,26 @@ import '../styles/home.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import CardCreation from './CardCreation';
+import Cards from './Cards';
 
 class Home extends React.Component {
     render(){
         return(
-            <div className="Home">
             <Router>
+            <div className="Home">
+                <div className="Home-Sidebar">
+
+                        <ul>
+                            <li><Link to="/allcampaigns">Campaigns</Link></li>
+                            <li><Link to="/allcards">All Cards</Link></li>
+                            <li><Link to="/allprizes">All Prizes</Link></li>
+                            <li><Link to="/allnonprizes">All Non Prizes</Link></li>
+                        </ul>
+                    
+                </div>
+                <Route exact path="/allcards" component={Cards} />
+
+            {/* <Router>
                 <div className="container">
                 <Card className="cardCampaign">
                     <CardBody>
@@ -45,8 +59,9 @@ class Home extends React.Component {
                 </Card>
                 </div>
                 <Route exact path="/cardcreation" component={CardCreation} />
-            </Router>
+            </Router> */}
             </div>
+            </Router>
         )
     }
 }
