@@ -25,5 +25,8 @@
 
 .Prize-Qnt{
     position: relative;
-    bottom: 0;
+    top: 89%;
+    background: #222;
+    color: #fff;
+    padding: 5px 10px;
 }
