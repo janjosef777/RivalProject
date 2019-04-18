@@ -3,7 +3,7 @@ module.exports = function(con, db) {
     const queries = {
         getAll: 'SELECT * FROM login_user',
         get: 'SELECT * FROM login_user WHERE username=?',
-        add: 'INSERT INTO login_user (username, password_hash, is_admin) VALUES (?,?,?)'
+        add: 'INSERT INTO login_user (username, password_hash, is_admin) VALUES (?,?,0)'
     };
     return {
         getAll(callback) {
@@ -31,6 +31,6 @@ module.exports = function(con, db) {
         };
     }
     function toArray(user) {
-        return [ user.username, user.passwordHash, user.isAdmin ? 1 : 0 ];
+        return [ user.username, user.passwordHash ];
     }
 };

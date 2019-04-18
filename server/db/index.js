@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
 const queue = [];
 let ready = false;
 
-require('./init')(connection, function() {
+require('./create')(connection, function() {
     ready = true;
     console.log("Database ready");
     for(var callback of queue)
@@ -27,9 +27,11 @@ const db = {
         else
             queue.push(func);
     },
-    users: null
+    admin: null,
+    users: null,
 };
 
+db.admin = require('./admin')(connection, db);
 db.users = require('./users')(connection, db);
 
 module.exports = db;
