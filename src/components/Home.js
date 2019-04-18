@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import CardCreation from './CardCreation';
 import Cards from './Cards';
 import Prizes from './Prizes';
+import Nonprizes from './NonPrizes';
 
 class Home extends React.Component {
     render(){
@@ -24,6 +25,7 @@ class Home extends React.Component {
                 </div>
                 <Route exact path="/allcards" component={Cards} />
                 <Route exact path="/allprizes" component={Prizes} />
+                <Route exact path="/allnonprizes" component={Nonprizes} />
 
             {/* <Router>
                 <div className="container">
