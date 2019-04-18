@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const images = require("./routes/images");
+const routes = require("./routes");
+const multer = require('multer');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 4000;
@@ -26,7 +27,7 @@ app.use(express.static(path.join(__dirname, '../build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/api", images);
+app.use("/api", routes);
 
 app.listen(port, function () {
     console.log("Server started on port " + port)

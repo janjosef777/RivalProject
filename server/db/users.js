@@ -3,7 +3,8 @@ module.exports = function(con, db) {
     const queries = {
         getAll: 'SELECT * FROM login_user',
         get: 'SELECT * FROM login_user WHERE username=?',
-        add: 'INSERT INTO login_user (username, password_hash, is_admin) VALUES (?,?,0)'
+        add: 'INSERT INTO login_user (username, password_hash, is_admin) VALUES (?,?,0)',
+        delete: 'DELETE FROM login_user WHERE username=?'
     };
     return {
         getAll(callback) {
@@ -18,6 +19,11 @@ module.exports = function(con, db) {
         },
         add(user, callback) {
             db.onReady = () => con.query(queries.add, toArray(user), (err, res) => {
+                callback(err, err ? false : res.affectedRows > 0);
+            });
+        },
+        delete(username, callback) {
+            db.onReady = () => con.query(queries.delete, username, (err, res) => {
                 callback(err, err ? false : res.affectedRows > 0);
             });
         }
