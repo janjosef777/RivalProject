@@ -1,21 +1,20 @@
 const bcrypt = require('bcrypt');
+const db = require('../db');
 const saltRounds = 10;
 
 module.exports = {
-    setupAdmin: require('./setupAdmin'),
-
     /**
      * Usage:
      * user = {
      *     username: 'user',
      *     password: 'password'
      * };
-     * addUser(db, user, (err, res) {
+     * addUser(user, (err, res) {
      *     if(err) throw err;
      *     console.log(res);
      * });
      */
-    addUser(db, user, callback) {
+    addUser(user, callback) {
 
         if(! (user = validateUserProps(user)) )
             callback(new TypeError('Invalid user object'), false);
@@ -38,12 +37,12 @@ module.exports = {
      *     username: 'user',
      *     password: 'password'
      * };
-     * verifyUser(db, user, (err, res) {
+     * verifyUser(user, (err, res) {
      *     if(err) throw err;
      *     console.log(res);
      * });
      */
-    verifyUser(db, user, callback) {
+    verifyUser(user, callback) {
 
         if(! (user = validateUserProps(user)) )
             callback(new TypeError('Invalid user object'), false);
