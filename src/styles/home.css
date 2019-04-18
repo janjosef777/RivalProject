@@ -1,7 +1,9 @@
 .Home {
     width: 100%;
     height: 100vh;
-    background-color: #282c34;
+    background-color: #fff;
+    position: absolute;
+    display: flex;
 }
 
 .container {
@@ -17,3 +19,33 @@
     height: 350px;
     text-align: center;
 }
+
+.Home-Sidebar{
+    width: 100%;
+    height: 260px;
+    max-width: 250px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 5%;
+    position: relative;
+    top: 10vh;
+    left: 20px;
+}
+
+.Home-Sidebar ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+.Home-Sidebar ul li{
+    padding: 20px;
+}
+
+.Home-Sidebar ul li a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.Home-Sidebar ul li:hover{
+    background: rgba(255,255,255,0.4);
+}
+
