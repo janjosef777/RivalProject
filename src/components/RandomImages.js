@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col } from 'reactstrap';
 import '../styles/randomImage.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 class RandomImage extends React.Component {
@@ -9,10 +11,17 @@ class RandomImage extends React.Component {
         return(
             <div className="RandomImage">
 
-            {/* Number step icons */}
-            <div>O</div>
-            <div>O</div>
-            <div>O</div>
+                <div className="stepNav">
+                    <Link to="/RandomImages"> 
+                    <div className="stepOne">1</div>
+                    </Link>
+                    <Link to="/RandomImages">
+                    <div className="stepTwo">2</div>
+                    </Link>
+                    <Link to="FinalCreation">
+                    <div className="stepThree">3</div>
+                    </Link>
+                </div>
 
                 <div className="container">
                 <Card className="items">
