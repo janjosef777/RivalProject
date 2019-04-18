@@ -21,7 +21,7 @@ module.exports = function(con, onSuccess) {
             )`,
             `CREATE TABLE IF NOT EXISTS image(
                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                filename VARCHAR(255) NOT NULL,
+                filename VARCHAR(255) UNIQUE NOT NULL,
                 width INT,
                 height INT
             )`,
