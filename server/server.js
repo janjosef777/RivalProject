@@ -6,6 +6,10 @@ const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 4000;
 const db = require('./db');
+const auth = require('./auth');
+
+// Create admin
+auth.setupAdmin(db);
 
 // To enable CORS
 // app.use(function (req, res, next) {

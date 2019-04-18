@@ -2,12 +2,13 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 module.exports = {
+    setupAdmin: require('./setupAdmin'),
+
     /**
      * Usage:
      * user = {
      *     username: 'user',
-     *     password: 'password',
-     *     isAdmin: false // <- optional (default: false)
+     *     password: 'password'
      * };
      * addUser(db, user, (err, res) {
      *     if(err) throw err;
@@ -25,8 +26,7 @@ module.exports = {
             else {
                 db.users.add({
                     username: user.username,
-                    passwordHash: hash,
-                    isAdmin: user.isAdmin
+                    passwordHash: hash
                 }, callback);
             }
         })
@@ -63,16 +63,15 @@ function validateUserProps(user) {
 
     let username = user.username;
     let password = user.password || '';
-    let isAdmin  = !!user.isAdmin;
 
     if(typeof username !== 'string'
         || !(username = username.trim())
-        || typeof password !== 'string')
+        || typeof password !== 'string') {
         return null;
+    }
 
     return {
         username: username,
-        password: password,
-        isAdmin:  isAdmin
+        password: password
     };
 }
