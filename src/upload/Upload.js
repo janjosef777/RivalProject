@@ -80,7 +80,6 @@ class Upload extends Component {
       render() {
         return (
           <div className="Upload">
-            <span className="Title">Upload an Image Here</span>
             <div className="Content">
               <div>
                 <Dropzone

@@ -1,22 +1,22 @@
-var mysql = require('mysql');
-var env = process.env;
-var con = mysql.createConnection({
+const mysql = require('mysql');
+const env = process.env;
+const connection = mysql.createConnection({
     host:     env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
     user:     env.DB_USER !== undefined ? env.DB_USER : 'user',
     password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
     database: env.DB_NAME !== undefined ? env.DB_NAME : 'database',
 });
-var ready = false;
-var queue = [];
+const queue = [];
+let ready = false;
 
-require('./init')(con, function() {
+require('./create')(connection, function() {
     ready = true;
     console.log("Database ready");
     for(var callback of queue)
         callback();
 });
 
-module.exports = {
+const db = {
     get isReady() { return ready; },
     set onReady(func) {
         if(typeof func !== 'function')
@@ -26,5 +26,12 @@ module.exports = {
             func();
         else
             queue.push(func);
-    }
+    },
+    admin: null,
+    users: null,
 };
+
+db.admin = require('./admin')(connection, db);
+db.users = require('./users')(connection, db);
+
+module.exports = db;
