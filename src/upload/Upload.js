@@ -91,7 +91,7 @@ class Upload extends Component {
                 {this.state.files.map(file => {
                   return (
                     <div key={file.name} className="Row">  
-                      <img src="{file.name}" className="FileImage" />  
+                      <img src={file.name} className="FileImage" />  
                       <span className="Filename">{file.name}</span>
                     </div>
                   );

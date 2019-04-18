@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import Upload from '../upload/Upload';
-import '../styles/cards.css';
+import '../styles/prizes.css';
 import { Card, Button, CardTitle, CardText } from 'reactstrap'; 
 
 
-class Cards extends React.Component {
+class Prizes extends React.Component {
     constructor(props) {
         super(props);
-        const cards = ["image1", "image2", "image3"];
-        this.listItems = cards.map((card) =>
-            <li>{card}</li>
+        const prizes = [{name: 'prize 1', qnt: 2}, {name: 'prize 2', qnt: 10}];
+        this.listItems = prizes.map((prize) =>
+            <li>
+                <p className="Prize-Img">{prize.name}</p>
+                <p className="Prize-Qnt">{prize.qnt}</p>
+            </li>
         );
     }
 
@@ -24,4 +27,4 @@ class Cards extends React.Component {
     }
 }
 
-export default Cards;
+export default Prizes;
