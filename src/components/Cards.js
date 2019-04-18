@@ -17,6 +17,7 @@ class Cards extends React.Component {
         return(
             <div>
                 <ul>{this.listItems}</ul>
+                <Upload />
             </div>
         )
     }
