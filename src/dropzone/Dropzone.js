@@ -73,6 +73,7 @@ class Dropzone extends Component {
       >
         <input
           ref={this.fileInputRef}
+          name="image"
           className="FileInput"
           type="file"
           multiple
