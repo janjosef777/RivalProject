@@ -31,8 +31,9 @@ const App = () => (
       <Navbar color="light" light expand="md">
         <NavbarBrand>Rival Scratch Reward Manager</NavbarBrand>
         <Nav className="ml-auto" navbar>
-          <NavItem><Link to="/login">Login</Link></NavItem>
+          
           <EnsureLoggedIn>
+            <NavItem><Link to="/login">Login</Link></NavItem>
             <NavItem><Link to="/">Home</Link></NavItem>
             <NavItem><Link to="/cardcreation">Card Creation</Link></NavItem>
             <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
