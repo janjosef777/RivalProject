@@ -11,58 +11,82 @@ class CardCreation extends React.Component {
     constructor(props) {
         super(props) 
         this.state = {
-          title:''
+          title:'
         }
         this.setTitle   = this.setTitle.bind(this);
       }
+
+
 
       setTitle(e) {
         this.setState({title:e.target.value});
       }
     
 
+    componentDidMount(){
+
+    }
+
     render(){
         return(
-
             <div className="CardCreation">
-                <div className="stepNav"> 
-                    <Link to="/CardCreation">
-                    <div className="stepOne">1</div>
-                    </Link>
-                    <Link to="/RandomImages">
-                    <div className="stepTwo">2</div>
-                    </Link>
-                    <Link to="/FinalCreation">
-                    <div className="stepThree">3</div>
-                    </Link>
-                </div>
 
+                <Row className="pageTitle">
+                    <h1>Scratch Card Editor</h1>
+                    {/* <div className="stepNav"> 
+                        <Link to="/CardCreation">
+                        <div className="stepOne">1</div>
+                        </Link>
+                        <Link to="/RandomImages">
+                        <div className="stepTwo">2</div>
+                        </Link>
+                        <Link to="/FinalCreation">
+                        <div className="stepThree">3</div>
+                        </Link>
+                    </div> */}
+                </Row>
+
+                <Row>
+
+                <Col xs="6">
                 <div className="sideBar">
-                    <div>TEXT</div>
-                    <div>IMAGE OVERLAY</div>
-                    <div>RANDOM IMAGE</div>
+                    <div>
+                    <label>Card Title</label>
+                    <br/>
+                    <input value={this.state.title} onChange={this.setTitle} placeholder="Enter title for the card..." />
+                    </div>
+                    <div>
+                        <label>IMAGE OVERLAY</label>
+                        <br/>
+                        <Button>Overlay Upload</Button>
+                    </div>
                 </div>
+                </Col>
 
+                <Col xs="6">
                 <div className="cardEditor">
                     <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }} className="TopCard">
-                        <CardTitle>{this.state.title}</CardTitle>
+                    <br/>
+                        <CardTitle><h2>{this.state.title}</h2></CardTitle>
+                        {/* <img src="{file.name}" className="FileImage" />  
+                        <span className="Filename">{file.name}</span> */}
                     </Card>
+
+
                 </div>
-                <input value={this.state.title} onChange={this.setTitle} placeholder="Enter title for the card..." />
-                
-                <div className="cardUpload">
-                    <Upload />
-                </div>
+                </Col>
+
 
                 <Row className="nextButton">
-                    <Col sm="12" md={{ size: 6, offset: 3 }}>
+                    <Col  sm={{ size: 'auto', offset: 1 }}>
                     <Link to="/RandomImages">
                     <Button color="success" >Next</Button>
                     </Link>
                     </Col>
                 </Row>
-
+            </Row>
             </div>
+            
         )
     }
 }
