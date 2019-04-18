@@ -9,7 +9,7 @@ const db = require('./db');
 const auth = require('./auth');
 
 // Create admin
-auth.setupAdmin(db);
+require('./setupAdmin');
 
 // To enable CORS
 // app.use(function (req, res, next) {
