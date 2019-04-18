@@ -26,7 +26,6 @@ app.use(express.static(path.join(__dirname, '../build')));
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({dest: '../uploads'}).single('image'));
 
 app.use("/api", routes);
 
