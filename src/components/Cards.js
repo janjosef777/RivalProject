@@ -18,7 +18,7 @@ class Cards extends React.Component {
         return(
             <div className="Cards-Wrapper">
                 <ul>{this.listItems}</ul>
-                <Upload />
+                <Upload onUpload={ (err, res) => console.log(res) } />
             </div>
         )
     }
