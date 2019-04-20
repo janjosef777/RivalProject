@@ -11,10 +11,15 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     list-style-type: none;
+    position: relative;
 }
 
 .Cards-Wrapper ul li{
     width: 250px;
     height: 300px;
     border: 1px solid #222;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px;
+    object-fit: cover;
+    overflow: hidden;
 }
