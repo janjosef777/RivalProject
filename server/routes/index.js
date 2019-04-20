@@ -8,6 +8,8 @@ const routes = {
 };
 
 router.get("/images", routes.images.getAll);
+router.get("/images/:id", routes.images.get);
 router.post("/images", upload.single('image'), routes.images.post);
+router.delete("/images/:id", routes.images.delete);
 
 module.exports = router;

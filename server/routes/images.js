@@ -16,6 +16,20 @@ module.exports = {
             res.send(images);
         })
     },
+    // get
+    get: (req, res, next) => {
+        const id = +req.params.id;
+        if(!(id > 0))
+            return handleErr(null, res, 404);
+        db.images.get(id, (err, image) => {
+            if(err)
+                return handleErr(err, res, 500);
+            if(!image)
+                return handleErr(null, res, 404);
+            image.path = uploadUrl + image.filename;
+            res.send(image);
+        })
+    },
     // post
     post: (req, res, next) => {
         if(!/^image\b/.test(req.file.mimetype)) {
@@ -55,10 +69,24 @@ module.exports = {
                 handleErr(err, res, 400, 'Invalid or corrupt image file')
             );
         }
+    },
+    // delete
+    delete: (req, res, next) => {
+        const id = +req.params.id;
+        if(!(id > 0))
+            return handleErr(null, res, 404);
+        db.images.delete(id, (err, success) => {
+            if(err)
+                return handleErr(err, res, 500);
+            if(!success)
+                return handleErr(null, res, 404);
+            res.send({ id: id, deleted: success });
+        })
     }
 };
 
 function handleErr(err, res, status, message) {
-    console.log(err);
+    if(err)
+        console.log(err);
     res.status(status).send(message);
 }
