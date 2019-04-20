@@ -3,7 +3,7 @@ import Upload from '../upload/Upload';
 import { Card, Button, CardTitle, CardText } from 'reactstrap'; 
 
 
-class Campaigns extends React.Component {
+class Campaigns extends Component {
 
     render(){
         return(
