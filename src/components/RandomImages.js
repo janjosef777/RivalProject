@@ -4,7 +4,7 @@ import { Card, CardImg, CardText, CardBody,
 import '../styles/randomImage.css';
 
 
-class RandomImage extends React.Component {
+class RandomImage extends Component {
     render(){
         return(
             <div className="RandomImage">

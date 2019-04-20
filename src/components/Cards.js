@@ -4,24 +4,48 @@ import '../styles/cards.css';
 import { Card, Button, CardTitle, CardText } from 'reactstrap'; 
 
 
-class Cards extends React.Component {
+class Cards extends Component {
     constructor(props) {
         super(props);
         this.title = "All Cards";
-        const cards = ["image1", "image2", "image3"];
-        this.listItems = cards.map((card) =>
-            <li><img src="{card}"/></li>
-        );
+        this.state = {
+            cards: []
+        }
+        this.fetchCards();
     }
 
+    fetchCards() {
+        fetch('http://localhost:4000/api/images')
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({cards: res});
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
 
+    onUpload(err, res) {
+        if(err) {
+            console.error(err);
+        } else {
+            this.state.cards.push(res);
+            this.setState({
+                cards: this.state.cards
+            });
+        }
+    }
     render(){
         return(
-            
             <div className="Cards-Wrapper">
                 <h2>{this.title}</h2>
-                <ul>{this.listItems}</ul>
-                <Upload onUpload={ (err, res) => console.log(res) } />
+                <ul>
+                    {this.state.cards.map((card,idx) => 
+                        <li key={idx}><img src={card.path} alt="Card Image" /></li>
+                    )}
+                </ul>
+                <Upload onUpload={this.onUpload.bind(this)} />
             </div>
         )
     }

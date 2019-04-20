@@ -4,7 +4,7 @@ import '../styles/nonprizes.css';
 import { Card, Button, CardTitle, CardText } from 'reactstrap'; 
 
 
-class Nonprizes extends React.Component {
+class Nonprizes extends Component {
     constructor(props) {
         super(props);
         this.title = "All Non Prizes";

@@ -1,13 +1,13 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const routes = require("./routes");
 const multer = require('multer');
-const app = express();
 require('dotenv').config();
-const port = process.env.PORT || 4000;
 const db = require('./db');
 const auth = require('./auth');
+const routes = require("./routes");
+const app = express();
+const port = process.env.PORT || 4000;
 const env = process.env.NODE_ENV;
 
 if(env != 'development' && env != 'production')
