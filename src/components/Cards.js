@@ -8,20 +8,32 @@ class Cards extends React.Component {
     constructor(props) {
         super(props);
         this.title = "All Cards";
-        const cards = ["image1", "image2", "image3"];
-        this.listItems = cards.map((card) =>
-            <li><img src="{card}"/></li>
-        );
+        this.state = {
+            cards: ["image1", "image2", "image3"]
+        }
     }
 
-
+    onUpload(err, res) {
+        if(err) {
+            console.error(err);
+        } else {
+            console.log(typeof res);
+            this.state.cards.push(res);
+            this.setState({
+                cards: this.state.cards
+            });
+        }
+    }
     render(){
         return(
-            
             <div className="Cards-Wrapper">
                 <h2>{this.title}</h2>
-                <ul>{this.listItems}</ul>
-                <Upload onUpload={ (err, res) => console.log(res) } />
+                <ul>
+                    {this.state.cards.map((card,idx) => 
+                        <li key={idx}><img src={card.path}/></li>
+                    )}
+                </ul>
+                <Upload onUpload={this.onUpload.bind(this)} />
             </div>
         )
     }

@@ -68,7 +68,8 @@ class Upload extends Component {
               status: req.status,
               message: req.statusText
             }
-            this.props.onUpload(err, req.response);
+            const res = err ? req.responseText : JSON.parse(req.responseText);
+            this.props.onUpload(err, res);
           }
          };
        
