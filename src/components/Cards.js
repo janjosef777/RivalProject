@@ -9,8 +9,21 @@ class Cards extends Component {
         super(props);
         this.title = "All Cards";
         this.state = {
-            cards: ["image1", "image2", "image3"]
+            cards: []
         }
+        this.fetchCards();
+    }
+
+    fetchCards() {
+        fetch('http://localhost:4000/api/images')
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({cards: res});
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     onUpload(err, res) {

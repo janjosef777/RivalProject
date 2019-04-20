@@ -26,7 +26,7 @@ module.exports = function(con, db) {
         },
         add(image, callback) {
             db.onReady = () => con.query(queries.add, toArray(image), (err, res) => {
-                callback(err, err ? false : res.affectedRows > 0);
+                callback(err, err ? 0 : res.insertId);
             });
         },
         delete(id, callback) {

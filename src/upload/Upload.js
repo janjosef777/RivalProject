@@ -73,7 +73,7 @@ class Upload extends Component {
           }
          };
        
-         req.open("POST", "http://localhost:4000/api/imageupload");
+         req.open("POST", "http://localhost:4000/api/images");
          req.send(formData);
         });
        }

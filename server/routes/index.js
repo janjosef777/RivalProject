@@ -4,9 +4,10 @@ const multer = require('multer');
 const upload = multer({dest: './temp-uploads'});
 
 const routes = {
-    imageupload: require('./imageupload')
+    images: require('./images')
 };
 
-router.post("/imageupload", upload.single('image'), routes.imageupload.post);
+router.get("/images", routes.images.getAll);
+router.post("/images", upload.single('image'), routes.images.post);
 
 module.exports = router;

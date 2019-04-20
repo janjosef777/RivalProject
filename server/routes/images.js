@@ -1,9 +1,21 @@
 const sharp = require('sharp');
 const fnHelper = require('../io/filename-helper');
 const mkdirp = require('mkdirp');
+const db = require('../db');
 const uploadUrl = '/uploads/'; // Start with and end with a slash
 
 module.exports = {
+    // get
+    getAll: (req, res, next) => {
+        db.images.getAll((err, images) => {
+            if(err)
+                return handleErr(err, res, 500);
+            images.forEach(image => {
+                image.path = uploadUrl + image.filename;
+            });
+            res.send(images);
+        })
+    },
     // post
     post: (req, res, next) => {
         if(!/^image\b/.test(req.file.mimetype)) {
@@ -23,11 +35,19 @@ module.exports = {
                     image.toFile(dir + filename, (err, savedImg) => {
                         if(err)
                             return handleErr(err, res, 500);
-                        res.send({
-                            path: uploadUrl + filename,
+                        const jsonImage = {
                             filename: filename,
                             width: savedImg.width,
                             height: savedImg.height
+                        };
+                        db.images.add(jsonImage, (err, id) => {
+                            if(err)
+                                return handleErr(err, res, 500);
+                            jsonImage.path = uploadUrl + filename;
+                            jsonImage.id = id
+
+                            // Success
+                            res.send(jsonImage);
                         });
                     });
                 });
