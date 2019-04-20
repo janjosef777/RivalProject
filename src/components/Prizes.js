@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import Upload from '../upload/Upload';
-import '../styles/nonprizes.css';
+import '../styles/prizes.css';
 import { Card, Button, CardTitle, CardText } from 'reactstrap'; 
 
 
-class Nonprizes extends React.Component {
+class Prizes extends React.Component {
     constructor(props) {
         super(props);
-        this.title = "All Non Prizes";
-        const nonprizes = ["image1", "image2", "image3"];
-        this.listItems = nonprizes.map((nonprize) =>
-            <li><img src="{nonprize}"/></li>
+        this.title = "All Prizes";
+        const prizes = [{name: 'prize 1', qnt: 2}, {name: 'prize 2', qnt: 10}];
+        this.listItems = prizes.map((prize) =>
+            <li>
+                <img src="{prize.name}" className="Prize-Img"/>
+                <p className="Prize-Qnt">{prize.qnt}</p>
+            </li>
         );
     }
 
@@ -26,4 +29,4 @@ class Nonprizes extends React.Component {
     }
 }
 
-export default Nonprizes;
+export default Prizes;

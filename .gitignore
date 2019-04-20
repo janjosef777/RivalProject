@@ -100,3 +100,4 @@ typings/
 
 # Uploads
 /temp-uploads
+/public/uploads

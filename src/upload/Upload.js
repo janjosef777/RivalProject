@@ -6,37 +6,27 @@ class Upload extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          files: [],
           uploading: false,
-          uploadProgress: {},
-          successfullUploaded: false
+          uploadProgress: {}
         };
     
-        this.onFilesAdded = this.onFilesAdded.bind(this);
         this.uploadFiles = this.uploadFiles.bind(this);
         this.sendRequest = this.sendRequest.bind(this);
-        this.renderActions = this.renderActions.bind(this);
       }
 
-      onFilesAdded(files) {
-        this.setState(prevState => ({
-          files: prevState.files.concat(files)
-        }));
-      }
-
-      async uploadFiles() {
+      async uploadFiles(files) {
         this.setState({ uploadProgress: {}, uploading: true });
         const promises = [];
-        this.state.files.forEach(file => {
+        files.forEach(file => {
           promises.push(this.sendRequest(file));
         });
         try {
           await Promise.all(promises);
       
-          this.setState({ successfullUploaded: true, uploading: false });
+          this.setState({ uploading: false });
         } catch (e) {
           // Not Production ready! Do some error handling here instead...
-          this.setState({ successfullUploaded: true, uploading: false });
+          this.setState({ uploading: false });
         }
       }
 
@@ -70,9 +60,19 @@ class Upload extends Component {
          });
        
          const formData = new FormData();
-         formData.append("file", file, file.name);
+         formData.append("image", file, file.name);
+
+         req.onreadystatechange = () => {
+          if (req.readyState == 4 && this.props.onUpload) {
+            let err = req.status == 200 ? null : {
+              status: req.status,
+              message: req.statusText
+            }
+            this.props.onUpload(err, req.response);
+          }
+         };
        
-         req.open("POST", "http://localhost:8000/upload");
+         req.open("POST", "http://localhost:4000/api/imageupload");
          req.send(formData);
         });
        }
@@ -83,49 +83,13 @@ class Upload extends Component {
             <div className="Content">
               <div>
                 <Dropzone
-                  onFilesAdded={this.onFilesAdded}
-                  disabled={this.state.uploading || this.state.successfullUploaded}
+                  onFilesAdded={this.uploadFiles}
+                  disabled={this.state.uploading}
                 />
               </div>
-              <div className="Files">
-                {this.state.files.map(file => {
-                  return (
-                    <div key={file.name} className="Row">  
-                      <img src="{file.name}" className="FileImage" />  
-                      <span className="Filename">{file.name}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="Actions">
-    
             </div>
           </div>
         );
-      }
-
-      renderActions() {
-        if (this.state.successfullUploaded) {
-          return (
-            <button
-              onClick={() =>
-                this.setState({ files: [], successfullUploaded: false })
-              }
-            >
-              Clear
-            </button>
-          );
-        } else {
-          return (
-            <button
-              disabled={this.state.files.length < 0 || this.state.uploading}
-              onClick={this.uploadFiles}
-            >
-              Upload
-            </button>
-          );
-        }
       }
   } 
   export default Upload;
