@@ -25,6 +25,7 @@ module.exports = {
                             return handleErr(err, res, 500);
                         res.send({
                             path: uploadUrl + filename,
+                            filename: filename,
                             width: savedImg.width,
                             height: savedImg.height
                         });
