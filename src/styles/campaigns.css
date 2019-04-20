@@ -17,10 +17,20 @@
 .Cards-Wrapper ul li{
     width: 250px;
     height: 300px;
-    margin: 0 auto;
     border: 1px solid #222;
     border-radius: 10px;
     box-shadow: 1px 1px 1px;
-    object-fit: cover;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addCampaign {
+    max-width:50%;
+    margin: 0 auto;
+    line-height: 50px;
+    width: 70px;
+    height: 70px;
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
 }

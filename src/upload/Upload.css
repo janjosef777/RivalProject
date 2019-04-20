@@ -3,16 +3,15 @@
     flex-direction: column;
     flex: 1;
     align-items: flex-start;
-    text-align: left;
+    text-align: center;
     overflow: hidden;
   }
   
   .Content {
     display: flex;
     flex-direction: row;
-    padding-top: 16px;
     box-sizing: border-box;
-    width: 100%;
+    margin: 0 auto;
   }
   
   .Files {
