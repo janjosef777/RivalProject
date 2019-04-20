@@ -8,13 +8,33 @@ class Prizes extends Component {
     constructor(props) {
         super(props);
         this.title = "All Prizes";
-        const prizes = [{name: 'prize 1', qnt: 2}, {name: 'prize 2', qnt: 10}];
-        this.listItems = prizes.map((prize) =>
-            <li>
-                <img src="{prize.name}" className="Prize-Img"/>
-                <p className="Prize-Qnt">{prize.qnt}</p>
-            </li>
-        );
+        this.state = {
+            cards: []
+        }
+        this.fetchCards();
+    }
+
+    fetchCards() {
+        fetch('http://localhost:4000/api/images')
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({cards: res});
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+    onUpload(err, res) {
+        if(err) {
+            console.error(err);
+        } else {
+            this.state.cards.push(res);
+            this.setState({
+                cards: this.state.cards
+            });
+        }
     }
 
 
@@ -22,8 +42,12 @@ class Prizes extends Component {
         return(
             <div className="Cards-Wrapper">
                 <h2>{this.title}</h2>
-                <ul>{this.listItems}</ul>
-                <Upload />
+                <ul>
+                    {this.state.cards.map((card,idx) => 
+                        <li key={idx}><img src={card.path} alt="Card Image" /></li>
+                    )}
+                </ul>
+                <Upload onUpload={this.onUpload.bind(this)} />
             </div>
         )
     }
