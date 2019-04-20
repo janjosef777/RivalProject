@@ -4,7 +4,7 @@ import '../styles/login.css';
 import logo from '../images/Rivallogo.png';
 
 
-class Login extends React.Component {
+class Login extends Component {
 
     render(){
         return(

@@ -3,7 +3,7 @@ import Upload from '../upload/Upload';
 import { Card, Button, CardTitle, CardText } from 'reactstrap';
 
 
-class CardCreation extends React.Component {
+class CardCreation extends Component {
     constructor(props) {
         super(props) 
         this.state = {

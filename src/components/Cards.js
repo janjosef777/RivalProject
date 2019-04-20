@@ -4,7 +4,7 @@ import '../styles/cards.css';
 import { Card, Button, CardTitle, CardText } from 'reactstrap'; 
 
 
-class Cards extends React.Component {
+class Cards extends Component {
     constructor(props) {
         super(props);
         this.title = "All Cards";
@@ -17,7 +17,6 @@ class Cards extends React.Component {
         if(err) {
             console.error(err);
         } else {
-            console.log(typeof res);
             this.state.cards.push(res);
             this.setState({
                 cards: this.state.cards
@@ -30,7 +29,7 @@ class Cards extends React.Component {
                 <h2>{this.title}</h2>
                 <ul>
                     {this.state.cards.map((card,idx) => 
-                        <li key={idx}><img src={card.path}/></li>
+                        <li key={idx}><img src={card.path} alt="Card Image" /></li>
                     )}
                 </ul>
                 <Upload onUpload={this.onUpload.bind(this)} />

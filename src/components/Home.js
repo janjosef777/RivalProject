@@ -9,7 +9,7 @@ import Cards from './Cards';
 import Prizes from './Prizes';
 import Nonprizes from './NonPrizes';
 
-class Home extends React.Component {
+class Home extends Component {
     render(){
         return(
             <Router>

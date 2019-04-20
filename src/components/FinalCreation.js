@@ -4,7 +4,7 @@ import { Card, CardImg, CardText, CardBody,
 import '../styles/finalCreation.css';
 
 
-class FinalCreation extends React.Component {
+class FinalCreation extends Component {
     render(){
         return(
             <div className="FinalCreation">
