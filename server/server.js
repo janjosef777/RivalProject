@@ -8,12 +8,16 @@ require('dotenv').config();
 const port = process.env.PORT || 4000;
 const db = require('./db');
 const auth = require('./auth');
+const env = process.env.NODE_ENV;
+
+if(env != 'development' && env != 'production')
+    throw new ReferenceError('Missing or invalid environment variable: NODE_ENV');
 
 // Create admin
 require('./setupAdmin');
 
 // To enable CORS
-if(process.env.NODE_ENV == 'development') {
+if(env == 'development') {
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
