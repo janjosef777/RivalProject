@@ -8,6 +8,7 @@ import CardCreation from './CardCreation';
 import Cards from './Cards';
 import Prizes from './Prizes';
 import Nonprizes from './NonPrizes';
+import Campaigns from './Campaigns';
 
 class Home extends React.Component {
     render(){
@@ -23,6 +24,7 @@ class Home extends React.Component {
                         </ul>
                     
                 </div>
+                <Route exact path="/allcampaigns" component={Campaigns} />
                 <Route exact path="/allcards" component={Cards} />
                 <Route exact path="/allprizes" component={Prizes} />
                 <Route exact path="/allnonprizes" component={Nonprizes} />
