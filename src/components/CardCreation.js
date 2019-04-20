@@ -11,7 +11,7 @@ class CardCreation extends React.Component {
     constructor(props) {
         super(props) 
         this.state = {
-          title:'
+          title:''
         }
         this.setTitle   = this.setTitle.bind(this);
       }
