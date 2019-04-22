@@ -27,7 +27,27 @@ module.exports = {
             }
         }
         auth.verifyUser(user, userVerified)
+    },
+    add: (req,res,next) => {
+        const user = {
+            username: req.body.username,
+            password: req.body.password
+        }
+        function confirmAdd(){
+            res.json({
+                username: req.body.username,
+                password: req.body.password
+            })
+        }
+        function successAdd(req, res) {
+            if (res == false){
+                console.log("unable to add User!")
+            } else {
+                console.log(res);
+                confirmAdd();
+            }
+        }
 
-
+        auth.addUser(user, successAdd)
     }
 };

@@ -14,4 +14,5 @@ router.post("/images", upload.single('image'), routes.images.post);
 router.delete("/images/:id", routes.images.delete);
 
 router.post("/auth", routes.auth.post)
+router.post("/add", routes.auth.add)
 module.exports = router;
