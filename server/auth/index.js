@@ -48,10 +48,11 @@ module.exports = {
             callback(new TypeError('Invalid user object'), false);
 
         db.users.get(user.username, (err, dbUser) => {
-            if(err)
+            if(!dbUser)
                 callback(err, false);
             else
                 bcrypt.compare(user.password, dbUser.passwordHash, callback);
+                
         })
     }
 }
