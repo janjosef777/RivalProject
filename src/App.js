@@ -4,7 +4,7 @@ import Login from './components/Login';
 import Home from './components/Home';
 import CardCreation from './components/CardCreation';
 import FinalCreation from './components/FinalCreation';
-import RandomImages from './components/RandomImages';
+import CardResults from './components/CardResults';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Upload from './upload/Upload';
 
@@ -37,7 +37,7 @@ const App = () => (
             <NavItem><Link to="/">Home</Link></NavItem>
             <NavItem><Link to="/cardcreation">Card Creation</Link></NavItem>
             <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
-            <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
+            <NavItem><Link to="/cardresults">Card Results</Link></NavItem>
           </EnsureLoggedIn>
         </Nav>
       </Navbar>
@@ -47,7 +47,7 @@ const App = () => (
           <Route exact path="/" component={Home} />
           <Route exact path="/cardcreation" component={CardCreation} />
           <Route exact path="/finalcreation" component={FinalCreation} />
-          <Route exact path="/randomimages" component={RandomImages} />
+          <Route exact path="/cardresults" component={CardResults} />
           <Route exact path="/upload" component={Upload} />
         </EnsureLoggedIn>
       </Switch>

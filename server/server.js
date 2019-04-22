@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const images = require("./routes/images");
+const images = require("./routes/index");
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 4000;

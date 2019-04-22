@@ -10,7 +10,6 @@ class Home extends React.Component {
     render(){
         return(
             <div className="Home">
-            <Router>
                 <div className="container">
                 <Card className="cardCampaign">
                     <CardBody>
@@ -44,8 +43,6 @@ class Home extends React.Component {
                     </CardBody> 
                 </Card>
                 </div>
-                <Route exact path="/cardcreation" component={CardCreation} />
-            </Router>
             </div>
         )
     }
