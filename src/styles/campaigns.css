@@ -1,0 +1,36 @@
+.Cards-Wrapper{
+    width: 100%;
+    max-width: 900px;
+    position: relative;
+    top: 10vh;
+    left: 5%; 
+}
+
+.Cards-Wrapper ul{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    list-style-type: none;
+    position: relative;
+}
+
+.Cards-Wrapper ul li{
+    width: 250px;
+    height: 300px;
+    border: 1px solid #222;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addCampaign {
+    max-width:50%;
+    margin: 0 auto;
+    line-height: 50px;
+    width: 70px;
+    height: 70px;
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+}

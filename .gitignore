@@ -94,8 +94,10 @@ typings/
 
 # testing
 /coverage
-/*/coverage
 
 # production
 /build
-/*/build
+
+# Uploads
+/temp-uploads
+/public/uploads

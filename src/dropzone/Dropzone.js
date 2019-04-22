@@ -73,6 +73,7 @@ class Dropzone extends Component {
       >
         <input
           ref={this.fileInputRef}
+          name="image"
           className="FileInput"
           type="file"
           multiple
@@ -83,7 +84,7 @@ class Dropzone extends Component {
           className="Icon"
           src="baseline-cloud_upload-24px.svg"
         /> */}
-        <span>Upload Image</span>
+        <span>+</span>
       </div>
     )
   }
