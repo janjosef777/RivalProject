@@ -34,6 +34,7 @@ module.exports = {
         }
 
         const campaign = {
+            name:      req.body.name || null,
             template:  req.body.template || null,
             startDate: startDate ? startDate.toISOString() : null,
             endDate:   endDate   ? endDate  .toISOString() : null,
