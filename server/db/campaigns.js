@@ -14,7 +14,7 @@ module.exports = function(con, db) {
         },
         get(id, callback) {
             db.onReady = () => con.query(queries.get, id, (err, res) => {
-                callback(err, res[0] ? null : fromRaw(res[0]));
+                callback(err, !res[0] ? null : fromRaw(res[0]));
             });
         },
         add(campaign, callback) {
