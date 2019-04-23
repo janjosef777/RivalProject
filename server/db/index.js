@@ -28,6 +28,7 @@ const db = {
             queue.push(func);
     },
     admin: null,
+    campaigns: null,
     cardResults: null,
     images: null,
     prizes: null,
@@ -35,6 +36,7 @@ const db = {
 };
 
 db.admin       = require('./admin')(connection, db);
+db.campaigns   = require('./campaigns')(connection, db);
 db.cardResults = require('./cardResults')(connection, db);
 db.images      = require('./images')(connection, db);
 db.prizes      = require('./prizes')(connection, db);
