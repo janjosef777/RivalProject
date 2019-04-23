@@ -7,7 +7,11 @@ import FinalCreation from './components/FinalCreation';
 import RandomImages from './components/RandomImages';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Upload from './upload/Upload';
-import Logout from './components/Logout'
+import Logout from './components/Logout';
+import AssetTabView from './components/AssetsTabView';
+import Overlay from './components/Overlay';
+import CardResult from './components/CardResult';
+
 import {
   Collapse,
   Navbar,
@@ -38,6 +42,7 @@ const App = () => (
             <NavItem><Link to="/cardcreation">Card Creation</Link></NavItem>
             <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
             <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
+            <NavItem><Link to="/assettabview">Asset Tab View</Link></NavItem>
             <NavItem><Link to="/logout">LogOut</Link></NavItem>
           </EnsureLoggedIn>
         </Nav>
@@ -49,7 +54,10 @@ const App = () => (
           <Route exact path="/cardcreation" component={CardCreation} />
           <Route exact path="/finalcreation" component={FinalCreation} />
           <Route exact path="/randomimages" component={RandomImages} />
+          <Route exact path="/assettabview" component={AssetTabView} />
           <Route exact path="/upload" component={Upload} />
+          <Route exact path="/overlay" component={Overlay} />
+          <Route exact path="/cardresult" component={CardResult} />
           <Route exact path="/logout" component={Logout} />
         </EnsureLoggedIn>
       </Switch>
