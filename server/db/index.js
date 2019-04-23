@@ -28,12 +28,16 @@ const db = {
             queue.push(func);
     },
     admin: null,
+    cardResults: null,
     images: null,
+    prizes: null,
     users: null,
 };
 
-db.admin  = require('./admin')(connection, db);
-db.images = require('./images')(connection, db);
-db.users  = require('./users')(connection, db);
+db.admin       = require('./admin')(connection, db);
+db.cardResults = require('./cardResults')(connection, db);
+db.images      = require('./images')(connection, db);
+db.prizes      = require('./prizes')(connection, db);
+db.users       = require('./users')(connection, db);
 
 module.exports = db;
