@@ -7,11 +7,34 @@ import { Card, Button, CardTitle, CardText } from 'reactstrap';
 class Nonprizes extends Component {
     constructor(props) {
         super(props);
-        this.title = "All Non Prizes";
-        const nonprizes = ["image1", "image2", "image3"];
-        this.listItems = nonprizes.map((nonprize) =>
-            <li><img src="{nonprize}"/></li>
-        );
+        this.title = "All Non-Prizes";
+        this.state = {
+            nonprizes: []
+        }
+        this.fetchCards();
+    }
+
+    fetchCards() {
+        fetch('http://localhost:4000/api/images')
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({nonprizes: res});
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+    onUpload(err, res) {
+        if(err) {
+            console.error(err);
+        } else {
+            this.state.nonprizes.push(res);
+            this.setState({
+                nonprizes: this.state.nonprizes
+            });
+        }
     }
 
 
@@ -19,8 +42,14 @@ class Nonprizes extends Component {
         return(
             <div className="Cards-Wrapper">
                 <h2>{this.title}</h2>
-                <ul>{this.listItems}</ul>
-                <Upload />
+                <ul>
+                    {this.state.nonprizes.map((nonprize,idx) => 
+                        <li key={idx}><img src={nonprize.path} alt="Nonprizes Image" /></li>
+                    )}
+                    <li>  
+                        <Upload onUpload={this.onUpload.bind(this)} />
+                    </li>
+                </ul>
             </div>
         )
     }

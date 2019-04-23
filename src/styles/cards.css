@@ -17,10 +17,14 @@
 .Cards-Wrapper ul li{
     width: 250px;
     height: 300px;
-    margin: 0 auto;
+    margin-top: 15px;
     border: 1px solid #222;
     border-radius: 10px;
     box-shadow: 1px 1px 1px;
     object-fit: cover;
     overflow: hidden;
+}
+
+.img-thumbnail{
+    width: 100%;
 }
