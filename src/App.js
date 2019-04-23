@@ -7,7 +7,7 @@ import FinalCreation from './components/FinalCreation';
 import CardResults from './components/CardResults';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Upload from './upload/Upload';
-
+import Logout from './components/Logout'
 import {
   Collapse,
   Navbar,
@@ -19,7 +19,8 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem
+} from 'reactstrap';
 
 import './App.css';
 
@@ -37,7 +38,8 @@ const App = () => (
             <NavItem><Link to="/">Home</Link></NavItem>
             <NavItem><Link to="/cardcreation">Card Creation</Link></NavItem>
             <NavItem><Link to="/finalcreation">Final Creation</Link></NavItem>
-            <NavItem><Link to="/cardresults">Card Results</Link></NavItem>
+            <NavItem><Link to="/randomimages">Random Images</Link></NavItem>
+            <NavItem><Link to="/logout">LogOut</Link></NavItem>
           </EnsureLoggedIn>
         </Nav>
       </Navbar>
@@ -49,6 +51,7 @@ const App = () => (
           <Route exact path="/finalcreation" component={FinalCreation} />
           <Route exact path="/cardresults" component={CardResults} />
           <Route exact path="/upload" component={Upload} />
+          <Route exact path="/logout" component={Logout} />
         </EnsureLoggedIn>
       </Switch>
     </div>

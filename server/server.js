@@ -9,6 +9,8 @@ const routes = require("./routes");
 const app = express();
 const port = process.env.PORT || 4000;
 const env = process.env.NODE_ENV;
+const secret = process.env.SECRET;
+
 
 if(env != 'development' && env != 'production')
     throw new ReferenceError('Missing or invalid environment variable: NODE_ENV');

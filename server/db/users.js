@@ -14,7 +14,7 @@ module.exports = function(con, db) {
         },
         get(username, callback) {
             db.onReady = () => con.query(queries.get, username, (err, res) => {
-                callback(err, err ? null : fromRaw(res[0]));
+                callback(err, res[0] ? fromRaw(res[0]) : null);
             });
         },
         add(user, callback) {

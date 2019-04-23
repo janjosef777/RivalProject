@@ -9,7 +9,7 @@ class Prizes extends Component {
         super(props);
         this.title = "All Prizes";
         this.state = {
-            cards: []
+            prizes: []
         }
         this.fetchCards();
     }
@@ -19,7 +19,7 @@ class Prizes extends Component {
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                this.setState({cards: res});
+                this.setState({prizes: res});
             })
             .catch(err => {
                 console.error(err);
@@ -30,9 +30,9 @@ class Prizes extends Component {
         if(err) {
             console.error(err);
         } else {
-            this.state.cards.push(res);
+            this.state.prizes.push(res);
             this.setState({
-                cards: this.state.cards
+                prizes: this.state.prizes
             });
         }
     }
@@ -43,8 +43,8 @@ class Prizes extends Component {
             <div className="Cards-Wrapper">
                 <h2>{this.title}</h2>
                 <ul>
-                    {this.state.cards.map((card,idx) => 
-                        <li key={idx}><img src={card.path} alt="Card Image" /></li>
+                    {this.state.prizes.map((prize,idx) => 
+                        <li key={idx}><img src={prize.path} alt="Prize Image" /></li>
                     )}
                     <li>  
                         <Upload onUpload={this.onUpload.bind(this)} />

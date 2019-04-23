@@ -16,11 +16,11 @@ module.exports = {
      */
     addUser(user, callback) {
 
-        if(! (user = validateUserProps(user)) )
+        if (!(user = validateUserProps(user)))
             callback(new TypeError('Invalid user object'), false);
 
         bcrypt.hash(user.password, saltRounds, (err, hash) => {
-            if(err)
+            if (err)
                 callback(err, false);
             else {
                 db.users.add({
@@ -44,26 +44,30 @@ module.exports = {
      */
     verifyUser(user, callback) {
 
-        if(! (user = validateUserProps(user)) )
+        if (!(user = validateUserProps(user)))
             callback(new TypeError('Invalid user object'), false);
 
         db.users.get(user.username, (err, dbUser) => {
-            if(err)
+            if (!dbUser) {
                 callback(err, false);
-            else
-                bcrypt.compare(user.password, dbUser.passwordHash, callback);
-        })
+            } else {
+                let passOK = bcrypt.compare(user.password, dbUser.passwordHash)
+                passOK.then(function (result) {
+                    callback(null, result ? dbUser.username : false);
+                });
+            }
+        });
     }
 }
 
 function validateUserProps(user) {
-    if(typeof user !== 'object')
+    if (typeof user !== 'object')
         return null;
 
     let username = user.username;
     let password = user.password || '';
 
-    if(typeof username !== 'string'
+    if (typeof username !== 'string'
         || !(username = username.trim())
         || typeof password !== 'string') {
         return null;
