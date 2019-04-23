@@ -52,7 +52,14 @@ module.exports = {
         return handleErr("campaigns.put not implemented", res, 501);
     },
     delete: (req, res, next) => {
-        return handleErr("campaigns.delete not implemented", res, 501);
+        const id = +req.params.id || 0;
+        if(id <= 0)
+            return handleErr(null, res, 404);
+        db.campaigns.delete(id, (err, success) => {
+            if(err)
+                return handleErr(err, res, 500);
+            res.json({ id: id, deleted: success });
+        });
     }
 };
 
