@@ -13,6 +13,10 @@ router.post("/auth", routes.auth.post);
 router.post("/auth/add", routes.auth.add);
 
 router.get("/campaigns", routes.campaigns.getAll);
+router.get("/campaigns/:id", routes.campaigns.get);
+router.post("/campaigns", routes.campaigns.post);
+router.put("/campaigns/:id", routes.campaigns.put);
+router.delete("/campaigns/:id", routes.campaigns.delete);
 
 router.get("/images", routes.images.getAll);
 router.get("/images/:id", routes.images.get);

@@ -49,8 +49,10 @@ module.exports = {
         });
     },
     put: (req, res, next) => {
+        return handleErr("campaigns.put not implemented", res, 501);
     },
     delete: (req, res, next) => {
+        return handleErr("campaigns.delete not implemented", res, 501);
     }
 };
 
