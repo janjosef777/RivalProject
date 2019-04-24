@@ -40,13 +40,25 @@ module.exports = {
             endDate:   endDate   ? endDate  .toISOString() : null,
             url:       req.body.url || null
         };
+
         db.campaigns.add(campaign, (err, id) => {
             if(err)
                 return handleErr(err, res, 500);
             const data = {
                 id: id
             };
-            res.json(data);
+
+            const cardResults = req.body.cardResults;
+
+            if(cardResults && !Array.isArray(cardResults))
+                return handleErr(null, res, 400, "Card results needs to be an array");
+    
+            processCardResults(id, cardResults, cardResultsData => {
+                if(cardResultsData)
+                    data.cardResults = cardResultsData;
+
+                res.json(data);
+            })
         });
     },
     put: (req, res, next) => {
@@ -69,4 +81,35 @@ function handleErr(err, res, status, message) {
         console.log(err);
     if(res)
         res.status(status).send(message);
+}
+
+function processCardResults(campaignId, cardResults, callback) {
+
+    if(!cardResults)
+        return callback(null);
+
+    const data = {
+        processed: 0,
+        successes: 0
+    };
+
+    cardResults.forEach(item => {
+        if(typeof item !== 'object') {
+            // Invalid
+            next(null, false);
+        } else {
+            item.campaign = campaignId;
+            db.cardResults.add(item, next)
+        }
+    });
+
+    function next(err, result) {
+        if(err)
+            console.log(err);
+        data.processed++;
+        data.successes += !err && !!result;
+        if(data.processed >= cardResults.length) {
+            callback(data);
+        }
+    }
 }
