@@ -4,15 +4,23 @@ const multer = require('multer');
 const upload = multer({dest: './temp-uploads'});
 
 const routes = {
-    images: require('./images'),
-    auth: require('./auth')
+    auth: require('./auth'),
+    campaigns: require('./campaigns'),
+    images: require('./images')
 };
+
+router.post("/auth", routes.auth.post);
+router.post("/auth/add", routes.auth.add);
+
+router.get("/campaigns", routes.campaigns.getAll);
+router.get("/campaigns/:id", routes.campaigns.get);
+router.post("/campaigns", routes.campaigns.post);
+router.put("/campaigns/:id", routes.campaigns.put);
+router.delete("/campaigns/:id", routes.campaigns.delete);
 
 router.get("/images", routes.images.getAll);
 router.get("/images/:id", routes.images.get);
 router.post("/images", upload.single('image'), routes.images.post);
 router.delete("/images/:id", routes.images.delete);
 
-router.post("/auth", routes.auth.post)
-router.post("/auth/add", routes.auth.add)
 module.exports = router;

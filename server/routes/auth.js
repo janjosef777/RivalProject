@@ -1,4 +1,3 @@
-const db = require('../db');
 const auth = require('../auth/index')
 const jwt = require("jsonwebtoken");
 
@@ -14,7 +13,8 @@ module.exports = {
         }
         function userVerified(req, res) {
             if (res === false) {
-                console.log("Incorrect email/password");
+                console.log("Incorrect username/password");
+                res.status(403).send("Incorrect username/password");
             } else {
                 console.log(res);
                 //issue token 
