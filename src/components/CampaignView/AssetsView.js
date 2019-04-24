@@ -6,13 +6,15 @@ import {
 } from 'reactstrap';
 import '../../styles/campaignView.css';
 import CardResultsList from './CardResultsList';
+import ImagesList from './ImagesList';
 
 
 class AssetsView extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {}
+        this.state = { 
+        }
     }
 
     componentDidMount() {
@@ -21,18 +23,8 @@ class AssetsView extends Component {
 
     render() {
         return (
-            <div>
-                {this.props.currentTab == 0 ?
-                <div className='wrapper'> 
-                    <imagesList {...this.props} setState={this.props.setState}></imagesList>
-                    <CardResultsList {...this.props} setState={this.props.setState}></CardResultsList>     
-                </div>
-                :
-                <div className='wrapper'>
-                    <imagesList {...this.props} setState={this.props.setState}></imagesList>
-                    <CardResultsList {...this.props} setState={this.props.setState}></CardResultsList>
-                </div>
-                }
+            <div className='assets-view-wrapper'> 
+                <ImagesList {...this.props}></ImagesList>  
             </div>
         )
     }
