@@ -2,8 +2,7 @@
     width: 100%;
     max-width: 900px;
     position: relative;
-    top: 10vh;
-    left: 5%; 
+    left: 20px;
 }
 
 .Cards-Wrapper ul{
@@ -12,15 +11,24 @@
     justify-content: space-evenly;
     list-style-type: none;
     position: relative;
+    padding: 0 20px;
 }
 
 .Cards-Wrapper ul li{
-    width: 250px;
-    height: 300px;
+    width: 100px;
+    height: 150px;
     margin-top: 15px;
     border: 1px solid #222;
     border-radius: 10px;
     box-shadow: 1px 1px 1px;
     object-fit: cover;
     overflow: hidden;
+}
+
+.img-thumbnail{
+    width: 100%;
+}
+
+h5{
+    text-transform: uppercase;
 }
