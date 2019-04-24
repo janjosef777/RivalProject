@@ -53,22 +53,10 @@ module.exports = {
             } else {
                 let passOK = bcrypt.compare(user.password, dbUser.passwordHash)
                 passOK.then(function (result) {
-                    if (result === false) {
-                        callback(err, false);
-                    } else {
-                        callback(true, dbUser.username);
-                    }
-                })
-                //  if (!bcrypt.compare(user.password, dbUser.passwordHash)){
-                //     console.log()
-                //     callback(err, false);
-                // } else {
-                //     callback(err, dbUser);
-                // }
+                    callback(null, result ? dbUser.username : false);
+                });
             }
-
-
-        })
+        });
     }
 }
 

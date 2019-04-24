@@ -42,7 +42,7 @@ class Cards extends Component {
                 <h2>{this.title}</h2>
                 <ul>
                     {this.state.cards.map((card,idx) => 
-                        <li key={idx}><img src={card.path} alt="Card Image" /></li>
+                        <li key={idx}><img src={card.path} alt="Card Image" class="img-thumbnail" /></li>
                     )}
                     <li>  
                         <Upload onUpload={this.onUpload.bind(this)} />
