@@ -12,24 +12,44 @@ class SelectPrizes extends Component {
     constructor(props) {
         super(props) 
         this.state = {
-          prize:'',
+          prize:[],
         }
         this.addPrize   = this.addPrize.bind(this);
       }
 
       addPrize(e) {
-        this.setState({prize:e.target.src});    
+        var newArray = this.state.prize.slice();
+        newArray.push(e.target.src);
+        this.setState({prize:newArray});
+        
+        console.log({prize:newArray});
+        console.log({prize:e.target.src});
+        // console.log(this.state.prize);
+
+        // fetch('http://localhost:4000/api/images')
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         console.log(res);
+        //         this.setState({prize:newArray});
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //     })
+
       }
 
     render(){
         return(
             <div>
                 <Router>
-                    <Route exact path="/allprizes" render={(props) => <Prizes onClick={this.addPrize} {...props} />}/>
+                    <Route exact path="/allprizes" render={(props) => 
+                    <Prizes onClick={this.addPrize} {...props} />}/>
                 </Router>
                 <div className="SelectPrizes">
                     <ul>
-                        <li><img src={this.state.prize} className="SelectPrize"/></li>
+                    {this.state.prize.map((prize,idx) => 
+                        <li key={idx}><img src={prize} alt="Selected Prize Image"/></li>
+                    )}
                     </ul>
                 </div>
             </div>
