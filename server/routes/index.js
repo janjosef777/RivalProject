@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require('multer');
 const upload = multer({dest: './temp-uploads'});
-
+const mw  = require('../samplemw');
 const routes = {
     auth: require('./auth'),
     campaigns: require('./campaigns'),

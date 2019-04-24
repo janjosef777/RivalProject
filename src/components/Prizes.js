@@ -15,7 +15,11 @@ class Prizes extends Component {
     }
 
     fetchCards() {
-        fetch('http://localhost:4000/api/images')
+        fetch('http://localhost:4000/api/images',{
+            headers: {
+                'Authorization': "Bearer " + localStorage.getItem("token")
+            }
+            })
             .then(res => res.json())
             .then(res => {
                 console.log(res);

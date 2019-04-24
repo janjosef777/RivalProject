@@ -10,6 +10,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 const env = process.env.NODE_ENV;
 const secret = process.env.SECRET;
+const mw  = require('./samplemw');
 
 
 if(env != 'development' && env != 'production')
@@ -17,13 +18,13 @@ if(env != 'development' && env != 'production')
 
 // Create admin
 require('./setupAdmin');
-
+app.use(mw);
 // To enable CORS
 if(env == 'development') {
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header("Access-Control-Allow-Headers", "Origin, Authorization, X-Requested-With, Content-Type, Accept");
         next();
     });
 }
@@ -35,7 +36,7 @@ app.use(express.static(path.join(__dirname, '../build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/api", routes);
+app.use("/api", mw, routes);
 
 app.listen(port, function () {
     console.log("Server started on port " + port)

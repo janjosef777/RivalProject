@@ -1,5 +1,6 @@
 const auth = require('../auth/index')
 const jwt = require("jsonwebtoken");
+const storage = require('node-sessionstorage')
 
 module.exports = {
     post: (req, res, next) => {
@@ -10,6 +11,8 @@ module.exports = {
 
         function sendToken(token) {
             res.json({ "token": token })
+            storage.setItem("auth_token", token)
+            console.log(storage.getItem("auth_token"))
         }
         function userVerified(err, username) {
             if (username === false) {
