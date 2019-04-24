@@ -1,4 +1,3 @@
-const db = require('../db');
 const auth = require('../auth/index')
 const jwt = require("jsonwebtoken");
 
@@ -12,13 +11,14 @@ module.exports = {
         function sendToken(token) {
             res.json({ "token": token })
         }
-        function userVerified(req, res) {
-            if (res === false) {
-                console.log("Incorrect email/password");
+        function userVerified(err, username) {
+            if (username === false) {
+                console.log("Incorrect username/password");
+                res.status(403).send("Incorrect username/password");
             } else {
-                console.log(res);
+                console.log(username);
                 //issue token 
-                const payload = { username: res };
+                const payload = { username: username };
                 const secret = process.env.SECRET;
                 const token = jwt.sign(payload, secret, {
                     expiresIn: '1h'

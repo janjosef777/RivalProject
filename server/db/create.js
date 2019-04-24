@@ -8,6 +8,11 @@ module.exports = function(con, onSuccess) {
 
         // Create tables
         multiQuery([
+            // Temp drops
+            `DROP TABLE IF EXISTS participant`,
+            `DROP TABLE IF EXISTS card_result`,
+
+
             `CREATE TABLE IF NOT EXISTS login_user(
                 username VARCHAR(40) PRIMARY KEY,
                 password_hash VARCHAR(255) NOT NULL,
@@ -61,6 +66,7 @@ module.exports = function(con, onSuccess) {
                 image BIGINT NOT NULL,
                 campaign BIGINT NOT NULL,
                 prize BIGINT,
+                quantity INT,
                 FOREIGN KEY(image) REFERENCES image(id),
                 FOREIGN KEY(campaign) REFERENCES campaign(id),
                 FOREIGN KEY(prize) REFERENCES prize(id)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Upload.css';
+import '../styles/upload.css';
 import Dropzone from '../dropzone/Dropzone';
 
 class Upload extends Component {
