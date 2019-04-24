@@ -8,9 +8,6 @@ import Prizes from './components/Prizes';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Upload from './upload/Upload';
 import Logout from './components/Logout';
-import AssetTabView from './components/AssetsTabView';
-import Overlay from './components/Overlay';
-import CardResult from './components/CardResult';
 
 import {
   Collapse,
