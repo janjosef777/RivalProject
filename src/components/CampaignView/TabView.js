@@ -5,10 +5,10 @@ import {
     CardTitle, CardSubtitle, Button, Container, Row, Col
 } from 'reactstrap';
 import '../../styles/campaignView.css';
-import TabView from './TabView';
+import CardTemplateView from './CardTemplateView';
 
 
-class CardTemplateView extends Component {
+class TabView extends Component {
     constructor(props) {
         super(props)
 
@@ -23,9 +23,10 @@ class CardTemplateView extends Component {
     render() {
         return (
             <div className='wrapper'>
+                <CardTemplateView {...this.props} setState={this.props.setState}></CardTemplateView>
             </div>
 
         )
     }
 }
-export default CardTemplateView;
+export default TabView;

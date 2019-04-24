@@ -5,8 +5,9 @@ import {
     CardTitle, CardSubtitle, Button, Container, Row, Col
 } from 'reactstrap';
 import '../../styles/campaignView.css';
-import AssetsTabView from './AssetsTabView';
+import AssetsView from './AssetsView';
 import CardTemplateView from './CardTemplateView';
+import TabView from './TabView';
 
 
 class CampaignView extends Component {
@@ -14,7 +15,10 @@ class CampaignView extends Component {
         super(props)
 
         this.state = {
+            currentTab: 1 //tabl 0 is overlay, tab 1 is card results
         }
+
+        this.setState=this.setState.bind(this);
     }
 
     componentDidMount() {
@@ -25,10 +29,10 @@ class CampaignView extends Component {
         return (
             <div className='wrapper'>
                 <div className='left-wrapper sub-wrapper'>
-                    <AssetsTabView></AssetsTabView>
+                    <AssetsView {...this.state} setState={this.setState} ></AssetsView>
                 </div>
                 <div className='right-wrapper sub-wrapper'>
-                    <CardTemplateView></CardTemplateView>
+                    <TabView {...this.state} setState={this.setState}></TabView>
                     <div class='button-group'>
                         <button></button>
                         <button></button>

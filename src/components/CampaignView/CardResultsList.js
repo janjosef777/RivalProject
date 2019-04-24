@@ -7,12 +7,12 @@ import {
 import '../../styles/campaignView.css';
 
 
-class AssetsTabView extends Component {
+
+class ImagesList extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-        }
+        this.state = {}
     }
 
     componentDidMount() {
@@ -26,4 +26,4 @@ class AssetsTabView extends Component {
         )
     }
 }
-export default AssetsTabView;
+export default ImagesList;
