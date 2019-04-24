@@ -1,0 +1,24 @@
+.wrapper {
+    display: flex;
+    padding-left: 50px;
+}
+
+.left-wrapper {
+    width: 500px;
+    height: 600px;
+    background-color: aquamarine;
+}
+
+.right-wrapper {
+    width: 500px;
+    height: 600px;
+    background-color: blueviolet;
+}
+
+.sub-wrapper {
+    margin: 50px 50px 50px 0px;
+}
+
+.button-group {
+    background-color: yellow;
+}

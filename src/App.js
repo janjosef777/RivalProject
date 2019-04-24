@@ -8,6 +8,7 @@ import Prizes from './components/Prizes';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Upload from './upload/Upload';
 import Logout from './components/Logout'
+import CampaignView from './components/CampaignView/index';
 import {
   Collapse,
   Navbar,
@@ -36,6 +37,7 @@ const App = () => (
           <NavItem><Link to="/login">Login</Link></NavItem>
           <EnsureLoggedIn>
             <NavItem className="SingleLink"><Link to="/">Home</Link></NavItem>
+            <NavItem className="SingleLink"><Link to="campaignview">Campaign View</Link></NavItem>
             <NavItem className="SingleLink"><Link to="cardcreation">Card Creation</Link></NavItem>
             <NavItem className="SingleLink"><Link to="/allcards">All Cards</Link></NavItem>
             <NavItem className="SingleLink"><Link to="/allprizes">All Prizes</Link></NavItem>
@@ -47,6 +49,7 @@ const App = () => (
         <Route exact path="/login" component={Login} />
         <EnsureLoggedIn>
           <Route exact path="/" component={Home} />
+          <Route exact path="/campaignview" component={CampaignView} />
           <Route exact path="/cardcreation" component={CardCreation} />
           <Route exact path="/allcards" component={Cards} />
           <Route exact path="/allprizes" component={Prizes} />
