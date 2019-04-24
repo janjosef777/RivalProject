@@ -11,15 +11,13 @@
   } */
 
   .Dropzone {
-    font-size: 100px;
     color: white;
     background-color: green;
     max-width:100%;
-    line-height: 50px;
-    width: 70px;
-    height: 70px;
-    -webkit-clip-path: circle(50% at 50% 50%);
-    clip-path: circle(50% at 50% 50%);
+    width: 80px;
+    height: 25px;
+    /* -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%); */
   }
 
   .Dropzone:hover {
