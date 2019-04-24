@@ -14,7 +14,7 @@ module.exports = {
             images.forEach(image => {
                 image.path = uploadUrl + image.filename;
             });
-            res.send(images);
+            res.json(images);
         })
     },
     // get
@@ -28,7 +28,7 @@ module.exports = {
             if(!image)
                 return handleErr(null, res, 404);
             image.path = uploadUrl + image.filename;
-            res.send(image);
+            res.json(image);
         })
     },
     // post
@@ -67,7 +67,7 @@ module.exports = {
                             jsonImage.id = id
 
                             // Success
-                            res.send(jsonImage);
+                            res.json(jsonImage);
                         });
                     });
                 });
@@ -98,7 +98,7 @@ module.exports = {
                 db.images.delete(id, (err, success) => {
                     if(err)
                         return handleErr(err, res, 500);
-                    res.send({ id: id, deleted: success });
+                    res.json({ id: id, deleted: success });
                 });
             })
         });

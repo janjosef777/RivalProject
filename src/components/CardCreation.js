@@ -5,86 +5,56 @@ import { Card, CardImg, CardText, CardBody,
 import '../styles/cardCreation.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Cards from './Cards';
+import SelectPrizes from './SelectPrizes';
+import PrizeFullComponent from './PrizeFullComponent';
 
 
 class CardCreation extends Component {
     constructor(props) {
         super(props) 
         this.state = {
-          title:''
+          title:'',
+          overlayImg:'',
         }
         this.setTitle   = this.setTitle.bind(this);
+        this.setOverlay   = this.setOverlay.bind(this);
       }
-
 
 
       setTitle(e) {
         this.setState({title:e.target.value});
       }
-    
+
+      setOverlay(e) {
+            this.setState({overlayImg:e.target.src});
+      }
 
     componentDidMount(){
 
     }
-
+ 
     render(){
         return(
             <div className="CardCreation">
-
-                <Row className="pageTitle">
-                    <h1>Scratch Card Editor</h1>
-                    {/* <div className="stepNav"> 
-                        <Link to="/CardCreation">
-                        <div className="stepOne">1</div>
-                        </Link>
-                        <Link to="/RandomImages">
-                        <div className="stepTwo">2</div>
-                        </Link>
-                        <Link to="/FinalCreation">
-                        <div className="stepThree">3</div>
-                        </Link>
-                    </div> */}
-                </Row>
-
-                <Row>
-
-                <Col xs="6">
-                <div className="sideBar">
-                    <div>
-                    <label>Card Title</label>
-                    <br/>
-                    <input value={this.state.title} onChange={this.setTitle} placeholder="Enter title for the card..." />
-                    </div>
-                    <div>
-                        <label>IMAGE OVERLAY</label>
-                        <br/>
-                        <Button>Overlay Upload</Button>
-                    </div>
+                <div className="Sidebar">
+                    <Router>
+                    <ul className="Tabs">
+                        <li><Link to="/allcards">Pick an overlay</Link></li>
+                        <li><Link to="/allprizes">Pick prizes</Link></li>
+                    </ul>
+                    <Route exact path="/allcards" render={(props) => <Cards onClick={this.setOverlay} {...props} />} /> 
+                    <Route exact path="/allprizes" component={SelectPrizes} />                  
+                    </Router>
                 </div>
-                </Col>
-
-                <Col xs="6">
-                <div className="cardEditor">
-                    <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }} className="TopCard">
-                    <br/>
-                        <CardTitle><h2>{this.state.title}</h2></CardTitle>
-                        {/* <img src="{file.name}" className="FileImage" />  
-                        <span className="Filename">{file.name}</span> */}
-                    </Card>
-
-
+                <div className="Card-Container">
+                    <div>
+                        <input value={this.state.title} onChange={this.setTitle} placeholder="Enter title for the campaign..." />
+                        <CardTitle><h3>{this.state.title}</h3></CardTitle>
+                    </div>
+                    <div className="ImageHolder"><img src={this.state.overlayImg} /></div>
+                    <button>Create Campaign</button>
                 </div>
-                </Col>
-
-
-                <Row className="nextButton">
-                    <Col  sm={{ size: 'auto', offset: 1 }}>
-                    <Link to="/RandomImages">
-                    <Button color="success" >Next</Button>
-                    </Link>
-                    </Col>
-                </Row>
-            </Row>
             </div>
             
         )
