@@ -11,7 +11,7 @@ module.exports = {
         function sendToken(token) {
             res.json({ "token": token })
         }
-        function userVerified(req, username) {
+        function userVerified(err, username) {
             if (username === false) {
                 console.log("Incorrect username/password");
                 res.status(403).send("Incorrect username/password");
