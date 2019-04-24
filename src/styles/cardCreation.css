@@ -73,6 +73,11 @@
     height: 200px;    
 }
 
+.SelectPrizes li img {
+    width: 100px;
+    height: 100px;
+}
+
 /* .pageTitle{
     color: white;
     text-align: center;

@@ -7,7 +7,8 @@ import Cards from './components/Cards';
 import Prizes from './components/Prizes';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Upload from './upload/Upload';
-import Logout from './components/Logout'
+import Logout from './components/Logout';
+
 import {
   Collapse,
   Navbar,
