@@ -109,7 +109,7 @@ const service = {
     },
     create: campaignItem => {
       count += 1;
-      campaignItems.push({
+      campaignItems.campaign.push({
         ...campaignItem,
         id: count
       });
@@ -126,6 +126,7 @@ const service = {
       return Promise.resolve(campaignItem);
     }
   };
+
 
 class Home extends Component {
 
@@ -146,21 +147,24 @@ class Home extends Component {
             
                     <Fields>
                         <Field name="id" label="Id" hideInCreateForm />
-                        <Field name="campaign" label="Campaign" placeholder="Campaign" />
+                        <Field name="campaign" label="Campaign" />
                         <Field
                         name="dateCreated"
                         label="Date Created"
                         type="date"
+                        hideInCreateForm
                         />
                         <Field
                         name="isActive"
                         label="Status"
                         type="bool"
+                        hideInCreateForm
                         />
                         <Field
                         name="hasPrize"
                         label="Has Prize"
                         type="bool"
+                        hideInCreateForm
                         />
                     </Fields>
 
@@ -199,30 +203,25 @@ class Home extends Component {
                     />
 
                     <CreateForm
+                        className="createButton"
                         campaign="Campaign Creation"
-                        message="Create a new Campaign!"
+                        message="Create a new Campaign"
                         trigger="Create Campaign"
-                        onSubmit={campaignItem => service.create(campaignItem)}
+                        onSubmit={campaignItem => service.create(campaignItem.campaign)}
                         submitText="Create"
                         validate={values => {
                         const errors = {};
                         if (!values.campaign) {
                             errors.campaign = "Please, provide Campaign title";
                         }
-                        if (!values.dateCreated) {
-                            errors.dateCreated = "Please, provide Date Today";
-                        }
-                        if (!values.isActive) {
-                            errors.isActive = "Is Active?";
-                        }
-                        if (!values.hasPrizes) {
-                            errors.hasPrizes = "Has Prize?";
-                        }
                         return errors;
                         }}
-                    />
+                    >
+                    <Button>Delete</Button>
+                    </CreateForm>
                     <Pagination
                         itemsPerPage={5}
+                        activePage={1}
                         defaultActivePage = {1}
                         fetchTotalOfItems={payload => service.fetchTotal(payload)}
                     />
