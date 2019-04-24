@@ -13,7 +13,14 @@ class CardTemplateView extends Component {
         super(props)
 
         this.state = {
+            overlayImg: '',
         }
+
+        this.setOverlay   = this.setOverlay.bind(this);
+    }
+
+    setOverlay(e) {
+        this.setState({overlayImg:e.target.src});
     }
 
     componentDidMount() {
@@ -23,6 +30,7 @@ class CardTemplateView extends Component {
     render() {
         return (
             <div className='wrapper'>
+                <div className="ImageHolder"><img src={this.state.overlayImg} alt="Your Scratch Image"/></div>
             </div>
 
         )
