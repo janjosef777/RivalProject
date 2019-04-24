@@ -10,6 +10,7 @@
     "concurrently": "^4.1.0",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "jquery": "^3.4.0",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.1",
     "mysql": "^2.16.0",
@@ -20,7 +21,8 @@
     "react-scripts": "2.1.8",
     "reactstrap": "^8.0.0",
     "sharp": "^0.22.0",
-    "superagent": "^5.0.2"
+    "superagent": "^5.0.2",
+    "typescript": "^3.4.5"
   },
   "scripts": {
     "dev": "concurrently \"nodemon ./server/server.js\" \"SET PORT=3100 && react-scripts start\"",
