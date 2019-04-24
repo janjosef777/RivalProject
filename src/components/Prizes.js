@@ -7,7 +7,7 @@ import { Card, Button, CardTitle, CardText } from 'reactstrap';
 class Prizes extends Component {
     constructor(props) {
         super(props);
-        this.title = "All Prizes";
+        this.title = "Choose from prizes";
         this.state = {
             prizes: []
         }
@@ -41,14 +41,12 @@ class Prizes extends Component {
     render(){
         return(
             <div className="Cards-Wrapper">
-                <h2>{this.title}</h2>
+                <Upload onUpload={this.onUpload.bind(this)} />
+                <h5>{this.title}</h5>
                 <ul>
                     {this.state.prizes.map((prize,idx) => 
-                        <li key={idx}><img src={prize.path} alt="Prize Image" /></li>
+                        <li key={idx}><img src={prize.path} alt="Prize Image" className ="img-thumbnail" onClick={this.props.onClick}/></li>
                     )}
-                    <li>  
-                        <Upload onUpload={this.onUpload.bind(this)} />
-                    </li>
                 </ul>
             </div>
         )

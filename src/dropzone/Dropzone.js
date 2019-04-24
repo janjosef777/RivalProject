@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './Dropzone.css'
+import '../styles/dropzone.css'
 
 class Dropzone extends Component {
   constructor(props) {
@@ -84,7 +84,7 @@ class Dropzone extends Component {
           className="Icon"
           src="baseline-cloud_upload-24px.svg"
         /> */}
-        <span>+</span>
+        <span>Upload</span>
       </div>
     )
   }
