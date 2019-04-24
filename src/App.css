@@ -8,4 +8,15 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
   }
+
+.SingleLink a{
+    text-decoration: none;
+    color: #222;
+    padding: 10px;
+  }
+
+  .SingleLink a:hover{
+    text-decoration: none;
+    color: #000;
+  }
   
