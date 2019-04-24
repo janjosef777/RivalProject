@@ -3,6 +3,13 @@
     padding-left: 50px;
 }
 
+.image-list-wrapper {
+    width: 500px;
+    height: 600px;
+    background-color: grey;
+}
+
+
 .left-wrapper {
     width: 35%;
     height: auto;
