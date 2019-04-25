@@ -67,6 +67,8 @@ let campaignItems = [
     }
 ];
 
+let onChange 
+
 const SORTERS = {
     NUMBER_ASCENDING: mapper => (a, b) => mapper(a) - mapper(b),
     NUMBER_DESCENDING: mapper => (a, b) => mapper(b) - mapper(a),
@@ -105,6 +107,7 @@ const service = {
       return Promise.resolve(result.slice(start,end));
     },
     fetchTotal: payload => {
+        
         return Promise.resolve(campaignItems.length);
     },
     create: campaignItem => {
@@ -132,7 +135,9 @@ class Home extends Component {
 
     constructor(props){
         super(props);
-    }
+        this.state={
+        }
+    } 
 
     render(){
         return(
@@ -143,6 +148,8 @@ class Home extends Component {
                     <CRUDTable
                     caption="Your Campaign"
                     fetchItems={payload => service.fetchItems(payload)}
+                    actionsLabel
+                    showQueryBuilder
                     >
             
                     <Fields>
@@ -168,6 +175,22 @@ class Home extends Component {
                         />
                     </Fields>
 
+                    <CreateForm
+                        campaign="Campaign Creation"
+                        message="Create a new Campaign"
+                        trigger="Create Campaign"
+                        onSubmit={campaignItem => service.create(campaignItem.campaign)}
+                        submitText="CREATE"
+                        validate={values => {
+                        const errors = {};
+                        if (!values.campaign) {
+                            errors.campaign = "Please, provide Campaign title";
+                        }
+                        return errors;
+                        }}
+                    >
+                    </CreateForm>
+
                     <UpdateForm
                         title="Campaign Update Process"
                         message="Update Campaign"
@@ -186,7 +209,7 @@ class Home extends Component {
                         return errors;
                         }}
                     />
-                    
+
                     <DeleteForm
                         title="Campaign Delete Process"
                         message="Are you sure you want to delete the Campaign?"
@@ -201,24 +224,7 @@ class Home extends Component {
                         return errors;
                         }}
                     />
-
-                    <CreateForm
-                        className="createButton"
-                        campaign="Campaign Creation"
-                        message="Create a new Campaign"
-                        trigger="Create Campaign"
-                        onSubmit={campaignItem => service.create(campaignItem.campaign)}
-                        submitText="Create"
-                        validate={values => {
-                        const errors = {};
-                        if (!values.campaign) {
-                            errors.campaign = "Please, provide Campaign title";
-                        }
-                        return errors;
-                        }}
-                    >
-                    <Button>Delete</Button>
-                    </CreateForm>
+                    
                     <Pagination
                         itemsPerPage={5}
                         activePage={1}

@@ -1,15 +1,18 @@
 body {
-    background-image: url("../images/sunset-downtown-vancouver.jpg");
+    background-color: white;
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
 }
 
 .loginPage {
+    width: 300px;
+    margin:0 auto;
+}
+
+.loginForm {
     margin-top: 100px;
-    width: 20%;
     border: 1px solid black;
-    margin: 0 auto;
     border-radius: 20px;
     text-align: center;
     background-color: white;

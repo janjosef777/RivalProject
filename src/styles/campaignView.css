@@ -1,16 +1,10 @@
-.image-list {
-  display: flex;
-  flex-wrap: wrap;
-  overflow-y: scroll;
-  height: 500px;
+ul{
+    list-style-type: none;
 }
 
-.img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 5px;
-  
+.content-wrapper {
+    display: flex;
+    padding-left: 50px;
 }
 
 .image-thumb {
@@ -45,6 +39,23 @@ ul {
 
 .sub-wrapper {
     margin: 50px 50px 50px 0px;
+}
+
+.image-list-wrapper{
+    overflow-x: scroll;
+    padding: 20px;
+}
+
+.image-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.img-thumbnail{
+    width: 150px;
+    height: 200px;
+    margin: 10px;
 }
 
 .tab-content>.active{
