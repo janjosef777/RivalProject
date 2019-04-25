@@ -37,7 +37,7 @@
     border: 1px, solid black;
     line-height: 40px;
     color: white;
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 5px;
 }
 
@@ -45,15 +45,14 @@
     background-color: green;
     line-height: 40px;
     color: white;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .crud-button--negative {
     background-color: red;
-    border: 1px, solid black;
     line-height: 40px;
     color: white;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .crud-table-pagination {
@@ -75,6 +74,14 @@
     margin-right:auto;
     background-color: gray;
     align-content: center;
+    text-align: center;
+    width: 300px;
+    height: 250px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px;
+}
+
+.crud-table-query-builder {
     text-align: center;
 }
 
