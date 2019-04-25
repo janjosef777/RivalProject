@@ -19,6 +19,8 @@ db.admin.delete(err => {
     auth.addUser({
         username: adminUser,
         password: adminPass
+    }, {
+        replace: true
     }, err => {
         if(err) throw err;
 

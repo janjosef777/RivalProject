@@ -13,6 +13,8 @@ module.exports = {
         }
         function userVerified(err, username) {
             if (username === false) {
+                if(err)
+                    console.log(err);
                 console.log("Incorrect username/password");
                 res.status(403).send("Incorrect username/password");
             } else {
@@ -39,9 +41,11 @@ module.exports = {
                 password: req.body.password
             })
         }
-        function successAdd(req, res) {
-            if (res == false){
-                console.log("unable to add User!")
+        function successAdd(err, res) {
+            if (!res){
+                if(err)
+                    console.log(err);
+                console.log("unable to add User!");
             } else {
                 console.log(res);
                 confirmAdd();

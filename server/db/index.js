@@ -15,6 +15,7 @@ require('./create')(connection, function() {
     for(var callback of queue)
         callback();
 });
+const crudBase = require('./crudBase');
 
 const db = {
     get isReady() { return ready; },
@@ -27,19 +28,19 @@ const db = {
         else
             queue.push(func);
     },
-    admin: null,
-    campaigns: null,
-    cardResults: null,
-    images: null,
-    prizes: null,
-    users: null,
+
+    admin:       require('./admin'),
+    campaigns:   require('./campaigns'),
+    cardResults: require('./cardResults'),
+    images:      require('./images'),
+    prizes:      require('./prizes'),
+    users:       require('./users'),
 };
 
-db.admin       = require('./admin')(connection, db);
-db.campaigns   = require('./campaigns')(connection, db);
-db.cardResults = require('./cardResults')(connection, db);
-db.images      = require('./images')(connection, db);
-db.prizes      = require('./prizes')(connection, db);
-db.users       = require('./users')(connection, db);
+crudBase.init(db, connection);
+for(prop of Object.getOwnPropertyNames(db)) {
+    if(db[prop] && db[prop].init)
+        db[prop].init(db, connection);
+}
 
 module.exports = db;
