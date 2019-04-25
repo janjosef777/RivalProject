@@ -16,7 +16,7 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns),
         }
     },
     getAllInCampaign(campaignId, callback) {
-        db.onReady = () => con.query(queries.getAllInCampaign, campaignId, (err, res) => {
+        db.onReady = () => connection.query(queries.getAllInCampaign, campaignId, (err, res) => {
             callback(err, err ? [] : res);
         });
     }

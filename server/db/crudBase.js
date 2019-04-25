@@ -34,14 +34,16 @@ module.exports = {
                     });
             },
             add(entry, callback, config = {}) {
-                entry = mapWrite ? mapWrite(entry) : entry;
+                try { entry = mapWrite ? mapWrite(entry) : entry; }
+                catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
                     () => connection.query(queries.add, toArray(entry), (err, res) => {
                         callback(err, err ? 0 : res.insertId || entry[primary] || true);
                     });
             },
             replace(entry, callback, config = {}) {
-                entry = mapWrite ? mapWrite(entry) : entry;
+                try { entry = mapWrite ? mapWrite(entry) : entry; }
+                catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
                     () => connection.query(queries.replace, toArray(entry), (err, res) => {
                         callback(err, err ? 0 : res.insertId || entry[primary] || true);
