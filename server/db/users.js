@@ -1,7 +1,11 @@
 const tableName = 'login_user';
 const columns = ['username', 'password_hash', 'is_admin'];
 
-module.exports = require('./crudBase').create(tableName, columns, mapWrite, mapRead);
+module.exports = require('./crudBase').create(tableName, columns, {
+    mapWrite: mapWrite,
+    mapRead: mapRead,
+    primary: 'username'
+});
 
 function mapWrite(user) {
     return {

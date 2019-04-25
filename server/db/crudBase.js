@@ -2,15 +2,18 @@ let connection = null;
 let db = null;
 
 module.exports = {
-    create(tableName, columns, mapWrite, mapRead) {
+    create(tableName, columns, config = {}) {
+        const mapWrite = config.mapWrite;
+        const mapRead = config.mapRead;
+        const primary = config.primary || 'id';
         const queries = {
             getAll: 'SELECT * FROM ' + tableName,
-            get: 'SELECT * FROM ' + tableName + ' WHERE id=?',
+            get: 'SELECT * FROM ' + tableName + ' WHERE ' + primary + '=?',
             add: 'INSERT INTO ' + tableName + ' (' + columns.join(',') + ') '
                 + 'VALUES (' + columns.map(() => '?').join(',') + ')',
             replace: 'INSERT INTO ' + tableName + ' (' + columns.join(',') + ') '
                     + 'VALUES (' + columns.map(() => '?').join(',') + ')',
-            delete: 'DELETE FROM ' + tableName + ' WHERE id=?',
+            delete: 'DELETE FROM ' + tableName + ' WHERE ' + primary + '=?',
         };
 
         return {
@@ -23,7 +26,7 @@ module.exports = {
             },
             get(id, callback) {
                 db.onReady = () => connection.query(queries.get, id, (err, res) => {
-                    res = err || !res[0] ? null : res;
+                    res = err || !res[0] ? null : res[0];
                     res = res && mapRead ? mapRead(res) : res;
                     callback(err, res);
                 });

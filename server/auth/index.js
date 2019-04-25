@@ -54,6 +54,8 @@ module.exports = {
                 let passOK = bcrypt.compare(user.password, dbUser.passwordHash)
                 passOK.then(function (result) {
                     callback(null, result ? dbUser.username : false);
+                }).catch(err => {
+                    callback(err, false);
                 });
             }
         });

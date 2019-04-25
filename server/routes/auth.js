@@ -13,6 +13,8 @@ module.exports = {
         }
         function userVerified(err, username) {
             if (username === false) {
+                if(err)
+                    console.log(err);
                 console.log("Incorrect username/password");
                 res.status(403).send("Incorrect username/password");
             } else {
