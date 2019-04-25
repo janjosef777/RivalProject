@@ -47,6 +47,7 @@ class Login extends Component {
     render() {
         return (
             <div className="loginPage" >
+                <div className="loginForm">
                 <img src={logo} className="logoImage" />
                 <Form>
                     <FormGroup>
@@ -59,6 +60,7 @@ class Login extends Component {
                     </FormGroup>
                     <Button onClick={this.handleSubmit}>Login</Button>
                 </Form>
+                </div>
             </div>
         )
     }
