@@ -34,13 +34,13 @@ module.exports = {
             add(entry, callback) {
                 entry = mapWrite ? mapWrite(entry) : entry;
                 db.onReady = () => connection.query(queries.add, toArray(entry), (err, res) => {
-                    callback(err, err ? 0 : res.insertId);
+                    callback(err, err ? 0 : res.insertId || entry[primary] || true);
                 });
             },
             replace(entry, callback) {
                 entry = mapWrite ? mapWrite(entry) : entry;
                 db.onReady = () => connection.query(queries.replace, toArray(entry), (err, res) => {
-                    callback(err, err ? 0 : res.insertId);
+                    callback(err, err ? 0 : res.insertId || entry[primary] || true);
                 });
             },
             delete(id, callback) {
