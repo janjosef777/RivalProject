@@ -6,8 +6,8 @@ import {
 import '../../styles/campaignView.css';
 
 const ImageThumb = (props) => (
-    <div>
-        <img src={props.imagePath} alt="Card Image" className="img-thumbnail" onClick={props.onClick}></img>
+    <div className="image-thumb">
+        <img src={props.imagePath} alt="Card Image" className="img" onClick={props.onClick}></img>
     </div>
 )
 
