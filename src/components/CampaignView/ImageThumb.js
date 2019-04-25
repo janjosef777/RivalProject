@@ -5,10 +5,22 @@ import {
 } from 'reactstrap';
 import '../../styles/campaignView.css';
 
-const ImageThumb = (props) => (
-    <div>
-        <img src={props.imagePath} alt="Card Image" className="img-thumbnail" onClick={props.onClick}></img>
-    </div>
-)
+class ImageThumb extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    setOverlay(e) {
+        this.props.setState({overlayImg: e.target.src});
+    }
+
+    render() {
+        return (
+            <div>
+                <img src={this.props.imagePath} alt="Card Image" className="img-thumbnail" onClick={this.setOverlay.bind(this)}></img>
+            </div>
+        );
+    }
+}
 
 export default ImageThumb;

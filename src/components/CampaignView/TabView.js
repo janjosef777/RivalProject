@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import '../../styles/campaignView.css';
 import CardTemplateView from './CardTemplateView';
 import CampaignCardResults from './CampaignCardResults';
-
+import CampaignSettings from './CampaignSettings';
 
 class TabView extends Component {
     constructor(props) {
@@ -79,13 +79,7 @@ class TabView extends Component {
                     <Row>
                         <Col sm="12">
                             <h4>The Campaign Settings</h4>
-                            <h6>Campaign Name: </h6>
-                            <h6>Campaign Reach: </h6>
-                            <h6>Campaign Activation Status: </h6>
-                            <label class="switch">
-                            <input type="checkbox" checked />
-                            <span className="slider round"></span>
-                            </label>
+                            <CampaignSettings {...this.props} setState={this.props.setState}></CampaignSettings>
                         </Col>
                         </Row>
                     </TabPane>
