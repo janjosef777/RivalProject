@@ -48,9 +48,9 @@ class ImagesList extends Component {
                 <h1>Images</h1>
                 <Upload onUpload={this.onUpload.bind(this)} />
                 <div>
-                    <ul>
+                    <ul className="image-list">
                     {this.props.images.map((image, idx) => 
-                        <li key={idx}><ImageThumb imagePath={image.path}></ImageThumb></li>
+                        <li key={idx}><ImageThumb imagePath={image.path} className="img-thumbnail" {...this.props}></ImageThumb></li>
                     )}
                     </ul>
                 </div>
