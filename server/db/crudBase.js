@@ -11,7 +11,7 @@ module.exports = {
             get: 'SELECT * FROM ' + tableName + ' WHERE ' + primary + '=?',
             add: 'INSERT INTO ' + tableName + ' (' + columns.join(',') + ') '
                 + 'VALUES (' + columns.map(() => '?').join(',') + ')',
-            replace: 'INSERT INTO ' + tableName + ' (' + columns.join(',') + ') '
+            replace: 'REPLACE INTO ' + tableName + ' (' + columns.join(',') + ') '
                     + 'VALUES (' + columns.map(() => '?').join(',') + ')',
             delete: 'DELETE FROM ' + tableName + ' WHERE ' + primary + '=?',
         };
