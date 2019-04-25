@@ -11,9 +11,6 @@ module.exports = {
         db.images.getAll((err, images) => {
             if(err)
                 return handleErr(err, res, 500);
-            images.forEach(image => {
-                image.path = uploadUrl + image.filename;
-            });
             res.json(images);
         })
     },
@@ -27,7 +24,6 @@ module.exports = {
                 return handleErr(err, res, 500);
             if(!image)
                 return handleErr(null, res, 404);
-            image.path = uploadUrl + image.filename;
             res.json(image);
         })
     },
