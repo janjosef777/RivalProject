@@ -2,34 +2,33 @@ const storage = require('node-sessionstorage')
 
 
 var myLogger = function (req, res, next) {
-   /*if req.url = auth 
-   then get body 
-   generate token
-   store in session
-   send back and store in local
-
-   if url is not auth
-   compare tokens in storage and local
-   next otherwise call log out 
-   */
-   console.log(req.headers)
    user = JSON.stringify(req.url)
    if (user == '\"/auth\"' || user == '\"/api/auth\"') {
       console.log(user);
       next()
    } else {
-      frontToken = req.get('Authorization')
+      frontToken = req.get('authorization')
       backToken = storage.getItem("auth_token")
-      if (frontToken == backToken) {
-         next();
+      console.log(frontToken);
+      console.log(backToken);
+
+      if (typeof backToken !== "undefined") {
+         if (frontToken == backToken) {
+            console.log("TOKEN MATCH");
+            next();
+         } else {
+            console.log("TOKEN DOES NOT MATCH")
+            res.sendStatus(403)
+         }
       } else {
-         console.log("tokens does not match!")
-         console.log(frontToken);
-         console.log(backToken);
+         res.sendStatus(404)
       }
+
 
    }
 
 }
+
+
 
 module.exports = myLogger;

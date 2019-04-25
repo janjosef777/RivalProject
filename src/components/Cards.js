@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Upload from '../upload/Upload';
 import '../styles/cards.css';
 import CardCreation from './CardCreation';
-import { Card, Button, CardTitle, CardText } from 'reactstrap'; 
+import { Card, Button, CardTitle, CardText } from 'reactstrap';
 
 
 class Cards extends Component {
@@ -16,15 +16,16 @@ class Cards extends Component {
     }
 
     fetchCards() {
-        fetch('http://localhost:4000/api/images',{
-            headers: {
-                'Authorization': "Bearer " + localStorage.getItem("token")
+        fetch('http://localhost:4000/api/images', {
+            headers:
+            {
+                'Authorization': localStorage.getItem('token')
             }
         })
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                this.setState({cards: res});
+                this.setState({ cards: res });
             })
             .catch(err => {
                 console.error(err);
@@ -32,7 +33,7 @@ class Cards extends Component {
     }
 
     onUpload(err, res) {
-        if(err) {
+        if (err) {
             console.error(err);
         } else {
             this.state.cards.push(res);
@@ -41,16 +42,16 @@ class Cards extends Component {
             });
         }
     }
-    render(){
-        return(
+    render() {
+        return (
             <div className="Cards-Wrapper">
                 <Upload onUpload={this.onUpload.bind(this)} />
                 <h5>{this.title}</h5>
                 <ul>
-                    {this.state.cards.map((card,idx) => 
-                        <li key={idx}><img src={card.path} alt="Card Image" className="img-thumbnail" onClick={this.props.onClick}/></li>
-                    )} 
-                        
+                    {this.state.cards.map((card, idx) =>
+                        <li key={idx}><img src={card.path} alt="Card Image" className="img-thumbnail" onClick={this.props.onClick} /></li>
+                    )}
+
                 </ul>
 
 

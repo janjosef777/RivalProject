@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Upload from '../upload/Upload';
 import '../styles/prizes.css';
-import { Card, Button, CardTitle, CardText } from 'reactstrap'; 
+import { Card, Button, CardTitle, CardText } from 'reactstrap';
 
 
 class Prizes extends Component {
@@ -15,15 +15,11 @@ class Prizes extends Component {
     }
 
     fetchCards() {
-        fetch('http://localhost:4000/api/images',{
-            headers: {
-                'Authorization': "Bearer " + localStorage.getItem("token")
-            }
-            })
+        fetch('http://localhost:4000/api/images')
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                this.setState({prizes: res});
+                this.setState({ prizes: res });
             })
             .catch(err => {
                 console.error(err);
@@ -31,7 +27,7 @@ class Prizes extends Component {
     }
 
     onUpload(err, res) {
-        if(err) {
+        if (err) {
             console.error(err);
         } else {
             this.state.prizes.push(res);
@@ -42,14 +38,14 @@ class Prizes extends Component {
     }
 
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="Cards-Wrapper">
                 <Upload onUpload={this.onUpload.bind(this)} />
                 <h5>{this.title}</h5>
                 <ul>
-                    {this.state.prizes.map((prize,idx) => 
-                        <li key={idx}><img src={prize.path} alt="Prize Image" className ="img-thumbnail" onClick={this.props.onClick}/></li>
+                    {this.state.prizes.map((prize, idx) =>
+                        <li key={idx}><img src={prize.path} alt="Prize Image" className="img-thumbnail" onClick={this.props.onClick} /></li>
                     )}
                 </ul>
             </div>
