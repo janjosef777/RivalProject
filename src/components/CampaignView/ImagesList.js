@@ -50,7 +50,7 @@ class ImagesList extends Component {
                 <div>
                     <ul className="image-list">
                     {this.props.images.map((image, idx) => 
-                        <li key={idx}><ImageThumb imagePath={image.path}></ImageThumb></li>
+                        <li key={idx}><ImageThumb imagePath={image.path} className="img-thumbnail" {...this.props}></ImageThumb></li>
                     )}
                     </ul>
                 </div>
