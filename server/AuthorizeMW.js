@@ -1,7 +1,7 @@
 const storage = require('node-sessionstorage')
 
 
-var myLogger = function (req, res, next) {
+var Authorize = function (req, res, next) {
    user = JSON.stringify(req.url)
    if (user == '\"/auth\"' || user == '\"/api/auth\"') {
       console.log(user);
@@ -31,4 +31,4 @@ var myLogger = function (req, res, next) {
 
 
 
-module.exports = myLogger;
+module.exports = Authorize;

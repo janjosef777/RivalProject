@@ -10,20 +10,22 @@ const app = express();
 const port = process.env.PORT || 4000;
 const env = process.env.NODE_ENV;
 const secret = process.env.SECRET;
-const mw  = require('./samplemw');
+const AuthorizeMW  = require('./AuthorizeMW');
 const cors=require('cors');
 
 
 
-
+//middleware does not work without this line
 app.use(cors({origin:true,credentials: true}));
+
+
 
 if(env != 'development' && env != 'production')
     throw new ReferenceError('Missing or invalid environment variable: NODE_ENV');
 
 // Create admin
 require('./setupAdmin');
-app.use(mw);
+
 // To enable CORS
 if(env == 'development') {
     app.use(function (req, res, next) {
@@ -32,7 +34,6 @@ if(env == 'development') {
         res.header("Access-Control-Allow-Headers", "Origin,X-Custom-Header, Authorization, X-Requested-With, Content-Type, Accept");
         next();
     });
-    app.use(cors({origin:true,credentials: true}));
 }
 
 // Set static folder
@@ -42,7 +43,7 @@ app.use(express.static(path.join(__dirname, '../build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/api", mw, routes);
+app.use("/api", AuthorizeMW, routes);
 
 app.listen(port, function () {
     console.log("Server started on port " + port)
