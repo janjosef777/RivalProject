@@ -7,21 +7,31 @@ ul{
     padding-left: 50px;
 }
 
-.image-list-wrapper {
-    width: 500px;
-    height: 600px;
-    background-color: grey;
+.image-thumb {
+  padding: 10px;
+  margin: 10px;
+  border: solid black 1px;
+  border-radius: 5px;
+  background-color: white;
 }
 
+ul {
+    list-style: none;
+}
+
+.content-wrapper {
+    display: flex;
+    padding-left: 50px;
+}
 
 .left-wrapper {
-    width: 35%;
+    width: 40%;
     height: auto;
-    background-color: aquamarine;
+    background: #ddd;
 }
 
 .right-wrapper {
-    width: 60%;
+    width: 55%;
     height: auto;
     background-color: #222;
     color: #fff;
