@@ -16,6 +16,12 @@ module.exports = {
      */
     addUser(user, callback) {
 
+        let config = {};
+        if(arguments.length > 2) {
+            config = callback;
+            callback = arguments[2];
+        }
+
         if (!(user = validateUserProps(user)))
             callback(new TypeError('Invalid user object'), false);
 
@@ -23,7 +29,7 @@ module.exports = {
             if (err)
                 callback(err, false);
             else {
-                db.users.add({
+                db.users[config.replace ? 'replace' : 'add']({
                     username: user.username,
                     passwordHash: hash
                 }, callback);
@@ -54,6 +60,8 @@ module.exports = {
                 let passOK = bcrypt.compare(user.password, dbUser.passwordHash)
                 passOK.then(function (result) {
                     callback(null, result ? dbUser.username : false);
+                }).catch(err => {
+                    callback(err, false);
                 });
             }
         });

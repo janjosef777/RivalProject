@@ -11,6 +11,11 @@ module.exports = function(con, onSuccess) {
             // Temp drops
             `DROP TABLE IF EXISTS participant`,
             `DROP TABLE IF EXISTS card_result`,
+            `DROP TABLE IF EXISTS campaign`,
+            `DROP TABLE IF EXISTS overlay`,
+            `DROP TABLE IF EXISTS card_template`,
+            `DROP TABLE IF EXISTS card_result`,
+            `DROP TABLE IF EXISTS card_result`,
 
 
             `CREATE TABLE IF NOT EXISTS login_user(
@@ -42,23 +47,25 @@ module.exports = function(con, onSuccess) {
                 FOREIGN KEY(image_id) REFERENCES image(id),
                 FOREIGN KEY(size_id) REFERENCES size(id)
             )`,
-            `CREATE TABLE IF NOT EXISTS card_template(
+            `CREATE TABLE IF NOT EXISTS overlay(
                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(80),
-                top_image BIGINT,
-                top_color VARCHAR(20),
+                image BIGINT,
                 size BIGINT,
-                FOREIGN KEY(top_image) REFERENCES image(id),
+                FOREIGN KEY(image) REFERENCES image(id),
                 FOREIGN KEY(size) REFERENCES size(id)
             )`,
             `CREATE TABLE IF NOT EXISTS campaign(
                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(80),
                 template BIGINT,
-                start_date DATE,
-                end_date DATE,
+                is_active TINYINT,
+                created_by VARCHAR(40) NOT NULL,
+                created_at DATETIME,
+                estimated_participants INT,
                 url VARCHAR(128),
-                FOREIGN KEY(template) REFERENCES card_template(id)
+                FOREIGN KEY(template) REFERENCES overlay(id),
+                FOREIGN KEY(created_by) REFERENCES login_user(username)
             )`,
             `CREATE TABLE IF NOT EXISTS card_result(
                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -66,7 +73,6 @@ module.exports = function(con, onSuccess) {
                 image BIGINT NOT NULL,
                 campaign BIGINT NOT NULL,
                 prize BIGINT,
-                quantity INT,
                 FOREIGN KEY(image) REFERENCES image(id),
                 FOREIGN KEY(campaign) REFERENCES campaign(id),
                 FOREIGN KEY(prize) REFERENCES prize(id)
@@ -74,7 +80,8 @@ module.exports = function(con, onSuccess) {
             `CREATE TABLE IF NOT EXISTS participant(
                 id VARCHAR(80),
                 result BIGINT,
-                has_claimed TINYINT,
+                assigned_at DATETIME,
+                redeemed_at DATETIME,
                 FOREIGN KEY(result) REFERENCES card_result(id)
             )`
         ], onSuccess);
