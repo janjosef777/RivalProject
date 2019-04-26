@@ -5,7 +5,10 @@ module.exports = {
         db.campaigns.getAll((err, campaigns) => {
             if(err)
                 return handleErr(err, res, 500);
-            res.json(campaigns);
+            res.json({
+                token: res.jwtToken,
+                data: campaigns
+            });
         });
     },
     get: (req, res, next) => {
@@ -17,7 +20,10 @@ module.exports = {
                 return handleErr(err, res, 500);
             if(!campaign)
                 return handleErr(null, res, 404);
-            res.json(campaign);
+            res.json({
+                token: res.jwtToken,
+                data: campaign
+            });
         });
     },
     post: (req, res, next) => {
@@ -57,7 +63,10 @@ module.exports = {
                 if(cardResultsData)
                     data.cardResults = cardResultsData;
 
-                res.json(data);
+                res.json({
+                    token: res.jwtToken,
+                    data: data
+                });
             })
         });
     },
@@ -71,7 +80,10 @@ module.exports = {
         db.campaigns.delete(id, (err, success) => {
             if(err)
                 return handleErr(err, res, 500);
-            res.json({ id: id, deleted: success });
+            res.json({
+                token: res.jwtToken,
+                data: { id: id, deleted: success }
+            });
         });
     }
 };
