@@ -17,6 +17,7 @@ module.exports = function ensureLoggedIn(req, res, next) {
         if(1000 * decoded.exp < Date.now()) {
             res.status(403).send('Not logged in');
         } else {
+            res.jwtUser = decoded.username;
             res.jwtToken = auth.issueToken(decoded.username);
             next();
         }
