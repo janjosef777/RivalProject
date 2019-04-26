@@ -1,2 +1,0 @@
-const resultChooser = require('../resultChooser/');
-

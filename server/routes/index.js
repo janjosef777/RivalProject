@@ -7,7 +7,7 @@ const routes = {
     auth: require('./auth'),
     campaigns: require('./campaigns'),
     images: require('./images'),
-    result: require('./result')
+    assignlink: require('./AssignCardLink')
 };
 
 router.post("/auth", routes.auth.post);
@@ -24,6 +24,6 @@ router.get("/images/:id", routes.images.get);
 router.post("/images", upload.single('image'), routes.images.post);
 router.delete("/images/:id", routes.images.delete);
 
-router.get('/result/:id/:id')
+router.get('/assignlink/:parid/:campid', routs.assignlink.get);
 
 module.exports = router;
