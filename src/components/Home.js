@@ -15,59 +15,7 @@ import CRUDTable,
   Pagination
 } from 'react-crud-table';
 
-let campaignItems = [
-    {
-        id: 1,
-        campaign: "Campaign example",
-        dateCreated: "01-01-2019",
-        isActive: true,
-        hasPrizes: true
-    },
-    {
-        id: 2,
-        campaign: "Campaign example 2",
-        dateCreated: "02-02-2019",
-        isActive: false,
-        hasPrizes: true
-    },
-    {
-        id: 3,
-        campaign: "Campaign example 3",
-        dateCreated: "02-02-2019",
-        isActive: false,
-        hasPrizes: true
-    },
-    {
-        id: 4,
-        campaign: "Campaign example 4",
-        dateCreated: "02-02-2019",
-        isActive: false,
-        hasPrizes: true
-    },
-    {
-        id: 5,
-        campaign: "Campaign example 5",
-        dateCreated: "02-02-2019",
-        isActive: false,
-        hasPrizes: true
-    },
-    {
-        id: 6,
-        campaign: "Campaign example 6",
-        dateCreated: "02-02-2019",
-        isActive: false,
-        hasPrizes: true
-    },
-    {
-        id: 7,
-        campaign: "Campaign example 7",
-        dateCreated: "02-02-2019",
-        isActive: false,
-        hasPrizes: true
-    }
-];
 
-let onChange 
 
 const SORTERS = {
     NUMBER_ASCENDING: mapper => (a, b) => mapper(a) - mapper(b),
@@ -94,8 +42,41 @@ const getSorter = data => {
   
     return sorter;
 };
-
+let campaignItems = [];
 let count = campaignItems.length;
+function fetchCampaigns() {
+    fetch('http://localhost:4000/api/campaigns', {
+        headers: { 
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+    })
+        .then(res => res.json())
+        .then(output => {
+            campaignItems = output.data;
+            console.log(campaignItems)
+        })
+        .catch(err => {
+            console.error(err);
+        })
+}
+
+function addCampaign() {
+    fetch('http://localhost:4000/api/campaigns', {
+        method:
+            'POST',
+        headers: { 
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+    })
+        .then(res => res.json())
+        .then(output => {
+            campaignItems = output.data;
+            console.log(campaignItems)
+        })
+        .catch(err => {
+            console.error(err);
+        })
+}
 
 const service = {
     fetchItems: payload => {
@@ -103,6 +84,7 @@ const service = {
       const start = (activePage - 1) * itemsPerPage;
       const end = start + itemsPerPage;
       let result = Array.from(campaignItems);
+      fetchCampaigns();
       result = result.sort(getSorter(payload.sort));
       return Promise.resolve(result.slice(start,end));
     },
@@ -112,10 +94,9 @@ const service = {
     },
     create: campaignItem => {
       count += 1;
-      campaignItems.campaign.push({
-        ...campaignItem,
-        id: count
-      });
+
+    addCampaign();
+
       return Promise.resolve(campaignItem);
     },
     update: data => {
@@ -154,10 +135,16 @@ class Home extends Component {
             
                     <Fields>
                         <Field name="id" label="Id" hideInCreateForm />
-                        <Field name="campaign" label="Campaign" />
+                        <Field name="name" label="Campaign" />
                         <Field
-                        name="dateCreated"
+                        name="createdAt"
                         label="Date Created"
+                        type="date"
+                        hideInCreateForm
+                        />
+                        <Field
+                        name="createdBy"
+                        label="Created By"
                         type="date"
                         hideInCreateForm
                         />
@@ -169,7 +156,13 @@ class Home extends Component {
                         />
                         <Field
                         name="hasPrize"
-                        label="Has Prize"
+                        label=""
+                        type="bool"
+                        hideInCreateForm
+                        />
+                        <Field
+                        name="url"
+                        label="LINK"
                         type="bool"
                         hideInCreateForm
                         />
