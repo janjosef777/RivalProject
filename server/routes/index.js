@@ -6,7 +6,8 @@ const upload = multer({dest: './temp-uploads'});
 const routes = {
     auth: require('./auth'),
     campaigns: require('./campaigns'),
-    images: require('./images')
+    images: require('./images'),
+    result: require('./result')
 };
 
 router.post("/auth", routes.auth.post);
@@ -22,5 +23,7 @@ router.get("/images", routes.images.getAll);
 router.get("/images/:id", routes.images.get);
 router.post("/images", upload.single('image'), routes.images.post);
 router.delete("/images/:id", routes.images.delete);
+
+router.get('/result/:id/:id')
 
 module.exports = router;
