@@ -29,9 +29,7 @@ class Login extends Component {
                 .then(responseJson => {
                     console.log(JSON.stringify(responseJson));
                     window.localStorage.setItem("token", JSON.stringify(responseJson));
-                    window.setTimeout(function () {
                         window.location.href = "/";
-                    }, 2000);
                 })
         })
     }
