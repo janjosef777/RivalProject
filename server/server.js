@@ -10,20 +10,20 @@ const app = express();
 const port = process.env.PORT || 4000;
 const env = process.env.NODE_ENV;
 const secret = process.env.SECRET;
-
-
+const cors = require('cors')
+// app.use(cors({credentials:true}))
 if(env != 'development' && env != 'production')
     throw new ReferenceError('Missing or invalid environment variable: NODE_ENV');
 
 // To enable CORS
 if(env == 'development') {
     app.use(function (req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
+        res.setHeader("Access-Control-Allow-Credentials", "true")
         next();
-    });
-}
+})}
 
 // Set static folder
 app.use(express.static(path.join(__dirname, '../build')));
