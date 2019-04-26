@@ -1,6 +1,6 @@
-const resultChooser = require('../resultChooser');
+const resultChooser = require('../resultChooser/');
 
-const FRONTEND_BASE_URL = process.env.NODE_ENV == 'development' ? 'localhost:3100' : null;
+const FRONTEND_BASE_URL = process.env.NODE_ENV == 'development' ? 'http://localhost:3100' : null;
 
 module.exports = {
 
@@ -9,14 +9,15 @@ module.exports = {
         const campid = +req.params.campid;
 
         if (!(parid > 0 && campid > 0)) {
-            return handleErr(null, res, 404);
+            return //handleErr(null, res, 404);
         }
 
-        var cardresult = resultChooser(parid, campid);
+        var cardresult = resultChooser.assignRandomCardResult(parid, campid);
 
-        var redirectURL = FRONTEND_BASE_URL + '/activecard?result=' + cardresult;
+        var redirectURL = FRONTEND_BASE_URL + '/activecard/' + cardresult;
 
-        if (resid) {
+        if (cardresult) {
+            //res.send('hello');
             res.redirect( redirectURL );
         }
     }

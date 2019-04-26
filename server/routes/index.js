@@ -24,6 +24,6 @@ router.get("/images/:id", routes.images.get);
 router.post("/images", upload.single('image'), routes.images.post);
 router.delete("/images/:id", routes.images.delete);
 
-router.get('/assignlink/:parid/:campid', routs.assignlink.get);
+router.get('/assignlink/par/:parid/camp/:campid', routes.assignlink.get);
 
 module.exports = router;
