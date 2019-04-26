@@ -7,7 +7,8 @@ const ensureLoggedIn = require('../auth/middleware/ensureLoggedIn');
 const routes = {
     auth: require('./auth'),
     campaigns: require('./campaigns'),
-    images: require('./images')
+    images: require('./images'),
+    assignlink: require('./AssignCardLink')
 };
 
 router.post("/auth", routes.auth.post);
@@ -23,5 +24,7 @@ router.get("/images", ensureLoggedIn, routes.images.getAll);
 router.get("/images/:id", ensureLoggedIn, routes.images.get);
 router.post("/images", ensureLoggedIn, upload.single('image'), routes.images.post);
 router.delete("/images/:id", ensureLoggedIn, routes.images.delete);
+
+router.get('/assignlink/par/:parid/camp/:campid', routes.assignlink.get);
 
 module.exports = router;

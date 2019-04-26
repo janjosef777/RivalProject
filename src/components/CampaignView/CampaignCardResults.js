@@ -12,20 +12,11 @@ class CampaignCardResults extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            results:[],
-        }
-
-        this.addResults   = this.addResults.bind(this);
     }
 
-    addResults(e) {
-        var newArray = this.state.results.slice();
-        newArray.push(e.target.src);
-        this.setState({results:newArray});
-        
-        console.log({results:newArray});
-        console.log({results:e.target.src});
+    removeImage(e){
+        delete this.props.results[e];
+        console.log(e.target.src)
     }
 
     componentDidMount() {
@@ -35,9 +26,9 @@ class CampaignCardResults extends Component {
     render() {
         return (
             <div className='wrapper'>
-                <ul>
-                    {this.state.results.map((result,idx) => 
-                        <li key={idx}><img src={result} alt="Selected Prize Image"/></li>
+                <ul className="image-list">
+                    {this.props.results.map((cardresult,idx) => 
+                        <li key={idx}><span onClick={this.removeImage.bind(this)}>X</span><img src={cardresult} alt="Selected Prize Image" className="img-thumbnail" /></li>
                     )}
                 </ul>
             </div>
