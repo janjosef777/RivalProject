@@ -24,8 +24,8 @@ class CampaignSettings extends Component {
                 <h6>Campaign Name: </h6>
                 <h6>Campaign Reach: </h6>
                 <h6>Campaign Activation Status: </h6>
-                <label class="switch">
-                <input type="checkbox" checked />
+                <label className="switch">
+                <input type="checkbox" defaultChecked />
                 <span className="slider round"></span>
                 </label>
             </div>
