@@ -10,19 +10,21 @@ const routes = {
     assignlink: require('./AssignCardLink')
 };
 
+const ensureLoggedIn = routes.auth.ensureLoggedIn;
+
 router.post("/auth", routes.auth.post);
-router.post("/auth/add", routes.auth.add);
+router.post("/auth/add", ensureLoggedIn, routes.auth.add);
 
-router.get("/campaigns", routes.campaigns.getAll);
-router.get("/campaigns/:id", routes.campaigns.get);
-router.post("/campaigns", routes.campaigns.post);
-router.put("/campaigns/:id", routes.campaigns.put);
-router.delete("/campaigns/:id", routes.campaigns.delete);
+router.get("/campaigns", ensureLoggedIn, routes.campaigns.getAll);
+router.get("/campaigns/:id", ensureLoggedIn, routes.campaigns.get);
+router.post("/campaigns", ensureLoggedIn, routes.campaigns.post);
+router.put("/campaigns/:id", ensureLoggedIn, routes.campaigns.put);
+router.delete("/campaigns/:id", ensureLoggedIn, routes.campaigns.delete);
 
-router.get("/images", routes.images.getAll);
-router.get("/images/:id", routes.images.get);
-router.post("/images", upload.single('image'), routes.images.post);
-router.delete("/images/:id", routes.images.delete);
+router.get("/images", ensureLoggedIn, routes.images.getAll);
+router.get("/images/:id", ensureLoggedIn, routes.images.get);
+router.post("/images", ensureLoggedIn, upload.single('image'), routes.images.post);
+router.delete("/images/:id", ensureLoggedIn, routes.images.delete);
 
 router.get('/assignlink/par/:parid/camp/:campid', routes.assignlink.get);
 

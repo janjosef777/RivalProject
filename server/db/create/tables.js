@@ -8,16 +8,6 @@ module.exports = function(con, onSuccess) {
 
         // Create tables
         multiQuery([
-            // Temp drops
-            `DROP TABLE IF EXISTS participant`,
-            `DROP TABLE IF EXISTS card_result`,
-            `DROP TABLE IF EXISTS campaign`,
-            `DROP TABLE IF EXISTS overlay`,
-            `DROP TABLE IF EXISTS card_template`,
-            `DROP TABLE IF EXISTS card_result`,
-            `DROP TABLE IF EXISTS card_result`,
-
-
             `CREATE TABLE IF NOT EXISTS login_user(
                 username VARCHAR(40) PRIMARY KEY,
                 password_hash VARCHAR(255) NOT NULL,
