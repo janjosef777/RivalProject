@@ -22,17 +22,16 @@ class ImagesList extends Component {
     }
 
     fetchImages() {
-        fetch('http://localhost:4000/api/images',
-            {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem("token").token
-                }
-            })
+        fetch('http://localhost:4000/api/images',{
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        })
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                this.images = res;
+                localStorage.setItem('token', res.token);
+                this.images = res.data;
                 this.props.setState({ images: this.images })
             })
             .catch(err => {
