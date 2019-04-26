@@ -15,33 +15,6 @@ import CRUDTable,
   Pagination
 } from 'react-crud-table';
 
-
-
-const SORTERS = {
-    NUMBER_ASCENDING: mapper => (a, b) => mapper(a) - mapper(b),
-    NUMBER_DESCENDING: mapper => (a, b) => mapper(b) - mapper(a),
-    STRING_ASCENDING: mapper => (a, b) => mapper(a).localeCompare(mapper(b)),
-    STRING_DESCENDING: mapper => (a, b) => mapper(b).localeCompare(mapper(a))
-  };
-  
-const getSorter = data => {
-    const mapper = x => x[data.field];
-    let sorter = SORTERS.STRING_ASCENDING(mapper);
-  
-    if (data.field === "id") {
-      sorter =
-        data.direction === "ascending"
-          ? SORTERS.NUMBER_ASCENDING(mapper)
-          : SORTERS.NUMBER_DESCENDING(mapper);
-    } else {
-      sorter =
-        data.direction === "ascending"
-          ? SORTERS.STRING_ASCENDING(mapper)
-          : SORTERS.STRING_DESCENDING(mapper);
-    }
-  
-    return sorter;
-};
 let campaignItems = [];
 let count = campaignItems.length;
 function fetchCampaigns() {
@@ -77,46 +50,47 @@ function addCampaign() {
             console.error(err);
         })
 }
-
-const service = {
-    fetchItems: payload => {
-      const { activePage, itemsPerPage } = payload.pagination;
-      const start = (activePage - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      let result = Array.from(campaignItems);
-      fetchCampaigns();
-      result = result.sort(getSorter(payload.sort));
-      return Promise.resolve(result.slice(start,end));
-    },
-    fetchTotal: payload => {
-        
-        return Promise.resolve(campaignItems.length);
-    },
-    create: campaignItem => {
-      count += 1;
-
-    addCampaign();
-
-      return Promise.resolve(campaignItem);
-    },
-    update: data => {
-      const campaignItem = campaignItems.find(t => t.id === data.id);
-      campaignItem.isActive = data.isActive;
-      return Promise.resolve(campaignItem);
-    },
-    delete: data => {
-      const campaignItem = campaignItems.find(t => t.id === data.id);
-      campaignItems = campaignItems.filter(t => t.id !== campaignItem.id);
-      return Promise.resolve(campaignItem);
-    }
-  };
-
+function deleteCampaign(id) {
+    fetch('http://localhost:4000/api/campaigns/' + id, {
+        method:
+            'DELETE',
+        headers: { 
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+    })
+        .then(res => res.json())
+        .then(output => {
+            campaignItems = output.data;
+            console.log(campaignItems)
+        })
+        .catch(err => {
+            console.error(err);
+        })
+}
+function updateCampaign(id) {
+    fetch('http://localhost:4000/api/campaigns/' + id, {
+        method:
+            'UPDATE',
+        headers: { 
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+    })
+        .then(res => res.json())
+        .then(output => {
+            campaignItems = output.data;
+            console.log(campaignItems)
+        })
+        .catch(err => {
+            console.error(err);
+        })
+}
 
 class Home extends Component {
 
     constructor(props){
         super(props);
         this.state={
+
         }
     } 
 
@@ -126,105 +100,7 @@ class Home extends Component {
         
                 <div className="container">
                 <Table>
-                    <CRUDTable
-                    caption="Your Campaign"
-                    fetchItems={payload => service.fetchItems(payload)}
-                    actionsLabel
-                    showQueryBuilder
-                    >
-            
-                    <Fields>
-                        <Field name="id" label="Id" hideInCreateForm />
-                        <Field name="name" label="Campaign" />
-                        <Field
-                        name="createdAt"
-                        label="Date Created"
-                        type="date"
-                        hideInCreateForm
-                        />
-                        <Field
-                        name="createdBy"
-                        label="Created By"
-                        type="date"
-                        hideInCreateForm
-                        />
-                        <Field
-                        name="isActive"
-                        label="Status"
-                        type="bool"
-                        hideInCreateForm
-                        />
-                        <Field
-                        name="hasPrize"
-                        label=""
-                        type="bool"
-                        hideInCreateForm
-                        />
-                        <Field
-                        name="url"
-                        label="LINK"
-                        type="bool"
-                        hideInCreateForm
-                        />
-                    </Fields>
-
-                    <CreateForm
-                        campaign="Campaign Creation"
-                        message="Create a new Campaign"
-                        trigger="Create Campaign"
-                        onSubmit={campaignItem => service.create(campaignItem.campaign)}
-                        submitText="CREATE"
-                        validate={values => {
-                        const errors = {};
-                        if (!values.campaign) {
-                            errors.campaign = "Please, provide Campaign title";
-                        }
-                        return errors;
-                        }}
-                    >
-                    </CreateForm>
-
-                    <UpdateForm
-                        title="Campaign Update Process"
-                        message="Update Campaign"
-                        trigger="Update"
-                        onSubmit={campaignItem => service.update(campaignItem)}
-                        submitText="Update"
-                        validate={values => {
-                        const errors = {};
-                        
-                        if (!values.id) {
-                            errors.id = "Please, provide id";
-                        }
-                        if (!values.isActive) {
-                            errors.isActive = "Please, provide Date Today";
-                        }
-                        return errors;
-                        }}
-                    />
-
-                    <DeleteForm
-                        title="Campaign Delete Process"
-                        message="Are you sure you want to delete the Campaign?"
-                        trigger="Delete"
-                        onSubmit={campaignItem => service.delete(campaignItem)}
-                        submitText="Delete"
-                        validate={values => {
-                        const errors = {};
-                        if (!values.id) {
-                            errors.id = "Please, provide id";
-                        }
-                        return errors;
-                        }}
-                    />
                     
-                    <Pagination
-                        itemsPerPage={5}
-                        activePage={1}
-                        defaultActivePage = {1}
-                        fetchTotalOfItems={payload => service.fetchTotal(payload)}
-                    />
-                </CRUDTable>
                 </Table>
                 </div>
             </div>
