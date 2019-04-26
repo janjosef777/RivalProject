@@ -9,6 +9,10 @@ module.exports = {
         }
 
         function sendToken(token) {
+            console.log('Token stuff');
+            console.log(token);
+            console.log(jwt.verify(token, process.env.SECRET));
+            console.log(jwt.verify('token', process.env.SECRET));
             res.json({ "token": token })
         }
         function userVerified(err, username) {
@@ -53,5 +57,28 @@ module.exports = {
         }
 
         auth.addUser(user, successAdd)
+    },
+    ensureLoggedIn: (req, res, next) => {
+        if(!req || !req.headers || !req.headers.Authorization) {
+            res.status(403).redirect('/');
+            return;
+        }
+        let token = req.headers.Authorization;
+        if(!token.startsWith('Bearer ')) {
+            res.status(403).redirect('/');
+            return;
+        }
+        token = token.substring(7);
+        try {
+            const decoded = jwt.verify(token, process.env.SECRET);
+            if(1000 * decoded.exp < Date.now()) {
+                res.status(403).redirect('/');
+            } else {
+                res.header
+            }
+        } catch(err) {
+            console.log(err);
+            res.status(403).redirect('/');
+        }
     }
 };
