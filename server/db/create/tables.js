@@ -47,7 +47,7 @@ module.exports = function(con, onSuccess) {
             )`,
             `CREATE TABLE IF NOT EXISTS campaign(
                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(80),
+                name VARCHAR(80) NOT NULL,
                 template BIGINT,
                 is_active TINYINT,
                 created_by VARCHAR(40) NOT NULL,

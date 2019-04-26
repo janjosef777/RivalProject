@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import Upload from '../upload/Upload';
-import '../styles/cards.css';
-import CardCreation from './CardCreation';
+import '../styles/prizes.css';
 import { Card, Button, CardTitle, CardText } from 'reactstrap'; 
 
 
-class Cards extends Component {
+class Prizes extends Component {
     constructor(props) {
         super(props);
-        this.title = "Add an overlay image from these cards";
+        this.title = "Choose from prizes";
         this.state = {
-            cards: []
+            prizes: []
         }
         this.fetchCards();
     }
 
     fetchCards() {
-        console.log(localStorage.getItem("token"));
         fetch('http://localhost:4000/api/images',{
             headers: { 
                 "Authorization": "Bearer " + localStorage.getItem("token")
@@ -24,9 +22,8 @@ class Cards extends Component {
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res.token);
-                localStorage.setItem('token', res.token)
-                this.setState({cards: res.data});
+                localStorage.setItem('token', res.token);
+                this.setState({prizes: res.data});
             })
             .catch(err => {
                 console.error(err);
@@ -37,28 +34,27 @@ class Cards extends Component {
         if(err) {
             console.error(err);
         } else {
-            this.state.cards.push(res);
+            this.state.prizes.push(res);
             this.setState({
-                cards: this.state.cards
+                prizes: this.state.prizes
             });
         }
     }
+
+
     render(){
         return(
             <div className="Cards-Wrapper">
                 <Upload onUpload={this.onUpload.bind(this)} />
                 <h5>{this.title}</h5>
                 <ul>
-                    {this.state.cards.map((card,idx) => 
-                        <li key={idx}><img src={card.path} alt="Card Image" className="img-thumbnail" onClick={this.props.onClick}/></li>
-                    )} 
-                        
+                    {this.state.prizes.map((prize,idx) => 
+                        <li key={idx}><img src={prize.path} alt="Prize Image" className ="img-thumbnail" onClick={this.props.onClick}/></li>
+                    )}
                 </ul>
-
-
             </div>
         )
     }
 }
 
-export default Cards;
+export default Prizes;

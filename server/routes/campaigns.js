@@ -5,7 +5,10 @@ module.exports = {
         db.campaigns.getAll((err, campaigns) => {
             if(err)
                 return handleErr(err, res, 500);
-            res.json(campaigns);
+            res.json({
+                token: res.jwtToken,
+                data: campaigns
+            });
         });
     },
     get: (req, res, next) => {
@@ -17,29 +20,15 @@ module.exports = {
                 return handleErr(err, res, 500);
             if(!campaign)
                 return handleErr(null, res, 404);
-            res.json(campaign);
+            res.json({
+                token: res.jwtToken,
+                data: campaign
+            });
         });
     },
     post: (req, res, next) => {
-        const startDate = req.body.startDate ? new Date(req.body.startDate) : null;
-        const endDate   = req.body.endDate   ? new Date(req.body.endDate  ) : null;
-
-        if(startDate || endDate) {
-            if(startDate && isNaN(startDate.getTime()))
-                return handleErr(null, res, 400, "Invalid start date");
-            if(endDate && isNaN(endDate.getTime()))
-                return handleErr(null, res, 400, "Invalid end date");
-            if(startDate && endDate && startDate > endDate)
-                return handleErr(null, res, 400, "Invalid dates");
-        }
-
-        const campaign = {
-            name:      req.body.name || null,
-            template:  req.body.template || null,
-            startDate: startDate ? startDate.toISOString() : null,
-            endDate:   endDate   ? endDate  .toISOString() : null,
-            url:       req.body.url || null
-        };
+        const campaign = req.body;
+        campaign.createdBy = res.jwtUser;
 
         db.campaigns.add(campaign, (err, id) => {
             if(err)
@@ -57,7 +46,10 @@ module.exports = {
                 if(cardResultsData)
                     data.cardResults = cardResultsData;
 
-                res.json(data);
+                res.json({
+                    token: res.jwtToken,
+                    data: data
+                });
             })
         });
     },
@@ -71,7 +63,10 @@ module.exports = {
         db.campaigns.delete(id, (err, success) => {
             if(err)
                 return handleErr(err, res, 500);
-            res.json({ id: id, deleted: success });
+            res.json({
+                token: res.jwtToken,
+                data: { id: id, deleted: success }
+            });
         });
     }
 };

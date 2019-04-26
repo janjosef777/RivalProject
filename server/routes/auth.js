@@ -1,5 +1,4 @@
 const auth = require('../auth/index')
-const jwt = require("jsonwebtoken");
 
 module.exports = {
     post: (req, res, next) => {
@@ -20,7 +19,7 @@ module.exports = {
             } else {
                 console.log(username);
                 //issue token
-                const token = issueToken(username);
+                const token = auth.issueToken(username);
                 sendToken(token);
             }
         }
@@ -33,9 +32,12 @@ module.exports = {
         }
         function confirmAdd(){
             res.json({
-                username: req.body.username,
-                password: req.body.password
-            })
+                token: res.jwtToken,
+                data: {
+                    username: req.body.username,
+                    success: true
+                }
+            });
         }
         function successAdd(err, res) {
             if (!res){
@@ -49,34 +51,5 @@ module.exports = {
         }
 
         auth.addUser(user, successAdd)
-    },
-    ensureLoggedIn: (req, res, next) => {
-        let token = req.headers.authorization;
-        if(!token) {
-            res.status(403).send('Not logged in');
-            return;
-        }
-        if(!token.startsWith('Bearer ')) {
-            res.status(403).send('Not logged in');
-            return;
-        }
-        token = token.substring(7);
-        try {
-            const decoded = jwt.verify(token, process.env.SECRET);
-            if(1000 * decoded.exp < Date.now()) {
-                res.status(403).send('Not logged in');
-            } else {
-                res.jwtToken = issueToken(decoded.username);
-                next();
-            }
-        } catch(err) {
-            console.log(err);
-            res.status(403).send('Not logged in');
-        }
     }
 };
-
-function issueToken(username, expiresIn = '1h') {
-    const secret = process.env.SECRET;
-    return jwt.sign({username: username}, secret, {expiresIn: expiresIn});
-}
