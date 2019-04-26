@@ -22,8 +22,8 @@ class Prizes extends Component {
         })
             .then(res => res.json())
             .then(res => {
-                console.log("came back from fetch");
-                this.setState({prizes: res});
+                localStorage.setItem('token', res.token);
+                this.setState({prizes: res.data});
             })
             .catch(err => {
                 console.error(err);
