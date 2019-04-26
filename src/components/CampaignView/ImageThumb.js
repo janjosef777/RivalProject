@@ -8,16 +8,24 @@ import '../../styles/campaignView.css';
 class ImageThumb extends Component {
     constructor(props) {
         super(props);
+        
     }
 
-    setOverlay(e) {
-        this.props.setState({overlayImg: e.target.src});
+    setImage(e) {
+        if(this.props.activeTab === '1'){
+            this.props.setState({overlayImg: e.target.src});
+        } else if(this.props.activeTab === '2'){
+            var newArray = this.props.results.slice();
+            newArray.push(e.target.src);
+            this.props.setState({results:newArray});
+        }  
     }
+
 
     render() {
         return (
             <div>
-                <img src={this.props.imagePath} alt="Card Image" className="img-thumbnail" onClick={this.setOverlay.bind(this)}></img>
+                <img src={this.props.imagePath} alt="Card Image" className="img-thumbnail" onClick={this.setImage.bind(this)} />
             </div>
         );
     }
