@@ -17,16 +17,18 @@ class ImagesList extends Component {
     }
 
     componentDidMount() {
+        console.log(localStorage.getItem("token"))
         this.fetchImages()
     }
 
     fetchImages() {
         fetch('http://localhost:4000/api/images',
-        {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem("token")
-            }
-        })
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("token").token
+                }
+            })
             .then(res => res.json())
             .then(res => {
                 console.log(res);
