@@ -60,7 +60,7 @@ function fetchCampaigns() {
         })
 }
 
-function addCampaign(name) {
+function addCampaign() {
     fetch('http://localhost:4000/api/campaigns', {
         method:
             'POST',
@@ -94,11 +94,8 @@ const service = {
     },
     create: campaignItem => {
       count += 1;
-    //   campaignItems.campaign.push({
-    //     ...campaignItem,
-    //     id: count
-    //   });
-    addCampaign(name);
+
+    addCampaign();
 
       return Promise.resolve(campaignItem);
     },
@@ -177,13 +174,13 @@ class Home extends Component {
                         trigger="Create Campaign"
                         onSubmit={campaignItem => service.create(campaignItem.campaign)}
                         submitText="CREATE"
-                        // validate={values => {
-                        // const errors = {};
-                        // if (!values.campaign) {
-                        //     errors.campaign = "Please, provide Campaign title";
-                        // }
-                        // return errors;
-                        // }}
+                        validate={values => {
+                        const errors = {};
+                        if (!values.campaign) {
+                            errors.campaign = "Please, provide Campaign title";
+                        }
+                        return errors;
+                        }}
                     >
                     </CreateForm>
 
