@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const db = require('../db');
 const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     /**
@@ -59,6 +60,11 @@ module.exports = {
                 });
             }
         });
+    },
+
+    issueToken(username, expiresIn = '1h') {
+        const secret = process.env.SECRET;
+        return jwt.sign({username: username}, secret, {expiresIn: expiresIn});
     }
 }
 
