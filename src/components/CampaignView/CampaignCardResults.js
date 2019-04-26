@@ -15,8 +15,7 @@ class CampaignCardResults extends Component {
     }
 
     removeImage(e){
-        delete this.props.results[e];
-        console.log(e.target.src)
+ 
     }
 
     componentDidMount() {

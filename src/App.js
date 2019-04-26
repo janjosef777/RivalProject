@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
-import CardCreation from './components/CardCreation';
-import Cards from './components/Cards';
-import Prizes from './components/Prizes';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Upload from './upload/Upload';
 import Logout from './components/Logout'
