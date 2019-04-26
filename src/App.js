@@ -8,6 +8,7 @@ import Prizes from './components/Prizes';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Upload from './upload/Upload';
 import Logout from './components/Logout'
+import ActiveCard from './components/ActiveCard';
 import CampaignView from './components/CampaignView/index';
 import {
   Collapse,
@@ -47,6 +48,7 @@ const App = () => (
       </Navbar>
       <Switch>
         <Route exact path="/login" component={Login} />
+        <Route exact path="/activecard/:id" component={ActiveCard} />
         <EnsureLoggedIn>
           <Route exact path="/" component={Home} />
           <Route exact path="/campaignview" component={CampaignView} />
