@@ -1,23 +1,60 @@
-import React, { Component } from 'react';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
+import React from 'react'
 
-class ActiveCard extends Component {
-    constructor(props) {
-        super(props);
+import ScratchCard from './scratch-card'
+import Flex from './scratch-card/flex'
+import FlexItem from './scratch-card/flex/flex-item'
 
+class ActiveCard extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            isCleared: false
+        }
+    }
+
+    handleCleared() {
+        this.setState({isCleared: true});
     }
 
     render() {
+        const title = 'THANKS FOR PARTICIPATING!'
+        const overlaySrc = 'IMG_20180902_150937.jpeg'
+        const resultTitle = 'YOU WON A STARSHIP!'
+        const imgSrc = 'mark-rademaker-posterfinal-3.jpeg'
+        const isCleared = this.state.isCleared;
         return (
-            <div>
-                <h1>hello</h1>
-                <h1>{this.props.match.params.id}</h1>
-
-            </div>
-        );
+            true && (
+                <div className="App">
+                    <header className="App-header">
+                        <div className="Game">
+                            <h4 className="card-header">{title}</h4>
+                            <Flex>
+                                <FlexItem margin="sm">
+                                    <ScratchCard
+                                        isCleared={isCleared}
+                                        brush="brush"
+                                        width={300}
+                                        height={300}
+                                        percentToClear={50}
+                                        subRectRatio={0.7}
+                                        imgURL={overlaySrc}
+                                        onClear={this.handleCleared}
+                                    >
+                                        <img
+                                            width={300}
+                                            height={300}
+                                            src={imgSrc}
+                                            alt="scratch card"
+                                        />
+                                    </ScratchCard>
+                                </FlexItem>
+                            </Flex>
+                        </div>
+                    </header>
+                </div>
+            )
+        )
     }
 }
-export default ActiveCard;
+
+export default ActiveCard
