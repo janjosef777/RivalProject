@@ -23,9 +23,6 @@ app.use(cors({origin:true,credentials: true}));
 if(env != 'development' && env != 'production')
     throw new ReferenceError('Missing or invalid environment variable: NODE_ENV');
 
-// Create admin
-require('./setupAdmin');
-
 // To enable CORS
 if(env == 'development') {
     app.use(function (req, res, next) {

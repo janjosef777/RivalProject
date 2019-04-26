@@ -15,31 +15,35 @@ module.exports = {
             con = connect;
         }
     },
-    get(callback) {
-        db.onReady = () => con.query(queries.get, username, (err, res) => {
-            const admin = (res && res.length) ? res[0] : {};
-            callback(err, err ? null : admin.username);
-        });
+    get(callback, config = {}) {
+        db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
+            () => con.query(queries.get, username, (err, res) => {
+                const admin = (res && res.length) ? res[0] : {};
+                callback(err, err ? null : admin.username);
+            });
     },
-    assign(username, callback) {
+    assign(username, callback, config = {}) {
         this.unassign(err => {
             if(err)
                 callback(err, null);
             else {
-                db.onReady = () => con.query(queries.assign, username, (err, res) => {
-                    callback(err, err ? false : res.affectedRows > 0);
-                });
+                db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
+                    () => con.query(queries.assign, username, (err, res) => {
+                        callback(err, err ? false : res.affectedRows > 0);
+                    });
             }
-        });
+        }, config);
     },
-    unassign(callback) {
-        db.onReady = () => con.query(queries.unassign, (err, res) => {
-            callback(err, err ? null : res.affectedRows);
-        });
+    unassign(callback, config = {}) {
+        db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
+            () => con.query(queries.unassign, (err, res) => {
+                callback(err, err ? null : res.affectedRows);
+            });
     },
-    delete(callback) {
-        db.onReady = () => con.query(queries.delete, (err, res) => {
-            callback(err, err ? null : res.affectedRows);
-        });
+    delete(callback, config = {}) {
+        db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
+            () => con.query(queries.delete, (err, res) => {
+                callback(err, err ? null : res.affectedRows);
+            });
     }
 };

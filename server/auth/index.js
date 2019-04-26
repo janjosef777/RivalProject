@@ -14,13 +14,7 @@ module.exports = {
      *     console.log(res);
      * });
      */
-    addUser(user, callback) {
-
-        let config = {};
-        if(arguments.length > 2) {
-            config = callback;
-            callback = arguments[2];
-        }
+    addUser(user, callback, config = {}) {
 
         if (!(user = validateUserProps(user)))
             callback(new TypeError('Invalid user object'), false);
@@ -29,10 +23,10 @@ module.exports = {
             if (err)
                 callback(err, false);
             else {
-                db.users[config.replace ? 'replace' : 'add']({
+                db.users.add({
                     username: user.username,
                     passwordHash: hash
-                }, callback);
+                }, callback, config);
             }
         })
     },
