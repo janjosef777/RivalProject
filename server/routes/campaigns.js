@@ -27,7 +27,7 @@ module.exports = {
         });
     },
     post: (req, res, next) => {
-        const campaign = res.body;
+        const campaign = req.body;
         campaign.createdBy = res.jwtUser;
 
         db.campaigns.add(campaign, (err, id) => {
