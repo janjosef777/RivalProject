@@ -11,7 +11,10 @@ module.exports = {
         db.images.getAll((err, images) => {
             if(err)
                 return handleErr(err, res, 500);
-            res.json(images);
+            res.json({
+                token: res.jwtToken,
+                data: images
+            });
         })
     },
     // get
@@ -24,7 +27,10 @@ module.exports = {
                 return handleErr(err, res, 500);
             if(!image)
                 return handleErr(null, res, 404);
-            res.json(image);
+            res.json({
+                token: res.jwtToken,
+                data: image
+            });
         })
     },
     // post
@@ -63,7 +69,10 @@ module.exports = {
                             jsonImage.id = id
 
                             // Success
-                            res.json(jsonImage);
+                            res.json({
+                                token: res.jwtToken,
+                                data: jsonImage
+                            });
                         });
                     });
                 });
@@ -94,7 +103,10 @@ module.exports = {
                 db.images.delete(id, (err, success) => {
                     if(err)
                         return handleErr(err, res, 500);
-                    res.json({ id: id, deleted: success });
+                    res.json({
+                        token: res.jwtToken,
+                        data: { id: id, deleted: success }
+                    });
                 });
             })
         });

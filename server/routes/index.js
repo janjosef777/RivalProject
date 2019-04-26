@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require('multer');
 const upload = multer({dest: './temp-uploads'});
+const ensureLoggedIn = require('../auth/middleware/ensureLoggedIn');
 
 const routes = {
     auth: require('./auth'),
@@ -9,8 +10,6 @@ const routes = {
     images: require('./images'),
     assignlink: require('./AssignCardLink')
 };
-
-const ensureLoggedIn = routes.auth.ensureLoggedIn;
 
 router.post("/auth", routes.auth.post);
 router.post("/auth/add", ensureLoggedIn, routes.auth.add);
