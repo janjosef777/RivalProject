@@ -25,7 +25,7 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns, 
             if(err || !campaign) {
                 callback(err, null);
             } else {
-                db.cardResults.getAllInCampaign(id, (err, cardResults) => {
+                db.cardResults.getDetailAll(id, (err, cardResults) => {
                     campaign.cardResults = cardResults;
                     callback(err, err ? null : campaign);
                 });
