@@ -27,25 +27,8 @@ module.exports = {
         });
     },
     post: (req, res, next) => {
-        const startDate = req.body.startDate ? new Date(req.body.startDate) : null;
-        const endDate   = req.body.endDate   ? new Date(req.body.endDate  ) : null;
-
-        if(startDate || endDate) {
-            if(startDate && isNaN(startDate.getTime()))
-                return handleErr(null, res, 400, "Invalid start date");
-            if(endDate && isNaN(endDate.getTime()))
-                return handleErr(null, res, 400, "Invalid end date");
-            if(startDate && endDate && startDate > endDate)
-                return handleErr(null, res, 400, "Invalid dates");
-        }
-
-        const campaign = {
-            name:      req.body.name || null,
-            template:  req.body.template || null,
-            startDate: startDate ? startDate.toISOString() : null,
-            endDate:   endDate   ? endDate  .toISOString() : null,
-            url:       req.body.url || null
-        };
+        const campaign = res.body;
+        campaign.createdBy = res.jwtUser;
 
         db.campaigns.add(campaign, (err, id) => {
             if(err)
