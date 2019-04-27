@@ -28,83 +28,64 @@ import {
 } from '@devexpress/dx-react-grid-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 
+// function addCampaign() {
+//     fetch('http://localhost:4000/api/campaigns', {
+//         method:
+//             'POST',
+//         headers: { 
+//             "Authorization": "Bearer " + localStorage.getItem("token")
+//         },
+//         body : {
+//             'name' : this.state.name,
+//             'template' : null,
+//             'created_by': this.state.created_by,
+//             'estimated_participants': this.state.estimated_participants
+//         }
+//     })
+//         .then(res => res.json())
+//         .then(output => {
+//             campaignItems = output.data;
+//             console.log(campaignItems)
 
-var campaignItems = [];
-var count = campaignItems.length;
-function fetchCampaigns() {
-    fetch('http://localhost:4000/api/campaigns', {
-        headers: { 
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    })
-        .then(res => res.json())
-        .then(output => {
-            campaignItems = output.data;
-            console.log(campaignItems)
-        })
-        .catch(err => {
-            console.error(err);
-        })
-}
-
-function addCampaign() {
-    fetch('http://localhost:4000/api/campaigns', {
-        method:
-            'POST',
-        headers: { 
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        },
-        body : {
-            'name' : this.state.name,
-            'template' : null,
-            'created_by': this.state.created_by,
-            'estimated_participants': this.state.estimated_participants
-        }
-    })
-        .then(res => res.json())
-        .then(output => {
-            campaignItems = output.data;
-            console.log(campaignItems)
-
-        })
-        .catch(err => {
-            console.error(err);
-        })
-}
-function deleteCampaign(id) {
-    fetch('http://localhost:4000/api/campaigns/' + id, {
-        method:
-            'DELETE',
-        headers: { 
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    })
-        .then(res => res.json())
-        .then(output => {
-            campaignItems = output.data;
-            console.log(campaignItems)
-        })
-        .catch(err => {
-            console.error(err);
-        })
-}
-function updateCampaign(id) {
-    fetch('http://localhost:4000/api/campaigns/' + id, {
-        method:
-            'UPDATE',
-        headers: { 
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    })
-        .then(res => res.json())
-        .then(output => {
-            campaignItems = output.data;
-            console.log(campaignItems)
-        })
-        .catch(err => {
-            console.error(err);
-        })
-}
+//         })
+//         .catch(err => {
+//             console.error(err);
+//         })
+// }
+// function deleteCampaign(id) {
+//     fetch('http://localhost:4000/api/campaigns/' + id, {
+//         method:
+//             'DELETE',
+//         headers: { 
+//             "Authorization": "Bearer " + localStorage.getItem("token")
+//         }
+//     })
+//         .then(res => res.json())
+//         .then(output => {
+//             campaignItems = output.data;
+//             console.log(campaignItems)
+//         })
+//         .catch(err => {
+//             console.error(err);
+//         })
+// }
+// function updateCampaign(id) {
+//     fetch('http://localhost:4000/api/campaigns/' + id, {
+//         method:
+//             'UPDATE',
+//         headers: { 
+//             "Authorization": "Bearer " + localStorage.getItem("token")
+//         }
+//     })
+//         .then(res => res.json())
+//         .then(output => {
+//             campaignItems = output.data;
+//             console.log(campaignItems)
+//         })
+//         .catch(err => {
+//             console.error(err);
+//         })
+// }
 
 class Home extends Component {
 
@@ -115,45 +96,58 @@ class Home extends Component {
             columns: [
               { name: 'id', title: 'ID' },
               { name: 'name', title: 'Campaign' },
-              { name: 'created_by', title: 'Created By' },
+              { name: 'createdBy', title: 'Created By' },
+              { name: 'createdAt', title: 'Date Created' },
               { name: 'url', title: 'URL' },
               { name: 'is_active', title: 'Status' }
             ],
-            rows: [
-                {   
-                    id: 1,
-                    name: "asd",
-                    template: "asd",
-                    is_active: false,
-                    created_by: "qwerty",
-                    created_at:"asd",
-                    estimated_participants:null,
-                    url:"something.com",
-                    is_active:"Active"
-                },
-                {   
-                    id: 2,
-                    name: "asd",
-                    template: "asd",
-                    is_active: false,
-                    created_by: "qwerty",
-                    created_at:"asd",
-                    estimated_participants:null,
-                    url:"something.com",
-                    is_active:"Active"
-                },
-            ],
+            campaignItems: [],
             selection: [],
           };
           
         //   this.loadData = this.loadData.bind(this)
           this.changeSelection = selection => this.setState({ selection });
+          this.fetchCampaigns = this.fetchCampaigns.bind(this);
     }
 
-    // componentDidMount(){
-    //     this.loadData()
-    //     // this.setUserName()
-    // }
+    componentDidMount(){
+        // this.loadData();
+        // this.setUserName()
+        this.fetchCampaigns();
+    }
+
+    fetchCampaigns() {
+        fetch('http://localhost:4000/api/campaigns', {
+            headers: { 
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(output => {
+                this.setState({campaignItems: output.data});
+                console.log(output.data)
+            })
+            .catch(err => {
+                console.error(err);
+        })
+    }
+
+    deleteCampaign(id) {
+            fetch('http://localhost:4000/api/campaigns/' + id, {
+                method:
+                    'DELETE',
+                headers: { 
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                }
+            })
+                .then(res => res.json())
+                .then(output => {
+                    this.setState({campaignItems: output.data});
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+    }
 
     // setUserName(){
     //      var username  = localStorage.getItem('token');
@@ -176,11 +170,10 @@ class Home extends Component {
     //     this.setState({
     //         campaigns: campaignItems
     //     })
-    //     console.log(campaignItems);
     // }
     
     render(){
-        const { rows, columns, selection } = this.state;
+        const { campaignItems, columns, selection } = this.state;
         return (
             <div>
             <span>
@@ -191,7 +184,7 @@ class Home extends Component {
             
             <Paper>
             <Grid
-                rows={rows}
+                rows={campaignItems}
                 columns={columns}
             >
                 <PagingState
@@ -204,6 +197,7 @@ class Home extends Component {
                 />
                 <IntegratedPaging />
                 <IntegratedSelection />
+                <Button color="success">Create</Button>
                 <SortingState
                     defaultSorting={[
                                      { columnName: 'id', direction: 'asc' },
