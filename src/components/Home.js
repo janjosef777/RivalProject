@@ -2,18 +2,35 @@ import React, { Component } from 'react';
 import '../styles/home.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap'; 
+// import jwt_decode from 'jwt-decode'
 
 import Paper from '@material-ui/core/Paper';
-
+import IconButton from '@material-ui/core/IconButton';
 import {
-  Grid,
-  Table,
-  TableHeaderRow,
-  Button
+    SelectionState,
+    PagingState,
+    IntegratedPaging,
+    IntegratedSelection,
+    SortingState,
+    IntegratedSorting,
+    SearchState,
+    IntegratedFiltering,
+} from '@devexpress/dx-react-grid';
+import {
+    Grid,
+    Table,
+    Toolbar,
+    SearchPanel,
+    TableHeaderRow,
+    TableSelection,
+    PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
+import { withStyles } from '@material-ui/core/styles';
 
-let campaignItems = [];
-let count = campaignItems.length;
+
+var campaignItems = [];
+var count = campaignItems.length;
 function fetchCampaigns() {
     fetch('http://localhost:4000/api/campaigns', {
         headers: { 
@@ -36,12 +53,19 @@ function addCampaign() {
             'POST',
         headers: { 
             "Authorization": "Bearer " + localStorage.getItem("token")
+        },
+        body : {
+            'name' : this.state.name,
+            'template' : null,
+            'created_by': this.state.created_by,
+            'estimated_participants': this.state.estimated_participants
         }
     })
         .then(res => res.json())
         .then(output => {
             campaignItems = output.data;
             console.log(campaignItems)
+
         })
         .catch(err => {
             console.error(err);
@@ -89,43 +113,118 @@ class Home extends Component {
 
         this.state = {
             columns: [
-              { name: 'name', title: 'Name' },
-              { name: 'sex', title: 'Sex' },
-              { name: 'city', title: 'City' },
-              { name: 'car', title: 'Car' }
+              { name: 'id', title: 'ID' },
+              { name: 'name', title: 'Campaign' },
+              { name: 'created_by', title: 'Created By' },
+              { name: 'url', title: 'URL' },
+              { name: 'is_active', title: 'Status' }
             ],
             rows: [
-              { sex: "Female", name: "Sandra", city: "Las Vegas", car: "Audi A4" },
-              { sex: "Male", name: "Paul", city: "Paris", car: "Nissan Altima" },
-              { sex: "Male", name: "Mark", city: "Paris", car: "Honda Accord" },
-              { sex: "Male", name: "Paul", city: "Paris", car: "Nissan Altima" },
-              { sex: "Female", name: "Linda", city: "Austin", car: "Toyota Corolla" },
-              { sex: "Male", name: "Robert", city: "Las Vegas", car: "Chevrolet Cruze" },
-              { sex: "Female", name: "Lisa", city: "London", car: "BMW 750" },
-              { sex: "Male", name: "Mark", city: "Chicago", car: "Toyota Corolla" },
-              { sex: "Male", name: "Thomas", city: "Rio de Janeiro", car: "Honda Accord" },
-              { sex: "Male", name: "Robert", city: "Las Vegas", car: "Honda Civic" },
-              { sex: "Female", name: "Betty", city: "Paris", car: "Honda Civic" },
-              { sex: "Male", name: "Robert", city: "Los Angeles", car: "Honda Accord" },
-              { sex: "Male", name: "William", city: "Los Angeles", car: "Honda Civic" },
-              { sex: "Male", name: "Mark", city: "Austin", car: "Nissan Altima" }
-            ]
+                {   
+                    id: 1,
+                    name: "asd",
+                    template: "asd",
+                    is_active: false,
+                    created_by: "qwerty",
+                    created_at:"asd",
+                    estimated_participants:null,
+                    url:"something.com",
+                    is_active:"Active"
+                },
+                {   
+                    id: 2,
+                    name: "asd",
+                    template: "asd",
+                    is_active: false,
+                    created_by: "qwerty",
+                    created_at:"asd",
+                    estimated_participants:null,
+                    url:"something.com",
+                    is_active:"Active"
+                },
+            ],
+            selection: [],
           };
+          
+        //   this.loadData = this.loadData.bind(this)
+          this.changeSelection = selection => this.setState({ selection });
     }
 
+    // componentDidMount(){
+    //     this.loadData()
+    //     // this.setUserName()
+    // }
+
+    // setUserName(){
+    //      var username  = localStorage.getItem('token');
+    //      username = jwt_decode(username);
+    //      this.setState({
+    //          created_by: username
+    //      })
+    // }
+    // handleInputChange(e){
+    //     const target = e.target;
+    //     const value = target.type === 'checkbox' ? target.checked : target.value;
+    //     const name = target.name;
+    //     this.setState({
+    //         [name]: value
+    //     });
+    // }
+
+    // loadData(){
+    //     fetchCampaigns();
+    //     this.setState({
+    //         campaigns: campaignItems
+    //     })
+    //     console.log(campaignItems);
+    // }
+    
     render(){
-        const { rows, columns } = this.state;
+        const { rows, columns, selection } = this.state;
         return (
-        <Paper>
+            <div>
+            <span>
+            Total rows selected:
+            {' '}
+            {selection.length}
+            </span>
+            
+            <Paper>
             <Grid
-            rows={rows}
-            columns={columns}
+                rows={rows}
+                columns={columns}
             >
+                <PagingState
+                defaultCurrentPage={1}
+                pageSize={4}
+                />
+                <SelectionState
+                selection={selection}
+                onSelectionChange={this.changeSelection}
+                />
+                <IntegratedPaging />
+                <IntegratedSelection />
+                <SortingState
+                    defaultSorting={[
+                                     { columnName: 'id', direction: 'asc' },
+                                     { columnName: 'name', direction: 'asc' },
+                                     { columnName: 'created_by', direction: 'asc' },
+                                     { columnName: 'url', direction: 'asc' }
+                                    ]}
+                />
+                <IntegratedSorting />
+                <SearchState defaultValue="" />
+                <IntegratedFiltering />
                 <Table />
-                <TableHeaderRow />
+                <TableHeaderRow  showSortingControls />
+                <Toolbar />
+                <SearchPanel />
+                <TableSelection showSelectAll />
+                <PagingPanel />
             </Grid>
-        </Paper>
-          );
+            </Paper>
+        </div>
+        );
     }
 }
 
