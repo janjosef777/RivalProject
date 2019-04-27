@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import '../styles/home.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap'; 
+import { Link } from 'react-router-dom'; 
 // import jwt_decode from 'jwt-decode'
 
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import {
     SelectionState,
     PagingState,
@@ -27,31 +27,8 @@ import {
     PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
 import { withStyles } from '@material-ui/core/styles';
+import CreateCampaign from './CreateCampaign';
 
-// function addCampaign() {
-//     fetch('http://localhost:4000/api/campaigns', {
-//         method:
-//             'POST',
-//         headers: { 
-//             "Authorization": "Bearer " + localStorage.getItem("token")
-//         },
-//         body : {
-//             'name' : this.state.name,
-//             'template' : null,
-//             'created_by': this.state.created_by,
-//             'estimated_participants': this.state.estimated_participants
-//         }
-//     })
-//         .then(res => res.json())
-//         .then(output => {
-//             campaignItems = output.data;
-//             console.log(campaignItems)
-
-//         })
-//         .catch(err => {
-//             console.error(err);
-//         })
-// }
 // function deleteCampaign(id) {
 //     fetch('http://localhost:4000/api/campaigns/' + id, {
 //         method:
@@ -103,6 +80,7 @@ class Home extends Component {
             ],
             campaignItems: [],
             selection: [],
+            showPopup: false
           };
           
         //   this.loadData = this.loadData.bind(this)
@@ -114,6 +92,12 @@ class Home extends Component {
         // this.loadData();
         // this.setUserName()
         this.fetchCampaigns();
+    }
+
+    toggleCreateCampaign() {
+        this.setState({
+            showCreate: !this.state.showCreate
+        });
     }
 
     fetchCampaigns() {
@@ -171,52 +155,75 @@ class Home extends Component {
     //         campaigns: campaignItems
     //     })
     // }
-    
+
+    togglePopup() {
+        this.setState({
+          showPopup: !this.state.showPopup
+        });
+    }
+
     render(){
         const { campaignItems, columns, selection } = this.state;
         return (
-            <div>
-            <span>
-            Total rows selected:
-            {' '}
-            {selection.length}
-            </span>
-            
-            <Paper>
-            <Grid
-                rows={campaignItems}
-                columns={columns}
-            >
-                <PagingState
-                defaultCurrentPage={1}
-                pageSize={4}
-                />
-                <SelectionState
-                selection={selection}
-                onSelectionChange={this.changeSelection}
-                />
-                <IntegratedPaging />
-                <IntegratedSelection />
-                <Button color="success">Create</Button>
-                <SortingState
-                    defaultSorting={[
-                                     { columnName: 'id', direction: 'asc' },
-                                     { columnName: 'name', direction: 'asc' },
-                                     { columnName: 'created_by', direction: 'asc' },
-                                     { columnName: 'url', direction: 'asc' }
-                                    ]}
-                />
-                <IntegratedSorting />
-                <SearchState defaultValue="" />
-                <IntegratedFiltering />
-                <Table />
-                <TableHeaderRow  showSortingControls />
-                <Toolbar />
-                <SearchPanel />
-                <TableSelection showSelectAll />
-                <PagingPanel />
-            </Grid>
-            </Paper>
+        <div classname="Home">
+            <div className="container">
+                <span>
+                Total rows selected:
+                {' '}
+                {selection.length}
+                </span>
+                <Paper>
+                    <Grid
+                        rows={campaignItems}
+                        columns={columns}
+                    >
+                        <PagingState
+                        defaultCurrentPage={1}
+                        pageSize={4}
+                        />
+                        <SelectionState
+                        selection={selection}
+                        onSelectionChange={this.changeSelection}
+                        />
+                        <IntegratedPaging />
+                        <IntegratedSelection />
+                        
+                        <Button 
+                        variant="fab"
+                        color="primary"
+                        aria-label="add"
+                        onClick={this.togglePopup.bind(this)}>
+                        +
+                        </Button>
+
+                        {this.state.showPopup ? 
+                            <CreateCampaign
+                                text='Close Me'
+                                closePopup={this.togglePopup.bind(this)}
+                            />
+                            : null
+                        }
+
+                        <SortingState
+                            defaultSorting={[
+                                            { columnName: 'id', direction: 'asc' },
+                                            { columnName: 'name', direction: 'asc' },
+                                            { columnName: 'created_by', direction: 'asc' },
+                                            { columnName: 'url', direction: 'asc' }
+                                            ]}
+                        />
+                        <IntegratedSorting />
+                        <SearchState defaultValue="" />
+                        <IntegratedFiltering />
+                        <Table />
+                        <TableHeaderRow  showSortingControls />
+                        <Toolbar />
+                        <SearchPanel />
+                        <TableSelection showSelectAll />
+                        <PagingPanel />
+                    </Grid>
+                </Paper>
+            </div>
         </div>
         );
     }

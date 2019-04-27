@@ -10,6 +10,7 @@ import Upload from './upload/Upload';
 import Logout from './components/Logout'
 import ActiveCard from './ActiveCard';
 import CampaignView from './components/CampaignView/index';
+import CreateCampaign from './components/CreateCampaign';
 import {
     Collapse,
     Navbar,
@@ -49,6 +50,7 @@ const CardCreatorApp = () => (
                 <Route exact path="/login" component={Login} />
                 <EnsureLoggedIn>
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/CreateCampaign" component={CreateCampaign} />
                     <Route exact path="/campaignview" component={CampaignView} />
                     <Route exact path="/cardcreation" component={CardCreation} />
                     <Route exact path="/allcards" component={Cards} />
