@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
     SelectionState,
     PagingState,
@@ -16,6 +17,7 @@ import {
     IntegratedSorting,
     SearchState,
     IntegratedFiltering,
+    EditingState
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
@@ -25,9 +27,11 @@ import {
     TableHeaderRow,
     TableSelection,
     PagingPanel,
+    TableEditRow,
+    TableEditColumn,
 } from '@devexpress/dx-react-grid-material-ui';
 import { withStyles } from '@material-ui/core/styles';
-import CreateCampaign from './CreateCampaign';
+import CreateCampaign from './CampaignCrud/CreateCampaign';
 
 // function deleteCampaign(id) {
 //     fetch('http://localhost:4000/api/campaigns/' + id, {
@@ -63,6 +67,8 @@ import CreateCampaign from './CreateCampaign';
 //             console.error(err);
 //         })
 // }
+
+const getRowId = row => row.id;
 
 class Home extends Component {
 
@@ -116,22 +122,33 @@ class Home extends Component {
         })
     }
 
-    deleteCampaign(id) {
-            fetch('http://localhost:4000/api/campaigns/' + id, {
-                method:
-                    'DELETE',
-                headers: { 
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            })
-                .then(res => res.json())
-                .then(output => {
-                    this.setState({campaignItems: output.data});
-                })
-                .catch(err => {
-                    console.error(err);
-                })
-    }
+    // deleteCampaign(id) {
+    //         fetch('http://localhost:4000/api/campaigns/' + id, {
+    //             method:
+    //                 'DELETE',
+    //             headers: { 
+    //                 "Authorization": "Bearer " + localStorage.getItem("token")
+    //             }
+    //         })
+    //             .then(res => res.json())
+    //             .then(output => {
+    //                 this.setState({campaignItems: output.data});
+    //             })
+    //             .catch(err => {
+    //                 console.error(err);
+    //             })
+    // }
+
+    commitChanges({ deleted }) {
+        let { campaignItems } = this.state;
+        
+        if (deleted) {
+          const deletedSet = new Set(deleted);
+          campaignItems = campaignItems.filter(row => !deletedSet.has(campaignItems.id));
+        }
+        this.setState({ campaignItems });
+      }
+
 
     // setUserName(){
     //      var username  = localStorage.getItem('token');
@@ -176,7 +193,11 @@ class Home extends Component {
                     <Grid
                         rows={campaignItems}
                         columns={columns}
+                        getRowId={getRowId}
                     >
+                        <EditingState
+                            onCommitChanges={this.commitChanges}
+                        />
                         <PagingState
                         defaultCurrentPage={1}
                         pageSize={4}
@@ -193,12 +214,11 @@ class Home extends Component {
                         color="primary"
                         aria-label="add"
                         onClick={this.togglePopup.bind(this)}>
-                        +
+                        Add
                         </Button>
 
                         {this.state.showPopup ? 
                             <CreateCampaign
-                                text='Close Me'
                                 closePopup={this.togglePopup.bind(this)}
                             />
                             : null
@@ -217,6 +237,10 @@ class Home extends Component {
                         <IntegratedFiltering />
                         <Table />
                         <TableHeaderRow  showSortingControls />
+                        <TableEditRow />
+                        <TableEditColumn
+                            showDeleteCommand
+                        />
                         <Toolbar />
                         <SearchPanel />
                         <TableSelection showSelectAll />

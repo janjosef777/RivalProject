@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import '../styles/createCampaign.css';
+import '../../styles/createCampaign.css';
 
 
 class CreateCampaign extends Component {
@@ -15,28 +15,6 @@ class CreateCampaign extends Component {
         this.handleParticipants = this.handleParticipants.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
-    // handleSubmit() {
-    //     fetch('http://localhost:4000/api/campaign', {
-    //         method: 'POST',
-    //         body: JSON.stringify({ 
-    //             "name": this.state.title, 
-    //             "estimatedParticipants": this.state.estimatedParticipants 
-    //             }),
-    //         headers: { 
-    //             "Authorization": "Bearer " + localStorage.getItem("token")
-    //         }
-    //     }).then(response => {
-    //         response.json()
-    //             .then(responseJson => {
-    //                 var token  = responseJson
-    //                 console.log(token.token);
-    //                 window.localStorage.setItem("token", token.token);
-    //                 window.location.href = "/";
-    //             })
-    //     })
-    //     console.log("triggered");
-    // }
 
     handleSubmit() {
         fetch('http://localhost:4000/api/campaigns', {
@@ -56,11 +34,12 @@ class CreateCampaign extends Component {
         .then(output => {
             this.campaignItems = output.data;
             console.log(this.campaignItems)
-
+            window.location.href = "/CampaignView";
         })
         .catch(err => {
             console.error(err);
         })
+
         console.log("triggered!");
 
     }
@@ -81,20 +60,23 @@ class CreateCampaign extends Component {
                             className="cancelButton" close>
                     </Button>
                 
-                <Form className="formCreateCampaign">
-                    <FormGroup>
-                        <Label for="title">Title</Label>
-                        <Input type="text" id="title" value={this.state.title} onChange={this.handleTitle}/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="estimatedParticipants">Estimated Participants</Label>
-                        <Input type="estimatedParticipants" value={this.state.estimatedParticipants} onChange={this.handleParticipants}/>
-                    </FormGroup>
-                    <Button 
-                    onClick={this.handleSubmit} 
-                    color="success">Create</Button>
+                    <Form className="formCreateCampaign">
+                        <FormGroup>
+                            <Label for="title">Campaign Title</Label>
+                            <Input type="text" id="title" value={this.state.title} onChange={this.handleTitle}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="estimatedParticipants">Estimated Participants</Label>
+                            <Input type="estimatedParticipants" value={this.state.estimatedParticipants} onChange={this.handleParticipants}/>
+                        </FormGroup>
+                        
+                        <Button 
+                            onClick={this.handleSubmit} 
+                            color="success">
+                            Create
+                        </Button>
 
-                </Form>
+                    </Form>
                 </div>
             </div>
         )
