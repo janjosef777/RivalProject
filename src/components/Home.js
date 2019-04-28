@@ -17,7 +17,8 @@ import {
     IntegratedSorting,
     SearchState,
     IntegratedFiltering,
-    EditingState
+    EditingState,
+    DataTypeProvider
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
@@ -70,6 +71,16 @@ import CreateCampaign from './CampaignCrud/CreateCampaign';
 
 const getRowId = row => row.id;
 
+const DateFormatter = ({ value }) => value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
+                                        .replace(/T/, ' - ')
+                                        .replace(/\..+/, '');
+const DateTypeProvider = props => (
+    <DataTypeProvider
+      formatterComponent={DateFormatter}
+      {...props}
+    />
+);
+
 class Home extends Component {
 
     constructor(props){
@@ -82,8 +93,9 @@ class Home extends Component {
               { name: 'createdBy', title: 'Created By' },
               { name: 'createdAt', title: 'Date Created' },
               { name: 'url', title: 'URL' },
-              { name: 'is_active', title: 'Status' }
+              { name: 'isActive', title: 'Status' }
             ],
+            dateColumns: ['createdAt'],
             campaignItems: [],
             selection: [],
             showPopup: false
@@ -180,9 +192,9 @@ class Home extends Component {
     }
 
     render(){
-        const { campaignItems, columns, selection } = this.state;
+        const { campaignItems, columns, selection, dateColumns } = this.state;
         return (
-        <div classname="Home">
+        <div className="Home">
             <div className="container">
                 <span>
                 Total rows selected:
@@ -198,22 +210,25 @@ class Home extends Component {
                         <EditingState
                             onCommitChanges={this.commitChanges}
                         />
+                        <DateTypeProvider
+                            for={dateColumns}
+                        />
                         <PagingState
-                        defaultCurrentPage={1}
-                        pageSize={4}
+                            defaultCurrentPage={1}
+                            pageSize={4}
                         />
                         <SelectionState
-                        selection={selection}
-                        onSelectionChange={this.changeSelection}
+                            selection={selection}
+                            onSelectionChange={this.changeSelection}
                         />
                         <IntegratedPaging />
                         <IntegratedSelection />
                         
                         <Button 
-                        variant="fab"
-                        color="primary"
-                        aria-label="add"
-                        onClick={this.togglePopup.bind(this)}>
+                            variant="fab"
+                            color="primary"
+                            aria-label="add"
+                            onClick={this.togglePopup.bind(this)}>
                         Add
                         </Button>
 
@@ -238,9 +253,7 @@ class Home extends Component {
                         <Table />
                         <TableHeaderRow  showSortingControls />
                         <TableEditRow />
-                        <TableEditColumn
-                            showDeleteCommand
-                        />
+                        <TableEditColumn showDeleteCommand />
                         <Toolbar />
                         <SearchPanel />
                         <TableSelection showSelectAll />
