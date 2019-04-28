@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Section from '../section'
+import Section from './flex/section'
 const ScratchCardContentSC = styled(Section)`
   left: 0;
   overflow: hidden;

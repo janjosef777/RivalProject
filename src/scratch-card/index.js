@@ -1,10 +1,10 @@
 import React from 'react'
-import throttle from 'lodash.throttle'
+import throttle from 'lodash/throttle'
 // Components
 import ScratchCardSC from './scratch-card-sc'
 import ScratchCardContentSC from './scratch-card-content-sc'
 import CanvasWrapperSC from './canvas-wrapper-sc'
-import {getOffset, loadImage} from '../utils'
+import {getOffset, loadImage} from './utils'
 
 // accepts only one child as prop
 // if children content of this component overflow, it will be hidden
@@ -162,9 +162,8 @@ class ScratchCard extends React.Component {
 
   componentDidMount() {
     if (this.props.brush === 'brush') {
-      loadImage('/brush.png').then((image) => {
-        this.brushImage = image
-      })
+        this.brushImage = '../images/brush.png'
+      console.log(this.brushImage)
     }
     this.ctx = this.refs.canvas.getContext('2d')
     this.renderForeground()

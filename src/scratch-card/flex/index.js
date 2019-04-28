@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Spacing from '../spacing'
+import Spacing from './spacing'
 
 const Flex = styled(Spacing)`
   display: ${({inline}) => (inline ? 'inline-flex' : 'flex')};
