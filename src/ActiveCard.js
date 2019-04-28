@@ -1,5 +1,5 @@
 import React from 'react'
-
+import SingleCardState from './components/SingleCardState'
 // import ScratchCard from './scratch-card'
 // import Flex from './scratch-card/flex'
 // import FlexItem from './scratch-card/flex/flex-item'
@@ -10,52 +10,50 @@ class ActiveCard extends React.Component {
         this.state = {
             isCleared: false
         }
+        this.handleCleared = this.handleCleared.bind(this)
     }
 
-    handleCleared() {
-        this.setState({isCleared: true});
+    handleCleared(e) {
+        console.log("cleareed?")
+        if (!this.state.isCleared){
+            this.setState({isCleared: true});
+        }
     }
 
     render() {
         const title = 'THANKS FOR PARTICIPATING!'
-        const overlaySrc = '../images/IMG_20180902_150937.jpeg'
+        const overlaySrc = '/uploads/IMG_20180902_150937.jpeg'
+        const overlayAlt = 'card overlay image'
+
         const resultTitle = 'YOU WON A STARSHIP!'
-        const imgSrc = './images/mark-rademaker-posterfinal-3.jpeg'
-        const isCleared = this.state.isCleared;
+        const resultSrc = '/uploads/mark-rademaker-posterfinal-3.jpeg'
+        const resultAlt = 'card result image'
+
         const imgWidth = 300;
         const imgHeight = 300;
+
         return (
             <div>
 
-                { !isCleared &&
-                <div>
-                    <header>
-                        <h1>{title}</h1>
-                    </header>
-                    <main>
-                        <img
-                            width={imgWidth}
-                            height={imgHeight}
-                            src={overlaySrc}
-                            alt="scratch card overlay"
-                        />
-                    </main>
-                </div> }   
+                {!this.state.isCleared &&
+                <SingleCardState
+                    title={title}
+                    imgSrc={overlaySrc}
+                    imgAlt={overlayAlt}
+                    imgWidth={imgWidth}
+                    imgHeight={imgHeight}
+                    handleCleared={this.handleCleared}
+                />}   
 
-                {isCleared &&
-                <div>
-                    <header>
-                        <h1>{resultTitle}</h1>
-                    </header>
-                    <main>
-                        <img
-                            width={imgWidth}
-                            height={imgHeight}
-                            src={imgSrc}
-                            alt="scratch card result image"
-                        />
-                    </main>
-                </div>}  
+                {this.state.isCleared &&
+                <SingleCardState
+                    title={resultTitle}
+                    imgSrc={resultSrc}
+                    imgAlt={resultAlt}
+                    imgWidth={imgWidth}
+                    imgHeight={imgHeight}
+                    handleCleared={this.handleCleared}
+                />} 
 
             </div>       
         )        
