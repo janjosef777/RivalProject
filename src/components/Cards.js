@@ -24,7 +24,6 @@ class Cards extends Component {
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res.token);
                 localStorage.setItem('token', res.token)
                 this.setState({cards: res.data});
             })

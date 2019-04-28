@@ -32,8 +32,9 @@ class CreateCampaign extends Component {
             })
         })
             .then(res => res.json())
-            .then(output => {
-                this.campaignItems = output.data;
+            .then(res => {
+                localStorage.setItem('token', res.token);
+                this.campaignItems = res.data;
                 console.log(this.campaignItems)
                 window.location.href = "/";
             })

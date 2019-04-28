@@ -8,58 +8,9 @@ class DeleteCampaign extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            deleteId : this.props.deleteId
+            deleteId: this.props.deleteId
         };
     }
-
-    // handleSubmit() {
-    //     fetch('http://localhost:4000/api/campaign', {
-    //         method: 'POST',
-    //         body: JSON.stringify({ 
-    //             "name": this.state.title, 
-    //             "estimatedParticipants": this.state.estimatedParticipants 
-    //             }),
-    //         headers: { 
-    //             "Authorization": "Bearer " + localStorage.getItem("token")
-    //         }
-    //     }).then(response => {
-    //         response.json()
-    //             .then(responseJson => {
-    //                 var token  = responseJson
-    //                 console.log(token.token);
-    //                 window.localStorage.setItem("token", token.token);
-    //                 window.location.href = "/";
-    //             })
-    //     })
-    //     console.log("triggered");
-    // }
-
-    // handleSubmit() {
-    //     fetch('http://localhost:4000/api/campaigns', {
-    //         method:
-    //             'POST',
-    //         headers: { 
-    //             "Authorization": "Bearer " + localStorage.getItem("token")
-    //         },
-    //         body : {
-    //             'name' : this.state.name,
-    //             'template' : null,
-    //             'created_by': this.state.created_by,
-    //             'estimated_participants': this.state.estimated_participants
-    //         }
-    //     })
-    //     .then(res => res.json())
-    //     .then(output => {
-    //         this.campaignItems = output.data;
-    //         console.log(this.campaignItems)
-
-    //     })
-    //     .catch(err => {
-    //         console.error(err);
-    //     })
-    //     console.log("triggered!");
-
-    // }
     deleteCampaign(id) {
         fetch('http://localhost:4000/api/campaigns/' + id, {
             method:
@@ -69,9 +20,9 @@ class DeleteCampaign extends Component {
             }
         })
             .then(res => res.json())
-            .then(output => {
-                console.log("deleted id: " + id)
-                console.log(output.data)
+            .then(res => {
+                localStorage.setItem('token', res.token);
+                console.log(res.data)
             })
             .catch(err => {
                 console.error(err);
@@ -82,15 +33,15 @@ class DeleteCampaign extends Component {
         return (
             <div className="deleteCampaign" >
                 <div className="innerDiv">
-                    <Button onClick={this.props.closePopup} 
-                            className="cancelButton" close>
+                    <Button onClick={this.props.closePopup}
+                        className="cancelButton" close>
                     </Button>
-                
+
                     <Form className="formDeleteCampaign">
                         <Label for="delete">Are you sure you want to delete this Campaign?</Label>
-                        <Button 
-                        onClick={this.deleteCampaign(this.props.deleteId)}
-                        color="danger">Delete</Button>
+                        <Button
+                            onClick={this.deleteCampaign(this.props.deleteId)}
+                            color="danger">Delete</Button>
                     </Form>
                 </div>
             </div>

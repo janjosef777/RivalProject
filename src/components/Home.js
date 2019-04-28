@@ -86,9 +86,10 @@ class Home extends Component {
             }
         })
             .then(res => res.json())
-            .then(output => {
-                this.setState({ campaignItems: output.data });
-                console.log(output.data)
+            .then(res => {
+                localStorage.setItem('token', res.token);
+                this.setState({ campaignItems: res.data });
+                console.log(res.data)
             })
             .catch(err => {
                 console.error(err);
@@ -104,9 +105,10 @@ class Home extends Component {
             }
         })
             .then(res => res.json())
-            .then(output => {
+            .then(res => {
+                localStorage.setItem('token', res.token);
                 console.log("deleted id: " + id)
-                console.log(output.data)
+                console.log(res.data)
             })
             .catch(err => {
                 console.error(err);
