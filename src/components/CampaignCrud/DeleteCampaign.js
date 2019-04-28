@@ -8,8 +8,8 @@ class DeleteCampaign extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            deleteId : this.props.deleteId
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     // handleSubmit() {
@@ -60,13 +60,22 @@ class DeleteCampaign extends Component {
     //     console.log("triggered!");
 
     // }
-
-    handleTitle(event) {
-        this.setState({ title: event.target.value });
-    }
-
-    handleParticipants(event) {
-        this.setState({ estimatedParticipants: event.target.value });
+    deleteCampaign(id) {
+        fetch('http://localhost:4000/api/campaigns/' + id, {
+            method:
+                'DELETE',
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(output => {
+                console.log("deleted id: " + id)
+                console.log(output.data)
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     render() {
@@ -80,7 +89,7 @@ class DeleteCampaign extends Component {
                     <Form className="formDeleteCampaign">
                         <Label for="delete">Are you sure you want to delete this Campaign?</Label>
                         <Button 
-                        onClick={this.handleSubmit} 
+                        onClick={this.deleteCampaign(this.props.deleteId)}
                         color="danger">Delete</Button>
                     </Form>
                 </div>

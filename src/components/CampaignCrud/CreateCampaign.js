@@ -34,7 +34,7 @@ class CreateCampaign extends Component {
         .then(output => {
             this.campaignItems = output.data;
             console.log(this.campaignItems)
-            window.location.href = "/CampaignView";
+            window.location.href = "/";
         })
         .catch(err => {
             console.error(err);
