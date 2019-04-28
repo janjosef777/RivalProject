@@ -34,40 +34,6 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import CreateCampaign from './CampaignCrud/CreateCampaign';
 import DeleteCampaign from './CampaignCrud/DeleteCampaign'
-// function deleteCampaign(id) {
-//     fetch('http://localhost:4000/api/campaigns/' + id, {
-//         method:
-//             'DELETE',
-//         headers: { 
-//             "Authorization": "Bearer " + localStorage.getItem("token")
-//         }
-//     })
-//         .then(res => res.json())
-//         .then(output => {
-//             campaignItems = output.data;
-//             console.log(campaignItems)
-//         })
-//         .catch(err => {
-//             console.error(err);
-//         })
-// }
-// function updateCampaign(id) {
-//     fetch('http://localhost:4000/api/campaigns/' + id, {
-//         method:
-//             'UPDATE',
-//         headers: { 
-//             "Authorization": "Bearer " + localStorage.getItem("token")
-//         }
-//     })
-//         .then(res => res.json())
-//         .then(output => {
-//             campaignItems = output.data;
-//             console.log(campaignItems)
-//         })
-//         .catch(err => {
-//             console.error(err);
-//         })
-// }
 
 const getRowId = row => row.id;
 
@@ -103,8 +69,6 @@ class Home extends Component {
             deleteId: null,
 
         };
-
-        //   this.loadData = this.loadData.bind(this)
         this.changeSelection = selection => this.setState({ selection });
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
         this.commitChanges = this.commitChanges.bind(this);
@@ -112,8 +76,6 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        // this.loadData();
-        // this.setUserName()
         this.fetchCampaigns();
     }
 
@@ -163,30 +125,6 @@ class Home extends Component {
         }
         this.setState({ campaignItems });
     }
-
-
-    // setUserName(){
-    //      var username  = localStorage.getItem('token');
-    //      username = jwt_decode(username);
-    //      this.setState({
-    //          created_by: username
-    //      })
-    // }
-    // handleInputChange(e){
-    //     const target = e.target;
-    //     const value = target.type === 'checkbox' ? target.checked : target.value;
-    //     const name = target.name;
-    //     this.setState({
-    //         [name]: value
-    //     });
-    // }
-
-    // loadData(){
-    //     fetchCampaigns();
-    //     this.setState({
-    //         campaigns: campaignItems
-    //     })
-    // }
 
     toggleCreatePopup() {
         this.setState({

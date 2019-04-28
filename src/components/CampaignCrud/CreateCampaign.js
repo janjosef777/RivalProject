@@ -17,28 +17,29 @@ class CreateCampaign extends Component {
     }
 
     handleSubmit() {
+        console.log(this.state.title);
         fetch('http://localhost:4000/api/campaigns', {
             method:
                 'POST',
-            headers: { 
-                "Authorization": "Bearer " + localStorage.getItem("token")
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Content-type": "application/json"
             },
-            body : {
-                'name' : this.state.name,
-                'template' : null,
-                'created_by': this.state.created_by,
-                'estimated_participants': this.state.estimated_participants
-            }
+            body: JSON.stringify({
+                'name': this.state.title,
+                'template': null,
+                'estimated_participants': this.state.estimatedParticipants
+            })
         })
-        .then(res => res.json())
-        .then(output => {
-            this.campaignItems = output.data;
-            console.log(this.campaignItems)
-            window.location.href = "/";
-        })
-        .catch(err => {
-            console.error(err);
-        })
+            .then(res => res.json())
+            .then(output => {
+                this.campaignItems = output.data;
+                console.log(this.campaignItems)
+                window.location.href = "/";
+            })
+            .catch(err => {
+                console.error(err);
+            })
 
         console.log("triggered!");
 
@@ -56,22 +57,22 @@ class CreateCampaign extends Component {
         return (
             <div className="createCampaign" >
                 <div className="innerDiv">
-                    <Button onClick={this.props.closePopup} 
-                            className="cancelButton" close>
+                    <Button onClick={this.props.closePopup}
+                        className="cancelButton" close>
                     </Button>
-                
+
                     <Form className="formCreateCampaign">
                         <FormGroup>
                             <Label for="title">Campaign Title</Label>
-                            <Input type="text" id="title" value={this.state.title} onChange={this.handleTitle}/>
+                            <Input type="text" id="title" value={this.state.title} onChange={this.handleTitle} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="estimatedParticipants">Estimated Participants</Label>
-                            <Input type="estimatedParticipants" value={this.state.estimatedParticipants} onChange={this.handleParticipants}/>
+                            <Input type="estimatedParticipants" value={this.state.estimatedParticipants} onChange={this.handleParticipants} />
                         </FormGroup>
-                        
-                        <Button 
-                            onClick={this.handleSubmit} 
+
+                        <Button
+                            onClick={this.handleSubmit}
                             color="success">
                             Create
                         </Button>
