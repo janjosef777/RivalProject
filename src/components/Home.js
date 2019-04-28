@@ -82,12 +82,12 @@ class Home extends Component {
     fetchCampaigns() {
         fetch('http://localhost:4000/api/campaigns', {
             headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
             .then(res => res.json())
             .then(res => {
-                localStorage.setItem('token', res.token);
+                sessionStorage.setItem('token', res.token);
                 this.setState({ campaignItems: res.data });
                 console.log(res.data)
             })
@@ -101,12 +101,12 @@ class Home extends Component {
             method:
                 'DELETE',
             headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
             .then(res => res.json())
             .then(res => {
-                localStorage.setItem('token', res.token);
+                sessionStorage.setItem('token', res.token);
                 console.log("deleted id: " + id)
                 console.log(res.data)
             })

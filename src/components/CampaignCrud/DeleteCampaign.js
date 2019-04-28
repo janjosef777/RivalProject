@@ -16,12 +16,12 @@ class DeleteCampaign extends Component {
             method:
                 'DELETE',
             headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
             .then(res => res.json())
             .then(res => {
-                localStorage.setItem('token', res.token);
+                sessionStorage.setItem('token', res.token);
                 console.log(res.data)
             })
             .catch(err => {

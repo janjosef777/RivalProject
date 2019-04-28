@@ -8,7 +8,7 @@ class EnsureLoggedIn extends React.Component {
         this.checkToken = this.checkToken.bind(this)
     }
     checkToken() {
-        var legit = window.localStorage.getItem('token')
+        var legit = window.sessionStorage.getItem('token')
         console.log(legit);
         if (legit !== null) {
             this.setState({

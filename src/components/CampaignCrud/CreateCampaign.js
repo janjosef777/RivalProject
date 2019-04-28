@@ -22,7 +22,7 @@ class CreateCampaign extends Component {
             method:
                 'POST',
             headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token"),
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-type": "application/json"
             },
             body: JSON.stringify({
@@ -33,7 +33,7 @@ class CreateCampaign extends Component {
         })
             .then(res => res.json())
             .then(res => {
-                localStorage.setItem('token', res.token);
+                sessionStorage.setItem('token', res.token);
                 this.campaignItems = res.data;
                 console.log(this.campaignItems)
                 window.location.href = "/";

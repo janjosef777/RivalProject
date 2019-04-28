@@ -29,7 +29,7 @@ class Login extends Component {
                 .then(responseJson => {
                     var token  = responseJson
                     console.log(token.token);
-                    window.localStorage.setItem("token", token.token);
+                    window.sessionStorage.setItem("token", token.token);
                     window.location.href = "/";
                 })
         })
