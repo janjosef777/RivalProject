@@ -25,21 +25,18 @@ class Login extends Component {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => res.json())
-        .then(res => {
-            if (res.status == 403){
-                window.alert("Incorrect Username/Password. Please try again")
-            } else {
-                console.log(res)
-                sessionStorage.setItem("token", res.token)
-                window.location.href = '/';
-            }
-        }).catch(err => {
-            console.error(err);
-        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status == 403) {
+                    window.alert("Incorrect Username/Password. Please try again")
+                } else {
+                    sessionStorage.setItem("token", res.token)
+                    window.location.href = '/';
+                }
+            }).catch(err => {
+                console.error(err);
+            })
     }
-  
-
 
     logUserIn(json) {
         console.log(json);
