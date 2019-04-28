@@ -1,0 +1,17 @@
+
+.Prize-Img{
+    position: absolute;
+    width: 100%;
+}
+
+.Prize-Qnt{
+    position: relative;
+    top: 89%;
+    background: #222;
+    color: #fff;
+    padding: 5px 10px;
+}
+
+h5{
+    text-transform: uppercase;
+}
