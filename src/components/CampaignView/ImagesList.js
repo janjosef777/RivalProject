@@ -23,13 +23,13 @@ class ImagesList extends Component {
     fetchImages() {
         fetch('http://localhost:4000/api/images',{
             headers: { 
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                localStorage.setItem('token', res.token);
+                sessionStorage.setItem('token', res.token);
                 this.images = res.data;
                 this.props.setState({ images: this.images })
             })

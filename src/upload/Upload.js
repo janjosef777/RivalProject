@@ -73,7 +73,7 @@ class Upload extends Component {
         }
       };
       req.open("POST", "http://localhost:4000/api/images");
-      req.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'))
+      req.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem('token'))
       req.send(formData);
     });
   }

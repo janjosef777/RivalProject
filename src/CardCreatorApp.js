@@ -10,6 +10,8 @@ import Upload from './upload/Upload';
 import Logout from './components/Logout'
 import ActiveCard from './ActiveCard';
 import CampaignView from './components/CampaignView/index';
+import CreateCampaign from './components/CampaignCrud/CreateCampaign';
+import DeleteCampaign from './components/CampaignCrud/DeleteCampaign';
 import {
     Collapse,
     Navbar,
@@ -59,6 +61,8 @@ class CardCreatorApp extends Component {
                 <Route exact path="/login" component={Login} />
                 <EnsureLoggedIn>
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/CreateCampaign" component={CreateCampaign} />
+                    <Route exact path="/DeleteCampaign" component={DeleteCampaign} />
                     <Route exact path="/campaignview" component={CampaignView} />
                     <Route exact path="/cardcreation" component={CardCreation} />
                     <Route exact path="/allcards" component={Cards} />
