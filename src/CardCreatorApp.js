@@ -27,7 +27,17 @@ import {
 import './App.css';
 
 
-const CardCreatorApp = () => (
+class CardCreatorApp extends Component {
+    constructor(props) {
+        super(props);
+        
+    }
+    componentDidMount() {
+
+    }
+
+    render() {
+        return (
     <Router>
         <div>
             <Navbar color="light" light expand="md">
@@ -58,5 +68,8 @@ const CardCreatorApp = () => (
             </Switch>
         </div>
     </Router>
+        
 )
+}
+}
 export default CardCreatorApp;

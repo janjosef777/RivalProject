@@ -24,9 +24,7 @@ class ImageThumb extends Component {
 
     render() {
         return (
-            <div>
-                <img src={this.props.imagePath} alt="Card Image" className="img-thumbnail" onClick={this.setImage.bind(this)} />
-            </div>
+            <img src={this.props.imagePath} alt="Card Image" className="img-thumbnail" onClick={this.setImage.bind(this)} />
         );
     }
 }
