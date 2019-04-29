@@ -13,9 +13,21 @@ module.exports = {
             return //handleErr(null, res, 404);
         }
 
-        var cardresult = resultChooser.assignRandomCardResult(parid, campid);
+        var cardResult = resultChooser.assignRandomCardResult(parid, campid);
+
+        if (cardResult) {
+            resultChooser.sendCardData(cardResult);
+        }
         
         // var resultDetails = null;
+        // function setResultDetails(value) {
+        //     resultDetails = value;
+        // };
+        // db.cardResults.getDetail(cardresult, (error, result) => {
+        //     setResultDetails(result)
+        // });
+        // console.log(resultDetails);
+
         // function callbackForResult(error, result) {
         //     resultDetails = result;
         //     var result = result;
@@ -23,29 +35,29 @@ module.exports = {
         // }
         // (error, result) => (callbackForResult(error, result))()
 
-        db.cardResults.getDetail(cardresult, (error, result) => {
-            resultTitle = result.title;
-            overlaySrc = null;
-            db.images.get(result.image, (error, overlayImg) => {
-                overlaySrc = overlayImg.filename;
-            });  
-            campaign = result.campaign;
-            console.log(overlaySrc);
-            // db.campaigns.getDetail(cardresult, (error, result) => {
-            //     title = result.title;
-            //     console.log(title);
-            // });    
-            //overlaySrc = 
-            //resultTitle = 
-            //resultSrc = 
-        });
+        // db.cardResults.getDetail(cardresult, (error, result) => {
+        //     resultTitle = result.title;
+        //     overlaySrc = null;
+        //     db.images.get(result.image, (error, overlayImg) => {
+        //         overlaySrc = overlayImg.filename;
+        //     });  
+        //     campaign = result.campaign;
+        //     console.log(overlaySrc);
+        //     // db.campaigns.getDetail(cardresult, (error, result) => {
+        //     //     title = result.title;
+        //     //     console.log(title);
+        //     // });    
+        //     //overlaySrc = 
+        //     //resultTitle = 
+        //     //resultSrc = 
+        // });
         //console.log(resultDetails);
 
-        var redirectURL = FRONTEND_BASE_URL + '/activecard/' + cardresult;
+        // var redirectURL = FRONTEND_BASE_URL + '/activecard/' + cardresult;
 
-        if (cardresult) {
-            //res.send('hello');
-            res.redirect( redirectURL );
-        }
+        // if (cardresult) {
+        //     //res.send('hello');
+        //     res.redirect( redirectURL );
+        // }
     }
 }

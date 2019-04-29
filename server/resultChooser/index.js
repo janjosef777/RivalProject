@@ -1,6 +1,8 @@
 const db = require('../db');
 //const cardresult = require('../db');
 
+const FRONTEND_BASE_URL = process.env.NODE_ENV == 'development' ? 'http://localhost:3100' : null;
+
 module.exports = {
 
     assignRandomCardResult(parid, campid) {
@@ -20,6 +22,27 @@ module.exports = {
         // }
 
         return 1;
+    },
+    sendCardData(cardResultId) {
+
+        //var redirectURL = FRONTEND_BASE_URL + '/activecard/' + cardresult;
+        var responseObject = { title: null, overlaySrc: null, resultTitle: null, resultSrc: null};
+
+        db.cardResults.getDetail(cardResultId, (error, result) => {
+            responseObject.resultTitle = result.title;
+            resultImageId = result.image;
+            campaignId = result.campaign;
+
+            db.images.get(resultImageId, (error, image) => {
+                responseObject.resultSrc = image.filename;
+
+                db.campaigns.getDetail(campaignId, (error, campaign) =>{
+                    overlayId = campaign.template;
+                    
+                });
+                console.log(responseObject);
+            });
+        });
     }
 
 }
