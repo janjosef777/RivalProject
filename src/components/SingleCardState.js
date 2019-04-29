@@ -23,8 +23,6 @@ const Image = styled.img`
     border: ${props => props.borderStyle};
 `;
 
-
-
 class SingleCardState extends React.Component {
     constructor(props) {
         super(props)
