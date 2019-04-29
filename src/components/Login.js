@@ -24,17 +24,23 @@ class Login extends Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(response => {
-            response.json()
-                .then(responseJson => {
-                    var token  = responseJson
-                    console.log(token.token);
-                    window.localStorage.setItem("token", token.token);
-                    window.location.href = "/";
-                })
         })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status == 403) {
+                    window.alert("Incorrect Username/Password. Please try again")
+                } else {
+                    sessionStorage.setItem("token", res.token)
+                    window.location.href = '/';
+                }
+            }).catch(err => {
+                console.error(err);
+            })
     }
 
+    logUserIn(json) {
+        console.log(json);
+    }
     handleUsername(event) {
         this.setState({ username: event.target.value });
     }
@@ -47,18 +53,18 @@ class Login extends Component {
         return (
             <div className="loginPage" >
                 <div className="loginForm">
-                <img src={logo} className="logoImage" />
-                <Form>
-                    <FormGroup>
-                        <Label for="username">Username</Label>
-                        <Input type="text" id="username" value={this.state.username} onChange={this.handleUsername} placeholder="Username" name="username" />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="password">Password</Label>
-                        <Input type="password" value={this.state.password} onChange={this.handlePassword} name="password" id="password" placeholder="Password" />
-                    </FormGroup>
-                    <Button onClick={this.handleSubmit}>Login</Button>
-                </Form>
+                    <img src={logo} className="logoImage" />
+                    <Form>
+                        <FormGroup>
+                            <Label for="username">Username</Label>
+                            <Input type="text" id="username" value={this.state.username} onChange={this.handleUsername} placeholder="Username" name="username" />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="password">Password</Label>
+                            <Input type="password" value={this.state.password} onChange={this.handlePassword} name="password" id="password" placeholder="Password" />
+                        </FormGroup>
+                        <Button onClick={this.handleSubmit}>Login</Button>
+                    </Form>
                 </div>
             </div>
         )
