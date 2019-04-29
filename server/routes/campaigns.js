@@ -29,7 +29,6 @@ module.exports = {
     post: (req, res, next) => {
         const campaign = req.body;
         campaign.createdBy = res.jwtUser;
-
         db.campaigns.add(campaign, (err, id) => {
             if(err)
                 return handleErr(err, res, 500);

@@ -1,234 +1,224 @@
 import React, { Component } from 'react';
-import { Table, Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button } from 'reactstrap';
 import '../styles/home.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+// import jwt_decode from 'jwt-decode'
 
-import CRUDTable,
-{
-  Fields,
-  Field,
-  CreateForm,
-  UpdateForm,
-  DeleteForm,
-  Pagination
-} from 'react-crud-table';
+import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import {
+    SelectionState,
+    PagingState,
+    IntegratedPaging,
+    IntegratedSelection,
+    SortingState,
+    IntegratedSorting,
+    SearchState,
+    IntegratedFiltering,
+    EditingState,
+    DataTypeProvider
+} from '@devexpress/dx-react-grid';
+import {
+    Grid,
+    Table,
+    Toolbar,
+    SearchPanel,
+    TableHeaderRow,
+    TableSelection,
+    PagingPanel,
+    TableEditRow,
+    TableEditColumn,
+} from '@devexpress/dx-react-grid-material-ui';
+import { withStyles } from '@material-ui/core/styles';
+import CreateCampaign from './CampaignCrud/CreateCampaign';
+import DeleteCampaign from './CampaignCrud/DeleteCampaign'
 
+const getRowId = row => row.id;
 
-
-const SORTERS = {
-    NUMBER_ASCENDING: mapper => (a, b) => mapper(a) - mapper(b),
-    NUMBER_DESCENDING: mapper => (a, b) => mapper(b) - mapper(a),
-    STRING_ASCENDING: mapper => (a, b) => mapper(a).localeCompare(mapper(b)),
-    STRING_DESCENDING: mapper => (a, b) => mapper(b).localeCompare(mapper(a))
-  };
-  
-const getSorter = data => {
-    const mapper = x => x[data.field];
-    let sorter = SORTERS.STRING_ASCENDING(mapper);
-  
-    if (data.field === "id") {
-      sorter =
-        data.direction === "ascending"
-          ? SORTERS.NUMBER_ASCENDING(mapper)
-          : SORTERS.NUMBER_DESCENDING(mapper);
-    } else {
-      sorter =
-        data.direction === "ascending"
-          ? SORTERS.STRING_ASCENDING(mapper)
-          : SORTERS.STRING_DESCENDING(mapper);
-    }
-  
-    return sorter;
-};
-let campaignItems = [];
-let count = campaignItems.length;
-function fetchCampaigns() {
-    fetch('http://localhost:4000/api/campaigns', {
-        headers: { 
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    })
-        .then(res => res.json())
-        .then(output => {
-            campaignItems = output.data;
-            console.log(campaignItems)
-        })
-        .catch(err => {
-            console.error(err);
-        })
-}
-
-function addCampaign() {
-    fetch('http://localhost:4000/api/campaigns', {
-        method:
-            'POST',
-        headers: { 
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    })
-        .then(res => res.json())
-        .then(output => {
-            campaignItems = output.data;
-            console.log(campaignItems)
-        })
-        .catch(err => {
-            console.error(err);
-        })
-}
-
-const service = {
-    fetchItems: payload => {
-      const { activePage, itemsPerPage } = payload.pagination;
-      const start = (activePage - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      let result = Array.from(campaignItems);
-      fetchCampaigns();
-      result = result.sort(getSorter(payload.sort));
-      return Promise.resolve(result.slice(start,end));
-    },
-    fetchTotal: payload => {
-        
-        return Promise.resolve(campaignItems.length);
-    },
-    create: campaignItem => {
-      count += 1;
-
-    addCampaign();
-
-      return Promise.resolve(campaignItem);
-    },
-    update: data => {
-      const campaignItem = campaignItems.find(t => t.id === data.id);
-      campaignItem.isActive = data.isActive;
-      return Promise.resolve(campaignItem);
-    },
-    delete: data => {
-      const campaignItem = campaignItems.find(t => t.id === data.id);
-      campaignItems = campaignItems.filter(t => t.id !== campaignItem.id);
-      return Promise.resolve(campaignItem);
-    }
-  };
-
+const DateFormatter = ({ value }) => value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
+    .replace(/T/, ' - ')
+    .replace(/\..+/, '');
+const DateTypeProvider = props => (
+    <DataTypeProvider
+        formatterComponent={DateFormatter}
+        {...props}
+    />
+);
 
 class Home extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-        }
-    } 
 
-    render(){
-        return(
-            <div className="Home">
-        
-                <div className="container">
-                <Table>
-                    <CRUDTable
-                    caption="Your Campaign"
-                    fetchItems={payload => service.fetchItems(payload)}
-                    actionsLabel
-                    showQueryBuilder
-                    >
+        this.state = {
+            columns: [
+                { name: 'id', title: 'ID' },
+                { name: 'name', title: 'Campaign' },
+                { name: 'createdBy', title: 'Created By' },
+                { name: 'createdAt', title: 'Date Created' },
+                { name: 'url', title: 'URL' },
+                { name: 'isActive', title: 'Status' }
+            ],
+            dateColumns: ['createdAt'],
+            campaignItems: [],
+            selection: [],
+            showCreatePopup: false,
+            showDeletePopup: false,
+            deleteId: null,
+
+        };
+        this.changeSelection = selection => this.setState({ selection });
+        this.fetchCampaigns = this.fetchCampaigns.bind(this);
+        this.commitChanges = this.commitChanges.bind(this);
+        this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
+    }
+
+    componentDidMount() {
+        this.fetchCampaigns();
+    }
+
+    fetchCampaigns() {
+        fetch('http://localhost:4000/api/campaigns', {
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                this.setState({ campaignItems: res.data });
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+    deleteCampaign(id) {
+        fetch('http://localhost:4000/api/campaigns/' + id, {
+            method:
+                'DELETE',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                console.log("deleted id: " + id)
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+    commitChanges({ deleted }) {
+        let { campaignItems } = this.state;
             
-                    <Fields>
-                        <Field name="id" label="Id" hideInCreateForm />
-                        <Field name="name" label="Campaign" />
-                        <Field
-                        name="createdAt"
-                        label="Date Created"
-                        type="date"
-                        hideInCreateForm
-                        />
-                        <Field
-                        name="createdBy"
-                        label="Created By"
-                        type="date"
-                        hideInCreateForm
-                        />
-                        <Field
-                        name="isActive"
-                        label="Status"
-                        type="bool"
-                        hideInCreateForm
-                        />
-                        <Field
-                        name="hasPrize"
-                        label=""
-                        type="bool"
-                        hideInCreateForm
-                        />
-                        <Field
-                        name="url"
-                        label="LINK"
-                        type="bool"
-                        hideInCreateForm
-                        />
-                    </Fields>
+        if (deleted) {
+            this.setState({
+                deleteId : deleted["0"]
+            })
+            this.toggleDeletePopup();
 
-                    <CreateForm
-                        campaign="Campaign Creation"
-                        message="Create a new Campaign"
-                        trigger="Create Campaign"
-                        onSubmit={campaignItem => service.create(campaignItem.campaign)}
-                        submitText="CREATE"
-                        validate={values => {
-                        const errors = {};
-                        if (!values.campaign) {
-                            errors.campaign = "Please, provide Campaign title";
-                        }
-                        return errors;
-                        }}
-                    >
-                    </CreateForm>
+        }
+        this.setState({ campaignItems });
+    }
 
-                    <UpdateForm
-                        title="Campaign Update Process"
-                        message="Update Campaign"
-                        trigger="Update"
-                        onSubmit={campaignItem => service.update(campaignItem)}
-                        submitText="Update"
-                        validate={values => {
-                        const errors = {};
-                        
-                        if (!values.id) {
-                            errors.id = "Please, provide id";
-                        }
-                        if (!values.isActive) {
-                            errors.isActive = "Please, provide Date Today";
-                        }
-                        return errors;
-                        }}
-                    />
+    toggleCreatePopup() {
+        this.setState({
+            showCreatePopup: !this.state.showCreatePopup
+        });
+    }
+    toggleDeletePopup() {
+        this.setState({
+            showDeletePopup: !this.state.showDeletePopup
+        });
+    }
 
-                    <DeleteForm
-                        title="Campaign Delete Process"
-                        message="Are you sure you want to delete the Campaign?"
-                        trigger="Delete"
-                        onSubmit={campaignItem => service.delete(campaignItem)}
-                        submitText="Delete"
-                        validate={values => {
-                        const errors = {};
-                        if (!values.id) {
-                            errors.id = "Please, provide id";
-                        }
-                        return errors;
-                        }}
-                    />
-                    
-                    <Pagination
-                        itemsPerPage={5}
-                        activePage={1}
-                        defaultActivePage = {1}
-                        fetchTotalOfItems={payload => service.fetchTotal(payload)}
-                    />
-                </CRUDTable>
-                </Table>
+    render() {
+        const { campaignItems, columns, selection, dateColumns } = this.state;
+        return (
+            <div className="Home">
+                <div className="container">
+                    <span>
+                        Total rows selected:
+                {' '}
+                        {selection.length}
+                    </span>
+                    <Paper>
+                        <Grid
+                            rows={campaignItems}
+                            columns={columns}
+                            getRowId={getRowId}
+                        >
+                            <EditingState
+                                onCommitChanges={this.commitChanges}
+                            />
+                            <DateTypeProvider
+                                for={dateColumns}
+                            />
+                            <PagingState
+                                defaultCurrentPage={1}
+                                pageSize={4}
+                            />
+                            <SelectionState
+                                selection={selection}
+                                onSelectionChange={this.changeSelection}
+                            />
+                            <IntegratedPaging />
+                            <IntegratedSelection />
+
+                            <Button
+                                variant="fab"
+                                color="primary"
+                                aria-label="add"
+                                onClick={this.toggleCreatePopup.bind(this)}>
+                                Add
+                        </Button>
+
+                            {this.state.showCreatePopup ?
+                                <CreateCampaign
+                                    closePopup={this.toggleCreatePopup.bind(this)}
+                                />
+                                : null
+                            }
+
+                            {this.state.showDeletePopup ?
+                                <DeleteCampaign
+                                    deleteId={this.state.deleteId}
+                                    closePopup={this.toggleDeletePopup.bind(this)}
+                                />
+                                : null
+                            }
+
+                            <SortingState
+                                defaultSorting={[
+                                    { columnName: 'id', direction: 'asc' },
+                                    { columnName: 'name', direction: 'asc' },
+                                    { columnName: 'created_by', direction: 'asc' },
+                                    { columnName: 'url', direction: 'asc' }
+                                ]}
+                            />
+                            <IntegratedSorting />
+                            <SearchState defaultValue="" />
+                            <IntegratedFiltering />
+                            <Table />
+                            <TableHeaderRow showSortingControls />
+                            <TableEditRow />
+                            <TableEditColumn showDeleteCommand />
+                            <Toolbar />
+                            <SearchPanel />
+                            <TableSelection showSelectAll />
+                            <PagingPanel />
+                        </Grid>
+                    </Paper>
                 </div>
             </div>
-        )
+        );
     }
 }
 
