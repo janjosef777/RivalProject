@@ -17,8 +17,7 @@ class CampaignView extends Component {
         this.state = {
             currentTab: 1, //tabl 0 is overlay, tab 1 is card results
             images: [],
-            results: [],
-        
+            results: []
         }
 
         this.setState=this.setState.bind(this);

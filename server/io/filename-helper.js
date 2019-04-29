@@ -55,11 +55,6 @@ module.exports = {
         root = root.replace(/[^a-zA-Z0-9_-]/, '_');
         ext  = ext.replace(/[^a-zA-Z0-9_-]/, '_');
 
-        //Replace space with unerline
-
-        root = root.replace(/\s/gi, "_");
-        ext = ext.replace(/\s/gi, "_");
-
         // Return sanitized filename info
         return {
             filenameRoot: root,

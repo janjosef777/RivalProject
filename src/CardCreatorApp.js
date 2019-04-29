@@ -29,17 +29,7 @@ import {
 import './App.css';
 
 
-class CardCreatorApp extends Component {
-    constructor(props) {
-        super(props);
-        
-    }
-    componentDidMount() {
-
-    }
-
-    render() {
-        return (
+const CardCreatorApp = () => (
     <Router>
         <div>
             <Navbar color="light" light expand="md">
@@ -72,8 +62,5 @@ class CardCreatorApp extends Component {
             </Switch>
         </div>
     </Router>
-        
 )
-}
-}
 export default CardCreatorApp;

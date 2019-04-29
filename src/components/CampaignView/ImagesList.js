@@ -39,9 +39,12 @@ class ImagesList extends Component {
     }
 
     onUpload(err, res) {
+        if (err) {
+            console.error(err);
+        } else {
             this.images.push(res);
             this.props.setState({images: this.images})
-            this.fetchImages()
+        }
     }
 
     render() {
@@ -52,7 +55,7 @@ class ImagesList extends Component {
                 <div>
                     <ul className="image-list">
                     {this.props.images.map((image, idx) => 
-                        <li key={idx}><ImageThumb imagePath={image.path} {...this.props}></ImageThumb></li>
+                        <li key={idx}><ImageThumb imagePath={image.path} className="img-thumbnail" {...this.props}></ImageThumb></li>
                     )}
                     </ul>
                 </div>
