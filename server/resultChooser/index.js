@@ -1,6 +1,11 @@
+const db = require('../db');
+//const cardresult = require('../db');
+
 module.exports = {
 
     assignRandomCardResult(parid, campid) {
+
+        //db.cardResults.getDetail(1, (error, result) => console.log(result));
 
         //if a result has already been assigned then return the cardresult id
 

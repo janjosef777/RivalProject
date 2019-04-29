@@ -41,7 +41,6 @@ module.exports = function(con, onSuccess) {
                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(80),
                 image BIGINT,
-                size BIGINT,
                 FOREIGN KEY(image) REFERENCES image(id),
                 FOREIGN KEY(size) REFERENCES size(id)
             )`,
@@ -73,12 +72,6 @@ module.exports = function(con, onSuccess) {
                 assigned_at DATETIME,
                 redeemed_at DATETIME,
                 FOREIGN KEY(result) REFERENCES card_result(id)
-            )`,
-            `CREATE TABLE IF NOT EXISTS template(
-                id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                title VARCHAR(80),
-                image BIGINT NOT NULL,
-                FOREIGN KEY(image) REFERENCES image(id)
             )`
         ], onSuccess);
     });
