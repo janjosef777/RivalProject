@@ -25,11 +25,11 @@ class CampaignSettings extends Component {
                     <div className='wrapper'>
                         <div className="input-section">
                             <h6>Campaign Name: </h6>
-                            <input type="text" placeholder={this.props.selectedCampaign.name} />
+                            <input type="text" value={this.props.selectedCampaign.name} />
                         </div>
                         <div className="input-section">
                             <h6>Estimated Participants: </h6>
-                            <input type="text" placeholder={this.props.selectedCampaign.estimatedParticipants} />
+                            <input type="text" value={this.props.selectedCampaign.estimatedParticipants} />
                         </div>
                         <div className="input-section">
                             <h6>Campaign Activation Status: {this.props.selectedCampaign.isActive} </h6>
