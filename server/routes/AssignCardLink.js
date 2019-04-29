@@ -15,18 +15,30 @@ module.exports = {
 
         var cardresult = resultChooser.assignRandomCardResult(parid, campid);
         
-        var resultDetails = null;
+        // var resultDetails = null;
+        // function callbackForResult(error, result) {
+        //     resultDetails = result;
+        //     var result = result;
+        //     return function () { resultDetails = result}
+        // }
+        // (error, result) => (callbackForResult(error, result))()
 
-        function callbackForResult(error, result) {
-            if (result)
-            var result = result;
-            return function () {return result}
-        }
-
-        db.cardResults.getDetail(cardresult, (error, result) => (callbackForResult(error, result))() );
-        resultDetails = (callbackForResult())();
-        console.log(resultDetails);
-
+        db.cardResults.getDetail(cardresult, (error, result) => {
+            resultTitle = result.title;
+            overlaySrc = null;
+            db.images.get(result.image, (error, overlayImg) => {
+                overlaySrc = overlayImg.filename;
+            });  
+            campaign = result.campaign;
+            console.log(overlaySrc);
+            // db.campaigns.getDetail(cardresult, (error, result) => {
+            //     title = result.title;
+            //     console.log(title);
+            // });    
+            //overlaySrc = 
+            //resultTitle = 
+            //resultSrc = 
+        });
         //console.log(resultDetails);
 
         var redirectURL = FRONTEND_BASE_URL + '/activecard/' + cardresult;
