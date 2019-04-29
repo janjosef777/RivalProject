@@ -44,6 +44,7 @@ class ImagesList extends Component {
         } else {
             this.images.push(res);
             this.props.setState({images: this.images})
+            this.fetchImages()
         }
     }
 
