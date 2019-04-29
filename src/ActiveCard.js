@@ -20,12 +20,12 @@ class ActiveCard extends React.Component {
     }
 
     render() {
-        const title = 'THANKS FOR PARTICIPATING!'//atob(this.props.match.params.title);//'THANKS FOR PARTICIPATING!' atob('VEhBTktTIEZPUiBQQVJUSUNJUEFUSU5HIQ==');
-        const overlaySrc = '/uploads/IMG_20180902_150937.jpeg'//atob(this.props.match.params.overlaySrc);//'/uploads/IMG_20180902_150937.jpeg'
+        const title = atob(this.props.match.params.title);//'THANKS FOR PARTICIPATING!' atob('VEhBTktTIEZPUiBQQVJUSUNJUEFUSU5HIQ==');
+        const overlaySrc = atob(this.props.match.params.overlaySrc);//'/uploads/IMG_20180902_150937.jpeg'
         const overlayAlt = 'card overlay image'
 
-        const resultTitle = 'YOU WON A STARSHIP!'//atob(this.props.match.params.resultTitle);//'YOU WON A STARSHIP!'
-        const resultSrc = '/uploads/mark-rademaker-posterfinal-3.jpeg'//atob(this.props.match.params.resultSrc);//'/uploads/mark-rademaker-posterfinal-3.jpeg'
+        const resultTitle = atob(this.props.match.params.resultTitle);//'YOU WON A STARSHIP!'
+        const resultSrc = atob(this.props.match.params.resultSrc);//'/uploads/mark-rademaker-posterfinal-3.jpeg'
         const resultAlt = 'card result image'
 
         const imgWidth = 300;

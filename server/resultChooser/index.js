@@ -1,7 +1,9 @@
 const db = require('../db');
+const btoa = require('btoa');
 //const cardresult = require('../db');
 
 const FRONTEND_BASE_URL = process.env.NODE_ENV == 'development' ? 'http://localhost:3100' : null;
+const IMAGES_PATH = '/uploads/'
 
 module.exports = {
 
@@ -23,9 +25,8 @@ module.exports = {
 
         return 1;
     },
-    sendCardData(cardResultId) {
+    getCardData(cardResultId, res) {
 
-        //var redirectURL = FRONTEND_BASE_URL + '/activecard/' + cardresult;
         var responseObject = { title: null, overlaySrc: null, resultTitle: null, resultSrc: null};
 
         db.cardResults.getDetail(cardResultId, (error, result) => {
@@ -34,13 +35,36 @@ module.exports = {
             campaignId = result.campaign;
 
             db.images.get(resultImageId, (error, image) => {
-                responseObject.resultSrc = image.filename;
+                responseObject.resultSrc = IMAGES_PATH + image.filename;
 
-                db.campaigns.getDetail(campaignId, (error, campaign) =>{
+                db.campaigns.getDetail(campaignId, (error, campaign) => {
                     overlayId = campaign.template;
                     
+                    //db.query('SELECT * FROM overlay WHERE id = 1;', (error, overlay, fields) => {
+                    //    console.log(overlay);
+                    //});
+                    // db.overlays.getDetail(overlayId, (error, overlay) => {
+                    //     console.log(error);
+                        //responseObject.title = overlay.title;
+                        //console.log(responseObject);
+                    //});
+
+                    responseObject.title = 'Thanks for Participating!';
+                    responseObject.overlaySrc = IMAGES_PATH + 'coffee-art-wallpaper-desktop-background-For-Wallpaper-Idea-5.jpeg';
+
+                    var redirectURL = FRONTEND_BASE_URL 
+                        + '/activecard/' 
+                        + btoa(responseObject.title) + '/'
+                        + btoa(responseObject.overlaySrc) + '/'
+                        + btoa(responseObject.resultTitle) + '/'
+                        + btoa(responseObject.resultSrc)
+
+                    console.log(responseObject);
+                    console.log(redirectURL);
+
+                    res.redirect(redirectURL);
                 });
-                console.log(responseObject);
+                
             });
         });
     }

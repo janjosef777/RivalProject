@@ -16,7 +16,7 @@ module.exports = {
         var cardResult = resultChooser.assignRandomCardResult(parid, campid);
 
         if (cardResult) {
-            resultChooser.sendCardData(cardResult);
+            resultChooser.getCardData(cardResult, res);
         }
         
         // var resultDetails = null;
