@@ -66,13 +66,16 @@ class Home extends Component {
             selection: [],
             showCreatePopup: false,
             showDeletePopup: false,
+            showUpdate: false,
             deleteId: null,
+            updatedId: null,
 
         };
         this.changeSelection = selection => this.setState({ selection });
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
         this.commitChanges = this.commitChanges.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
+        this.toggleUpdate = this.toggleUpdate.bind(this);
     }
 
     componentDidMount() {
@@ -115,7 +118,26 @@ class Home extends Component {
             })
     }
 
-    commitChanges({ deleted }) {
+    updatedCampaign(id) {
+        fetch('http://localhost:4000/api/campaigns/' + id, {
+            method:
+                'PATCH',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                console.log("updated id: " + id)
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+    commitChanges({ deleted, changed }) {
         let { campaignItems } = this.state;
             
         if (deleted) {
@@ -123,6 +145,15 @@ class Home extends Component {
                 deleteId : deleted["0"]
             })
             this.toggleDeletePopup();
+
+        }
+
+        if ( changed ) {
+            this.setState({
+                updateId : changed["0"]
+            })
+            this.toggleUpdate();
+            window.location.href = "/campaignview" + this.state.updateId;
 
         }
         this.setState({ campaignItems });
@@ -136,6 +167,11 @@ class Home extends Component {
     toggleDeletePopup() {
         this.setState({
             showDeletePopup: !this.state.showDeletePopup
+        });
+    }
+    toggleUpdate() {
+        this.setState({
+            showUpdate: !this.state.showUpdate
         });
     }
 
@@ -209,7 +245,9 @@ class Home extends Component {
                             <Table />
                             <TableHeaderRow showSortingControls />
                             <TableEditRow />
-                            <TableEditColumn showDeleteCommand />
+                            <TableEditColumn 
+                            showEditCommand
+                            showDeleteCommand />
                             <Toolbar />
                             <SearchPanel />
                             <TableSelection showSelectAll />
