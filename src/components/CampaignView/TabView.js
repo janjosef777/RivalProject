@@ -10,8 +10,7 @@ import CampaignSettings from './CampaignSettings';
 class TabView extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
-        this.selectedCampaign = []
+    
         this.toggle = this.toggle.bind(this);
       }
     
@@ -24,27 +23,8 @@ class TabView extends Component {
       }
 
     componentDidMount() {
-        this.loadCampaign()
-    }
 
-    loadCampaign(){
-        fetch('http://localhost:4000/api/campaigns/' + 14,{
-            headers: { 
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                sessionStorage.setItem('token', res.token);
-                this.selectedCampaign = res.data;
-                this.props.setState({ selectedCampaign: this.selectedCampaign })
-            })
-            .catch(err => {
-                console.error(err);
-            })
     }
-    
 
     render() {
         return (
@@ -96,7 +76,7 @@ class TabView extends Component {
                     <Row>
                         <Col sm="12">
                             <h4>The Campaign Settings</h4>
-                            <CampaignSettings selectedCampaign={this.selectedCampaign} {...this.props} setState={this.props.setState}></CampaignSettings>
+                            <CampaignSettings {...this.props} setState={this.props.setState}></CampaignSettings>
                         </Col>
                         </Row>
                     </TabPane>

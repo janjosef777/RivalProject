@@ -15,17 +15,16 @@ class CampaignView extends Component {
         super(props)
 
         this.state = {
-            activeTab: '1', //tabl 0 is overlay, tab 1 is card results
+            currentTab: 1, //tabl 0 is overlay, tab 1 is card results
             images: [],
-            results: [],
-            selectedCampaign: [],
-            defaultOverlay: '/src/images/Rivallogo.png'
+            results: []
         }
-        this.setState = this.setState.bind(this);
+
+        this.setState=this.setState.bind(this);
     }
 
     componentDidMount() {
-        
+
     }
 
     render() {
@@ -35,7 +34,7 @@ class CampaignView extends Component {
                     <AssetsView {...this.state} setState={this.setState} ></AssetsView>
                 </div>
                 <div className='right-wrapper sub-wrapper'>
-                    <TabView defaultOverLay={this.state.defaultOverlay} {...this.state} setState={this.setState}></TabView>
+                    <TabView {...this.state} setState={this.setState}></TabView>
                 </div>
 
             </div>
