@@ -9,7 +9,7 @@ class CreateCampaign extends Component {
         super(props);
         this.state = {
             title: "",
-            estimatedParticipants: ""
+            estimatedParticipants: null
         };
         this.handleTitle = this.handleTitle.bind(this);
         this.handleParticipants = this.handleParticipants.bind(this);
@@ -36,7 +36,7 @@ class CreateCampaign extends Component {
                 sessionStorage.setItem('token', res.token);
                 this.campaignItems = res.data;
                 console.log(this.campaignItems)
-                window.location.href = "/";
+                window.location.href = "/campaignview";
             })
             .catch(err => {
                 console.error(err);
@@ -69,7 +69,7 @@ class CreateCampaign extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label for="estimatedParticipants">Estimated Participants</Label>
-                            <Input type="estimatedParticipants" value={this.state.estimatedParticipants} onChange={this.handleParticipants} />
+                            <Input type="number" value={this.state.estimatedParticipants} onChange={this.handleParticipants} />
                         </FormGroup>
 
                         <Button

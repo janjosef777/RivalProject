@@ -20,13 +20,13 @@ class CampaignSettings extends Component {
 
     render() {
         return (
-            <div className='wrapper'>        
-                <h6>Campaign Name: </h6>
-                <h6>Campaign Reach: </h6>
-                <h6>Campaign Activation Status: </h6>
+            <div className='wrapper'>
+                <h6>Campaign Name: {this.props.selectedCampaign.name} </h6>
+                <h6>Campaign Reach: {this.props.selectedCampaign.estimatedParticipants}</h6>
+                <h6>Campaign Activation Status:{this.props.selectedCampaign.isActive} </h6>
                 <label className="switch">
-                <input type="checkbox" defaultChecked />
-                <span className="slider round"></span>
+                    <input type="checkbox" defaultChecked />
+                    <span className="slider round"></span>
                 </label>
             </div>
 
