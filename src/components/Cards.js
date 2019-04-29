@@ -16,16 +16,15 @@ class Cards extends Component {
     }
 
     fetchCards() {
-        console.log(localStorage.getItem("token"));
+        console.log(sessionStorage.getItem("token"));
         fetch('http://localhost:4000/api/images',{
             headers: { 
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res.token);
-                localStorage.setItem('token', res.token)
+                sessionStorage.setItem('token', res.token)
                 this.setState({cards: res.data});
             })
             .catch(err => {

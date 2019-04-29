@@ -15,7 +15,7 @@ module.exports = {
                 if(err)
                     console.log(err);
                 console.log("Incorrect username/password");
-                res.status(403).send("Incorrect username/password");
+                res.json({ "status": 403 })
             } else {
                 console.log(username);
                 //issue token
