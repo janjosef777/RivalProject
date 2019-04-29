@@ -28,6 +28,10 @@ module.exports = {
     },
     post: (req, res, next) => {
         const campaign = req.body;
+        var est_parStr = campaign.estimated_participants
+        var est_parInt = parseInt(est_parStr, 10)
+        campaign.estimatedParticipants = est_parInt;
+        console.log(campaign);
         campaign.createdBy = res.jwtUser;
         db.campaigns.add(campaign, (err, id) => {
             if(err)

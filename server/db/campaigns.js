@@ -39,7 +39,7 @@ function mapRead(campaign) {
         id: campaign.id,
         name: campaign.name,
         template: campaign.template,
-        isActive: !!campaign.is_active,
+        isActive: campaign.is_active,
         createdBy: campaign.created_by,
         createdAt: campaign.created_at,
         estimatedParticipants: campaign.estimated_participants,
@@ -48,16 +48,14 @@ function mapRead(campaign) {
     };
 }
 function mapWrite(campaign) {
-    if(campaign.hasPrizes && !campaign.estimatedParticipants) {
-        throw new Error("Campaign with prizes needs estimated participants");
-    }
+    
     return {
         name: campaign.name,
         template: campaign.template,
         is_active: campaign.isActive ? 1 : 0,
         created_by: campaign.createdBy,
         created_at: campaign.createdAt || new Date(),
-        estimated_participants: campaign.hasPrizes && campaign.estimatedParticipants || 0,
+        estimated_participants: campaign.estimated_participants,
         url: campaign.url
     };
 }

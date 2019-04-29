@@ -9,7 +9,7 @@ class CreateCampaign extends Component {
         super(props);
         this.state = {
             title: "",
-            estimatedParticipants: ""
+            estimatedParticipants: null
         };
         this.handleTitle = this.handleTitle.bind(this);
         this.handleParticipants = this.handleParticipants.bind(this);
@@ -69,7 +69,7 @@ class CreateCampaign extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label for="estimatedParticipants">Estimated Participants</Label>
-                            <Input type="estimatedParticipants" value={this.state.estimatedParticipants} onChange={this.handleParticipants} />
+                            <Input type="number" value={this.state.estimatedParticipants} onChange={this.handleParticipants} />
                         </FormGroup>
 
                         <Button
