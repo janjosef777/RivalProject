@@ -3,7 +3,7 @@ const db = require('../db');
 module.exports = {
     getAll: (req, res, next) => {
         db.campaigns.getAll((err, campaigns) => {
-            if(err)
+            if (err)
                 return handleErr(err, res, 500);
             res.json({
                 token: res.jwtToken,
@@ -13,12 +13,12 @@ module.exports = {
     },
     get: (req, res, next) => {
         const id = +req.params.id || 0;
-        if(id <= 0)
+        if (id <= 0)
             return handleErr(null, res, 404);
         db.campaigns.get(id, (err, campaign) => {
-            if(err)
+            if (err)
                 return handleErr(err, res, 500);
-            if(!campaign)
+            if (!campaign)
                 return handleErr(null, res, 404);
             res.json({
                 token: res.jwtToken,
@@ -28,9 +28,13 @@ module.exports = {
     },
     post: (req, res, next) => {
         const campaign = req.body;
+        var est_parStr = campaign.estimated_participants
+        var est_parInt = parseInt(est_parStr, 10)
+        campaign.estimatedParticipants = est_parInt;
+        console.log(campaign);
         campaign.createdBy = res.jwtUser;
         db.campaigns.add(campaign, (err, id) => {
-            if(err)
+            if (err)
                 return handleErr(err, res, 500);
             const data = {
                 id: id
@@ -38,11 +42,11 @@ module.exports = {
 
             const cardResults = req.body.cardResults;
 
-            if(cardResults && !Array.isArray(cardResults))
+            if (cardResults && !Array.isArray(cardResults))
                 return handleErr(null, res, 400, "Card results needs to be an array");
-    
+
             processCardResults(id, cardResults, cardResultsData => {
-                if(cardResultsData)
+                if (cardResultsData)
                     data.cardResults = cardResultsData;
 
                 res.json({
@@ -57,10 +61,10 @@ module.exports = {
     },
     delete: (req, res, next) => {
         const id = +req.params.id || 0;
-        if(id <= 0)
+        if (id <= 0)
             return handleErr(null, res, 404);
         db.campaigns.delete(id, (err, success) => {
-            if(err)
+            if (err)
                 return handleErr(err, res, 500);
             res.json({
                 token: res.jwtToken,
@@ -71,15 +75,15 @@ module.exports = {
 };
 
 function handleErr(err, res, status, message) {
-    if(err)
+    if (err)
         console.log(err);
-    if(res)
+    if (res)
         res.status(status).send(message);
 }
 
 function processCardResults(campaignId, cardResults, callback) {
 
-    if(!cardResults)
+    if (!cardResults)
         return callback(null);
 
     const data = {
@@ -88,7 +92,7 @@ function processCardResults(campaignId, cardResults, callback) {
     };
 
     cardResults.forEach(item => {
-        if(typeof item !== 'object') {
+        if (typeof item !== 'object') {
             // Invalid
             next(null, false);
         } else {
@@ -98,11 +102,11 @@ function processCardResults(campaignId, cardResults, callback) {
     });
 
     function next(err, result) {
-        if(err)
+        if (err)
             console.log(err);
         data.processed++;
         data.successes += !err && !!result;
-        if(data.processed >= cardResults.length) {
+        if (data.processed >= cardResults.length) {
             callback(data);
         }
     }
