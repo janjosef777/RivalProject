@@ -17,6 +17,7 @@ class ImagesList extends Component {
     }
 
     componentDidMount() {
+        console.log(localStorage.getItem("token"))
         this.fetchImages()
     }
 
