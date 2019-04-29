@@ -41,7 +41,6 @@ module.exports = function(con, onSuccess) {
                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(80),
                 image BIGINT,
-                size BIGINT,
                 FOREIGN KEY(image) REFERENCES image(id),
                 FOREIGN KEY(size) REFERENCES size(id)
             )`,
