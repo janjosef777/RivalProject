@@ -5,6 +5,7 @@ ul{
 .content-wrapper {
     display: flex;
     padding-left: 50px;
+    background: #fff;
 }
 
 .image-thumb {
@@ -15,26 +16,18 @@ ul{
   background-color: white;
 }
 
-ul {
-    list-style: none;
-}
-
-.content-wrapper {
-    display: flex;
-    padding-left: 50px;
-}
-
 .left-wrapper {
     width: 40%;
-    height: auto;
+    height: 90vh;
     background: #ddd;
 }
 
 .right-wrapper {
     width: 55%;
-    height: auto;
+    height: 90vh;
     background-color: #222;
     color: #fff;
+    overflow-x: scroll;
 }
 
 .sub-wrapper {

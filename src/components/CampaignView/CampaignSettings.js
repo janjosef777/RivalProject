@@ -20,17 +20,31 @@ class CampaignSettings extends Component {
 
     render() {
         return (
-            <div className='wrapper'>        
-                <h6>Campaign Name: </h6>
-                <h6>Campaign Reach: </h6>
-                <h6>Campaign Activation Status: </h6>
-                <label className="switch">
-                <input type="checkbox" defaultChecked />
-                <span className="slider round"></span>
-                </label>
-            </div>
 
-        )
-    }
-}
-export default CampaignSettings;
+                <div className='wrapper'>
+                    <div className='wrapper'>
+                        <div className="input-section">
+                            <h6>Campaign Name: </h6>
+                            <input type="text" value={this.props.selectedCampaign.name} />
+                        </div>
+                        <div className="input-section">
+                            <h6>Estimated Participants: </h6>
+                            <input type="text" value={this.props.selectedCampaign.estimatedParticipants} />
+                        </div>
+                        <div className="input-section">
+                            <h6>Campaign Activation Status: {this.props.selectedCampaign.isActive} </h6>
+                            <label class="switch">
+                                <input type="checkbox" defaultChecked />
+                                <span className="slider round"></span>
+                            </label>
+                        </div>
+                        <div className="input-section">
+                            <h6>Generated URL: </h6>
+                        </div>
+                    </div>
+                </div>
+
+                )
+            }
+        }
+        export default CampaignSettings;

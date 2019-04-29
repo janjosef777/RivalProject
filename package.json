@@ -35,6 +35,7 @@
   },
   "scripts": {
     "dev": "concurrently \"nodemon ./server/server.js\" \"SET PORT=3100 && react-scripts start\"",
+    "macdev": "concurrently \"nodemon ./server/server.js\" \"PORT=3100 && react-scripts start\"",
     "server": "node ./server/server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
