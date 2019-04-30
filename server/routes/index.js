@@ -8,7 +8,8 @@ const routes = {
     auth: require('./auth'),
     campaigns: require('./campaigns'),
     images: require('./images'),
-    assignlink: require('./AssignCardLink')
+    assignlink: require('./AssignCardLink'),
+    templates: require('./templates')
 };
 
 router.post("/auth", routes.auth.post);
@@ -24,6 +25,9 @@ router.get("/images", ensureLoggedIn, routes.images.getAll);
 router.get("/images/:id", ensureLoggedIn, routes.images.get);
 router.post("/images", ensureLoggedIn, upload.single('image'), routes.images.post);
 router.delete("/images/:id", ensureLoggedIn, routes.images.delete);
+
+router.post("/template", ensureLoggedIn, routes.templates.post);
+router.get("/template", ensureLoggedIn,routes.templates.get);
 
 router.get('/assignlink/par/:parid/camp/:campid', routes.assignlink.get);
 
