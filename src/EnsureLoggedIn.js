@@ -29,7 +29,8 @@ class EnsureLoggedIn extends React.Component {
         this.checkToken();
     }
     render() {
-        if (this.state.isLoggedIn) {
+        const invertCondition = this.props.invertCondition ? true : false;
+        if (this.state.isLoggedIn == !invertCondition) {
             return this.props.children
         } else {
             return null
