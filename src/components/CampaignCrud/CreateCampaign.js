@@ -21,10 +21,11 @@ class CreateCampaign extends Component {
     }
 
     renderRedirect = () => {
+        
         if (this.state.redirect) {
             return <Redirect to={{ 
                 pathname:'/campaignview', 
-                state: {id: this.state.id}
+                state: {updateId: this.state.id}
             }}  />
         }
     }
@@ -49,9 +50,10 @@ class CreateCampaign extends Component {
             .then(res => res.json())
             .then(res => {
                 sessionStorage.setItem('token', res.token);
-                this.campaignItems = res.data;
-                this.setState({redirect: true})
-                console.log(this.campaignItems)
+                this.setState({
+                    id: res.data.id,
+                    redirect: true
+                })
             })
             .catch(err => {
                 console.error(err);

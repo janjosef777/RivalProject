@@ -5,8 +5,8 @@ import SingleCardState from './components/SingleCardState'
 // import FlexItem from './scratch-card/flex/flex-item'
 
 class ActiveCard extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             isCleared: false
         }

@@ -29,17 +29,17 @@ import NavBarComponent from './components/NavBarComponent';
 
 const CardCreatorApp = () => (
     <Router>
-            <Switch>
-                <Route exact path="/activecard/:title/:overlaySrc/:resultTitle/:resultSrc" component={ActiveCard} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/logout" component={Logout} />
-                <EnsureLoggedIn renderNav={true}>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/CreateCampaign" component={CreateCampaign} />
-                    <Route exact path="/DeleteCampaign" component={DeleteCampaign} />
-                    <Route exact path="/campaignview" component={CampaignView} />                    
-                </EnsureLoggedIn>
-            </Switch>
+        <Switch>
+            <Route exact path="/activecard/:title/:overlaySrc/:resultTitle/:resultSrc" component={ActiveCard} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/logout" component={Logout} />
+            <EnsureLoggedIn renderNav={true}>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/CreateCampaign" component={CreateCampaign} />
+                <Route exact path="/DeleteCampaign" component={DeleteCampaign} />
+                <Route exact path="/campaignview" component={CampaignView} />                    
+            </EnsureLoggedIn>
+        </Switch>
     </Router>
 )
 export default CardCreatorApp;
