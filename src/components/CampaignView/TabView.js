@@ -27,7 +27,7 @@ class TabView extends Component {
         this.loadCampaign()
     }
     loadCampaign(){
-        fetch('http://localhost:4000/api/campaigns/' + 23,{
+        fetch('http://localhost:4000/api/campaigns/' + 4,{
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
