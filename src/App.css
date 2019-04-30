@@ -82,17 +82,6 @@
     width: 150px;
   }
 
-  .primary-button{
-    background: #E8542A;
-    padding: 10px 25px;
-    border: #E8542A 1px solid;
-    border-radius: 5px;
-  }
-
-  .primary-button:hover{
-    background: #222;
-  }
-
   .primary-button a{
     text-decoration: none;
     color: #fff;

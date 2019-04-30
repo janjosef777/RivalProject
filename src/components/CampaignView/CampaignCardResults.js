@@ -24,10 +24,10 @@ class CampaignCardResults extends Component {
 
     render() {
         return (
-            <div className='wrapper'>
-                <ul className="image-list">
+            <div>
+                <ul className="results-list">
                     {this.props.results.map((cardresult,idx) => 
-                        <li key={idx}><span onClick={this.removeImage.bind(this)}>X</span><img src={cardresult} alt="Selected Prize Image" className="img-thumbnail" /></li>
+                        <li key={idx}><button onClick={this.removeImage.bind(this)} className="delete-img">X</button><img src={cardresult} alt="Selected Prize Image" className="img-thumbnail result-img" /></li>
                     )}
                 </ul>
             </div>
