@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import '../styles/login.css';
 import logo from '../images/Rivallogo.png';
 import NavBarComponent from './NavBarComponent';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
 
