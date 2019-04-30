@@ -9,7 +9,6 @@ import ActiveCard from './ActiveCard';
 import CampaignView from './components/CampaignView/index';
 import CreateCampaign from './components/CampaignCrud/CreateCampaign';
 import DeleteCampaign from './components/CampaignCrud/DeleteCampaign';
-import logo from '../src/images/Rivallogo.png';
 import {
     Collapse,
     Navbar,
@@ -25,6 +24,7 @@ import {
 } from 'reactstrap';
 
 import './App.css';
+import NavBarComponent from './components/NavBarComponent';
 
 
 const CardCreatorApp = () => (

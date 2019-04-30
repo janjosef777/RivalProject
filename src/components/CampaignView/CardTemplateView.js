@@ -16,6 +16,9 @@ const imgHeight = 300;
 class CardTemplateView extends Component {
     constructor(props) {
         super(props)
+        this.state ={
+            overlayImg: "../../images/Rivallogo.png"
+        }
     }
     
     
