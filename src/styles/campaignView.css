@@ -35,14 +35,18 @@ ul{
 }
 
 .image-list-wrapper{
-    overflow-x: scroll;
     padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .image-list{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    padding: 20px;
+    overflow-x: scroll;
 }
 
 .img-thumbnail{

@@ -56,14 +56,12 @@ class Login extends Component {
                     <img src={logo} className="logoImage" />
                     <Form>
                         <FormGroup>
-                            <Label for="username">Username</Label>
-                            <Input type="text" id="username" value={this.state.username} onChange={this.handleUsername} placeholder="Username" name="username" />
+                            <Input placeholder="Username..." type="text" id="username" value={this.state.username} onChange={this.handleUsername} placeholder="Username" name="username" />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="password">Password</Label>
-                            <Input type="password" value={this.state.password} onChange={this.handlePassword} name="password" id="password" placeholder="Password" />
+                            <Input placeholder="Password..." type="password" value={this.state.password} onChange={this.handlePassword} name="password" id="password" placeholder="Password" />
                         </FormGroup>
-                        <Button onClick={this.handleSubmit}>Login</Button>
+                        <Button className="login-btn" onClick={this.handleSubmit}>Login</Button>
                     </Form>
                 </div>
             </div>

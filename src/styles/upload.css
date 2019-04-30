@@ -1,7 +1,6 @@
 .Upload {
     display: flex;
     flex-direction: column;
-    flex: 1;
     align-items: flex-start;
     text-align: center;
     overflow: hidden;
