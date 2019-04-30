@@ -63,6 +63,7 @@ class CampaignView extends Component {
     }
 
     componentDidMount() {
+    console.log(this.state.updateId)
     }
 
     render() {
