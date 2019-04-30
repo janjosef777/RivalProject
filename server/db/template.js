@@ -1,8 +1,8 @@
 const tableName = 'overlay';
-const columns = [ 'title',
-                  'images',
-                  'size'
-                ];
+const columns = ['title',
+    'image',
+    'size'
+];
 
 let db = null;
 let connection = null;
@@ -11,42 +11,36 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns, 
     mapRead: mapRead,
     mapWrite: mapWrite
 }), {
-    init(database, connect) {
-        if(!connection) {
-            db = database;
-            connection = connect;
-        }
-    },
-    getDetail(id, callback) {
-        db.overlay.get(id, (err, overlay) => {
-            if(err || !overlay) {
-                callback(err, null);
-            } else {
-                db.cardResults.getDetailAll(id, (err, cardResults) => {
-                    overlay.cardResults = cardResults;
-                    callback(err, err ? null : overlay);
-                });
+        init(database, connect) {
+            if (!connection) {
+                db = database;
+                connection = connect;
             }
-        });
-    }
-});
+        },
+        getDetail(id, callback) {
+            db.template.get(id, (err, template) => {
+                if (err || !template) {
+                    callback(err, null);
+                } else {
+                    callback(err, err ? null : template)
+                }
+            });
+        }
+    });
 
-function mapRead(overlay) {
+function mapRead(template) {
     return {
-        id: overlay.id,
-        title: overlay.title,
-        images: overlay.images,
-        size: overlay.images
+        id: template.id,
+        title: template.title,
+        image: template.image,
+        size: template.size
     };
 }
-function mapWrite(overlay) {
-    if(overlay.hasPrizes && !overlay.estimatedParticipants) {
-        throw new Error("");
-    }
+function mapWrite(template) {
     return {
-        name: overlay.name,
-        title: overlay.title,
-        images: overlay.images,
-        size: overlay.images
+        id: template.id,
+        title: template.title,
+        image: template.image,
+        size: template.size
     };
 }
