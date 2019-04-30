@@ -10,7 +10,9 @@ import CampaignSettings from './CampaignSettings';
 class TabView extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            updateId: this.props.updateId
+        }
         this.selectedCampaign = []
         this.toggle = this.toggle.bind(this);
     }
@@ -27,7 +29,7 @@ class TabView extends Component {
         this.loadCampaign()
     }
     loadCampaign(){
-        fetch('http://localhost:4000/api/campaigns/' + 4,{
+        fetch('http://localhost:4000/api/campaigns/' + this.state.updateId, {
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
@@ -38,6 +40,25 @@ class TabView extends Component {
                 sessionStorage.setItem('token', res.token);
                 this.selectedCampaign = res.data;
                 this.props.setState({ selectedCampaign: this.selectedCampaign })
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+        updatedCampaign(id) {
+        fetch('http://localhost:4000/api/campaigns/' + id, {
+            method:
+                'PUT',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                console.log("updated id: " + id)
+                console.log(res.data)
             })
             .catch(err => {
                 console.error(err);
