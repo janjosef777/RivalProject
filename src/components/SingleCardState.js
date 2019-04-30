@@ -127,7 +127,7 @@ class SingleCardState extends React.Component {
                 :
                 <Title
                     {...this.props}
-                    titleVal = {this.state.titleVal}
+                    titleVal = {this.titleVal}
                     framePadding={framePadding}
                     borderStyle={borderStyle}
                 >{this.props.title}</Title>}
