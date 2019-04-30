@@ -60,6 +60,8 @@ class Login extends Component {
 
     render() {
         return (
+            <div>
+            <NavBarComponent />
             <div className="loginPage" >
                 {this.renderRedirect()}
                 <div className="loginForm">
@@ -75,6 +77,7 @@ class Login extends Component {
                     </Form>
                 </div>
             </div>
+        </div>
         )
     }
 }
