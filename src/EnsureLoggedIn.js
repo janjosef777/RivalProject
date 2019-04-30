@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
+
 class EnsureLoggedIn extends React.Component {
     constructor(props) {
         super(props);
@@ -33,7 +35,11 @@ class EnsureLoggedIn extends React.Component {
         if (this.state.isLoggedIn == !invertCondition) {
             return this.props.children
         } else {
-            return null
+            if (this.props.gotoLogin) {
+                return <Redirect to='/login' />
+            } else {
+                return null
+            }            
         }
     }
 }

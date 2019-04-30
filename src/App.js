@@ -32,7 +32,7 @@ const CardCreatorApp = () => (
             <Switch>
                 <Route exact path="/activecard/:title/:overlaySrc/:resultTitle/:resultSrc" component={ActiveCard} />
                 <Route exact path="/login" component={Login} />
-                <EnsureLoggedIn>
+                <EnsureLoggedIn gotoLogin={true}>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/CreateCampaign" component={CreateCampaign} />
                     <Route exact path="/DeleteCampaign" component={DeleteCampaign} />
