@@ -78,7 +78,10 @@ class TabView extends Component {
                         <Row>
                             <Col sm="12">
                                 <h4>Overlay image for the scratch card</h4>
-                                <CardTemplateView {...this.props}></CardTemplateView>
+                                <CardTemplateView 
+                                    overlay
+                                    {...this.props}
+                                ></CardTemplateView>
                             </Col>
                         </Row>
                     </TabPane>

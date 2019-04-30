@@ -31,7 +31,10 @@ class EditableTitle extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {editing: false};
+        this.state = {
+            editing: false,
+            titleVal: this.props.titleVal
+        };
 
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -43,13 +46,26 @@ class EditableTitle extends React.Component {
     }
 
     handleChange(e) {
-        this.props.setState({
-            title: e.target.value
+
+        this.setState({
+            titleVal: e.target.value
         });
     }
 
     handleBlur = (e) => {
         this.setState({editing: false});
+
+        if (this.props.overlay) {
+            this.props.setState({
+                title: e.target.value
+            });
+        } else if (this.props.index) {
+            var titles = this.props.resultTitles;
+            titles[this.props.index] = e.target.value;
+            this.props.setState({
+                resultTitles: titles
+            });
+        }
     }
 
     render() {
@@ -59,12 +75,12 @@ class EditableTitle extends React.Component {
                     framePadding={this.props.framePadding}
                     borderStyle={this.props.borderStyle}
                     onClick={this.handleClick}
-                >{this.props.title}</Title>
+                >{this.state.titleVal}</Title>
             )
         } else {
             return (
                 <Input
-                    value={this.props.title} 
+                    value={this.state.titleVal} 
                     onChange={this.handleChange} 
                     onBlur={this.handleBlur}
                 />
@@ -75,13 +91,25 @@ class EditableTitle extends React.Component {
 
 class SingleCardState extends React.Component {
     constructor(props) {
-        super(props)
+        super(props)       
     }
 
     render() {
+        if (this.props.overlay) {
+            this.titleVal = this.props.title;
+            this.imgSrc = this.props.overlayImg;
+            this.imgAlt = 'card overlay image'
+        } else if (this.props.index) {
+            // this is the case for viewing card results by index
+        } else {
+            this.titleVal = this.props.title;
+            this.imgSrc = this.props.imgSrc;
+            this.ingAlt = this.props.imgAlt;
+        }
         const framePadding = 25;
         const frameColor = 'lightgray';
         const borderStyle = 'solid black 1px';
+
         return (
             <CardFrame
                 frameWidth={this.props.imgWidth + 2 * framePadding}
@@ -92,20 +120,22 @@ class SingleCardState extends React.Component {
                 {this.props.editable ?
                 <EditableTitle
                     {...this.props}
+                    titleVal = {this.titleVal}
                     framePadding={framePadding}
                     borderStyle={borderStyle}
                 ></EditableTitle>
                 :
                 <Title
                     {...this.props}
+                    titleVal = {this.state.titleVal}
                     framePadding={framePadding}
                     borderStyle={borderStyle}
                 >{this.props.title}</Title>}
                 <Image
                     width={this.props.imgWidth}
                     height={this.props.imgHeight}
-                    src={this.props.imgSrc}
-                    alt={this.props.imgAlt}
+                    src={this.imgSrc}
+                    alt={this.imgAlt}
                     onClick={this.props.handleCleared ? e => this.props.handleCleared(e) : undefined}
                     framePadding={framePadding}
                     borderStyle={borderStyle}

@@ -35,8 +35,11 @@ class CampaignView extends Component {
             activeTab: '1', //tabl 0 is overlay, tab 1 is card results
             images: [],
             results: [],
+            resultTitles: [],
             selectedCampaign: [],
-            title: 'THANKS FOR PARTICIPATING!'
+            title: 'THANKS FOR PARTICIPATING!',
+            overlayImg: '/uploads/IMG_20180902_150937.jpeg',//null,
+            selectedIndex: null
         }
 
         this.setState=this.setState.bind(this);
