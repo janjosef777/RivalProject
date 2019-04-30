@@ -9,8 +9,8 @@ import AssetsView from './AssetsView';
 import CardTemplateView from './CardTemplateView';
 import TabView from './TabView';
 import { Link } from '@material-ui/core';
-import styled from 'styled-components'
-import NavBarComponent from '../NavBarComponent'
+import styled from 'styled-components';
+import NavBarComponent from '../NavBarComponent';
 
 const LinkButton = styled.a`
     padding: 10px;   
@@ -78,7 +78,7 @@ class CampaignView extends Component {
                     </div>
                     <div className='right-wrapper sub-wrapper'>
                         <TabView {...this.state} setState={this.setState}></TabView>
-                        <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1">Demo</LinkButton>
+                        <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" className="demo-btn"><i class="fas fa-external-link-alt"></i></LinkButton>
                         <Button>SAVE</Button>
                     </div>
                 </div>

@@ -2,6 +2,13 @@ ul{
     list-style-type: none;
 }
 
+h4{
+  color: #E8542A;
+  font-size: 1.4rem !important;
+  margin: 20px 0 !important;
+  text-align: center;
+}
+
 .content-wrapper {
     display: flex;
     padding-left: 50px;
@@ -24,8 +31,6 @@ ul{
 
 .right-wrapper {
     width: 55%;
-    background-color: #222;
-    color: #fff;
     overflow-x: scroll;
 }
 
@@ -35,8 +40,8 @@ ul{
 
 .image-list-wrapper{
     padding: 20px;
+    border-bottom: 1px dotted #999;
     display: flex;
-    align-items: center;
     justify-content: space-between;
 }
 
@@ -49,6 +54,18 @@ ul{
     overflow-x: scroll;
 }
 
+.results-list{
+  height: 60vh;
+  overflow: scroll;
+}
+
+.results-list li{
+  height: 150px;
+  border-bottom: 1px dotted #999;
+  display: flex;
+  align-items: center;
+}
+
 .img-thumbnail{
     width: 150px;
     height: 200px;
@@ -59,6 +76,10 @@ ul{
     background: #fff;
     padding: 20px;
     color: #222;
+}
+
+.active{
+  font-weight: bold;
 }
 
 a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
@@ -143,3 +164,66 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
     border-radius: 50%;
   }
   /* Toggle button */
+
+  .delete-img{
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background: red;
+    color: #fff;
+    padding: 0px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .delete-img:hover, .delete-img:active, .delete-img:focus{
+    border: none;
+    outline: none;
+    opacity: 0.8;
+  }
+
+  .input-section{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .input-section input{
+    width: 100%;
+    padding: 10px;
+  }
+
+  .input-section input:focus{
+    border: 2px #222 solid;
+  }
+
+  .activation-switch{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .fa-external-link-alt{
+    font-size: 1.7rem;
+  }
+
+  .demo-btn{
+    text-decoration: none;
+    background: #222;
+    width: 65px;
+    height: 65px;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 20px;
+  }
+
+  .demo-btn:hover, .demo-btn:focus{
+    text-decoration: none;
+    background: #fff;
+    color: #54AE70;
+  }
+
+  .fa-link{
+    font-size: 1.5rem;
+    color: #222;
+  }

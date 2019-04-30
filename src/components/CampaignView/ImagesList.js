@@ -56,7 +56,6 @@ class ImagesList extends Component {
                     <h2>Image Library</h2>
                     <Upload onUpload={this.onUpload.bind(this)} />
                 </div>
-                <hr />
                 <div>
                     <ul className="image-list">
                     {this.props.images.map((image, idx) => 
