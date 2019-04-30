@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import NavBarComponent from './components/NavBarComponent'
+import Login from './components/Login'
 
 class EnsureLoggedIn extends React.Component {
     constructor(props) {
@@ -40,6 +41,7 @@ class EnsureLoggedIn extends React.Component {
         } else {
             // if (gotoLogin) {
             //     return <Redirect to='/login' />
+            //     return <Login/>
             // } else {
             //     return null
             // }   

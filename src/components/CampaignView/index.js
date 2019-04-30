@@ -27,7 +27,6 @@ const LinkButton = styled.a`
     }
 `;
 
-
 class CampaignView extends Component {
     constructor(props) {
         super(props)
@@ -36,7 +35,8 @@ class CampaignView extends Component {
             activeTab: '1', //tabl 0 is overlay, tab 1 is card results
             images: [],
             results: [],
-            selectedCampaign: []
+            selectedCampaign: [],
+            title: 'THANKS FOR PARTICIPATING!'
         }
 
         this.setState=this.setState.bind(this);

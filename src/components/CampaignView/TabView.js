@@ -78,7 +78,7 @@ class TabView extends Component {
                         <Row>
                             <Col sm="12">
                                 <h4>Overlay image for the scratch card</h4>
-                                <CardTemplateView {...this.props} setState={this.props.setState}></CardTemplateView>
+                                <CardTemplateView {...this.props}></CardTemplateView>
                             </Col>
                         </Row>
                     </TabPane>
@@ -86,7 +86,7 @@ class TabView extends Component {
                         <Row>
                             <Col sm="12">
                                 <h4>A collection of card results for the campaign</h4>
-                                <CampaignCardResults {...this.props} setState={this.props.setState}></CampaignCardResults>
+                                <CampaignCardResults {...this.props}></CampaignCardResults>
                             </Col>
                         </Row>
                     </TabPane>
@@ -94,7 +94,7 @@ class TabView extends Component {
                         <Row>
                             <Col sm="12">
                                 <h4>The Campaign Settings</h4>
-                                <CampaignSettings selectedCampaign={this.selectedCampaign} {...this.props} setState={this.props.setState}></CampaignSettings>
+                                <CampaignSettings selectedCampaign={this.selectedCampaign} {...this.props}></CampaignSettings>
                             </Col>
                         </Row>
                     </TabPane>

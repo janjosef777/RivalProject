@@ -6,7 +6,12 @@ import {
 } from 'reactstrap';
 import '../../styles/campaignView.css';
 import TabView from './TabView';
+import SingleCardState from '../SingleCardState'
 
+const imgSrc = '/uploads/IMG_20180902_150937.jpeg'
+const imgAlt = 'card overlay image'
+const imgWidth = 300;
+const imgHeight = 300;
 
 class CardTemplateView extends Component {
     constructor(props) {
@@ -17,11 +22,19 @@ class CardTemplateView extends Component {
     }
 
     render() {
+        
         return (
             <div className='wrapper'>
-                <div className="ImageHolder"><img src={this.props.overlayImg} alt="Your Scratch Image"/></div>
+                {/* <div className="ImageHolder"><img src={this.props.overlayImg} alt="Your Scratch Image"/></div> */}
+                <SingleCardState
+                    editable
+                    {...this.props}
+                    imgSrc={imgSrc}
+                    imgAlt={imgAlt}
+                    imgWidth={imgWidth}
+                    imgHeight={imgHeight}
+                />
             </div>
-
         )
     }
 }
