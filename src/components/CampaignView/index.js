@@ -37,10 +37,9 @@ class CampaignView extends Component {
             results: [],
             resultTitles: [],
             selectedCampaign: [],
-            title: 'THANKS FOR PARTICIPATING!',
-            overlayImg: '/uploads/IMG_20180902_150937.jpeg',//null,
+            title: null, //'THANKS FOR PARTICIPATING!',
+            overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
             selectedIndex: null,
-            // updateId: this.props.location.state.updateId
             updateId: this.props.location.state ? this.props.location.state.updateId : 0
         }
 
