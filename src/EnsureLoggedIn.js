@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
+import NavBarComponent from './components/NavBarComponent'
 
 class EnsureLoggedIn extends React.Component {
     constructor(props) {
@@ -32,14 +33,22 @@ class EnsureLoggedIn extends React.Component {
     }
     render() {
         const invertCondition = this.props.invertCondition ? true : false;
+        const gotoLogin = this.props.gotoLogin ? true : false;
+        const renderNav = this.props.renderNav ? true : false;
         if (this.state.isLoggedIn == !invertCondition) {
             return this.props.children
         } else {
-            if (this.props.gotoLogin) {
-                return <Redirect to='/login' />
+            // if (gotoLogin) {
+            //     return <Redirect to='/login' />
+            // } else {
+            //     return null
+            // }   
+            if (renderNav) {
+                return <NavBarComponent />
             } else {
                 return null
-            }            
+            }   
+            //return null         
         }
     }
 }

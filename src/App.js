@@ -32,12 +32,12 @@ const CardCreatorApp = () => (
             <Switch>
                 <Route exact path="/activecard/:title/:overlaySrc/:resultTitle/:resultSrc" component={ActiveCard} />
                 <Route exact path="/login" component={Login} />
-                <EnsureLoggedIn gotoLogin={true}>
+                <Route exact path="/logout" component={Logout} />
+                <EnsureLoggedIn renderNav={true}>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/CreateCampaign" component={CreateCampaign} />
                     <Route exact path="/DeleteCampaign" component={DeleteCampaign} />
-                    <Route exact path="/campaignview" component={CampaignView} />
-                    <Route exact path="/logout" component={Logout} />
+                    <Route exact path="/campaignview" component={CampaignView} />                    
                 </EnsureLoggedIn>
             </Switch>
     </Router>
