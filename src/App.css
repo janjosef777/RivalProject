@@ -9,6 +9,10 @@
     font-size: calc(10px + 2vmin);
   }
 
+  h1{
+    text-transform: uppercase;
+  }
+
   p, ul li, span, table tr td{
     font-family: 'PT Sans', sans-serif;
   } 
@@ -25,6 +29,30 @@
   button:focus, button:active{
     border: none;
     outline: none;
+  }
+
+  .landingpage-wrapper{
+    text-align: center;
+    width: 50vw;
+    position: absolute;
+    margin: 10vh 25vw;
+    padding: 10vh;
+    color: #E8542A;
+    border: 2px dashed #222;
+    border-radius: 3%;
+    background: #fff;
+    z-index: 99;
+  }
+
+  .home-arrow{
+    position: relative;
+    width: 350px;
+    left: 65%;
+    z-index: 9;
+  }
+
+  .landingpage-wrapper h1{
+    margin-bottom: 30px;
   }
 
 .SingleLink a{
