@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
+import NavBarComponent from './components/NavBarComponent'
+
 class EnsureLoggedIn extends React.Component {
     constructor(props) {
         super(props);
@@ -29,10 +32,23 @@ class EnsureLoggedIn extends React.Component {
         this.checkToken();
     }
     render() {
-        if (this.state.isLoggedIn) {
+        const invertCondition = this.props.invertCondition ? true : false;
+        const gotoLogin = this.props.gotoLogin ? true : false;
+        const renderNav = this.props.renderNav ? true : false;
+        if (this.state.isLoggedIn == !invertCondition) {
             return this.props.children
         } else {
-            return null
+            // if (gotoLogin) {
+            //     return <Redirect to='/login' />
+            // } else {
+            //     return null
+            // }   
+            if (renderNav) {
+                return <NavBarComponent />
+            } else {
+                return null
+            }   
+            //return null         
         }
     }
 }
