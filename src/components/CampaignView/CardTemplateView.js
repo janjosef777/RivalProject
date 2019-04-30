@@ -11,6 +11,9 @@ import TabView from './TabView';
 class CardTemplateView extends Component {
     constructor(props) {
         super(props)
+        this.state ={
+            overlayImg: "../../images/Rivallogo.png"
+        }
     }
     componentDidMount() {
 

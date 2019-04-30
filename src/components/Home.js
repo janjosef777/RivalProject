@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import '../styles/home.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import NavBarComponent from './NavBarComponent';
 // import jwt_decode from 'jwt-decode'
 
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
     SelectionState,
@@ -34,7 +37,8 @@ import {
 } from '@devexpress/dx-react-grid-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import CreateCampaign from './CampaignCrud/CreateCampaign';
-import DeleteCampaign from './CampaignCrud/DeleteCampaign'
+import DeleteCampaign from './CampaignCrud/DeleteCampaign';
+import CampaignView from './CampaignView/index';
 
 const getRowId = row => row.id;
 
@@ -49,6 +53,38 @@ const DateTypeProvider = props => (
     />
 );
 
+// const DeleteButton = ({ onExecute }) => (
+//     <IconButton
+//       onClick={() => {{onExecute();}}}
+//       title="Delete row"
+//     >
+//       <DeleteIcon />
+//     </IconButton>
+// );
+
+// const EditButton = ({ onExecute }) => (
+//   <IconButton 
+//     onClick={() => {{onExecute();}}} 
+//     title="Edit row">
+//     <EditIcon />
+//   </IconButton>
+// );
+
+// const commandComponents = {
+//   edit: EditButton,
+//   delete: DeleteButton,
+// };
+
+// const Command = ({ id, onExecute }) => {
+//     const CommandButton = commandComponents[id];
+//     return (
+//       <CommandButton
+//         onExecute={onExecute}
+//       />
+//     );
+//   };
+  
+
 class Home extends Component {
 
     constructor(props) {
@@ -56,12 +92,12 @@ class Home extends Component {
 
         this.state = {
             columns: [
+                { name: 'actions', title: 'actions' },
                 { name: 'id', title: 'ID' },
                 { name: 'name', title: 'Campaign' },
                 { name: 'createdBy', title: 'Created By' },
                 { name: 'createdAt', title: 'Date Created' },
                 { name: 'url', title: 'URL' },
-                { name: 'isActive', title: 'Status' }
             ],
             dateColumns: ['createdAt'],
             editingStateColumnExtensions: [
@@ -73,6 +109,7 @@ class Home extends Component {
             showCreatePopup: false,
             showDeletePopup: false,
             showUpdate: false,
+            showUpdate: false,
             deleteId: null,
             updatedId: null,
 
@@ -82,7 +119,6 @@ class Home extends Component {
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
         this.commitChanges = this.commitChanges.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
-        this.toggleUpdate = this.toggleUpdate.bind(this);
     }
 
     componentDidMount() {
@@ -106,44 +142,6 @@ class Home extends Component {
             })
     }
 
-    deleteCampaign(id) {
-        fetch('http://localhost:4000/api/campaigns/' + id, {
-            method:
-                'DELETE',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                console.log("deleted id: " + id)
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
-
-    updatedCampaign(id) {
-        fetch('http://localhost:4000/api/campaigns/' + id, {
-            method:
-                'PATCH',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                console.log("updated id: " + id)
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
-
     commitChanges({ deleted, changed }) {
         let { campaignItems } = this.state;
             
@@ -154,11 +152,12 @@ class Home extends Component {
             this.toggleDeletePopup();
         }
 
-        if ( changed ) {
+        if (changed) {
+            var keyId = Object.keys(changed)
             this.setState({
-                updateId : changed["0"]
+                updateId : keyId["0"],
+                showUpdate: true
             })
-            window.location.href = "/campaignview/" + this.state.updateId;
 
         }
         this.setState({ campaignItems });
@@ -174,10 +173,20 @@ class Home extends Component {
             showDeletePopup: !this.state.showDeletePopup
         });
     }
-    toggleUpdate() {
-        this.setState({
-            showUpdate: !this.state.showUpdate
-        });
+
+    renderRedirect = () => {
+        if (this.state.showUpdate) {
+            
+            return <Redirect to={{ 
+                pathname:'/campaignview', 
+                state: {updateId: this.state.updateId}
+            }} 
+                />
+        }
+    }
+
+    componentDidMount(){
+        this.fetchCampaigns();
     }
 
     render() {
@@ -248,6 +257,8 @@ class Home extends Component {
                                     : null
                                 }
 
+                                {this.renderRedirect()}
+
                                 <SortingState
                                     defaultSorting={[
                                         { columnName: 'id', direction: 'asc' },
@@ -263,8 +274,11 @@ class Home extends Component {
                                 <TableHeaderRow showSortingControls />
                                 <TableEditRow />
                                 <TableEditColumn 
+                                width={170}
                                 showEditCommand
-                                showDeleteCommand />
+                                showDeleteCommand
+                                // commandComponent={Command}
+                                 />
                                 <Toolbar />
                                 <SearchPanel />
                                 <TableSelection showSelectAll />

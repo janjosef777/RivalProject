@@ -8,11 +8,13 @@ class DeleteCampaign extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
             deleteId: this.props.deleteId
         };
+        this.deleteCampaign = this.deleteCampaign.bind(this);
     }
-    deleteCampaign(id) {
-        fetch('http://localhost:4000/api/campaigns/' + id, {
+    deleteCampaign() {
+        fetch('http://localhost:4000/api/campaigns/' + this.state.deleteId , {
             method:
                 'DELETE',
             headers: {
@@ -28,6 +30,8 @@ class DeleteCampaign extends Component {
                 console.error(err);
             })
     }
+    
+    
 
     render() {
         return (
@@ -40,7 +44,7 @@ class DeleteCampaign extends Component {
                     <Form className="formDeleteCampaign">
                         <Label for="delete">Are you sure you want to delete this Campaign?</Label>
                         <Button
-                            onClick={this.deleteCampaign(this.props.deleteId)}
+                            onClick={this.deleteCampaign}
                             color="danger">Delete</Button>
                     </Form>
                 </div>
