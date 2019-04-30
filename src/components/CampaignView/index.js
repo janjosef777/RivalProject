@@ -27,7 +27,6 @@ const LinkButton = styled.a`
     }
 `;
 
-
 class CampaignView extends Component {
     constructor(props) {
         super(props)
@@ -36,9 +35,12 @@ class CampaignView extends Component {
             activeTab: '1', //tabl 0 is overlay, tab 1 is card results
             images: [],
             results: [],
+            resultTitles: [],
             selectedCampaign: [],
-            // updateId: this.props.location.state.updateId
-            updateId: this.props.location.state.updateId
+            title: null, //'THANKS FOR PARTICIPATING!',
+            overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
+            selectedIndex: null,
+            updateId: this.props.location.state ? this.props.location.state.updateId : 0
         }
 
         this.setState=this.setState.bind(this);
