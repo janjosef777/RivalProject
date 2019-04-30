@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../styles/home.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import NavBarComponent from './NavBarComponent';
 // import jwt_decode from 'jwt-decode'
 
 import Paper from '@material-ui/core/Paper';
@@ -180,85 +181,89 @@ class Home extends Component {
     render() {
         const { campaignItems, columns, selection, dateColumns } = this.state;
         return (
-            <div className="Home">
-                <h2>Scratch & Win Campaigns</h2>
-                <div className="container">
+            <div>
+                <NavBarComponent></NavBarComponent>
+                <div className="Home">
+                    
+                    <h2>Scratch & Win Campaigns</h2>
+                    <div className="container">
 
-                    <span>
-                        Total rows selected:
-                {' '}
-                        {selection.length}
-                    </span>
-                    <Paper>
-                        <Grid
-                            rows={campaignItems}
-                            columns={columns}
-                            getRowId={getRowId}
-                        >
-                            <EditingState
-                                onCommitChanges={this.commitChanges}
-                            />
-                            <DateTypeProvider
-                                for={dateColumns}
-                            />
-                            <PagingState
-                                defaultCurrentPage={1}
-                                pageSize={4}
-                            />
-                            <SelectionState
-                                selection={selection}
-                                onSelectionChange={this.changeSelection}
-                            />
-                            <IntegratedPaging />
-                            <IntegratedSelection />
-
-                            <Button
-                                variant="fab"
-                                color="primary"
-                                aria-label="add"
-                                className="add-btn"
-                                onClick={this.toggleCreatePopup.bind(this)}>
-                                +
-                        </Button>
-
-                            {this.state.showCreatePopup ?
-                                <CreateCampaign
-                                    closePopup={this.toggleCreatePopup.bind(this)}
+                        <span>
+                            Total rows selected:
+                    {' '}
+                            {selection.length}
+                        </span>
+                        <Paper>
+                            <Grid
+                                rows={campaignItems}
+                                columns={columns}
+                                getRowId={getRowId}
+                            >
+                                <EditingState
+                                    onCommitChanges={this.commitChanges}
                                 />
-                                : null
-                            }
-
-                            {this.state.showDeletePopup ?
-                                <DeleteCampaign
-                                    deleteId={this.state.deleteId}
-                                    closePopup={this.toggleDeletePopup.bind(this)}
+                                <DateTypeProvider
+                                    for={dateColumns}
                                 />
-                                : null
-                            }
+                                <PagingState
+                                    defaultCurrentPage={1}
+                                    pageSize={4}
+                                />
+                                <SelectionState
+                                    selection={selection}
+                                    onSelectionChange={this.changeSelection}
+                                />
+                                <IntegratedPaging />
+                                <IntegratedSelection />
 
-                            <SortingState
-                                defaultSorting={[
-                                    { columnName: 'id', direction: 'asc' },
-                                    { columnName: 'name', direction: 'asc' },
-                                    { columnName: 'created_by', direction: 'asc' },
-                                    { columnName: 'url', direction: 'asc' }
-                                ]}
-                            />
-                            <IntegratedSorting />
-                            <SearchState defaultValue="" />
-                            <IntegratedFiltering />
-                            <Table />
-                            <TableHeaderRow showSortingControls />
-                            <TableEditRow />
-                            <TableEditColumn 
-                            showEditCommand
-                            showDeleteCommand />
-                            <Toolbar />
-                            <SearchPanel />
-                            <TableSelection showSelectAll />
-                            <PagingPanel />
-                        </Grid>
-                    </Paper>
+                                <Button
+                                    variant="fab"
+                                    color="primary"
+                                    aria-label="add"
+                                    className="add-btn"
+                                    onClick={this.toggleCreatePopup.bind(this)}>
+                                    +
+                            </Button>
+
+                                {this.state.showCreatePopup ?
+                                    <CreateCampaign
+                                        closePopup={this.toggleCreatePopup.bind(this)}
+                                    />
+                                    : null
+                                }
+
+                                {this.state.showDeletePopup ?
+                                    <DeleteCampaign
+                                        deleteId={this.state.deleteId}
+                                        closePopup={this.toggleDeletePopup.bind(this)}
+                                    />
+                                    : null
+                                }
+
+                                <SortingState
+                                    defaultSorting={[
+                                        { columnName: 'id', direction: 'asc' },
+                                        { columnName: 'name', direction: 'asc' },
+                                        { columnName: 'created_by', direction: 'asc' },
+                                        { columnName: 'url', direction: 'asc' }
+                                    ]}
+                                />
+                                <IntegratedSorting />
+                                <SearchState defaultValue="" />
+                                <IntegratedFiltering />
+                                <Table />
+                                <TableHeaderRow showSortingControls />
+                                <TableEditRow />
+                                <TableEditColumn 
+                                showEditCommand
+                                showDeleteCommand />
+                                <Toolbar />
+                                <SearchPanel />
+                                <TableSelection showSelectAll />
+                                <PagingPanel />
+                            </Grid>
+                        </Paper>
+                    </div>
                 </div>
             </div>
         );

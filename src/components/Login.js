@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import '../styles/login.css';
 import logo from '../images/Rivallogo.png';
-
+import NavBarComponent from './NavBarComponent';
 
 class Login extends Component {
 

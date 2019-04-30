@@ -29,20 +29,8 @@ import './App.css';
 
 const CardCreatorApp = () => (
     <Router>
-            <Navbar>
-                <NavbarBrand><img src={logo} className="nav-logo"/></NavbarBrand>
-                <Nav navbar>
-                    <EnsureLoggedIn invertCondition={true}>
-                        <button className="primary-button"><Link to="/login">Login</Link></button>
-                    </EnsureLoggedIn>
-                    <EnsureLoggedIn>
-                        <NavItem className="SingleLink"><Link to="/">Home</Link></NavItem>
-                        <NavItem className="SingleLink"><Link to="campaignview">Campaign View</Link></NavItem>
-                        <NavItem className="SingleLink"><Link to="/logout">LogOut</Link></NavItem>
-                    </EnsureLoggedIn>
-                </Nav>
-            </Navbar>
             <Switch>
+                <Route exact path="/activecard/:title/:overlaySrc/:resultTitle/:resultSrc" component={ActiveCard} />
                 <Route exact path="/login" component={Login} />
                 <EnsureLoggedIn>
                     <Route exact path="/" component={Home} />
