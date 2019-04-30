@@ -10,7 +10,9 @@ import CampaignSettings from './CampaignSettings';
 class TabView extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            updateId: this.props.updateId
+        }
         this.selectedCampaign = []
         this.toggle = this.toggle.bind(this);
     }
@@ -27,7 +29,7 @@ class TabView extends Component {
         this.loadCampaign()
     }
     loadCampaign(){
-        fetch('http://localhost:4000/api/campaigns/' + 4,{
+        fetch('http://localhost:4000/api/campaigns/' + this.state.updateId, {
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
@@ -38,6 +40,25 @@ class TabView extends Component {
                 sessionStorage.setItem('token', res.token);
                 this.selectedCampaign = res.data;
                 this.props.setState({ selectedCampaign: this.selectedCampaign })
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+        updatedCampaign(id) {
+        fetch('http://localhost:4000/api/campaigns/' + id, {
+            method:
+                'PUT',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                console.log("updated id: " + id)
+                console.log(res.data)
             })
             .catch(err => {
                 console.error(err);
@@ -78,7 +99,10 @@ class TabView extends Component {
                         <Row>
                             <Col sm="12">
                                 <h4>Overlay image for the scratch card</h4>
-                                <CardTemplateView {...this.props} setState={this.props.setState}></CardTemplateView>
+                                <CardTemplateView 
+                                    overlay
+                                    {...this.props}
+                                ></CardTemplateView>
                             </Col>
                         </Row>
                     </TabPane>
@@ -86,7 +110,7 @@ class TabView extends Component {
                         <Row>
                             <Col sm="12">
                                 <h4>A collection of card results for the campaign</h4>
-                                <CampaignCardResults {...this.props} setState={this.props.setState}></CampaignCardResults>
+                                <CampaignCardResults {...this.props}></CampaignCardResults>
                             </Col>
                         </Row>
                     </TabPane>
@@ -94,7 +118,7 @@ class TabView extends Component {
                         <Row>
                             <Col sm="12">
                                 <h4>The Campaign Settings</h4>
-                                <CampaignSettings selectedCampaign={this.selectedCampaign} {...this.props} setState={this.props.setState}></CampaignSettings>
+                                <CampaignSettings selectedCampaign={this.selectedCampaign} {...this.props}></CampaignSettings>
                             </Col>
                         </Row>
                     </TabPane>
