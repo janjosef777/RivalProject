@@ -70,6 +70,7 @@ class Home extends Component {
             deleteId: null,
             updatedId: null,
 
+
         };
         this.changeSelection = selection => this.setState({ selection });
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
@@ -179,7 +180,9 @@ class Home extends Component {
         const { campaignItems, columns, selection, dateColumns } = this.state;
         return (
             <div className="Home">
+                <h2>Scratch & Win Campaigns</h2>
                 <div className="container">
+
                     <span>
                         Total rows selected:
                 {' '}
@@ -212,8 +215,9 @@ class Home extends Component {
                                 variant="fab"
                                 color="primary"
                                 aria-label="add"
+                                className="add-btn"
                                 onClick={this.toggleCreatePopup.bind(this)}>
-                                Add
+                                +
                         </Button>
 
                             {this.state.showCreatePopup ?

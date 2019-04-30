@@ -9,6 +9,7 @@ import ActiveCard from './ActiveCard';
 import CampaignView from './components/CampaignView/index';
 import CreateCampaign from './components/CampaignCrud/CreateCampaign';
 import DeleteCampaign from './components/CampaignCrud/DeleteCampaign';
+import logo from '../src/images/Rivallogo.png';
 import {
     Collapse,
     Navbar,
@@ -28,12 +29,11 @@ import './App.css';
 
 const CardCreatorApp = () => (
     <Router>
-        <div>
-            <Navbar color="light" light expand="md">
-                <NavbarBrand>Rival Scratch Reward Manager</NavbarBrand>
-                <Nav className="ml-auto" navbar>
+            <Navbar>
+                <NavbarBrand><img src={logo} className="nav-logo"/></NavbarBrand>
+                <Nav navbar>
 
-                    <NavItem><Link to="/login">Login</Link></NavItem>
+                    <button className="primary-button"><Link to="/login">Login</Link></button>
                     <EnsureLoggedIn>
                         <NavItem className="SingleLink"><Link to="/">Home</Link></NavItem>
                         <NavItem className="SingleLink"><Link to="campaignview">Campaign View</Link></NavItem>
@@ -51,7 +51,6 @@ const CardCreatorApp = () => (
                     <Route exact path="/logout" component={Logout} />
                 </EnsureLoggedIn>
             </Switch>
-        </div>
     </Router>
 )
 export default CardCreatorApp;

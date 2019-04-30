@@ -51,9 +51,11 @@ class ImagesList extends Component {
 
     render() {
         return (
-            <div className='image-list-wrapper'>
-                <h1>Images</h1>
-                <Upload onUpload={this.onUpload.bind(this)} />
+            <div>
+                <div className='image-list-wrapper'>
+                    <h2>Images</h2>
+                    <Upload onUpload={this.onUpload.bind(this)} />
+                </div>
                 <div>
                     <ul className="image-list">
                     {this.props.images.map((image, idx) => 
