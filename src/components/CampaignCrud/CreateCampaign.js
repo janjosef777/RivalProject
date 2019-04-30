@@ -9,7 +9,8 @@ class CreateCampaign extends Component {
         super(props);
         this.state = {
             title: "",
-            estimatedParticipants: null
+            estimatedParticipants: null,
+            dateNow: new Date().toLocaleString()
         };
         this.handleTitle = this.handleTitle.bind(this);
         this.handleParticipants = this.handleParticipants.bind(this);
@@ -28,7 +29,8 @@ class CreateCampaign extends Component {
             body: JSON.stringify({
                 'name': this.state.title,
                 'template': null,
-                'estimated_participants': this.state.estimatedParticipants
+                'estimated_participants': this.state.estimatedParticipants,
+                'created_at': this.state.dateNow
             })
         })
             .then(res => res.json())

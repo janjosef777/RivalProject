@@ -62,6 +62,10 @@ class Home extends Component {
                 { name: 'isActive', title: 'Status' }
             ],
             dateColumns: ['createdAt'],
+            editingStateColumnExtensions: [
+                { columnName: 'id', editingEnabled: false },
+                { columnName: 'name', editingEnabled: false },
+              ],
             campaignItems: [],
             selection: [],
             showCreatePopup: false,
@@ -146,15 +150,13 @@ class Home extends Component {
                 deleteId : deleted["0"]
             })
             this.toggleDeletePopup();
-
         }
 
         if ( changed ) {
             this.setState({
                 updateId : changed["0"]
             })
-            this.toggleUpdate();
-            window.location.href = "/campaignview" + this.state.updateId;
+            window.location.href = "/campaignview/" + this.state.updateId;
 
         }
         this.setState({ campaignItems });
@@ -177,7 +179,13 @@ class Home extends Component {
     }
 
     render() {
-        const { campaignItems, columns, selection, dateColumns } = this.state;
+        const { 
+               campaignItems,
+               columns, 
+               selection, 
+               dateColumns,
+               editingStateColumnExtentions   
+            } = this.state;
         return (
             <div className="Home">
                 <h2>Scratch & Win Campaigns</h2>
@@ -196,6 +204,7 @@ class Home extends Component {
                         >
                             <EditingState
                                 onCommitChanges={this.commitChanges}
+                                columnExtensions={editingStateColumnExtentions}
                             />
                             <DateTypeProvider
                                 for={dateColumns}
