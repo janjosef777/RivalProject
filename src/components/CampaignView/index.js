@@ -21,6 +21,9 @@ const LinkButton = styled.a`
     position: fixed;
     bottom: 100px;
     right: 100px;
+    &:hover { 
+        background-color: yellow;
+    }
 `;
 
 
