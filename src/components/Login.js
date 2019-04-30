@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import '../styles/login.css';
 import logo from '../images/Rivallogo.png';
-
+import NavBarComponent from './NavBarComponent';
+import { Redirect } from 'react-router-dom'
 
 class Login extends Component {
 
@@ -10,7 +11,8 @@ class Login extends Component {
         super(props);
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            redirect: false
         };
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
@@ -31,11 +33,18 @@ class Login extends Component {
                     window.alert("Incorrect Username/Password. Please try again")
                 } else {
                     sessionStorage.setItem("token", res.token)
-                    window.location.href = '/';
+                    //window.location.href = '/';
+                    this.setState({redirect: true})
                 }
             }).catch(err => {
                 console.error(err);
             })
+    }
+
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/' />
+        }
     }
 
     logUserIn(json) {
@@ -52,6 +61,7 @@ class Login extends Component {
     render() {
         return (
             <div className="loginPage" >
+                {this.renderRedirect()}
                 <div className="loginForm">
                     <img src={logo} className="logoImage" />
                     <Form>
