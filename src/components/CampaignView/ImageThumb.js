@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
 import '../../styles/campaignView.css';
 
 class ImageThumb extends Component {

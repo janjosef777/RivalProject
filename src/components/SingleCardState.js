@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import contentEditable from './contentEditable'
 import {Input} from 'reactstrap';
 
 const CardFrame = styled.div`
