@@ -41,7 +41,10 @@ class EditableTitle extends React.Component {
     }
 
     handleClick = (e) => {
-        this.setState({editing: true});
+        if (this.props.cardResults[this.props.selectedIndex]) {
+            this.setState({editing: true});
+            this.setState({titleVal: this.props.titleVal});
+        }   
     }
 
     handleChange(e) {
@@ -49,6 +52,7 @@ class EditableTitle extends React.Component {
         this.setState({
             titleVal: e.target.value
         });
+        this.titleVal = e.target.value
     }
 
     handleBlur = (e) => {
@@ -59,8 +63,8 @@ class EditableTitle extends React.Component {
                 title: e.target.value
             });
         } else if (this.props.index) {
+            console.log(this.props.cardResults);
             var tempCardResults = this.props.cardResults;
-            console.log(this.props.selectedIndex);
             var tempEntry = tempCardResults[this.props.selectedIndex];
             tempEntry.title = e.target.value;
             tempCardResults.splice(this.props.selectedIndex, 1, tempEntry)
@@ -77,7 +81,7 @@ class EditableTitle extends React.Component {
                     framePadding={this.props.framePadding}
                     borderStyle={this.props.borderStyle}
                     onClick={this.handleClick}
-                >{this.state.titleVal}</Title>
+                >{this.props.titleVal}</Title>
             )
         } else {
             return (
@@ -103,8 +107,11 @@ class SingleCardState extends React.Component {
             this.imgAlt = 'card overlay image'
         } else if (this.props.index) {
             // this is the case for viewing card results by index
+            this.titleVal = this.props.cardResults[this.props.selectedIndex] ?
+                this.props.cardResults[this.props.selectedIndex].title : null;
             this.imgAlt = 'card result image'
-            this.imgSrc = this.props.results[this.props.selectedIndex];
+            this.imgSrc = this.props.cardResults[this.props.selectedIndex] ?
+                this.props.cardResults[this.props.selectedIndex].image : null;
         } else {
             this.titleVal = this.props.title;
             this.imgSrc = this.props.imgSrc;

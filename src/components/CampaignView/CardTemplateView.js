@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import '../../styles/campaignView.css';
 import SingleCardState from '../SingleCardState'
+import {
+    Card, CardImg, CardText, CardBody,
+    CardTitle, CardSubtitle, Button, Container, Row, Col
+} from 'reactstrap';
+
 
 // const imgSrc = '/uploads/IMG_20180902_150937.jpeg'
 // const imgAlt = 'card overlay image'
