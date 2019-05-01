@@ -1,11 +1,4 @@
 import React, { Component } from 'react';
-//import Upload from '../upload/Upload';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
-import '../../styles/campaignView.css';
-import TabView from './TabView';
 
 
 class CampaignSettings extends Component {

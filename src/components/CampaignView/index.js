@@ -6,9 +6,7 @@ import {
 } from 'reactstrap';
 import '../../styles/campaignView.css';
 import AssetsView from './AssetsView';
-import CardTemplateView from './CardTemplateView';
 import TabView from './TabView';
-import { Link } from '@material-ui/core';
 import styled from 'styled-components';
 import NavBarComponent from '../NavBarComponent';
 
@@ -34,8 +32,7 @@ class CampaignView extends Component {
         this.state = {
             activeTab: '1', //tabl 0 is overlay, tab 1 is card results
             images: [],
-            results: [],
-            resultTitles: [],
+            cardResults: [],
             selectedCampaign: [],
             title: 'THANKS FOR PARTICIPATING!',
             overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
@@ -106,12 +103,11 @@ class CampaignView extends Component {
                         <TabView {...this.state} setState={this.setState}></TabView>
 
 
-                        <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" className="demo-btn"><i class="fas fa-external-link-alt"></i></LinkButton>
+                        <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="demo-btn"><i class="fas fa-external-link-alt"></i></LinkButton>
                     </div>
 
                 </div>
             </div>
-
         )
     }
 }

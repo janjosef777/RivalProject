@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-//import Upload from '../upload/Upload';
+import '../../styles/campaignView.css';
+import SingleCardState from '../SingleCardState'
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col
 } from 'reactstrap';
-import '../../styles/campaignView.css';
-import TabView from './TabView';
-import SingleCardState from '../SingleCardState'
+
 
 // const imgSrc = '/uploads/IMG_20180902_150937.jpeg'
 // const imgAlt = 'card overlay image'
@@ -128,6 +127,19 @@ class CardTemplateView extends Component {
                     <Button onClick={this.handleSubmit}>SAVE</Button>
                 </div>
 
+            )
+        } else if (this.props.index) {
+            return (
+                <div className='wrapper'>
+                    {/* <div className="ImageHolder"><img src={this.props.overlayImg} alt="Your Scratch Image"/></div> */}
+                    <SingleCardState
+                        editable
+                        index
+                        {...this.props}
+                        imgWidth={imgWidth}
+                        imgHeight={imgHeight}
+                    />
+                </div>
             )
         }
     }
