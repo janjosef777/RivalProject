@@ -28,7 +28,7 @@ class Logout extends Component {
             // <div>
             //     <NavBarComponent/>
             // </div>
-            <Redirect to='/login'/>
+            <Redirect to='/'/>
          )
     }
 }
