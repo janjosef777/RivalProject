@@ -41,7 +41,7 @@ class EditableTitle extends React.Component {
     }
 
     handleClick = (e) => {
-        if (this.props.cardResults[this.props.selectedIndex]) {
+        if (this.props.overlay || this.props.cardResults[this.props.selectedIndex]) {
             this.setState({editing: true});
             this.setState({titleVal: this.props.titleVal});
         }   
