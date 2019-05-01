@@ -1,4 +1,4 @@
-const auth = require('../auth/index')
+const auth = require('../../auth/index')
 
 module.exports = {
     post: (req, res, next) => {
