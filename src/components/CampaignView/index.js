@@ -37,8 +37,9 @@ class CampaignView extends Component {
             results: [],
             resultTitles: [],
             selectedCampaign: [],
-            title: null, //'THANKS FOR PARTICIPATING!',
+            title: 'THANKS FOR PARTICIPATING!',
             overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
+            overlayImgId: ' ',
             selectedIndex: null,
             updateId: this.props.location.state ? this.props.location.state.updateId : 0
         }
@@ -86,6 +87,7 @@ class CampaignView extends Component {
             .catch(err => {
                 console.error(err);
             })
+
     }
 
     componentDidMount() {

@@ -132,6 +132,7 @@ class SingleCardState extends React.Component {
                     borderStyle={borderStyle}
                 >{this.props.title}</Title>}
                 <Image
+                    {...this.props}
                     width={this.props.imgWidth}
                     height={this.props.imgHeight}
                     src={this.imgSrc}
