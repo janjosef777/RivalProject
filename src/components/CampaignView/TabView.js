@@ -45,25 +45,6 @@ class TabView extends Component {
                 console.error(err);
             })
     }
-
-        updatedCampaign(id) {
-        fetch('http://localhost:4000/api/campaigns/' + id, {
-            method:
-                'PUT',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                console.log("updated id: " + id)
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
     
     render() {
         return (

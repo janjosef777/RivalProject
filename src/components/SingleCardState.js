@@ -108,7 +108,7 @@ class SingleCardState extends React.Component {
         } else {
             this.titleVal = this.props.title;
             this.imgSrc = this.props.imgSrc;
-            this.ingAlt = this.props.imgAlt;
+            this.imgAlt = this.props.imgAlt;
         }
         const framePadding = 25;
         const frameColor = 'lightgray';
@@ -136,6 +136,7 @@ class SingleCardState extends React.Component {
                     borderStyle={borderStyle}
                 >{this.props.title}</Title>}
                 <Image
+                    {...this.props}
                     width={this.props.imgWidth}
                     height={this.props.imgHeight}
                     src={this.imgSrc}
