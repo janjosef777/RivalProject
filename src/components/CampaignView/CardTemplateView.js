@@ -20,10 +20,13 @@ class CardTemplateView extends Component {
             overlayImg: "../../images/Rivallogo.png",
             title: this.props.titleVal,
             image: this.props.image,
-            size: ""
+            size: "",
+            imageId: ''
         }
 
         this.handleSubmit=this.handleSubmit.bind(this);
+        this.loadTemplate=this.loadTemplate.bind(this);
+        this.getTemplateImg=this.getTemplateImg.bind(this);
     }
     
     handleSubmit() {
@@ -52,6 +55,62 @@ class CardTemplateView extends Component {
                 console.error(err);
             })
 
+    }
+
+    loadTemplate() {
+        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.template, {
+            method:
+                'GET',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            },
+            
+        })
+
+        .then(res => res.json())
+        .then(res => {
+            sessionStorage.setItem('token', res.token);
+            console.log(res.data);
+            this.setState({
+                title: res.data.title,
+                imageId: res.data.id
+            })
+        })
+        
+        .catch(err => {
+            console.error(err);
+        })
+    }
+
+    getTemplateImg() {
+        fetch('http://localhost:4000/api/images/' + this.state.imageId, {
+            method:
+                'GET',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            },
+            
+        })
+
+        .then(res => res.json())
+        .then(res => {
+            sessionStorage.setItem('token', res.token);
+            console.log(res.data);
+            this.setState({
+                image: res.data.filename,
+            })
+        })
+        
+        .catch(err => {
+            console.error(err);
+        })
+
+    }
+
+    componentDidMount(){
+        this.loadTemplate()
     }
 
     render() {
