@@ -37,8 +37,9 @@ class CampaignView extends Component {
             results: [],
             resultTitles: [],
             selectedCampaign: [],
-            title: null, //'THANKS FOR PARTICIPATING!',
+            title: 'THANKS FOR PARTICIPATING!',
             overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
+            overlayImgId: ' ',
             selectedIndex: null,
             updateId: this.props.location.state ? this.props.location.state.updateId : 0
         }
@@ -68,14 +69,11 @@ class CampaignView extends Component {
     shuffle(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
     
-        // While there remain elements to shuffle...
         while (0 !== currentIndex) {
     
-        // Pick a remaining element...
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
     
-        // And swap it with the current element.
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
