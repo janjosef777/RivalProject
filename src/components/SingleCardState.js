@@ -104,7 +104,7 @@ class SingleCardState extends React.Component {
         } else {
             this.titleVal = this.props.title;
             this.imgSrc = this.props.imgSrc;
-            this.ingAlt = this.props.imgAlt;
+            this.imgAlt = this.props.imgAlt;
         }
         const framePadding = 25;
         const frameColor = 'lightgray';

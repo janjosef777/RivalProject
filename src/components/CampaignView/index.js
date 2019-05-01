@@ -105,7 +105,6 @@ class CampaignView extends Component {
 
 
                         <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" className="demo-btn"><i class="fas fa-external-link-alt"></i></LinkButton>
-                        <Button>SAVE</Button>
                     </div>
 
                 </div>

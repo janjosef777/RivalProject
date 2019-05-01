@@ -12,10 +12,15 @@ class CampaignCardResults extends Component {
     constructor(props) {
         super(props)
 
+
+        this.triggerDelete=this.triggerDelete.bind(this);
     }
 
-    removeImage(e){
- 
+    triggerDelete(cardresult, idx){
+        let imageList = [this.props.results]
+        imageList.splice(idx, 1);
+        this.props.setState({results: imageList});
+        console.log(imageList);
     }
 
     componentDidMount() {
@@ -27,7 +32,14 @@ class CampaignCardResults extends Component {
             <div>
                 <ul className="results-list">
                     {this.props.results.map((cardresult,idx) => 
-                        <li key={idx}><button onClick={this.removeImage.bind(this)} className="delete-img">X</button><img src={cardresult} alt="Selected Prize Image" className="img-thumbnail result-img" /></li>
+                        <li key={idx}>
+                        <button onClick={(e)=>{
+                            this.triggerDelete(cardresult, idx)}}className="delete-img">
+                        X
+                        </button>
+                        <img src={cardresult} alt="Selected Prize Image" className="img-thumbnail result-img" />
+                            
+                        </li>
                     )}
                 </ul>
             </div>

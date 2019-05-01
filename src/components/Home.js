@@ -92,7 +92,6 @@ class Home extends Component {
 
         this.state = {
             columns: [
-                { name: 'actions', title: 'actions' },
                 { name: 'id', title: 'ID' },
                 { name: 'name', title: 'Campaign' },
                 { name: 'createdBy', title: 'Created By' },
@@ -102,7 +101,9 @@ class Home extends Component {
             dateColumns: ['createdAt'],
             editingStateColumnExtensions: [
                 { columnName: 'id', editingEnabled: false },
-                { columnName: 'name', editingEnabled: false },
+                { columnName: 'createdBy', editingEnabled: false },
+                { columnName: 'createdAt', editingEnabled: false },
+                { columnName: 'url', editingEnabled: false },
               ],
             campaignItems: [],
             selection: [],
@@ -130,6 +131,28 @@ class Home extends Component {
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                this.setState({ campaignItems: res.data });
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+    editCampaignName(id){
+        fetch('http://localhost:4000/api/campaigns' + id, {
+            method: 
+                "PUT",
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+            },
+            body: JSON.stringify({
+                "title": ""
+            }),
         })
             .then(res => res.json())
             .then(res => {
@@ -195,7 +218,7 @@ class Home extends Component {
                columns, 
                selection, 
                dateColumns,
-               editingStateColumnExtentions   
+               editingStateColumnExtensions   
             } = this.state;
         return (
             <div>
@@ -218,6 +241,7 @@ class Home extends Component {
                             >
                                 <EditingState
                                     onCommitChanges={this.commitChanges}
+                                    columnExtensions={editingStateColumnExtensions}
                                 />
                                 <DateTypeProvider
                                     for={dateColumns}
@@ -240,7 +264,7 @@ class Home extends Component {
                                     className="add-btn"
                                     onClick={this.toggleCreatePopup.bind(this)}>
                                     +
-                            </Button>
+                                </Button>
 
                                 {this.state.showCreatePopup ?
                                     <CreateCampaign
