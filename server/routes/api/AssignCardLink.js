@@ -1,5 +1,5 @@
-const resultChooser = require('../resultChooser/');
-const db = require('../db');
+const resultChooser = require('../../resultChooser');
+const db = require('../../db');
 
 const FRONTEND_BASE_URL = process.env.NODE_ENV == 'development' ? 'http://localhost:3100' : null;
 
