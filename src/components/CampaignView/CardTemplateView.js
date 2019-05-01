@@ -22,6 +22,8 @@ class CardTemplateView extends Component {
             image: this.props.image,
             size: ""
         }
+
+        this.handleSubmit=this.handleSubmit.bind(this);
     }
     
     handleSubmit() {
@@ -34,7 +36,6 @@ class CardTemplateView extends Component {
                 "Content-type": "application/json"
             },
             body: JSON.stringify({
-                'id': "",
                 'title': this.state.title,
                 'image': null,
                 'size': this.state.size
