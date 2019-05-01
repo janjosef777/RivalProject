@@ -41,7 +41,7 @@ class EditableTitle extends React.Component {
     }
 
     handleClick = (e) => {
-        if (this.props.cardResults[this.props.selectedIndex]) {
+        if (this.props.overlay || this.props.cardResults[this.props.selectedIndex]) {
             this.setState({editing: true});
             this.setState({titleVal: this.props.titleVal});
         }   
@@ -108,10 +108,10 @@ class SingleCardState extends React.Component {
         } else if (this.props.index) {
             // this is the case for viewing card results by index
             this.titleVal = this.props.cardResults[this.props.selectedIndex] ?
-                this.props.cardResults[this.props.selectedIndex].title : null;
+                this.props.cardResults[this.props.selectedIndex].title : '';
             this.imgAlt = 'card result image'
             this.imgSrc = this.props.cardResults[this.props.selectedIndex] ?
-                this.props.cardResults[this.props.selectedIndex].image : null;
+                this.props.cardResults[this.props.selectedIndex].image : '';
         } else {
             this.titleVal = this.props.title;
             this.imgSrc = this.props.imgSrc;
