@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import Upload from '../../upload/Upload';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
 import '../../styles/campaignView.css';
 import ImageThumb from './ImageThumb';
 
@@ -59,7 +55,7 @@ class ImagesList extends Component {
                 <div>
                     <ul className="image-list">
                     {this.props.images.map((image, idx) => 
-                        <li key={idx}><ImageThumb imagePath={image.path} className="img-thumbnail" {...this.props}></ImageThumb></li>
+                        <li key={idx}><ImageThumb imagePath={image.path} imageId={image.id} className="img-thumbnail" {...this.props}></ImageThumb></li>
                     )}
                     </ul>
                 </div>

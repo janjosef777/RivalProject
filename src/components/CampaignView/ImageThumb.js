@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
 import '../../styles/campaignView.css';
 
 class ImageThumb extends Component {
@@ -13,10 +9,14 @@ class ImageThumb extends Component {
 
     setImage(e) {
         if(this.props.activeTab === '1'){
-            this.props.setState({overlayImg: e.target.src});
+            this.props.setState({overlayImg: e.target.src, overlayImgId: e.target.alt});
         } else if(this.props.activeTab === '2'){
-            var newArray = this.props.results.slice();
-            newArray.push(e.target.src);
+            var newArray = this.props.cardResults;
+            newArray.push({
+                image: e.target.src,
+                title: '',
+                prize: null
+            });
             this.props.setState({results:newArray});
         }  
     }
@@ -25,7 +25,7 @@ class ImageThumb extends Component {
     render() {
         return (
             <div>
-                <img src={this.props.imagePath} alt="Card Image" className="img-thumbnail" onClick={this.setImage.bind(this)} />
+                <img src={this.props.imagePath} alt={this.props.imageId} className="img-thumbnail" onClick={this.setImage.bind(this)} />
             </div>
         );
     }

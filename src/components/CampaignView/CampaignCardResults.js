@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
-//import Upload from '../upload/Upload';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
 import '../../styles/campaignView.css';
-import TabView from './TabView';
 
 
 class CampaignCardResults extends Component {
     constructor(props) {
         super(props)
 
+        this.setSelectedIndex = this.setSelectedIndex.bind(this);
+        this.triggerDelete=this.triggerDelete.bind(this);
     }
 
-    removeImage(e){
- 
+    triggerDelete(idx){
+        let imageList = this.props.results;
+        console.log(imageList);
+        imageList.splice(idx, 1);
+        this.props.setState({results: imageList});
+        console.log(imageList);
+    }
+
+    setSelectedIndex = (idx) => {
+        this.props.setState({selectedIndex: idx});
+        //console.log(this.props.selectedIndex);
     }
 
     componentDidMount() {
@@ -26,8 +31,19 @@ class CampaignCardResults extends Component {
         return (
             <div>
                 <ul className="results-list">
-                    {this.props.results.map((cardresult,idx) => 
-                        <li key={idx}><button onClick={this.removeImage.bind(this)} className="delete-img">X</button><img src={cardresult} alt="Selected Prize Image" className="img-thumbnail result-img" /></li>
+                    {this.props.cardResults.map((cardresult,idx) => 
+                        <li key={idx}>
+                            <button onClick={(e) => {
+                                this.triggerDelete(idx)
+                            }} className="delete-img">
+                                X
+                        </button>
+                        <img 
+                            src={cardresult.image} 
+                            onClick={(e) => {this.setSelectedIndex(idx)}}
+                            alt="Selected Prize Image" 
+                            className="img-thumbnail result-img" 
+                        /></li>
                     )}
                 </ul>
             </div>

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import contentEditable from './contentEditable'
 import {Input} from 'reactstrap';
 
 const CardFrame = styled.div`
@@ -42,7 +41,10 @@ class EditableTitle extends React.Component {
     }
 
     handleClick = (e) => {
-        this.setState({editing: true});
+        if (this.props.cardResults[this.props.selectedIndex]) {
+            this.setState({editing: true});
+            this.setState({titleVal: this.props.titleVal});
+        }   
     }
 
     handleChange(e) {
@@ -50,6 +52,7 @@ class EditableTitle extends React.Component {
         this.setState({
             titleVal: e.target.value
         });
+        this.titleVal = e.target.value
     }
 
     handleBlur = (e) => {
@@ -60,10 +63,13 @@ class EditableTitle extends React.Component {
                 title: e.target.value
             });
         } else if (this.props.index) {
-            var titles = this.props.resultTitles;
-            titles[this.props.index] = e.target.value;
+            console.log(this.props.cardResults);
+            var tempCardResults = this.props.cardResults;
+            var tempEntry = tempCardResults[this.props.selectedIndex];
+            tempEntry.title = e.target.value;
+            tempCardResults.splice(this.props.selectedIndex, 1, tempEntry)
             this.props.setState({
-                resultTitles: titles
+                cardResults: tempCardResults
             });
         }
     }
@@ -75,7 +81,7 @@ class EditableTitle extends React.Component {
                     framePadding={this.props.framePadding}
                     borderStyle={this.props.borderStyle}
                     onClick={this.handleClick}
-                >{this.state.titleVal}</Title>
+                >{this.props.titleVal}</Title>
             )
         } else {
             return (
@@ -101,10 +107,15 @@ class SingleCardState extends React.Component {
             this.imgAlt = 'card overlay image'
         } else if (this.props.index) {
             // this is the case for viewing card results by index
+            this.titleVal = this.props.cardResults[this.props.selectedIndex] ?
+                this.props.cardResults[this.props.selectedIndex].title : null;
+            this.imgAlt = 'card result image'
+            this.imgSrc = this.props.cardResults[this.props.selectedIndex] ?
+                this.props.cardResults[this.props.selectedIndex].image : null;
         } else {
             this.titleVal = this.props.title;
             this.imgSrc = this.props.imgSrc;
-            this.ingAlt = this.props.imgAlt;
+            this.imgAlt = this.props.imgAlt;
         }
         const framePadding = 25;
         const frameColor = 'lightgray';
@@ -132,6 +143,7 @@ class SingleCardState extends React.Component {
                     borderStyle={borderStyle}
                 >{this.props.title}</Title>}
                 <Image
+                    {...this.props}
                     width={this.props.imgWidth}
                     height={this.props.imgHeight}
                     src={this.imgSrc}
