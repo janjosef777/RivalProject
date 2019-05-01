@@ -18,16 +18,15 @@ class CardTemplateView extends Component {
         super(props)
         this.state ={
             overlayImg: "../../images/Rivallogo.png",
-            title: this.props.titleVal,
-            image: this.props.image,
-            size: ""
+            title: this.props.title,
+            image: this.props.overlayImg,
+            size: 1
         }
 
         this.handleSubmit=this.handleSubmit.bind(this);
     }
     
     handleSubmit() {
-        console.log(this.state.title);
         fetch('http://localhost:4000/api/overlay/', {
             method:
                 'POST',
@@ -36,8 +35,8 @@ class CardTemplateView extends Component {
                 "Content-type": "application/json"
             },
             body: JSON.stringify({
-                'title': this.state.title,
-                'image': null,
+                'title': this.props.title,
+                'image': this.props.overlayImg,
                 'size': this.state.size
             })
         })
