@@ -17,11 +17,41 @@ class CardTemplateView extends Component {
     constructor(props) {
         super(props)
         this.state ={
-            overlayImg: "../../images/Rivallogo.png"
+            overlayImg: "../../images/Rivallogo.png",
+            title: this.props.titleVal,
+            image: this.props.image,
+            size: ""
         }
     }
     
-    
+    handleSubmit() {
+        console.log(this.state.title);
+        fetch('http://localhost:4000/api/overlay/', {
+            method:
+                'POST',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                'id': "",
+                'title': this.state.title,
+                'image': null,
+                'size': this.state.size
+            })
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                this.setState({
+                    id: res.data.id
+                })
+            })
+            .catch(err => {
+                console.error(err);
+            })
+
+    }
 
     render() {
         if (this.props.overlay){
@@ -35,7 +65,9 @@ class CardTemplateView extends Component {
                         imgWidth={imgWidth}
                         imgHeight={imgHeight}
                     />
+                    <Button onClick={this.handleSubmit}>SAVE</Button>
                 </div>
+
             )
         }
     }
