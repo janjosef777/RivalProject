@@ -15,101 +15,12 @@ const imgHeight = 300;
 class CardTemplateView extends Component {
     constructor(props) {
         super(props)
-        this.state ={
-            overlayImg: "../../images/Rivallogo.png",
-            title: this.props.titleVal,
-            image: this.props.image,
-            size: "",
-            imageId: ''
-        }
 
-        this.handleSubmit=this.handleSubmit.bind(this);
-        this.loadTemplate=this.loadTemplate.bind(this);
-        this.getTemplateImg=this.getTemplateImg.bind(this);
     }
     
-    handleSubmit() {
-        console.log(this.state.title);
-        fetch('http://localhost:4000/api/overlay/', {
-            method:
-                'POST',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                'title': this.state.title,
-                'image': null,
-                'size': this.state.size
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                this.setState({
-                    id: res.data.id
-                })
-            })
-            .catch(err => {
-                console.error(err);
-            })
-
-    }
-
-    loadTemplate() {
-        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.template, {
-            method:
-                'GET',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            
-        })
-
-        .then(res => res.json())
-        .then(res => {
-            sessionStorage.setItem('token', res.token);
-            console.log(res.data);
-            this.setState({
-                title: res.data.title,
-                imageId: res.data.id
-            })
-        })
-        
-        .catch(err => {
-            console.error(err);
-        })
-    }
-
-    getTemplateImg() {
-        fetch('http://localhost:4000/api/images/' + this.state.imageId, {
-            method:
-                'GET',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            
-        })
-
-        .then(res => res.json())
-        .then(res => {
-            sessionStorage.setItem('token', res.token);
-            console.log(res.data);
-            this.setState({
-                image: res.data.filename,
-            })
-        })
-        
-        .catch(err => {
-            console.error(err);
-        })
-
-    }
 
     componentDidMount(){
-        this.loadTemplate()
+
     }
 
     render() {
@@ -124,7 +35,6 @@ class CardTemplateView extends Component {
                         imgWidth={imgWidth}
                         imgHeight={imgHeight}
                     />
-                    <Button onClick={this.handleSubmit}>SAVE</Button>
                 </div>
 
             )
