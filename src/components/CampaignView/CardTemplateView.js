@@ -37,7 +37,7 @@ class CardTemplateView extends Component {
                     {/* <div className="ImageHolder"><img src={this.props.overlayImg} alt="Your Scratch Image"/></div> */}
                     <SingleCardState
                         editable
-                        index = {this.props.selectedIndex}
+                        index
                         {...this.props}
                         imgWidth={imgWidth}
                         imgHeight={imgHeight}

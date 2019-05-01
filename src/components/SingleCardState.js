@@ -59,10 +59,13 @@ class EditableTitle extends React.Component {
                 title: e.target.value
             });
         } else if (this.props.index) {
-            var titles = this.props.resultTitles;
-            titles[this.props.index] = e.target.value;
+            var tempCardResults = this.props.cardResults;
+            console.log(this.props.selectedIndex);
+            var tempEntry = tempCardResults[this.props.selectedIndex];
+            tempEntry.title = e.target.value;
+            tempCardResults.splice(this.props.selectedIndex, 1, tempEntry)
             this.props.setState({
-                resultTitles: titles
+                cardResults: tempCardResults
             });
         }
     }
