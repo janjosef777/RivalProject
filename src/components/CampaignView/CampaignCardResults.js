@@ -17,7 +17,8 @@ class CampaignCardResults extends Component {
     }
 
     triggerDelete(cardresult, idx){
-        let imageList = [this.props.results]
+        let imageList = this.props.results;
+        console.log(imageList);
         imageList.splice(idx, 1);
         this.props.setState({results: imageList});
         console.log(imageList);

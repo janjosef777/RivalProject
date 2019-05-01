@@ -15,10 +15,11 @@ class ImageThumb extends Component {
         if(this.props.activeTab === '1'){
             this.props.setState({overlayImg: e.target.src});
         } else if(this.props.activeTab === '2'){
-            var newImageArray = this.props.results.slice();
+            var newImageArray = this.props.results;
             newImageArray.push(e.target.src);
             this.props.setState({results:newImageArray});
             console.log(newImageArray);
+            
         }  
     }
 

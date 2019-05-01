@@ -101,6 +101,7 @@ class Home extends Component {
             dateColumns: ['createdAt'],
             editingStateColumnExtensions: [
                 { columnName: 'id', editingEnabled: false },
+                { columnName: 'name', editingEnabled: false },
                 { columnName: 'createdBy', editingEnabled: false },
                 { columnName: 'createdAt', editingEnabled: false },
                 { columnName: 'url', editingEnabled: false },
