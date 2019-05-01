@@ -6,9 +6,7 @@ import {
 } from 'reactstrap';
 import '../../styles/campaignView.css';
 import AssetsView from './AssetsView';
-import CardTemplateView from './CardTemplateView';
 import TabView from './TabView';
-import { Link } from '@material-ui/core';
 import styled from 'styled-components';
 import NavBarComponent from '../NavBarComponent';
 
@@ -36,6 +34,7 @@ class CampaignView extends Component {
             images: [],
             results: [],
             resultTitles: [],
+            cardResults: [],
             selectedCampaign: [],
             title: 'THANKS FOR PARTICIPATING!',
             overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
