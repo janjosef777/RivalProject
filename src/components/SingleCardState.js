@@ -101,6 +101,8 @@ class SingleCardState extends React.Component {
             this.imgAlt = 'card overlay image'
         } else if (this.props.index) {
             // this is the case for viewing card results by index
+            this.imgAlt = 'card result image'
+            this.imgSrc = this.props.results[this.props.selectedIndex];
         } else {
             this.titleVal = this.props.title;
             this.imgSrc = this.props.imgSrc;

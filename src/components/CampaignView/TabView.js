@@ -110,6 +110,10 @@ class TabView extends Component {
                         <Row>
                             <Col sm="12">
                                 <h4>A collection of card results for the campaign</h4>
+                                <CardTemplateView
+                                    index
+                                    {...this.props}
+                                ></CardTemplateView>
                                 <CampaignCardResults {...this.props}></CampaignCardResults>
                             </Col>
                         </Row>

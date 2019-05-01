@@ -37,6 +37,19 @@ class CardTemplateView extends Component {
                     />
                 </div>
             )
+        } else if (this.props.index) {
+            return (
+                <div className='wrapper'>
+                    {/* <div className="ImageHolder"><img src={this.props.overlayImg} alt="Your Scratch Image"/></div> */}
+                    <SingleCardState
+                        editable
+                        index = {this.props.selectedIndex}
+                        {...this.props}
+                        imgWidth={imgWidth}
+                        imgHeight={imgHeight}
+                    />
+                </div>
+            )
         }
     }
 }
