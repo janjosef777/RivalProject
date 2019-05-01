@@ -1,8 +1,9 @@
 const sharp = require('sharp');
-const fnHelper = require('../io/filename-helper');
+const fnHelper = require('../../io/filename-helper');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
-const db = require('../db');
+const db = require('../../db');
+const urls = require('../../urls');
 const uploadUrl = '/uploads/'; // Start with and end with a slash
 
 module.exports = {
@@ -43,7 +44,7 @@ module.exports = {
             const image = sharp(tempPath);
             image.metadata().then(metadata => {
 
-                const dir = 'public' + uploadUrl;
+                const dir = uploadUrl;
                 const filename = fnHelper.ensureUnique(dir,
                     req.file.originalname,
                     metadata.format);
@@ -53,7 +54,7 @@ module.exports = {
                         fs.unlink(tempPath, handleErr);
                         return handleErr(err, res, 500);
                     }
-                    image.toFile(dir + filename, (err, savedImg) => {
+                    image.toFile(__dirname + '/../../..' + dir + filename, (err, savedImg) => {
                         fs.unlink(tempPath, handleErr);
                         if(err)
                             return handleErr(err, res, 500);
@@ -65,7 +66,7 @@ module.exports = {
                         db.images.add(jsonImage, (err, id) => {
                             if(err)
                                 return handleErr(err, res, 500);
-                            jsonImage.path = uploadUrl + filename;
+                            jsonImage.path = urls.baseUrl + uploadUrl + filename;
                             jsonImage.id = id
 
                             // Success
@@ -95,7 +96,7 @@ module.exports = {
                 return handleErr(null, res, 404);
 
             // Delete image file
-            fs.unlink('public' + uploadUrl + image.filename, err => {
+            fs.unlink(uploadUrl + image.filename, err => {
                 if(err)
                     return handleErr(err, res, 500);
                 
