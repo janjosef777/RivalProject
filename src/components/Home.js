@@ -204,7 +204,6 @@ class Home extends Component {
         const CellComponent = ({ children, row, ...restProps }) => (
             <TableEditColumn.Cell row={row} {...restProps}>
                 {children}
-                />
                     <TableEditColumn.Command
                         id="custom"
                         class="fas fa-edit"
