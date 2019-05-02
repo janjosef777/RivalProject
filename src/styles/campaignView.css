@@ -37,7 +37,7 @@ h4{
 }
 
 .sub-wrapper {
-    margin: 50px 50px 50px 0px;
+    margin: 50px 10px 50px 0px;
 }
 
 .image-list-wrapper{
@@ -52,21 +52,30 @@ h4{
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
-    height: 70vh;
-    overflow-y: scroll;
+    height: 90vh;
+    overflow-x: scroll;
 }
 
 .results-list{
-  height: 60vh;
-  overflow: scroll;
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 10px;
+  padding: 10px;
+  border-top: 1px dotted #222;
 }
 
-/* .results-list li{
-  height: 150px;
-  border-bottom: 1px dotted #999;
+.results-list img{
+  height: 200px;
+}
+
+.results-list li{
+  flex: 0 0 auto;
   display: flex;
-  align-items: center;
-} */
+  flex-direction: column;
+  text-align: center;
+}
 
 .img-thumbnail{
     width: 150px;
@@ -91,6 +100,7 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
 
 .nav-item{
     cursor: pointer;
+    width: 50%;
 }
 
 .ImageHolder{
@@ -186,13 +196,13 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
   }
 
   .input-section{
-    width: 100%;
-    margin-bottom: 20px;
+    margin: 20px 20px 0 0;
   }
 
   .input-section input{
-    width: 100%;
     padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
   }
 
   .input-section input:focus{
@@ -205,28 +215,42 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
     justify-content: space-between;
   }
 
-  .fa-external-link-alt{
-    font-size: 1.7rem;
-  }
-
-  .demo-btn{
+  .fas{
     text-decoration: none;
-    background: #222;
-    width: 65px;
-    height: 65px;
-    color: #fff;
+    color: #222;
     border: none;
-    border-radius: 50%;
-    padding: 20px;
+    padding: 5px;
   }
 
-  .demo-btn:hover, .demo-btn:focus{
+  .fas:hover, .fas:focus{
     text-decoration: none;
     background: #fff;
     color: #54AE70;
   }
 
-  .fa-link{
-    font-size: 1.5rem;
+  .fas{
+    font-size: 2rem;
     color: #222;
+  }
+
+  .settings-wrapper{
+    padding: 20px 7vw;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .campaign-main-info, .campaign-main-btns{
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .eWfqod{
+    position: initial;
+    background: #fff;
+    border: none;
+    margin: 0;
+  }
+
+  .eWfqod:hover{
+    background: none;
   }

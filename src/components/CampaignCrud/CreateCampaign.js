@@ -11,6 +11,7 @@ class CreateCampaign extends Component {
         this.state = {
             id: "",
             title: "",
+            templateId: "",
             estimatedParticipants: null,
             dateNow: new Date().toLocaleString(),
             redirect: false
@@ -18,6 +19,7 @@ class CreateCampaign extends Component {
         this.handleTitle = this.handleTitle.bind(this);
         this.handleParticipants = this.handleParticipants.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.saveTemplate = this.saveTemplate.bind(this);
     }
 
     renderRedirect = () => {
@@ -30,8 +32,39 @@ class CreateCampaign extends Component {
         }
     }
 
+
     handleSubmit() {
-        console.log(this.state.title);
+
+        fetch('http://localhost:4000/api/template/', {
+            method:
+                'POST',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                'title': null,
+                'image': null,
+                'size': 1
+            })
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                this.setState({
+                    templateId: res.data.id,
+        
+                })
+                this.saveTemplate()
+            })
+            .catch(err => {
+                console.error(err);
+            })
+        
+
+    }
+
+    saveTemplate() {
         fetch('http://localhost:4000/api/campaigns/', {
             method:
                 'POST',
@@ -40,25 +73,25 @@ class CreateCampaign extends Component {
                 "Content-type": "application/json"
             },
             body: JSON.stringify({
-                'id': "",
                 'name': this.state.title,
-                'template': null,
+                'template': this.state.templateId,
                 'estimated_participants': this.state.estimatedParticipants,
                 'created_at': this.state.dateNow
             })
         })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                this.setState({
-                    id: res.data.id,
-                    redirect: true
-                })
-            })
-            .catch(err => {
-                console.error(err);
-            })
 
+        .then(res => res.json())
+        .then(res => {
+            sessionStorage.setItem('token', res.token);
+            this.setState({
+                id: res.data.id,
+                redirect: true
+            })
+        })
+        
+        .catch(err => {
+            console.error(err);
+        })
     }
 
     handleTitle(event) {

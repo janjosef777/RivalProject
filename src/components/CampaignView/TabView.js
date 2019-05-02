@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import '../../styles/campaignView.css';
 import CardTemplateView from './CardTemplateView';
 import CampaignCardResults from './CampaignCardResults';
-import CampaignSettings from './CampaignSettings';
+
 
 class TabView extends Component {
     constructor(props) {
@@ -66,14 +66,6 @@ class TabView extends Component {
                             Card Results
                         </NavLink>
                     </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.props.activeTab === '3' })}
-                            onClick={() => { this.toggle('3'); }}
-                        >
-                            Campaign Settings
-                        </NavLink>
-                    </NavItem>
                 </Nav>
                 <TabContent activeTab={this.props.activeTab}>
                     <TabPane tabId="1">
@@ -96,14 +88,6 @@ class TabView extends Component {
                                     {...this.props}
                                 ></CardTemplateView>
                                 <CampaignCardResults {...this.props}></CampaignCardResults>
-                            </Col>
-                        </Row>
-                    </TabPane>
-                    <TabPane tabId="3">
-                        <Row>
-                            <Col sm="12">
-                                <h4>The Campaign Settings</h4>
-                                <CampaignSettings selectedCampaign={this.selectedCampaign} {...this.props}></CampaignSettings>
                             </Col>
                         </Row>
                     </TabPane>

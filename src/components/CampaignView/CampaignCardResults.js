@@ -41,18 +41,16 @@ class CampaignCardResults extends Component {
                                 }} className="delete-img"
                             >
                                 X
-                            </button>
-                            <ImgThumbImg 
-                                src={cardResult.image} 
-                                onClick={(e) => {this.setSelectedIndex(idx)}}
-                                alt="Selected Prize Image" 
-                            />
-                            <SetPrize
-                                {...this.props}
-                                cardResult={cardResult}
-                                idx={idx}
-                            />
-                        </ResultsList>
+                        </button>
+                        <img 
+                            src={cardresult.image} 
+                            onClick={(e) => {this.setSelectedIndex(idx)}}
+                            alt="Selected Prize Image" 
+                            className="img-thumbnail result-img" 
+                        />
+                        <p>Title</p>
+                        <p>- 1 +</p>
+                        </li>
                     )}
                 </ul>
             </div>
