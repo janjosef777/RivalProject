@@ -25,3 +25,10 @@ export const ResultsList = styled.li`
 export const SetPrizeWrapper = styled.div`
     margin: 5px;
 `;
+
+export const BorderBox = styled.div`
+    padding: 5px;
+    margin: 5px;
+    border: solid lightgray 1px;
+    border-radius: 5px;
+`;
