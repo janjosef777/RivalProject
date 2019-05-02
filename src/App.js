@@ -5,7 +5,7 @@ import Home from './components/Home';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Upload from './upload/Upload';
 import Logout from './components/Logout'
-import ActiveCard from './ActiveCard';
+import ActiveCard from './components/CampaignView/ActiveCard';
 import CampaignView from './components/CampaignView/index';
 import CreateCampaign from './components/CampaignCrud/CreateCampaign';
 import DeleteCampaign from './components/CampaignCrud/DeleteCampaign';

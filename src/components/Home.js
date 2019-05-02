@@ -89,7 +89,7 @@ class Home extends Component {
             showDeletePopup: false,
             showUpdate: false,
             deleteId: null,
-            updatedId: null,
+            selectedCampaignId: null,
 
 
         };
@@ -124,28 +124,6 @@ class Home extends Component {
             })
     }
 
-    editCampaignName(id) {
-        fetch('http://localhost:4000/api/campaigns' + id, {
-            method:
-                "PUT",
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                "title": ""
-            }),
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                this.setState({ campaignItems: res.data });
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
-
     commitChanges({ deleted, changed }) {
         let { campaignItems } = this.state;
 
@@ -154,15 +132,6 @@ class Home extends Component {
                 deleteId: deleted["0"]
             })
             this.toggleDeletePopup();
-        }
-
-        if (changed) {
-            var keyId = Object.keys(changed)
-            this.setState({
-                updateId: keyId["0"],
-                showUpdate: true
-            })
-
         }
         this.setState({ campaignItems });
     }
@@ -182,7 +151,7 @@ class Home extends Component {
         if (this.state.showUpdate) {
             return <Redirect to={{
                 pathname: '/campaignview',
-                state: { updateId: this.state.updateId }
+                state: { selectedCampaignId: this.state.selectedCampaignId }
             }}
             />
         }
@@ -193,7 +162,7 @@ class Home extends Component {
     }
     myLogger(row){
         this.setState({
-            updateId : row.id,
+            selectedCampaignId : row.id,
             showUpdate: true
         })
     }
@@ -212,13 +181,13 @@ class Home extends Component {
         const CellComponent = ({ children, row, ...restProps }) => (
             <TableEditColumn.Cell row={row} {...restProps}>
                 {children}
-                <TableEditColumn.Command
-                    id="custom"
-                    text="Show Info"
-                    onExecute={() => {
-                        showDetails(row);
-                    }} // action callback
-                />
+                    <TableEditColumn.Command
+                        id="custom"
+                        class="fas fa-edit"
+                        onExecute={() => {
+                            showDetails(row);
+                        }} // action callback
+                    />
             </TableEditColumn.Cell>
         );
         return (
@@ -300,7 +269,6 @@ class Home extends Component {
                                 <TableEditRow />
                                 <TableEditColumn
                                     width={170}
-                                    showEditCommand
                                     showDeleteCommand
                                     cellComponent={CellComponent}
                                 />
