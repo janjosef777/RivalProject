@@ -34,33 +34,38 @@ class SetPrize extends Component {
     }
 
     render() {
-        if (this.state.showForm) {
-            return (
-                <div>
-                    <>Prize Name: </><Input /><br />
-                    <>Quantity: </><Input /><br />
-                    <Button onClick={this.saveChanges} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Save Changes</Button>
-                    <Button onClick={this.cancel} color='secondary'>Cancel</Button>
-                </div>
-            )
-        } else {
-            if (this.props.cardResults[this.props.idx].prize) {
+        if (this.props.cardResults[this.props.idx]) {
+            if (this.state.showForm) {
                 return (
                     <div>
-                        <>Prize Name: </><br />
-                        <>Quantity: </><br />
-                        <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Edit Prize</Button>
-                        <Button color='danger' style={{ margin: '5px' }}>Remove Prize</Button>
+                        <>Prize Name: </><Input /><br />
+                        <>Quantity: </><Input /><br />
+                        <Button onClick={this.saveChanges} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Save Changes</Button>
+                        <Button onClick={this.cancel} color='secondary'>Cancel</Button>
                     </div>
                 )
             } else {
-                return (
-                    <div>
-                        <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Add a Prize</Button>
-                    </div>
-                )
+                if (this.props.cardResults[this.props.idx].prize) {
+                    return (
+                        <div>
+                            <>Prize Name: </><br />
+                            <>Quantity: </><br />
+                            <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Edit Prize</Button>
+                            <Button color='danger' style={{ margin: '5px' }}>Remove Prize</Button>
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div>
+                            <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Add a Prize</Button>
+                        </div>
+                    )
+                }
             }
+        } else {
+            return <div/>
         }
+        
     }
 }
 export default SetPrize;
