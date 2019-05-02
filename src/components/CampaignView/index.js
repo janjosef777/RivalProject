@@ -62,18 +62,16 @@ class CampaignView extends Component {
             })
     }
 
-    createTemplate() {
-        fetch('http://localhost:4000/api/template/', {
+    createURL() {
+        fetch('http://localhost:4000/api/campaign/', {
             method:
-                'POST',
+                'UPDATE',
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-type": "application/json"
             },
             body: JSON.stringify({
-                'title': "",
-                'image': "",
-                'size': ""
+                url: ""
             })
         })
             .then(res => res.json())

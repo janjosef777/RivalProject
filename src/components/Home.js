@@ -96,7 +96,7 @@ class Home extends Component {
                 { name: 'name', title: 'Campaign' },
                 { name: 'createdBy', title: 'Created By' },
                 { name: 'createdAt', title: 'Date Created' },
-                { name: 'url', title: 'URL' },
+                { name: 'url', title: 'URL' }
             ],
             dateColumns: ['createdAt'],
             editingStateColumnExtensions: [
@@ -104,7 +104,7 @@ class Home extends Component {
                 { columnName: 'name', editingEnabled: false },
                 { columnName: 'createdBy', editingEnabled: false },
                 { columnName: 'createdAt', editingEnabled: false },
-                { columnName: 'url', editingEnabled: false },
+                { columnName: 'url', editingEnabled: false }
               ],
             campaignItems: [],
             selection: [],
@@ -113,14 +113,14 @@ class Home extends Component {
             showUpdate: false,
             showUpdate: false,
             deleteId: null,
-            updatedId: null,
-
+            updatedId: null
 
         };
         this.changeSelection = selection => this.setState({ selection });
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
         this.commitChanges = this.commitChanges.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
+        // this.editCampaignStatus = this.editCampaignStatus.bind(this);
     }
 
     componentDidMount() {
@@ -132,28 +132,6 @@ class Home extends Component {
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                this.setState({ campaignItems: res.data });
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
-
-    editCampaignName(id){
-        fetch('http://localhost:4000/api/campaigns' + id, {
-            method: 
-                "PUT",
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                "title": ""
-            }),
         })
             .then(res => res.json())
             .then(res => {
@@ -180,9 +158,11 @@ class Home extends Component {
             var keyId = Object.keys(changed)
             this.setState({
                 updateId : keyId["0"],
-                showUpdate: true
+                showUpdate: true,
+                
             })
-
+            console.log(keyId)
+            // editCampaignStatus(id);
         }
         this.setState({ campaignItems });
     }
@@ -203,7 +183,9 @@ class Home extends Component {
             
             return <Redirect to={{ 
                 pathname:'/campaignview', 
-                state: {updateId: this.state.updateId}
+                state: {updateId: this.state.updateId,
+                        }
+
             }} 
                 />
         }
@@ -219,7 +201,7 @@ class Home extends Component {
                columns, 
                selection, 
                dateColumns,
-               editingStateColumnExtensions   
+               editingStateColumnExtensions
             } = this.state;
         return (
             <div>
@@ -227,7 +209,7 @@ class Home extends Component {
                 <div className="Home">
                     
                     <h2>Scratch & Win Campaigns</h2>
-                    <div className="container">
+                    <div className="container"> 
 
                         <span>
                             Total rows selected:
