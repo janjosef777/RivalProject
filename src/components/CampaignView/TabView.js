@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import '../../styles/campaignView.css';
+//import { } from '../../styles/componentStyles';
 import CardTemplateView from './CardTemplateView';
 import CampaignCardResults from './CampaignCardResults';
+import SetPrize from './SetPrize';
 
 
 class TabView extends Component {
@@ -87,6 +89,7 @@ class TabView extends Component {
                                     index
                                     {...this.props}
                                 ></CardTemplateView>
+                                <SetPrize {...this.props} idx={this.props.selectedIndex}/>
                                 <CampaignCardResults {...this.props}></CampaignCardResults>
                             </Col>
                         </Row>
