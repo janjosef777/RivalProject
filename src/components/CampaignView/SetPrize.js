@@ -39,24 +39,24 @@ class SetPrize extends Component {
                 <div>
                     <>Prize Name: </><Input /><br />
                     <>Quantity: </><Input /><br />
-                    <Button onClick={this.saveChanges} style={{ backgroundColor: '#E8542A' }}>Save Changes</Button>
+                    <Button onClick={this.saveChanges} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Save Changes</Button>
                     <Button onClick={this.cancel} color='secondary'>Cancel</Button>
                 </div>
             )
         } else {
-            if (!this.props.cardResults[this.props.idx].prize) {
+            if (this.props.cardResults[this.props.idx].prize) {
                 return (
                     <div>
                         <>Prize Name: </><br />
                         <>Quantity: </><br />
-                        <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A' }}>Edit Prize</Button>
-                        <Button color='danger'>Remove Prize</Button>
+                        <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Edit Prize</Button>
+                        <Button color='danger' style={{ margin: '5px' }}>Remove Prize</Button>
                     </div>
                 )
             } else {
                 return (
                     <div>
-                        <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A' }}>Add a Prize</Button>
+                        <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Add a Prize</Button>
                     </div>
                 )
             }
