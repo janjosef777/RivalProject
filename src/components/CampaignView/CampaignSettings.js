@@ -20,17 +20,29 @@ class CampaignSettings extends Component {
     constructor(props) {
         super(props)
         this.state ={
-            overlayImg: "../../images/Rivallogo.png",
-            title: this.props.titleVal,
-            image: this.props.image,
-            size: "",
-            imageId: ''
+            campaign: this.props.selectedCampaign
         }
-
-  
+        this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
+        this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentDidMount() {
+    }
+    handleCampaignNameChange(e){
+        this.props.setState({
+           name: e.target.value
+        })
+    }
+
+    handleEstimatedPatricipantsChange(e){
+        this.props.setState({
+           estimatedParticipants: e.target.value
+        })
+    }
+    handleSubmit(){
+        console.log(this.props.estimatedParticipants)
+        console.log(this.props.name)
     }
 
     viewSummary = () => {
@@ -43,11 +55,11 @@ class CampaignSettings extends Component {
                         <div className="campaign-main-info">
                             <div className="input-section">
                                 <h6>Campaign Name: </h6>
-                                <input type="text" value={this.props.selectedCampaign.name} placeholder="Campaign Name..."/>
+                                <input type="text"  value={this.props.name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
                             </div>
                             <div className="input-section">
                                 <h6>Estimated Participants: </h6>
-                                <input type="text" value={this.props.selectedCampaign.estimatedParticipants}  placeholder="Estimated Participants..."/>
+                                <input type="text" value={this.props.estimatedParticipants} onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
                             </div>
                             <div className="input-section activation-switch">
                                 {this.props.selectedCampaign.isActive}
