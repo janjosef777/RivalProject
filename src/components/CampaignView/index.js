@@ -90,7 +90,7 @@ class CampaignView extends Component {
     }
 
     componentDidMount() {
-    console.log(this.state.updateId)
+    console.log("Component has Mounted " + this.state.updateId)
     }
 
     render() {

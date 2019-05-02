@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import '../styles/home.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link, Redirect } from 'react-router-dom';
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import NavBarComponent from './NavBarComponent';
 // import jwt_decode from 'jwt-decode'
 import {
@@ -55,45 +59,16 @@ const DateTypeProvider = props => (
     />
 );
 
-// const DeleteButton = ({ onExecute }) => (
-//     <IconButton
-//       onClick={() => {{onExecute();}}}
-//       title="Delete row"
-//     >
-//       <DeleteIcon />
-//     </IconButton>
-// );
-
-// const EditButton = ({ onExecute }) => (
-//   <IconButton 
-//     onClick={() => {{onExecute();}}} 
-//     title="Edit row">
-//     <EditIcon />
-//   </IconButton>
-// );
-
-// const commandComponents = {
-//   edit: EditButton,
-//   delete: DeleteButton,
-// };
-
-// const Command = ({ id, onExecute }) => {
-//     const CommandButton = commandComponents[id];
-//     return (
-//       <CommandButton
-//         onExecute={onExecute}
-//       />
-//     );
-//   };
-
-
 class Home extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            popupVisible: false,
+            activeRow: {},
             columns: [
+                 
                 { name: 'id', title: 'ID' },
                 { name: 'name', title: 'Campaign' },
                 { name: 'createdBy', title: 'Created By' },
@@ -113,7 +88,6 @@ class Home extends Component {
             showCreatePopup: false,
             showDeletePopup: false,
             showUpdate: false,
-            showUpdate: false,
             deleteId: null,
             updatedId: null,
 
@@ -123,6 +97,10 @@ class Home extends Component {
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
         this.commitChanges = this.commitChanges.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
+        this.closePopup = () => {
+            this.setState({ popupVisible: false, activeRow: {} });
+        };
+        this.myLogger = this.myLogger.bind(this);
     }
 
     componentDidMount() {
@@ -202,7 +180,6 @@ class Home extends Component {
 
     renderRedirect = () => {
         if (this.state.showUpdate) {
-
             return <Redirect to={{
                 pathname: '/campaignview',
                 state: { updateId: this.state.updateId }
@@ -214,16 +191,38 @@ class Home extends Component {
     componentDidMount() {
         this.fetchCampaigns();
     }
-
+    myLogger(row){
+        this.setState({
+            updateId : row.id,
+            showUpdate: true
+        })
+    }
     render() {
         const {
             campaignItems,
             columns,
             selection,
             dateColumns,
-            editingStateColumnExtensions
+            editingStateColumnExtensions,
+            rows, popupVisible, activeRow
         } = this.state;
+        const showDetails = row => {
+            this.myLogger(row)
+        };
+        const CellComponent = ({ children, row, ...restProps }) => (
+            <TableEditColumn.Cell row={row} {...restProps}>
+                {children}
+                <TableEditColumn.Command
+                    id="custom"
+                    text="Show Info"
+                    onExecute={() => {
+                        showDetails(row);
+                    }} // action callback
+                />
+            </TableEditColumn.Cell>
+        );
         return (
+
             <div>
                 <NavBarComponent></NavBarComponent>
                 <div className="Home">
@@ -303,12 +302,11 @@ class Home extends Component {
                                     width={170}
                                     showEditCommand
                                     showDeleteCommand
-                                // commandComponent={Command}
+                                    cellComponent={CellComponent}
                                 />
                                 <Getter
                                     name="tableColumns"
                                     computed={({ tableColumns }) => {
-                                        debugger
                                         const result = [
                                             ...tableColumns.filter(c => c.type !== TableEditColumn.COLUMN_TYPE),
                                             { key: 'editCommand', type: TableEditColumn.COLUMN_TYPE, width: 140 }
@@ -322,6 +320,18 @@ class Home extends Component {
                                 <TableSelection showSelectAll />
                                 <PagingPanel />
                             </Grid>
+                            <Dialog onClose={this.closePopup} open={popupVisible}>
+                                <DialogTitle id="responsive-dialog-title">Row Details</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        {columns.map(column => (
+                                            <div key={column.name}>
+                                                <strong>{column.title}</strong>: {activeRow[column.name]}
+                                            </div>
+                                        ))}
+                                    </DialogContentText>
+                                </DialogContent>
+                            </Dialog>
                         </Paper>
                     </div>
                 </div>
