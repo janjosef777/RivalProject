@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../styles/campaignView.css';
+//import '../../styles/campaignView.css';
 import SingleCardState from '../SingleCardState'
 import {
     Card, CardImg, CardText, CardBody,
