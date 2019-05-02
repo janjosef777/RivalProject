@@ -13,13 +13,7 @@ margin: 10px;
 margin-top: 50px;
 border: 1px solid black;
 border-radius: 5px;
-background-color: red;
-position: fixed;
-bottom: 100px;
-right: 100px;
-&:hover { 
-    background-color: yellow;
-}
+background-color: #E8542A;
 `;
 
 class CampaignSettings extends Component {
@@ -36,6 +30,8 @@ class CampaignSettings extends Component {
         this.loadTemplate=this.loadTemplate.bind(this);
         this.getTemplateImg=this.getTemplateImg.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
+
+        this.viewSummary = this.viewSummary.bind(this);
     }
 
     handleSubmit() {
@@ -122,6 +118,10 @@ class CampaignSettings extends Component {
         this.loadTemplate()
     }
 
+    viewSummary = () => {
+        this.props.setState({ viewSummary: true })
+    }
+
     render() {
         return (
                     <div className='settings-wrapper'>
@@ -143,6 +143,7 @@ class CampaignSettings extends Component {
                             </div>
                         </div>
                         <div className="campaign-main-btns">
+                            <Button onClick={this.viewSummary} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Campaign Summary</Button>
                             <LinkButton href="" target="_blank"><i class="fas fa-link"></i></LinkButton>
                             <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank"><i class="fas fa-external-link-alt"></i></LinkButton>
                             <LinkButton onClick={this.handleSubmit}><i class="fas fa-save"></i></LinkButton>
