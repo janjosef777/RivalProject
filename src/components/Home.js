@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link, Redirect } from 'react-router-dom';
 import NavBarComponent from './NavBarComponent';
 // import jwt_decode from 'jwt-decode'
-
+import {
+    Getter,
+} from '@devexpress/dx-react-core';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
@@ -42,10 +44,10 @@ import CampaignView from './CampaignView/index';
 
 const getRowId = row => row.id;
 
-const DateFormatter = ({ value }) => 
+const DateFormatter = ({ value }) =>
     value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
-    .replace(/T/, ' - ')
-    .replace(/\..+/, '');
+        .replace(/T/, ' - ')
+        .replace(/\..+/, '');
 const DateTypeProvider = props => (
     <DataTypeProvider
         formatterComponent={DateFormatter}
@@ -83,7 +85,7 @@ const DateTypeProvider = props => (
 //       />
 //     );
 //   };
-  
+
 
 class Home extends Component {
 
@@ -105,7 +107,7 @@ class Home extends Component {
                 { columnName: 'createdBy', editingEnabled: false },
                 { columnName: 'createdAt', editingEnabled: false },
                 { columnName: 'url', editingEnabled: false },
-              ],
+            ],
             campaignItems: [],
             selection: [],
             showCreatePopup: false,
@@ -144,9 +146,9 @@ class Home extends Component {
             })
     }
 
-    editCampaignName(id){
+    editCampaignName(id) {
         fetch('http://localhost:4000/api/campaigns' + id, {
-            method: 
+            method:
                 "PUT",
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
@@ -168,10 +170,10 @@ class Home extends Component {
 
     commitChanges({ deleted, changed }) {
         let { campaignItems } = this.state;
-            
+
         if (deleted) {
             this.setState({
-                deleteId : deleted["0"]
+                deleteId: deleted["0"]
             })
             this.toggleDeletePopup();
         }
@@ -179,7 +181,7 @@ class Home extends Component {
         if (changed) {
             var keyId = Object.keys(changed)
             this.setState({
-                updateId : keyId["0"],
+                updateId: keyId["0"],
                 showUpdate: true
             })
 
@@ -200,32 +202,32 @@ class Home extends Component {
 
     renderRedirect = () => {
         if (this.state.showUpdate) {
-            
-            return <Redirect to={{ 
-                pathname:'/campaignview', 
-                state: {updateId: this.state.updateId}
-            }} 
-                />
+
+            return <Redirect to={{
+                pathname: '/campaignview',
+                state: { updateId: this.state.updateId }
+            }}
+            />
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.fetchCampaigns();
     }
 
     render() {
-        const { 
-               campaignItems,
-               columns, 
-               selection, 
-               dateColumns,
-               editingStateColumnExtensions   
-            } = this.state;
+        const {
+            campaignItems,
+            columns,
+            selection,
+            dateColumns,
+            editingStateColumnExtensions
+        } = this.state;
         return (
             <div>
                 <NavBarComponent></NavBarComponent>
                 <div className="Home">
-                    
+
                     <h2>Scratch & Win Campaigns</h2>
                     <div className="container">
 
@@ -242,7 +244,6 @@ class Home extends Component {
                             >
                                 <EditingState
                                     onCommitChanges={this.commitChanges}
-                                    columnExtensions={editingStateColumnExtensions}
                                 />
                                 <DateTypeProvider
                                     for={dateColumns}
@@ -298,12 +299,24 @@ class Home extends Component {
                                 <Table />
                                 <TableHeaderRow showSortingControls />
                                 <TableEditRow />
-                                <TableEditColumn 
-                                width={170}
-                                showEditCommand
-                                showDeleteCommand
+                                <TableEditColumn
+                                    width={170}
+                                    showEditCommand
+                                    showDeleteCommand
                                 // commandComponent={Command}
-                                 />
+                                />
+                                <Getter
+                                    name="tableColumns"
+                                    computed={({ tableColumns }) => {
+                                        debugger
+                                        const result = [
+                                            ...tableColumns.filter(c => c.type !== TableEditColumn.COLUMN_TYPE),
+                                            { key: 'editCommand', type: TableEditColumn.COLUMN_TYPE, width: 140 }
+                                        ];
+                                        return result;
+                                    }
+                                    }
+                                />
                                 <Toolbar />
                                 <SearchPanel />
                                 <TableSelection showSelectAll />
