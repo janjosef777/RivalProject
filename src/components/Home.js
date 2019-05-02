@@ -181,13 +181,13 @@ class Home extends Component {
         const CellComponent = ({ children, row, ...restProps }) => (
             <TableEditColumn.Cell row={row} {...restProps}>
                 {children}
-                <TableEditColumn.Command
-                    id="custom"
-                    text="Show Info"
-                    onExecute={() => {
-                        showDetails(row);
-                    }} // action callback
-                />
+                    <TableEditColumn.Command
+                        id="custom"
+                        class="fas fa-edit"
+                        onExecute={() => {
+                            showDetails(row);
+                        }} // action callback
+                    />
             </TableEditColumn.Cell>
         );
         return (
@@ -269,7 +269,6 @@ class Home extends Component {
                                 <TableEditRow />
                                 <TableEditColumn
                                     width={170}
-                                    showEditCommand
                                     showDeleteCommand
                                     cellComponent={CellComponent}
                                 />
