@@ -7,6 +7,7 @@ import '../../styles/campaignView.css';
 import CardTemplateView from './CardTemplateView';
 import CampaignCardResults from './CampaignCardResults';
 import SetPrize from './SetPrize';
+import { BorderBox } from '../../styles/componentStyles';
 
 
 class TabView extends Component {
@@ -89,7 +90,9 @@ class TabView extends Component {
                                     index
                                     {...this.props}
                                 ></CardTemplateView>
-                                <SetPrize {...this.props} idx={this.props.selectedIndex}/>
+                                <BorderBox>
+                                    <SetPrize {...this.props} idx={this.props.selectedIndex}/>
+                                </BorderBox>
                                 <CampaignCardResults {...this.props}></CampaignCardResults>
                             </Col>
                         </Row>

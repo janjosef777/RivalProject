@@ -26,7 +26,7 @@ export const SetPrizeWrapper = styled.div`
     margin: 5px;
 `;
 
-export const borderBox = styled.div`
+export const BorderBox = styled.div`
     padding: 5px;
     margin: 5px;
     border: solid lightgray 1px;
