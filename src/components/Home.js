@@ -183,7 +183,7 @@ class Home extends Component {
                 {children}
                     <TableEditColumn.Command
                         id="custom"
-                        class="fas fa-edit"
+                        class="far fa-edit"
                         onExecute={() => {
                             showDetails(row);
                         }} // action callback
