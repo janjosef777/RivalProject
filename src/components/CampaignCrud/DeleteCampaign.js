@@ -25,6 +25,7 @@ class DeleteCampaign extends Component {
             .then(res => {
                 sessionStorage.setItem('token', res.token);
                 console.log(res.data)
+                window.location.href ="/";
             })
             .catch(err => {
                 console.error(err);
