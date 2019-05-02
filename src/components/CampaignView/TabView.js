@@ -24,27 +24,6 @@ class TabView extends Component {
             });
         }
     }
-
-    componentDidMount() {
-        this.loadCampaign()
-    }
-    loadCampaign(){
-        fetch('http://localhost:4000/api/campaigns/' + this.state.updateId, {
-            headers: { 
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                sessionStorage.setItem('token', res.token);
-                this.selectedCampaign = res.data;
-                this.props.setState({ selectedCampaign: this.selectedCampaign })
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
     
     render() {
         return (
