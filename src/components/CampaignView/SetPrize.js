@@ -21,6 +21,7 @@ class SetPrize extends Component {
         this.saveChanges = this.saveChanges.bind(this);
         this.cancel = this.cancel.bind(this);
         this.inputUpdate = this.inputUpdate.bind(this);
+        this.removePrize = this.removePrize.bind(this);
     }
 
     inputUpdate = e => {
@@ -29,10 +30,25 @@ class SetPrize extends Component {
         })
     };
 
+    removePrize = e => {
+        var idx = this.props.idx;
+
+        var modifiedCardResult = this.props.cardResults[idx];
+        modifiedCardResult.prize = null;
+        var newCardResultArray = this.props.cardResults;
+        newCardResultArray.splice(idx, 1, modifiedCardResult);
+        console.log(modifiedCardResult)
+
+        this.props.setState({
+            cardResults: newCardResultArray
+        })
+    }
+
     showForm() {
         this.setState({ showForm: true });
 
-        var prize = this.props.cardResults[this.props.idx].prize
+        var prize = this.props.cardResults[this.props.idx].prize;
+        console.log(prize);
         if (prize) {
             this.setState({name: prize.name, qty: prize.qty})
         }
@@ -49,17 +65,13 @@ class SetPrize extends Component {
 
         var modifiedCardResult = this.props.cardResults[idx];
         modifiedCardResult.prize = prize;
+        var newCardResultArray = this.props.cardResults;
+        newCardResultArray.splice(idx, 1, modifiedCardResult);
+        console.log(modifiedCardResult)
 
-        this.props.setState(state => ({
-            cardResults: state.cardResults.map(
-                (value, index) => {
-                    if (index = idx) {
-                        return modifiedCardResult;
-                    } else {
-                        return value;
-                    }
-                })
-        }))
+        this.props.setState({
+            cardResults: newCardResultArray
+        })
 
         this.setState({ showForm: false });
     };
@@ -75,13 +87,15 @@ class SetPrize extends Component {
                     <div>
                         <>Prize Name: </><Input
                             id='name'
-                            onChange={this.handleChange}
+                            value={this.state.name}
+                            onChange={this.inputUpdate}
                         /><br />
                         <>Quantity: </><Input
                             id='qty'
+                            value={this.state.qty}
                             type='number'
                             min='0'
-                            onChange={this.handleChange}
+                            onChange={this.inputUpdate}
                         /><br />
                         <Button onClick={this.saveChanges} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Save Changes</Button>
                         <Button onClick={this.cancel} color='secondary'>Cancel</Button>
@@ -94,7 +108,7 @@ class SetPrize extends Component {
                             <>Prize Name: </><>{this.props.cardResults[this.props.idx].prize.name}</><br />
                             <>Quantity: </><>{this.props.cardResults[this.props.idx].prize.qty}</><br />
                             <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Edit Prize</Button>
-                            <Button color='danger' style={{ margin: '5px' }}>Remove Prize</Button>
+                            <Button color='danger' onClick={this.removePrize} style={{ margin: '5px' }}>Remove Prize</Button>
                         </div>
                     )
                 } else {
