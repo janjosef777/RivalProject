@@ -11,6 +11,16 @@ module.exports = {
             get: 'SELECT * FROM ' + tableName + ' WHERE ' + primary + '=?',
             add: 'INSERT INTO ' + tableName + ' (' + columns.join(',') + ') '
                 + 'VALUES (' + columns.map(() => '?').join(',') + ')',
+            update: entry => {
+                let query = 'UPDATE ' + tableName + ' SET ';
+                let first = true;
+                for(let col of Object.getOwnPropertyNames(entry)) {
+                    if(!first)
+                        query += ',';
+                    query += col + '=' + entry[col];
+                }
+                return query;
+            },
             replace: 'REPLACE INTO ' + tableName + ' (' + columns.join(',') + ') '
                     + 'VALUES (' + columns.map(() => '?').join(',') + ')',
             delete: 'DELETE FROM ' + tableName + ' WHERE ' + primary + '=?',
@@ -41,6 +51,14 @@ module.exports = {
                         callback(err, err ? 0 : res.insertId || entry[primary] || true);
                     });
             },
+            update(entry, callback, config = {}) {
+                try { entry = removeUnused(mapWrite ? mapWrite(entry) : entry); }
+                catch(err) { callback(err, null); return; }
+                db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
+                    () => connection.query(queries.update(entry), toArray(entry, true), (err, res) => {
+                        callback(err, err ? 0 : res.insertId || entry[primary] || true);
+                    });
+            },
             replace(entry, callback, config = {}) {
                 try { entry = mapWrite ? mapWrite(entry) : entry; }
                 catch(err) { callback(err, null); return; }
@@ -57,8 +75,27 @@ module.exports = {
             }
         };
     
-        function toArray(entry) {
+        function toArray(entry, trim = false) {
+            if(trim) {
+                let arr = [];
+                for(let col of columns) {
+                    if(entry[col] !== undefined)
+                        arr.push(entry[col]);
+                }
+                return arr;
+            }
             return columns.map(col => entry[col]);
+        }
+        function removeUnused(entry) {
+            if(!entry[primary])
+                throw new Error('Primary key required');
+
+            let trimmed = {};
+            for(let col of columns) {
+                if(entry[col] !== undefined)
+                    trimmed9[col] = entry[col];
+            }
+            return trimmed;
         }
     },
     init(database, connect) {
