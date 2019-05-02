@@ -120,7 +120,6 @@ class Home extends Component {
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
         this.commitChanges = this.commitChanges.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
-        // this.editCampaignStatus = this.editCampaignStatus.bind(this);
     }
 
     componentDidMount() {
@@ -161,8 +160,6 @@ class Home extends Component {
                 showUpdate: true,
                 
             })
-            console.log(keyId)
-            // editCampaignStatus(id);
         }
         this.setState({ campaignItems });
     }

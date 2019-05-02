@@ -30,96 +30,20 @@ class CampaignSettings extends Component {
             title: this.props.titleVal,
             image: this.props.image,
             size: "",
-            imageId: ''
+            imageId: '',
+            updateId: this.props.location.state ? this.props.location.state.updateId : 0,
         }
 
-        this.loadTemplate=this.loadTemplate.bind(this);
-        this.getTemplateImg=this.getTemplateImg.bind(this);
-        this.handleSubmit=this.handleSubmit.bind(this);
+
+        // this.loadTemplate=this.loadTemplate.bind(this);
+        // this.loadCampaign=this.loadCampaign.bind(this);
+        // this.getTemplateImg=this.getTemplateImg.bind(this);
+        // this.handleSubmit=this.handleSubmit.bind(this);
     }
 
-    handleSubmit() {
-        console.log(this.state.title);
-        fetch('http://localhost:4000/api/overlay/', {
-            method:
-                'POST',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                'title': this.state.title,
-                'image': null,
-                'size': this.state.size
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                this.setState({
-                    id: res.data.id
-                })
-            })
-            .catch(err => {
-                console.error(err);
-            })
-
-    }
-
-    loadTemplate() {
-        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.template, {
-            method:
-                'GET',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            
-        })
-
-        .then(res => res.json())
-        .then(res => {
-            sessionStorage.setItem('token', res.token);
-            console.log(res.data);
-            this.setState({
-                title: res.data.title,
-                imageId: res.data.id
-            })
-        })
-        
-        .catch(err => {
-            console.error(err);
-        })
-    }
-
-    getTemplateImg() {
-        fetch('http://localhost:4000/api/images/' + this.state.imageId, {
-            method:
-                'GET',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            
-        })
-
-        .then(res => res.json())
-        .then(res => {
-            sessionStorage.setItem('token', res.token);
-            console.log(res.data);
-            this.setState({
-                image: res.data.filename,
-            })
-        })
-        
-        .catch(err => {
-            console.error(err);
-        })
-
-    }
+  
 
     componentDidMount() {
-        this.loadTemplate()
     }
 
     render() {

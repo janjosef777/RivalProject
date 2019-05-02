@@ -33,7 +33,6 @@ class Login extends Component {
                     window.alert("Incorrect Username/Password. Please try again")
                 } else {
                     sessionStorage.setItem("token", res.token)
-                    //window.location.href = '/';
                     this.setState({redirect: true})
                 }
             }).catch(err => {
