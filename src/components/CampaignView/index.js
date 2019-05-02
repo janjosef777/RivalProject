@@ -50,7 +50,7 @@ class CampaignView extends Component {
     }
 
     loadCampaign() {
-        fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaignId, {
+        fetch('api/campaigns/' + this.state.selectedCampaignId, {
             method:
                 'GET',
             headers: {
@@ -71,7 +71,7 @@ class CampaignView extends Component {
     }
     loadTemplate(){
         console.log("selectedCampaignId "+ this.state.selectedCampaign.template)
-        fetch('http://localhost:4000/api/template/' + this.state.selectedCampaign.template, {
+        fetch('api/template/' + this.state.selectedCampaign.template, {
             method:
                 'GET',
             headers: {

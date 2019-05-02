@@ -5,6 +5,7 @@ import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col
 } from 'reactstrap';
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 
 const LinkButton = styled.a`
@@ -24,13 +25,16 @@ class CampaignSettings extends Component {
             title: this.props.titleVal,
             image: this.props.image,
             size: "",
-            imageId: ''
+            imageId: '',
+            isChecked: true
         }
-
-  
+        this.handleChecked = this.handleChecked.bind(this);
     }
 
-    componentDidMount() {
+    handleChecked () {
+        this.props.setState({selectedCampaign: !this.state.isChecked});
+        console.log("triggered");
+        console.log(this.props.selectedCampaign.isActive);
     }
 
     viewSummary = () => {
@@ -50,9 +54,12 @@ class CampaignSettings extends Component {
                                 <input type="text" value={this.props.selectedCampaign.estimatedParticipants}  placeholder="Estimated Participants..."/>
                             </div>
                             <div className="input-section activation-switch">
-                                {this.props.selectedCampaign.isActive}
                                 <label className="switch">
-                                    <input type="checkbox" defaultChecked />
+                                    <input type="checkbox" 
+                                        onChange={this.handleChecked}
+                                        checked={this.props.isActive}
+                                        />
+
                                     <span className="slider round"></span>
                                 </label>
                             </div>
