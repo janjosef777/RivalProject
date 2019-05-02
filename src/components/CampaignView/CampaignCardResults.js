@@ -43,7 +43,10 @@ class CampaignCardResults extends Component {
                             onClick={(e) => {this.setSelectedIndex(idx)}}
                             alt="Selected Prize Image" 
                             className="img-thumbnail result-img" 
-                        /></li>
+                        />
+                        <p>Title</p>
+                        <p>- 1 +</p>
+                        </li>
                     )}
                 </ul>
             </div>
