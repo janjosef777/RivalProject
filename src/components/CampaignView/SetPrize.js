@@ -11,40 +11,56 @@ class SetPrize extends Component {
     constructor(props) {
         super(props)
 
-        this.toggle = this.toggle.bind(this);
-        this.state = { collapse: false };
+        this.state = {
+            showForm: false
+        }
+
+        this.showForm = this.showForm.bind(this);
+        this.saveChanges = this.saveChanges.bind(this);
+        this.cancel = this.cancel.bind(this);
     }
 
-    toggle() {
-        this.setState(state => ({ collapse: !state.collapse }));
+    showForm() {
+        this.setState({ showForm: true });
+        console.log(this.state.showForm)
+    }
+
+    saveChanges() {
+        this.setState({ showForm: false });
+    }
+
+    cancel() {
+        this.setState({ showForm: false });
     }
 
     render() {
-        return (
-            <div style={{ margin: '5px'}}>
-                {!this.props.cardResults[this.props.idx].prize? 
-                    <div style={{ marginBottom: '5px' }}>
-                        <>Prize Name: </><br/>
+        if (this.state.showForm) {
+            return (
+                <div>
+                    <>Prize Name: </><Input /><br />
+                    <>Quantity: </><Input /><br />
+                    <Button onClick={this.saveChanges} style={{ backgroundColor: '#E8542A' }}>Save Changes</Button>
+                    <Button onClick={this.cancel} color='secondary'>Cancel</Button>
+                </div>
+            )
+        } else {
+            if (!this.props.cardResults[this.props.idx].prize) {
+                return (
+                    <div>
+                        <>Prize Name: </><br />
                         <>Quantity: </><br />
-                        <Button color='danger' style={{ marginBottom: '1rem'}}>Remove Prize</Button>
+                        <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A' }}>Edit Prize</Button>
+                        <Button color='danger'>Remove Prize</Button>
                     </div>
-                    :
-                    <></>
-                }
-                <Button onClick={this.toggle} style={{ marginBottom: '1rem', backgroundColor: '#E8542A' }}>Set Prize</Button>
-                <Collapse isOpen={this.state.collapse}>
-                    <Card>
-                        <CardBody>
-                            Anim pariatur cliche reprehenderit,
-                             enim eiusmod high life accusamus terry richardson ad squid. Nihil
-                             anim keffiyeh helvetica, craft beer labore wes anderson cred
-                             nesciunt sapiente ea proident.
-                        </CardBody>
-                    </Card>
-                </Collapse>
-            </div>
-
-        )
+                )
+            } else {
+                return (
+                    <div>
+                        <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A' }}>Add a Prize</Button>
+                    </div>
+                )
+            }
+        }
     }
 }
 export default SetPrize;
