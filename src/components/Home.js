@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link, Redirect } from 'react-router-dom';
 import NavBarComponent from './NavBarComponent';
 // import jwt_decode from 'jwt-decode'
-
+import {
+    Getter,
+} from '@devexpress/dx-react-core';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
@@ -42,48 +44,16 @@ import CampaignView from './CampaignView/index';
 
 const getRowId = row => row.id;
 
-const DateFormatter = ({ value }) => 
+const DateFormatter = ({ value }) =>
     value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
-    .replace(/T/, ' - ')
-    .replace(/\..+/, '');
+        .replace(/T/, ' - ')
+        .replace(/\..+/, '');
 const DateTypeProvider = props => (
     <DataTypeProvider
         formatterComponent={DateFormatter}
         {...props}
     />
 );
-
-// const DeleteButton = ({ onExecute }) => (
-//     <IconButton
-//       onClick={() => {{onExecute();}}}
-//       title="Delete row"
-//     >
-//       <DeleteIcon />
-//     </IconButton>
-// );
-
-// const EditButton = ({ onExecute }) => (
-//   <IconButton 
-//     onClick={() => {{onExecute();}}} 
-//     title="Edit row">
-//     <EditIcon />
-//   </IconButton>
-// );
-
-// const commandComponents = {
-//   edit: EditButton,
-//   delete: DeleteButton,
-// };
-
-// const Command = ({ id, onExecute }) => {
-//     const CommandButton = commandComponents[id];
-//     return (
-//       <CommandButton
-//         onExecute={onExecute}
-//       />
-//     );
-//   };
-  
 
 class Home extends Component {
 
@@ -145,10 +115,10 @@ class Home extends Component {
 
     commitChanges({ deleted, changed }) {
         let { campaignItems } = this.state;
-            
+
         if (deleted) {
             this.setState({
-                deleteId : deleted["0"]
+                deleteId: deleted["0"]
             })
             this.toggleDeletePopup();
         }
@@ -188,7 +158,7 @@ class Home extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.fetchCampaigns();
     }
 
@@ -204,7 +174,7 @@ class Home extends Component {
             <div>
                 <NavBarComponent></NavBarComponent>
                 <div className="Home">
-                    
+
                     <h2>Scratch & Win Campaigns</h2>
                     <div className="container"> 
 
@@ -221,7 +191,6 @@ class Home extends Component {
                             >
                                 <EditingState
                                     onCommitChanges={this.commitChanges}
-                                    columnExtensions={editingStateColumnExtensions}
                                 />
                                 <DateTypeProvider
                                     for={dateColumns}
@@ -277,12 +246,24 @@ class Home extends Component {
                                 <Table />
                                 <TableHeaderRow showSortingControls />
                                 <TableEditRow />
-                                <TableEditColumn 
-                                width={170}
-                                showEditCommand
-                                showDeleteCommand
+                                <TableEditColumn
+                                    width={170}
+                                    showEditCommand
+                                    showDeleteCommand
                                 // commandComponent={Command}
-                                 />
+                                />
+                                <Getter
+                                    name="tableColumns"
+                                    computed={({ tableColumns }) => {
+                                        debugger
+                                        const result = [
+                                            ...tableColumns.filter(c => c.type !== TableEditColumn.COLUMN_TYPE),
+                                            { key: 'editCommand', type: TableEditColumn.COLUMN_TYPE, width: 140 }
+                                        ];
+                                        return result;
+                                    }
+                                    }
+                                />
                                 <Toolbar />
                                 <SearchPanel />
                                 <TableSelection showSelectAll />

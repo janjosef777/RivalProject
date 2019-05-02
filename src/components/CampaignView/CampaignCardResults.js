@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../styles/campaignView.css';
+import { ImgThumbImg } from '../../styles/componentStyles';
 
 
 class CampaignCardResults extends Component {
@@ -11,11 +12,9 @@ class CampaignCardResults extends Component {
     }
 
     triggerDelete(idx){
-        let imageList = this.props.results;
-        console.log(imageList);
+        let imageList = this.props.cardResults;
         imageList.splice(idx, 1);
-        this.props.setState({results: imageList});
-        console.log(imageList);
+        this.props.setState({cardResults: imageList});
     }
 
     setSelectedIndex = (idx) => {
@@ -37,15 +36,14 @@ class CampaignCardResults extends Component {
                                 this.triggerDelete(idx)
                             }} className="delete-img">
                                 X
-                        </button>
-                        <img 
-                            src={cardresult.image} 
-                            onClick={(e) => {this.setSelectedIndex(idx)}}
-                            alt="Selected Prize Image" 
-                            className="img-thumbnail result-img" 
-                        />
-                        <p>Title</p>
-                        <p>- 1 +</p>
+                            </button>
+                            <ImgThumbImg 
+                                src={cardresult.image} 
+                                onClick={(e) => {this.setSelectedIndex(idx)}}
+                                alt="Selected Prize Image" 
+                            />
+                            <p>Title</p>
+                            <p>- 1 +</p>
                         </li>
                     )}
                 </ul>
