@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../styles/campaignView.css';
 import SetPrize from './SetPrize';
-import { ImgThumbImg } from '../../styles/componentStyles';
+import { ImgThumbImg, ResultsList } from '../../styles/componentStyles';
 
 
 class CampaignCardResults extends Component {
@@ -33,10 +33,13 @@ class CampaignCardResults extends Component {
             <div>
                 <ul className="results-list">
                     {this.props.cardResults.map((cardResult,idx) => 
-                        <li key={idx}>
-                            <button onClick={(e) => {
-                                this.triggerDelete(idx)
-                            }} className="delete-img">
+                        <ResultsList key={idx}>
+                            <button 
+                                style={{ margin: '5px' }}
+                                onClick={(e) => {
+                                    this.triggerDelete(idx)
+                                }} className="delete-img"
+                            >
                                 X
                             </button>
                             <ImgThumbImg 
@@ -49,7 +52,7 @@ class CampaignCardResults extends Component {
                                 cardResult={cardResult}
                                 idx={idx}
                             />
-                        </li>
+                        </ResultsList>
                     )}
                 </ul>
             </div>

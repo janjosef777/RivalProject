@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+//import {Button} from 'reactstrap'
 
 
 export const ImgThumbImg = styled.img`
@@ -13,8 +14,14 @@ export const ImgThumbImg = styled.img`
 `;
 
 export const ResultsList = styled.li`
-    height: 150px;
+    margin: 5px
+    min-height: 150px;
     border-bottom: 1px dotted #999;
     display: flex;
-    align-items: center;
+    //align-items: center;
+    padding-top: 10px;
+`;
+
+export const SetPrizeWrapper = styled.div`
+    margin: 5px;
 `;

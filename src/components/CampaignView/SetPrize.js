@@ -5,15 +5,7 @@ import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col, Input, Collapse
 } from 'reactstrap';
-
-const CardFrame = styled.div`
-    width: ${props => props.frameWidth + 'px'};
-    padding-bottom: ${props => props.framePadding + 'px'};
-    background-color: ${props => props.frameColor};
-    border: ${props => props.borderStyle};
-    display: block;
-    margin 0 auto;
-`;
+import { SetPrizeWrapper} from '../../styles/componentStyles';
 
 class SetPrize extends Component {
     constructor(props) {
@@ -29,8 +21,17 @@ class SetPrize extends Component {
 
     render() {
         return (
-            <div>
-                <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Toggle</Button>
+            <div style={{ margin: '5px'}}>
+                {!this.props.cardResults[this.props.idx].prize? 
+                    <div style={{ marginBottom: '5px' }}>
+                        <>Prize Name: </><br/>
+                        <>Quantity: </><br />
+                        <Button color='danger' style={{ marginBottom: '1rem'}}>Remove Prize</Button>
+                    </div>
+                    :
+                    <></>
+                }
+                <Button onClick={this.toggle} style={{ marginBottom: '1rem', backgroundColor: '#E8542A' }}>Set Prize</Button>
                 <Collapse isOpen={this.state.collapse}>
                     <Card>
                         <CardBody>
