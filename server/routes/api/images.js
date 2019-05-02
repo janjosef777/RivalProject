@@ -4,6 +4,7 @@ const mkdirp = require('mkdirp');
 const fs = require('fs');
 const db = require('../../db');
 const urls = require('../../urls');
+const path = require('path');
 const uploadUrl = '/uploads/'; // Start with and end with a slash
 
 module.exports = {
@@ -44,7 +45,7 @@ module.exports = {
             const image = sharp(tempPath);
             image.metadata().then(metadata => {
 
-                const dir = uploadUrl;
+                const dir = path.join(__dirname, '../../..', uploadUrl);
                 const filename = fnHelper.ensureUnique(dir,
                     req.file.originalname,
                     metadata.format);
@@ -54,7 +55,7 @@ module.exports = {
                         fs.unlink(tempPath, handleErr);
                         return handleErr(err, res, 500);
                     }
-                    image.toFile(__dirname + '/../../..' + dir + filename, (err, savedImg) => {
+                    image.toFile(dir + filename, (err, savedImg) => {
                         fs.unlink(tempPath, handleErr);
                         if(err)
                             return handleErr(err, res, 500);
