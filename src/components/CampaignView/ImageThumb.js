@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import '../../styles/campaignView.css';
+//import '../../styles/campaignView.css';
+import {ImgThumbFrame, ImgThumbImg} from '../../styles/componentStyles';
+
+//const ImgThumbDivStyle = st
 
 class ImageThumb extends Component {
     constructor(props) {
@@ -24,9 +27,9 @@ class ImageThumb extends Component {
 
     render() {
         return (
-            <div>
-                <img src={this.props.imagePath} alt={this.props.imageId} className="img-thumbnail" onClick={this.setImage.bind(this)} />
-            </div>
+            <ImgThumbFrame>
+                <ImgThumbImg src={this.props.imagePath} alt={this.props.imageId} onClick={this.setImage.bind(this)} />
+            </ImgThumbFrame>
         );
     }
 }

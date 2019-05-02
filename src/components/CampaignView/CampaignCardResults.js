@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import '../../styles/campaignView.css';
+import SetPrize from './SetPrize';
+import { ImgThumbFrame, ImgThumbImg } from '../../styles/componentStyles';
 
 
 class CampaignCardResults extends Component {
@@ -20,7 +22,6 @@ class CampaignCardResults extends Component {
 
     setSelectedIndex = (idx) => {
         this.props.setState({selectedIndex: idx});
-        //console.log(this.props.selectedIndex);
     }
 
     componentDidMount() {
@@ -31,19 +32,26 @@ class CampaignCardResults extends Component {
         return (
             <div>
                 <ul className="results-list">
-                    {this.props.cardResults.map((cardresult,idx) => 
+                    {this.props.cardResults.map((cardResult,idx) => 
                         <li key={idx}>
                             <button onClick={(e) => {
                                 this.triggerDelete(idx)
                             }} className="delete-img">
                                 X
-                        </button>
-                        <img 
-                            src={cardresult.image} 
-                            onClick={(e) => {this.setSelectedIndex(idx)}}
-                            alt="Selected Prize Image" 
-                            className="img-thumbnail result-img" 
-                        /></li>
+                            </button>
+                            <ImgThumbFrame>
+                                <ImgThumbImg 
+                                    src={cardResult.image} 
+                                    onClick={(e) => {this.setSelectedIndex(idx)}}
+                                    alt="Selected Prize Image" 
+                                />
+                            </ImgThumbFrame>
+                            <SetPrize
+                                {...this.props}
+                                cardResult={cardResult}
+                                idx={idx}
+                            />
+                        </li>
                     )}
                 </ul>
             </div>

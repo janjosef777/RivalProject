@@ -21,6 +21,8 @@ h4{
   border: solid black 1px;
   border-radius: 5px;
   background-color: white;
+  width: 150px;
+  height: 150px;
 }
 
 .left-wrapper {
@@ -51,7 +53,7 @@ h4{
     justify-content: space-around;
     padding: 20px;
     height: 70vh;
-    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 .results-list{
@@ -68,8 +70,9 @@ h4{
 
 .img-thumbnail{
     width: 150px;
-    height: 200px;
+    height: 150px;
     margin: 10px;
+    object-fit: cov/er;
 }
 
 .tab-content>.active{
