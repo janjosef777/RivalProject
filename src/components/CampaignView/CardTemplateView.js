@@ -22,7 +22,6 @@ class CardTemplateView extends Component {
             size: 1
         }
 
-        this.handleSubmit=this.handleSubmit.bind(this);
     }
     
     handleSubmit() {
@@ -64,7 +63,6 @@ class CardTemplateView extends Component {
                         imgWidth={imgWidth}
                         imgHeight={imgHeight}
                     />
-                    <Button onClick={this.handleSubmit}>SAVE</Button>
                 </div>
 
             )

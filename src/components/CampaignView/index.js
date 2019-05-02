@@ -9,6 +9,7 @@ import AssetsView from './AssetsView';
 import TabView from './TabView';
 import styled from 'styled-components';
 import NavBarComponent from '../NavBarComponent';
+import CampaignSettings from './CampaignSettings';
 
 const LinkButton = styled.a`
     padding: 10px;   
@@ -38,8 +39,9 @@ class CampaignView extends Component {
             overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
             overlayImgId: ' ',
             selectedIndex: null,
-            updateId: this.props.location.state ? this.props.location.state.updateId : 0
+            updateId: this.props.location.state ? this.props.location.state.updateId : 0,
         }
+        this.selectedCampaign = []
         this.setState=this.setState.bind(this);
         this.updatedCampaign=this.updatedCampaign.bind(this);
     }
@@ -91,17 +93,15 @@ class CampaignView extends Component {
 
     render() {
         return (
-            <div>
+            <div> 
                 <NavBarComponent />
+                <CampaignSettings selectedCampaign={this.selectedCampaign} {...this.props}></CampaignSettings>
                 <div className='content-wrapper'>
                     <div className='left-wrapper sub-wrapper'>
                         <AssetsView {...this.state} setState={this.setState} ></AssetsView>
                     </div>
                     <div className='right-wrapper sub-wrapper'>
                         <TabView {...this.state} setState={this.setState}></TabView>
-
-
-                        <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="demo-btn"><i class="fas fa-external-link-alt"></i></LinkButton>
                     </div>
 
                 </div>
