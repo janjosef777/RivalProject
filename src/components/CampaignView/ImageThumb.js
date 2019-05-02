@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 //import '../../styles/campaignView.css';
-import {ImgThumbFrame, ImgThumbImg} from '../../styles/componentStyles';
+import {ImgThumbImg} from '../../styles/componentStyles';
 
 //const ImgThumbDivStyle = st
 
@@ -27,9 +27,7 @@ class ImageThumb extends Component {
 
     render() {
         return (
-            <ImgThumbFrame>
                 <ImgThumbImg src={this.props.imagePath} alt={this.props.imageId} onClick={this.setImage.bind(this)} />
-            </ImgThumbFrame>
         );
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../styles/campaignView.css';
 import SetPrize from './SetPrize';
-import { ImgThumbFrame, ImgThumbImg } from '../../styles/componentStyles';
+import { ImgThumbImg } from '../../styles/componentStyles';
 
 
 class CampaignCardResults extends Component {
@@ -39,13 +39,11 @@ class CampaignCardResults extends Component {
                             }} className="delete-img">
                                 X
                             </button>
-                            <ImgThumbFrame>
-                                <ImgThumbImg 
-                                    src={cardResult.image} 
-                                    onClick={(e) => {this.setSelectedIndex(idx)}}
-                                    alt="Selected Prize Image" 
-                                />
-                            </ImgThumbFrame>
+                            <ImgThumbImg 
+                                src={cardResult.image} 
+                                onClick={(e) => {this.setSelectedIndex(idx)}}
+                                alt="Selected Prize Image" 
+                            />
                             <SetPrize
                                 {...this.props}
                                 cardResult={cardResult}

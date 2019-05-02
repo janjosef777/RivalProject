@@ -61,12 +61,12 @@ h4{
   overflow: scroll;
 }
 
-.results-list li{
+/* .results-list li{
   height: 150px;
   border-bottom: 1px dotted #999;
   display: flex;
   align-items: center;
-}
+} */
 
 .img-thumbnail{
     width: 150px;

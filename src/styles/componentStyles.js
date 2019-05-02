@@ -1,16 +1,20 @@
 import styled from 'styled-components'
 
-export const ImgThumbFrame = styled.div`
-    padding: 5px;
-    margin: 5px;
-    border: solid grey 1px;
-    border-radius: 2px;
-    background-color: white;
-    
-`;
 
 export const ImgThumbImg = styled.img`
-    width: 100px;
-    height: 100px;
+    padding: 5px;
+    margin: 5px;
+    border: solid lightgray 1px;
+    border-radius: 5px;
+    background-color: white;
+    width: 130px;
+    height: 130px;
     object-fit: cover;
+`;
+
+export const ResultsList = styled.li`
+    height: 150px;
+    border-bottom: 1px dotted #999;
+    display: flex;
+    align-items: center;
 `;
