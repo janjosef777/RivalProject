@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../styles/dropzone.css'
+import ReactTooltip from 'react-tooltip'
 
 class Dropzone extends Component {
   constructor(props) {
@@ -70,7 +71,9 @@ class Dropzone extends Component {
         onDrop={this.onDrop}
         onClick={this.openFileDialog}
         style={{ cursor: this.props.disabled ? 'default' : 'pointer' }}
+        data-tip="Drag and drop image here"
       >
+      <ReactTooltip />
         <input
           ref={this.fileInputRef}
           name="image"
