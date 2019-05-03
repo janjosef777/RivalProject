@@ -18,7 +18,7 @@ class ImagesList extends Component {
     }
 
     fetchImages() {
-        fetch('http://localhost:4000/api/images',{
+        fetch('api/images',{
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
