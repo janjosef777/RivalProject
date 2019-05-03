@@ -64,6 +64,7 @@ class CampaignView extends Component {
         // this.saveChanges = this.saveChanges.bind(this);
     }
 
+
     loadCampaign() {
         fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaignId, {
             method:

@@ -31,10 +31,6 @@ class CampaignSettings extends Component {
         this.directToHome = this.directToHome.bind(this)
     }
 
-    componentDidMount() {
-
-    }
-
     handleCampaignNameChange(e){
         this.props.setState({
            name: e.target.value
@@ -116,7 +112,7 @@ class CampaignSettings extends Component {
                     <div className='settings-wrapper'>
                         <div className="campaign-main-btns">
                         {this.renderRedirect()}
-                            <LinkButton>
+                            <LinkButton className="icon">
                                 <i class="fas fa-arrow-circle-left" onClick={this.directToHome}></i>
                             </LinkButton>
                         </div>
@@ -154,11 +150,10 @@ class CampaignSettings extends Component {
 
                         </div>
                         <div className="campaign-main-btns">
-                            <Button onClick={this.viewSummary} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Campaign Summary</Button>
-                            <LinkButton href="" target="_blank"><i class="fas fa-link"></i></LinkButton>
-                            <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank"><i class="fas fa-external-link-alt"></i>
+                            <LinkButton onClick={this.viewSummary} className="icon"><i class="fas fa-list-alt"></i></LinkButton>
+                            <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="icon"><i class="fas fa-link"></i>
                             </LinkButton>
-                            <LinkButton
+                            <LinkButton className="icon"
                             onClick={this.handleSubmit}
                             >
                             <i class="fas fa-save"></i>

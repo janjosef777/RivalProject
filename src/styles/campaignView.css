@@ -235,3 +235,8 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
   right: 0px; 
 }
+
+.icon{
+  background: #fff;
+  border: none;
+}
