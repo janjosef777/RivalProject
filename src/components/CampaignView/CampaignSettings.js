@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import SingleCardState from './SingleCardState';
 import {
@@ -21,11 +22,13 @@ class CampaignSettings extends Component {
         super(props)
         this.state ={
             campaign: this.props.selectedCampaign,
+            showHomepage: false
         }
         this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
         this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleStatusChange = this.handleStatusChange.bind(this)
+        this.directToHome = this.directToHome.bind(this)
     }
 
     componentDidMount() {
@@ -89,6 +92,18 @@ class CampaignSettings extends Component {
 
     }
 
+    directToHome() {
+        this.setState({showHomepage: true})
+    }
+
+    renderRedirect = () => {
+        if (this.state.showHomepage) {
+            return <Redirect to={{
+                pathname: '/',
+            }}
+            />
+        }
+    }
 
 
     viewSummary = () => {
@@ -98,6 +113,12 @@ class CampaignSettings extends Component {
     render() {
         return (
                     <div className='settings-wrapper'>
+                        <div className="campaign-main-btns">
+                        {this.renderRedirect()}
+                            <LinkButton>
+                                <i class="fas fa-arrow-circle-left" onClick={this.directToHome}></i>
+                            </LinkButton>
+                        </div>
                         <div className="campaign-main-info">
                             <div className="input-section">
                                 <h6>Campaign Name: </h6>
