@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Upload from '../../upload/Upload';
 import '../../styles/campaignView.css';
 import ImageThumb from './ImageThumb';
+import ReactTooltip from 'react-tooltip';
 
 
 class ImagesList extends Component {
@@ -10,6 +11,7 @@ class ImagesList extends Component {
 
         this.state = {}
         this.images = []
+        this.deleteImages = this.deleteImages.bind(this);
     }
 
     componentDidMount() {
@@ -45,17 +47,40 @@ class ImagesList extends Component {
         }
     }
 
+    deleteImages(imageId) {
+        fetch('http://localhost:4000/api/images/' + imageId ,{
+            method: 'DELETE',
+            headers: { 
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token)
+
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
+
     render() {
         return (
             <div>
                 <div className='image-list-wrapper'>
                     <h3>Image Library</h3>
-                    <Upload onUpload={this.onUpload.bind(this)} />
+                    <Upload onUpload={this.onUpload.bind(this)}/>
                 </div>
                 <div>
                     <ul className="image-list">
                     {this.props.images.map((image, idx) => 
-                        <li key={idx}><ImageThumb imagePath={image.path} imageId={image.id} {...this.props}></ImageThumb></li>
+                        <li key={idx}>
+                        <button onClick={(e)=>{this.deleteImages(image.id)}} 
+                        className="delete-img">
+                                X
+                        </button>
+                        <ImageThumb imagePath={image.path} imageId={image.id} {...this.props}></ImageThumb></li>
                     )}
                     </ul>
                 </div>
