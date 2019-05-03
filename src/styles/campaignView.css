@@ -271,12 +271,12 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
   box-sizing: border-box;
 }
 .onoffswitch-inner:before {
-  content: "ON";
+  content: "ACTIVE";
   padding-left: 10px;
   background-color: #34A7C1; color: #FFFFFF;
 }
 .onoffswitch-inner:after {
-  content: "OFF";
+  content: "INACTIVE";
   padding-right: 10px;
   background-color: #EEEEEE; color: #999999;
   text-align: right;

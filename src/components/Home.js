@@ -190,14 +190,14 @@ class Home extends Component {
                 {children}
                     <TableEditColumn.Command
                         id="custom"
-                        class="fa fa-edit"
+                        class="fas fa-edit"
                         onExecute={() => {
                             showDetails(row);
                         }} // action callback
                     />
                     <TableEditColumn.Command
                         id="custom"
-                        class="fa fa-trash"
+                        class="fas fa-trash"
                         onExecute={() => {
                             deleteCampaign(row);
                         }} // action callback
