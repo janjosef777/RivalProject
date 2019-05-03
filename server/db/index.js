@@ -1,23 +1,19 @@
 const mysql = require('mysql');
 const env = process.env;
 
-const c = () => {
-    return env.NODE_ENV == 'development' ?
-        mysql.createConnection({
-            host:     env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
-            user:     env.DB_USER !== undefined ? env.DB_USER : 'user',
-            password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
-            database: env.DB_NAME !== undefined ? env.DB_NAME : 'database',
-        }) : 
-        mysql.createConnection(
-            env.CLEARDB_DATABASE_URL
-        )
-}
+const connectionValues = env.NODE_ENV == 'development' ? 
+    {
+        host: env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
+        user: env.DB_USER !== undefined ? env.DB_USER : 'user',
+        password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
+        database: env.DB_NAME !== undefined ? env.DB_NAME : 'database'
+    } :
+    env.CLEARDB_DATABASE_URL;
 
-const connection = c();
+const connection = mysql.createConnection(connectionValues);
 
-function handleDisconnect() {
-    connection = c(); // Recreate the connection, since
+function nurtureConnection() {
+    connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL); // Recreate the connection, since
     // the old one cannot be reused.
 
     connection.connect(function (err) {              // The server is either down
@@ -30,7 +26,7 @@ function handleDisconnect() {
     connection.on('error', function (err) {
         console.log('db error', err);
         if (err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-            handleDisconnect();                         // lost due to either server restart, or a
+            nurtureConnection();                         // lost due to either server restart, or a
         } else {                                      // connnection idle timeout (the wait_timeout
             throw err;                                  // server variable configures this)
         }
@@ -77,9 +73,7 @@ const db = {
     templates:    require('./template'),
 
     nurtureConnection: () => { 
-        if (connection.status == 'disconnected') {
-            handleDisconnect();
-        }
+        
     }
 };
 
