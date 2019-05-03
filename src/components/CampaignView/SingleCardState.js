@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {Input} from 'reactstrap';
 
+
 const CardFrame = styled.div`
     width: ${props => props.frameWidth + 'px'};
     padding-bottom: ${props => props.framePadding + 'px'};
@@ -25,6 +26,7 @@ const Image = styled.img`
     margin-top: ${props => props.framePadding + 'px'}
     border: ${props => props.borderStyle};
 `;
+
 
 class EditableTitle extends React.Component {
     constructor(props) {
@@ -104,7 +106,7 @@ class SingleCardState extends React.Component {
         if (this.props.overlay) {
             this.titleVal = this.props.title;
             this.imgSrc = this.props.overlayImg;
-            this.imgAlt = 'card overlay image'
+            this.imgAlt = 'card overlay image';
         } else if (this.props.index) {
             // this is the case for viewing card results by index
             this.titleVal = this.props.cardResults[this.props.selectedIndex] ?
@@ -156,4 +158,4 @@ class SingleCardState extends React.Component {
         )
     }
 }
-export default SingleCardState
+export default SingleCardState;

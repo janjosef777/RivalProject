@@ -68,6 +68,7 @@ class CampaignView extends Component {
         // this.saveChanges = this.saveChanges.bind(this);
     }
 
+
     loadCampaign() {
         fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaignId, {
             method:
@@ -198,7 +199,7 @@ class CampaignView extends Component {
             .then(res => res.json())
             .then(res => {
                 sessionStorage.setItem('token', res.token);
-                this.saveTemplate()
+                //this.saveTemplate()
             })
             
             .catch(err => {
@@ -233,6 +234,7 @@ class CampaignView extends Component {
     componentDidMount() {
         this.loadCampaign()
     }
+
 
     render() {
         if (this.state.viewSummary) {

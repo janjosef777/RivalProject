@@ -32,10 +32,6 @@ class CampaignSettings extends Component {
         this.saveChanges = this.props.saveChanges.bind(this)
     }
 
-    componentDidMount() {
-
-    }
-
     handleCampaignNameChange(e){
         this.props.setState({
            name: e.target.value
@@ -90,33 +86,25 @@ class CampaignSettings extends Component {
 
     render() {
         return (
-                    <div className='settings-wrapper'>
-                        <div className="campaign-main-btns">
-                        {this.renderRedirect()}
-                            <LinkButton>
-                                <i class="fas fa-arrow-circle-left" onClick={this.directToHome}></i>
-                            </LinkButton>
-                        </div>
-                        <div className="campaign-main-info">
-                            <div className="input-section">
-                                <h6>Campaign Name: </h6>
-                                <input type="text"  value={this.props.name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
-                            </div>
-                            <div className="input-section">
-                                <h6>Estimated Participants: </h6>
-                                <input type="text" 
-                                    value={this.props.estimatedParticipants} 
-                                    onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
-                            </div>
-                            {/* <div className="input-section activation-switch">
-                                <label className="switch">
-                                    <input type="checkbox" 
-                                    onChange={this.handleStatusChange} 
-                                    // checked={this.props.isActive} 
-                                />
-                                    <span className="slider round"></span>
-                                </label>
-                            </div> */}
+                    <div>
+                        <h2>Campaign Setup</h2>
+                        <div className='settings-wrapper'>
+                            <div className="campaign-main-info">
+                                {this.renderRedirect()}
+                                <LinkButton className="icon back-icon">
+                                <i class="fas fa-arrow-left" onClick={this.directToHome}></i>
+                                </LinkButton>
+                                <div className="input-section">
+                                    <h6>Campaign Name: </h6>
+                                    <input type="text"  value={this.props.name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
+                                </div>
+                                <div className="input-section">
+                                    <h6>Estimated Participants: </h6>
+                                    <input type="text" 
+                                        value={this.props.estimatedParticipants} 
+                                        onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
+                                </div>
+
                             <div class="input-section onoffswitch">
                                 <input type="checkbox" 
                                        name="onoffswitch" 
@@ -130,18 +118,18 @@ class CampaignSettings extends Component {
                                 </label>
                             </div>
 
+                            </div>
+                            <div className="campaign-main-btns">
+                                <LinkButton onClick={this.viewSummary} className="icon"><i class="fas fa-list-alt"></i></LinkButton>
+                                <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="icon"><i class="fas fa-link"></i>
+                                </LinkButton>
+                                <LinkButton className="icon"
+                                onClick={this.saveChanges}
+                                >
+                                <i class="fas fa-save"></i>
+                                </LinkButton>
+                            </div>   
                         </div>
-                        <div className="campaign-main-btns">
-                            <Button onClick={this.viewSummary} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Campaign Summary</Button>
-                            <LinkButton href="" target="_blank"><i class="fas fa-link"></i></LinkButton>
-                            <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank"><i class="fas fa-external-link-alt"></i>
-                            </LinkButton>
-                            <LinkButton
-                            onClick={this.saveChanges}
-                            >
-                            <i class="fas fa-save"></i>
-                            </LinkButton>
-                        </div>   
                     </div>
 
                 )
