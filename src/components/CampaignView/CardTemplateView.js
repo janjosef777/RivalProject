@@ -28,7 +28,6 @@ class CardTemplateView extends Component {
         if (this.props.overlay){
             return (
                 <div className='wrapper'>
-                    {/* <div className="ImageHolder"><img src={this.props.overlayImg} alt="Your Scratch Image"/></div> */}
                     <SingleCardState
                         editable
                         overlay
@@ -43,7 +42,6 @@ class CardTemplateView extends Component {
         } else if (this.props.index) {
             return (
                 <div className='wrapper'>
-                    {/* <div className="ImageHolder"><img src={this.props.overlayImg} alt="Your Scratch Image"/></div> */}
                     <SingleCardState
                         editable
                         index
