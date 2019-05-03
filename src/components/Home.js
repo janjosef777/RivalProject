@@ -158,9 +158,6 @@ class Home extends Component {
         }
     }
 
-    componentDidMount() {
-        this.fetchCampaigns();
-    }
     myUpdate(row){
         this.setState({
             selectedCampaignId : row.id,
