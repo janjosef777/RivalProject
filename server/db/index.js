@@ -1,11 +1,16 @@
 const mysql = require('mysql');
 const env = process.env;
-const connection = mysql.createConnection({
-    host:     env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
-    user:     env.DB_USER !== undefined ? env.DB_USER : 'user',
-    password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
-    database: env.DB_NAME !== undefined ? env.DB_NAME : 'database',
-});
+const connection = env.NODE_ENV == 'development' ?
+    mysql.createConnection({
+        host:     env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
+        user:     env.DB_USER !== undefined ? env.DB_USER : 'user',
+        password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
+        database: env.DB_NAME !== undefined ? env.DB_NAME : 'database',
+    }) : 
+    mysql.createConnection(
+        env.CLEARDB_DATABASE_URL
+    )
+
 const queue1 = [];
 const queue2 = [];
 const states = {

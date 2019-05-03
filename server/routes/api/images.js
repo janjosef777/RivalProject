@@ -67,7 +67,8 @@ module.exports = {
                         db.images.add(jsonImage, (err, id) => {
                             if(err)
                                 return handleErr(err, res, 500);
-                            jsonImage.path = urls.baseUrl + uploadUrl + filename;
+                            //jsonImage.path = urls.baseUrl + uploadUrl + filename;
+                            jsonImage.path = uploadUrl + filename;
                             jsonImage.id = id
 
                             // Success

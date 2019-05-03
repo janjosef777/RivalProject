@@ -7,7 +7,7 @@ const db = require('./db');
 const auth = require('./auth');
 const routes = require("./routes");
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 80;
 const env = process.env.NODE_ENV;
 const secret = process.env.SECRET;
 
@@ -28,9 +28,9 @@ if(env == 'development') {
 // Set static folder
 app.use(express.static(path.join(__dirname, '../build')));
 
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
+// app.get('/*', function (req, res) {
+//     res.sendFile(path.join(__dirname, '../build', 'index.html'));
+// });
 
 
 // Body parser middleware
