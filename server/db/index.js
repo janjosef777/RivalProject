@@ -72,9 +72,7 @@ const db = {
     users:       require('./users'),
     templates:    require('./template'),
 
-    nurtureConnection: () => { 
-        
-    }
+    nurtureConnection: nurtureConnection
 };
 
 crudBase.init(db, connection);
