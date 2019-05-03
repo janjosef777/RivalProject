@@ -59,33 +59,32 @@ module.exports = {
     patch: (req, res, next) => {
         // return handleErr("campaigns.put not implemented", res, 501);
         const campaign = req.body;
-        campaign.id = req.params.id;
+        campaign.id = parseInt(req.params.id, 10);
         console.log(campaign);
         db.campaigns.update(campaign, (err, id) => {
             if (err)
                 return handleErr(err, res, 500);
-            if(!id)
+            if (!id)
                 return handleErr(err, res, 404, "No campaign with id " + campaign.id);
             const data = {
                 id: id
             };
 
-            const cardResults = req.body.cardResults;
+            // const cardResults = req.body.cardResults;
 
-            if (cardResults && !Array.isArray(cardResults))
-                return handleErr(null, res, 400, "Card results needs to be an array");
+            // if (cardResults && !Array.isArray(cardResults))
+            //     return handleErr(null, res, 400, "Card results needs to be an array");
 
-            processCardResults(id, cardResults,  'update', cardResultsData => {
+            // processCardResults(id, cardResults,  'update', cardResultsData => {
 
-                if (cardResultsData)
-                    data.cardResults = cardResultsData;
-                res.json({
-                    token: res.jwtToken,
-                    data: data
-                });
-            })
+            //     if (cardResultsData)
+            //         data.cardResults = cardResultsData;
+            res.json({
+                token: res.jwtToken,
+                data: data
+            });
         });
-        
+
     },
 
     put: (req, res, next) => {

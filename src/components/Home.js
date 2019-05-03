@@ -153,7 +153,7 @@ class Home extends Component {
     myDelete(row){
         console.log(row.id)
         this.setState({
-            deleteId : row.id,
+            deleteId: row.id,
             showDeletePopup: true
         })
     }

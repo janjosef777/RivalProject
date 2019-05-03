@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 //import '../../styles/campaignView.css';
-import SingleCardState from './SingleCardState'
+import SingleCardState from './SingleCardState';
+
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col
@@ -27,7 +28,6 @@ class CardTemplateView extends Component {
         if (this.props.overlay){
             return (
                 <div className='wrapper'>
-                    {/* <div className="ImageHolder"><img src={this.props.overlayImg} alt="Your Scratch Image"/></div> */}
                     <SingleCardState
                         editable
                         overlay
@@ -42,7 +42,6 @@ class CardTemplateView extends Component {
         } else if (this.props.index) {
             return (
                 <div className='wrapper'>
-                    {/* <div className="ImageHolder"><img src={this.props.overlayImg} alt="Your Scratch Image"/></div> */}
                     <SingleCardState
                         editable
                         index
