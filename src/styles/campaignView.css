@@ -48,7 +48,8 @@ h2{
     justify-content: space-between;
     background: #222;
     color: #fff;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .image-list{

@@ -4,6 +4,7 @@ import '../../styles/campaignView.css';
 import ImageThumb from './ImageThumb';
 
 
+
 class ImagesList extends Component {
     constructor(props) {
         super(props)
@@ -50,7 +51,7 @@ class ImagesList extends Component {
             <div>
                 <div className='image-list-wrapper'>
                     <h3>Image Library</h3>
-                    <Upload onUpload={this.onUpload.bind(this)} />
+                    <Upload onUpload={this.onUpload.bind(this)}/>
                 </div>
                 <div>
                     <ul className="image-list">

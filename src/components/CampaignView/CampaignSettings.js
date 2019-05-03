@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import SingleCardState from './SingleCardState';
+import ReactTooltip from 'react-tooltip';
+
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col
@@ -128,7 +130,7 @@ class CampaignSettings extends Component {
                                         onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
                                 </div>
 
-                            <div class="input-section onoffswitch">
+                            <div class="input-section onoffswitch" data-tip="Activate campaign">
                                 <input type="checkbox" 
                                        name="onoffswitch" 
                                        class="onoffswitch-checkbox" 
@@ -143,11 +145,13 @@ class CampaignSettings extends Component {
 
                             </div>
                             <div className="campaign-main-btns">
-                                <LinkButton onClick={this.viewSummary} className="icon"><i class="fas fa-list-alt"></i></LinkButton>
-                                <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="icon"><i class="fas fa-link"></i>
+                                <ReactTooltip />
+                                <LinkButton onClick={this.viewSummary} className="icon"><i class="fas fa-list-alt" data-tip="Campaign summary"></i></LinkButton>
+                                <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
                                 </LinkButton>
                                 <LinkButton className="icon"
                                 onClick={this.handleSubmit}
+                                data-tip="Save"
                                 >
                                 <i class="fas fa-save"></i>
                                 </LinkButton>
