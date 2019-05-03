@@ -94,7 +94,6 @@ class Home extends Component {
         };
         this.changeSelection = selection => this.setState({ selection });
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
-        this.commitChanges = this.commitChanges.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
         this.closePopup = () => {
             this.setState({ popupVisible: false, activeRow: {} });
@@ -124,17 +123,6 @@ class Home extends Component {
             })
     }
 
-    commitChanges({ deleted, changed }) {
-        let { campaignItems } = this.state;
-
-        if (deleted) {
-            this.setState({
-                deleteId: deleted["0"]
-            })
-            this.toggleDeletePopup();
-        }
-        this.setState({ campaignItems });
-    }
 
     toggleCreatePopup() {
         this.setState({
@@ -165,7 +153,7 @@ class Home extends Component {
     }
     myDelete(row){
         this.setState({
-            selectedCampaignId : row.id,
+            deleteId: row.id,
             showDeletePopup: true
         })
     }
