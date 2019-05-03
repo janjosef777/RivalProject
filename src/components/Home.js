@@ -100,7 +100,8 @@ class Home extends Component {
         this.closePopup = () => {
             this.setState({ popupVisible: false, activeRow: {} });
         };
-        this.myLogger = this.myLogger.bind(this);
+        this.myUpdate = this.myUpdate.bind(this);
+        this.myDelete = this.myDelete.bind(this);
     }
 
     componentDidMount() {
@@ -160,10 +161,16 @@ class Home extends Component {
     componentDidMount() {
         this.fetchCampaigns();
     }
-    myLogger(row){
+    myUpdate(row){
         this.setState({
             selectedCampaignId : row.id,
             showUpdate: true
+        })
+    }
+    myDelete(row){
+        this.setState({
+            selectedCampaignId : row.id,
+            showDeletePopup: true
         })
     }
     render() {
@@ -176,16 +183,26 @@ class Home extends Component {
             rows, popupVisible, activeRow
         } = this.state;
         const showDetails = row => {
-            this.myLogger(row)
+            this.myUpdate(row)
+        };
+        const deleteCampaign = row => {
+            this.myDelete(row)
         };
         const CellComponent = ({ children, row, ...restProps }) => (
             <TableEditColumn.Cell row={row} {...restProps}>
                 {children}
                     <TableEditColumn.Command
                         id="custom"
-                        class="far fa-edit"
+                        class="fa fa-edit"
                         onExecute={() => {
                             showDetails(row);
+                        }} // action callback
+                    />
+                    <TableEditColumn.Command
+                        id="custom"
+                        class="fa fa-trash"
+                        onExecute={() => {
+                            deleteCampaign(row);
                         }} // action callback
                     />
             </TableEditColumn.Cell>
@@ -269,7 +286,6 @@ class Home extends Component {
                                 <TableEditRow />
                                 <TableEditColumn
                                     width={170}
-                                    showDeleteCommand
                                     cellComponent={CellComponent}
                                 />
                                 <Getter

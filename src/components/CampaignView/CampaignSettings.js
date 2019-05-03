@@ -60,6 +60,8 @@ class CampaignSettings extends Component {
         console.log(this.props.overlayImg)
         console.log(this.props.cardResults)
         console.log(this.props.isActive)
+        console.log(this.props.template)
+        console.log(this.props.createdBy)
 
         // fetch('http://localhost:4000/api/campaign/' + this.props.id, {
         //     method:
