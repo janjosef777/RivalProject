@@ -10,6 +10,7 @@ import TabView from './TabView';
 import styled from 'styled-components';
 import NavBarComponent from '../NavBarComponent';
 import CampaignSettings from './CampaignSettings';
+import Summary from './Summary';
 
 const LinkButton = styled.a`
     padding: 10px;   
@@ -34,59 +35,80 @@ class CampaignView extends Component {
             activeTab: '1', //tabl 0 is overlay, tab 1 is card results
             images: [],
             cardResults: [],
-            selectedCampaign: [],
             title: 'THANKS FOR PARTICIPATING!',
             overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
             overlayImgId: ' ',
             selectedIndex: null,
-            updateId: this.props.location.state ? this.props.location.state.updateId : 0,
+            selectedCampaignId: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
+            viewSummary: false,
+
+            // when components mount, all data is loaded in these arrays
+            selectedCampaign: [],
+            selectedCampaignTemplate: []
         }
-        this.selectedCampaign = []
-        this.setState=this.setState.bind(this);
-        this.updatedCampaign=this.updatedCampaign.bind(this);
+        this.setState = this.setState.bind(this);
     }
 
-    updatedCampaign() {
-        fetch('http://localhost:4000/api/campaigns/' + this.state.updateId, {
+    loadCampaign() {
+        fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaignId, {
             method:
-                'FETCH',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
-
-    createTemplate() {
-        fetch('http://localhost:4000/api/template/', {
-            method:
-                'POST',
+                'GET',
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                'title': "",
-                'image': "",
-                'size': ""
+            }
             })
-        })
             .then(res => res.json())
             .then(res => {
-                sessionStorage.setItem('token', res.token); 
-                console.log(res.data)
+                sessionStorage.setItem('token', res.token)
+                this.setState({selectedCampaign: res.data})
+                this.loadTemplate()
+            })
+            
+            .catch(err => {
+                console.error(err);
+            })
+    }
+    loadTemplate(){
+        console.log("selectedCampaignId "+ this.state.selectedCampaign.template)
+        fetch('http://localhost:4000/api/template/' + this.state.selectedCampaign.template, {
+            method:
+                'GET',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            }
+            })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token)
+                this.setState({ 
+                    selectedCampaignTemplate:res.data
+                })
+                // this.loadCardResults()
             })
             .catch(err => {
                 console.error(err);
             })
+    }
+    loadCardResults(){
+        fetch('http://localhost:4000/api/cardResults/' + this.state.selectedCampaign.id, {
+            method:
+                'GET',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            }
+            })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token)
+                console.log(res.data)
 
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     loadCampaign(){
@@ -113,21 +135,25 @@ class CampaignView extends Component {
 
 
     render() {
-        return (
-            <div> 
-                <NavBarComponent />
-                <CampaignSettings selectedCampaign={this.selectedCampaign} {...this.props}></CampaignSettings>
-                <div className='content-wrapper'>
-                    <div className='left-wrapper sub-wrapper'>
-                        <AssetsView {...this.state} setState={this.setState} ></AssetsView>
-                    </div>
-                    <div className='right-wrapper sub-wrapper'>
-                        <TabView {...this.state} setState={this.setState}></TabView>
-                    </div>
+        if (this.state.viewSummary) {
+            return <Summary {...this.state} setState={this.setState} />
+        } else {
+            return (
+                <div>
+                    <NavBarComponent />
+                    <CampaignSettings  {...this.state} setState={this.setState}></CampaignSettings>
+                    <div className='content-wrapper'>
+                        <div className='left-wrapper sub-wrapper'>
+                            <AssetsView {...this.state} setState={this.setState} ></AssetsView>
+                        </div>
+                        <div className='right-wrapper sub-wrapper'>
+                            <TabView {...this.state} setState={this.setState}></TabView>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }
 export default CampaignView;

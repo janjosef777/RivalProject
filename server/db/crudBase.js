@@ -17,7 +17,8 @@ module.exports = {
                 for(let col of Object.getOwnPropertyNames(entry)) {
                     if(!first)
                         query += ',';
-                    query += col + '=' + entry[col];
+                    query += col + '=?';
+                    first = false;
                 }
                 return query;
             },
@@ -56,7 +57,7 @@ module.exports = {
                 catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
                     () => connection.query(queries.update(entry), toArray(entry, true), (err, res) => {
-                        callback(err, err ? 0 : res.insertId || entry[primary] || true);
+                        callback(err, !err && res.affectedRows > 0 ? res.insertId || entry[primary] || true : 0);
                     });
             },
             replace(entry, callback, config = {}) {
@@ -64,7 +65,7 @@ module.exports = {
                 catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
                     () => connection.query(queries.replace, toArray(entry), (err, res) => {
-                        callback(err, err ? 0 : res.insertId || entry[primary] || true);
+                        callback(err, !err && res.affectedRows > 0 ? res.insertId || entry[primary] || true : 0);
                     });
             },
             delete(id, callback, config = {}) {
@@ -78,10 +79,15 @@ module.exports = {
         function toArray(entry, trim = false) {
             if(trim) {
                 let arr = [];
+                let includedPrimary = false;
                 for(let col of columns) {
                     if(entry[col] !== undefined)
                         arr.push(entry[col]);
+                    if(col === primary)
+                        includedPrimary = true;
                 }
+                if(!includedPrimary)
+                    arr.push(entry[primary]);
                 return arr;
             }
             return columns.map(col => entry[col]);
@@ -93,8 +99,9 @@ module.exports = {
             let trimmed = {};
             for(let col of columns) {
                 if(entry[col] !== undefined)
-                    trimmed9[col] = entry[col];
+                    trimmed[col] = entry[col];
             }
+            trimmed[primary] = entry[primary];
             return trimmed;
         }
     },

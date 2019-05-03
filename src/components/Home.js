@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import '../styles/home.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Link, Redirect } from 'react-router-dom';
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import NavBarComponent from './NavBarComponent';
 // import jwt_decode from 'jwt-decode'
-
+import {
+    Getter,
+} from '@devexpress/dx-react-core';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
@@ -42,10 +48,10 @@ import CampaignView from './CampaignView/index';
 
 const getRowId = row => row.id;
 
-const DateFormatter = ({ value }) => 
+const DateFormatter = ({ value }) =>
     value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
-    .replace(/T/, ' - ')
-    .replace(/\..+/, '');
+        .replace(/T/, ' - ')
+        .replace(/\..+/, '');
 const DateTypeProvider = props => (
     <DataTypeProvider
         formatterComponent={DateFormatter}
@@ -53,45 +59,16 @@ const DateTypeProvider = props => (
     />
 );
 
-// const DeleteButton = ({ onExecute }) => (
-//     <IconButton
-//       onClick={() => {{onExecute();}}}
-//       title="Delete row"
-//     >
-//       <DeleteIcon />
-//     </IconButton>
-// );
-
-// const EditButton = ({ onExecute }) => (
-//   <IconButton 
-//     onClick={() => {{onExecute();}}} 
-//     title="Edit row">
-//     <EditIcon />
-//   </IconButton>
-// );
-
-// const commandComponents = {
-//   edit: EditButton,
-//   delete: DeleteButton,
-// };
-
-// const Command = ({ id, onExecute }) => {
-//     const CommandButton = commandComponents[id];
-//     return (
-//       <CommandButton
-//         onExecute={onExecute}
-//       />
-//     );
-//   };
-  
-
 class Home extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            popupVisible: false,
+            activeRow: {},
             columns: [
+                 
                 { name: 'id', title: 'ID' },
                 { name: 'name', title: 'Campaign' },
                 { name: 'createdBy', title: 'Created By' },
@@ -105,15 +82,14 @@ class Home extends Component {
                 { columnName: 'createdBy', editingEnabled: false },
                 { columnName: 'createdAt', editingEnabled: false },
                 { columnName: 'url', editingEnabled: false },
-              ],
+            ],
             campaignItems: [],
             selection: [],
             showCreatePopup: false,
             showDeletePopup: false,
             showUpdate: false,
-            showUpdate: false,
             deleteId: null,
-            updatedId: null,
+            selectedCampaignId: null,
 
 
         };
@@ -121,6 +97,10 @@ class Home extends Component {
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
         this.commitChanges = this.commitChanges.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
+        this.closePopup = () => {
+            this.setState({ popupVisible: false, activeRow: {} });
+        };
+        this.myLogger = this.myLogger.bind(this);
     }
 
     componentDidMount() {
@@ -144,45 +124,14 @@ class Home extends Component {
             })
     }
 
-    editCampaignName(id){
-        fetch('http://localhost:4000/api/campaigns' + id, {
-            method: 
-                "PUT",
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                "title": ""
-            }),
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                this.setState({ campaignItems: res.data });
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
-
     commitChanges({ deleted, changed }) {
         let { campaignItems } = this.state;
-            
+
         if (deleted) {
             this.setState({
-                deleteId : deleted["0"]
+                deleteId: deleted["0"]
             })
             this.toggleDeletePopup();
-        }
-
-        if (changed) {
-            var keyId = Object.keys(changed)
-            this.setState({
-                updateId : keyId["0"],
-                showUpdate: true
-            })
-
         }
         this.setState({ campaignItems });
     }
@@ -200,32 +149,53 @@ class Home extends Component {
 
     renderRedirect = () => {
         if (this.state.showUpdate) {
-            
-            return <Redirect to={{ 
-                pathname:'/campaignview', 
-                state: {updateId: this.state.updateId}
-            }} 
-                />
+            return <Redirect to={{
+                pathname: '/campaignview',
+                state: { selectedCampaignId: this.state.selectedCampaignId }
+            }}
+            />
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.fetchCampaigns();
     }
-
+    myLogger(row){
+        this.setState({
+            selectedCampaignId : row.id,
+            showUpdate: true
+        })
+    }
     render() {
-        const { 
-               campaignItems,
-               columns, 
-               selection, 
-               dateColumns,
-               editingStateColumnExtensions   
-            } = this.state;
+        const {
+            campaignItems,
+            columns,
+            selection,
+            dateColumns,
+            editingStateColumnExtensions,
+            rows, popupVisible, activeRow
+        } = this.state;
+        const showDetails = row => {
+            this.myLogger(row)
+        };
+        const CellComponent = ({ children, row, ...restProps }) => (
+            <TableEditColumn.Cell row={row} {...restProps}>
+                {children}
+                    <TableEditColumn.Command
+                        id="custom"
+                        class="fas fa-edit"
+                        onExecute={() => {
+                            showDetails(row);
+                        }} // action callback
+                    />
+            </TableEditColumn.Cell>
+        );
         return (
+
             <div>
                 <NavBarComponent></NavBarComponent>
                 <div className="Home">
-                    
+
                     <h2>Scratch & Win Campaigns</h2>
                     <div className="container">
 
@@ -242,7 +212,6 @@ class Home extends Component {
                             >
                                 <EditingState
                                     onCommitChanges={this.commitChanges}
-                                    columnExtensions={editingStateColumnExtensions}
                                 />
                                 <DateTypeProvider
                                     for={dateColumns}
@@ -298,17 +267,39 @@ class Home extends Component {
                                 <Table />
                                 <TableHeaderRow showSortingControls />
                                 <TableEditRow />
-                                <TableEditColumn 
-                                width={170}
-                                showEditCommand
-                                showDeleteCommand
-                                // commandComponent={Command}
-                                 />
+                                <TableEditColumn
+                                    width={170}
+                                    showDeleteCommand
+                                    cellComponent={CellComponent}
+                                />
+                                <Getter
+                                    name="tableColumns"
+                                    computed={({ tableColumns }) => {
+                                        const result = [
+                                            ...tableColumns.filter(c => c.type !== TableEditColumn.COLUMN_TYPE),
+                                            { key: 'editCommand', type: TableEditColumn.COLUMN_TYPE, width: 140 }
+                                        ];
+                                        return result;
+                                    }
+                                    }
+                                />
                                 <Toolbar />
                                 <SearchPanel />
                                 <TableSelection showSelectAll />
                                 <PagingPanel />
                             </Grid>
+                            <Dialog onClose={this.closePopup} open={popupVisible}>
+                                <DialogTitle id="responsive-dialog-title">Row Details</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        {columns.map(column => (
+                                            <div key={column.name}>
+                                                <strong>{column.title}</strong>: {activeRow[column.name]}
+                                            </div>
+                                        ))}
+                                    </DialogContentText>
+                                </DialogContent>
+                            </Dialog>
                         </Paper>
                     </div>
                 </div>

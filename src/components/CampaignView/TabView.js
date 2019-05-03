@@ -3,17 +3,18 @@ import React, { Component } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import '../../styles/campaignView.css';
+//import { } from '../../styles/componentStyles';
 import CardTemplateView from './CardTemplateView';
 import CampaignCardResults from './CampaignCardResults';
+import SetPrize from './SetPrize';
+import { BorderBox } from '../../styles/componentStyles';
 
 
 class TabView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            updateId: this.props.updateId
         }
-        this.selectedCampaign = []
         this.toggle = this.toggle.bind(this);
     }
 
@@ -24,7 +25,11 @@ class TabView extends Component {
             });
         }
     }
-    
+
+    componentDidMount() {
+        
+    }
+
     render() {
         return (
             <div className='wrapper'>
@@ -51,7 +56,7 @@ class TabView extends Component {
                         <Row>
                             <Col sm="12">
                                 <h4>Overlay image for the scratch card</h4>
-                                <CardTemplateView 
+                                <CardTemplateView
                                     overlay
                                     {...this.props}
                                 ></CardTemplateView>
@@ -66,6 +71,9 @@ class TabView extends Component {
                                     index
                                     {...this.props}
                                 ></CardTemplateView>
+                                <BorderBox>
+                                    <SetPrize {...this.props} idx={this.props.selectedIndex}/>
+                                </BorderBox>
                                 <CampaignCardResults {...this.props}></CampaignCardResults>
                             </Col>
                         </Row>

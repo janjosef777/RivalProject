@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import '../../styles/campaignView.css';
-import SingleCardState from '../SingleCardState'
+//import '../../styles/campaignView.css';
+import SingleCardState from './SingleCardState'
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col
@@ -18,7 +18,6 @@ class CardTemplateView extends Component {
 
     }
     
-
     componentDidMount(){
 
     }

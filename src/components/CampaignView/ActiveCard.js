@@ -1,5 +1,5 @@
 import React from 'react'
-import SingleCardState from './components/SingleCardState'
+import SingleCardState from './SingleCardState'
 // import ScratchCard from './scratch-card'
 // import Flex from './scratch-card/flex'
 // import FlexItem from './scratch-card/flex/flex-item'

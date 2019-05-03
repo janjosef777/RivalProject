@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import SingleCardState from '../SingleCardState';
+import SingleCardState from './SingleCardState';
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col
@@ -13,13 +13,7 @@ margin: 10px;
 margin-top: 50px;
 border: 1px solid black;
 border-radius: 5px;
-background-color: red;
-position: fixed;
-bottom: 100px;
-right: 100px;
-&:hover { 
-    background-color: yellow;
-}
+background-color: #E8542A;
 `;
 
 class CampaignSettings extends Component {
@@ -33,93 +27,14 @@ class CampaignSettings extends Component {
             imageId: ''
         }
 
-        this.loadTemplate=this.loadTemplate.bind(this);
-        this.getTemplateImg=this.getTemplateImg.bind(this);
-        this.handleSubmit=this.handleSubmit.bind(this);
-    }
-
-    handleSubmit() {
-        console.log(this.state.title);
-        fetch('http://localhost:4000/api/overlay/', {
-            method:
-                'POST',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                'title': this.state.title,
-                'image': null,
-                'size': this.state.size
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                this.setState({
-                    id: res.data.id
-                })
-            })
-            .catch(err => {
-                console.error(err);
-            })
-
-    }
-
-    loadTemplate() {
-        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.template, {
-            method:
-                'GET',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            
-        })
-
-        .then(res => res.json())
-        .then(res => {
-            sessionStorage.setItem('token', res.token);
-            console.log(res.data);
-            this.setState({
-                title: res.data.title,
-                imageId: res.data.id
-            })
-        })
-        
-        .catch(err => {
-            console.error(err);
-        })
-    }
-
-    getTemplateImg() {
-        fetch('http://localhost:4000/api/images/' + this.state.imageId, {
-            method:
-                'GET',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            
-        })
-
-        .then(res => res.json())
-        .then(res => {
-            sessionStorage.setItem('token', res.token);
-            console.log(res.data);
-            this.setState({
-                image: res.data.filename,
-            })
-        })
-        
-        .catch(err => {
-            console.error(err);
-        })
-
+  
     }
 
     componentDidMount() {
-        this.loadTemplate()
+    }
+
+    viewSummary = () => {
+        this.props.setState({ viewSummary: true })
     }
 
     render() {
@@ -136,13 +51,14 @@ class CampaignSettings extends Component {
                             </div>
                             <div className="input-section activation-switch">
                                 {this.props.selectedCampaign.isActive}
-                                <label class="switch">
+                                <label className="switch">
                                     <input type="checkbox" defaultChecked />
                                     <span className="slider round"></span>
                                 </label>
                             </div>
                         </div>
                         <div className="campaign-main-btns">
+                            <Button onClick={this.viewSummary} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Campaign Summary</Button>
                             <LinkButton href="" target="_blank"><i class="fas fa-link"></i></LinkButton>
                             <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank"><i class="fas fa-external-link-alt"></i></LinkButton>
                             <LinkButton onClick={this.handleSubmit}><i class="fas fa-save"></i></LinkButton>
