@@ -41,3 +41,8 @@
     border: none;
     outline: none;
 }
+
+.fa-edit,
+.fa-trash {
+    background-color: white;
+}
