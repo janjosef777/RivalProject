@@ -127,13 +127,7 @@ class CampaignSettings extends Component {
                                         value={this.props.estimatedParticipants} 
                                         onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
                                 </div>
-                                <div class="input-section onoffswitch">
-                                    <input type="checkbox" 
-                                    onChange={this.handleStatusChange} 
-                                />
-                                    <span className="slider round"></span>
-                                </label>
-                            </div> */}
+
                             <div class="input-section onoffswitch">
                                 <input type="checkbox" 
                                        name="onoffswitch" 
