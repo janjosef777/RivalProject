@@ -20,15 +20,18 @@ class CampaignSettings extends Component {
     constructor(props) {
         super(props)
         this.state ={
-            campaign: this.props.selectedCampaign
+            campaign: this.props.selectedCampaign,
         }
         this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
         this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleStatusChange = this.handleStatusChange.bind(this)
     }
 
     componentDidMount() {
+
     }
+
     handleCampaignNameChange(e){
         this.props.setState({
            name: e.target.value
@@ -44,17 +47,46 @@ class CampaignSettings extends Component {
     handleStatusChange(e) {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        // this.props.setState({
-        //     isActive: e.target.change
-        //  })
-        console.log(value);
-
+        var intValue = value ? 1 : 0;
+        this.props.setState({
+            isActive: intValue
+        })
     }
 
     handleSubmit(){
         console.log(this.props.estimatedParticipants)
         console.log(this.props.name)
+        console.log(this.props.title)
+        console.log(this.props.overlayImg)
+        console.log(this.props.cardResults)
+        console.log(this.props.isActive)
+
+        // fetch('http://localhost:4000/api/campaign/' + this.props.id, {
+        //     method:
+        //         'POST',
+        //     headers: {
+        //         "Authorization": "Bearer " + sessionStorage.getItem("token"),
+        //         "Content-type": "application/json"
+        //     },
+        //     body: JSON.stringify({
+        //         'name': this.props.title,
+        //         // 'template': this.props.templateId,
+        //         'estimated_participants': this.props.estimatedParticipants,
+        //         // 'created_at': this.props.dateNow
+        //     })
+        // })
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         sessionStorage.setItem('token', res.token)
+        //         console.log(res.data)
+
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //     })
+
     }
+
 
 
     viewSummary = () => {
@@ -90,8 +122,13 @@ class CampaignSettings extends Component {
                         <div className="campaign-main-btns">
                             <Button onClick={this.viewSummary} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Campaign Summary</Button>
                             <LinkButton href="" target="_blank"><i class="fas fa-link"></i></LinkButton>
-                            <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank"><i class="fas fa-external-link-alt"></i></LinkButton>
-                            <LinkButton onClick={this.handleSubmit}><i class="fas fa-save"></i></LinkButton>
+                            <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank"><i class="fas fa-external-link-alt"></i>
+                            </LinkButton>
+                            <LinkButton
+                            onClick={this.handleSubmit}
+                            >
+                            <i class="fas fa-save"></i>
+                            </LinkButton>
                         </div>   
                     </div>
 

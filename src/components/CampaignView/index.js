@@ -36,7 +36,8 @@ class CampaignView extends Component {
             images: [],
             cardResults: [],
             title: 'THANKS FOR PARTICIPATING!',
-            overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
+            overlayImg: null, 
+            //'/uploads/IMG_20180902_150937.jpeg',
             overlayImgId: ' ',
             selectedIndex: null,
             selectedCampaignId: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
@@ -53,12 +54,14 @@ class CampaignView extends Component {
             name: "",
             template: "",
             url: "",
+            dateNow: new Date().toLocaleString(),
             //selectedCampaignTemplate as array
             selectedCampaignTemplate: [],
             //selectedCampaignTemplate as individual values
             
         }
         this.setState = this.setState.bind(this);
+        // this.saveChanges = this.saveChanges.bind(this);
     }
 
     loadCampaign() {
@@ -94,7 +97,7 @@ class CampaignView extends Component {
             })
     }
     loadTemplate() {
-        console.log("selectedCampaignId " + this.state.selectedCampaign.template)
+        // console.log("selectedCampaignId " + this.state.selectedCampaign.template)
         fetch('http://localhost:4000/api/template/' + this.state.selectedCampaign.template, {
             method:
                 'GET',
@@ -135,10 +138,6 @@ class CampaignView extends Component {
             })
     }
 
-    saveChanges() {
-
-    }
-
     componentDidMount() {
         this.loadCampaign()
     }
@@ -158,7 +157,6 @@ class CampaignView extends Component {
                         <div className='right-wrapper sub-wrapper'>
                             <TabView {...this.state} setState={this.setState}></TabView>
                         </div>
-
                     </div>
                 </div>
             )

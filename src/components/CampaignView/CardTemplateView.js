@@ -17,7 +17,8 @@ class CardTemplateView extends Component {
         super(props)
 
     }
-    
+
+
     componentDidMount(){
 
     }
@@ -35,6 +36,7 @@ class CardTemplateView extends Component {
                         imgHeight={imgHeight}
                     />
                 </div>
+                
 
             )
         } else if (this.props.index) {
