@@ -183,6 +183,51 @@ class CampaignView extends Component {
         console.log(this.props.estimatedParticipants)
         console.log(this.props.overlayImgId)
         console.log(this.props.title)
+        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.id, {
+            method:
+                'PUT',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                'name': this.props.name,
+                'estimated_participants': this.props.estimatedParticipants,
+            })
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                this.saveTemplate()
+            })
+            
+            .catch(err => {
+                console.error(err);
+            })
+        
+    }
+    
+    saveTemplate(){
+        fetch('http://localhost:4000/api/templates/' + this.props.selectedTemplateId, {
+            method:
+                'PUT',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                'name': this.props.title,
+                'image':this.props.overlayImgId,
+            })
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token);
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     componentDidMount() {

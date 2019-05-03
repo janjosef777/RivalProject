@@ -69,41 +69,6 @@ class CampaignSettings extends Component {
         console.log(intValue);
     }
 
-    handleSubmit(){
-        console.log(this.props.estimatedParticipants)
-        console.log(this.props.name)
-        console.log(this.props.title)
-        console.log(this.props.overlayImg)
-        console.log(this.props.cardResults)
-        console.log(this.props.isActive)
-        console.log(this.props.template)
-        console.log(this.props.createdBy)
-
-        // fetch('http://localhost:4000/api/campaign/' + this.props.id, {
-        //     method:
-        //         'POST',
-        //     headers: {
-        //         "Authorization": "Bearer " + sessionStorage.getItem("token"),
-        //         "Content-type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         'name': this.props.title,
-        //         // 'template': this.props.templateId,
-        //         'estimated_participants': this.props.estimatedParticipants,
-        //         // 'created_at': this.props.dateNow
-        //     })
-        // })
-        //     .then(res => res.json())
-        //     .then(res => {
-        //         sessionStorage.setItem('token', res.token)
-        //         console.log(res.data)
-
-        //     })
-        //     .catch(err => {
-        //         console.error(err);
-        //     })
-
-    }
 
     directToHome() {
         this.setState({showHomepage: true})
