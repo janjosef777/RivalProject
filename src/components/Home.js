@@ -68,7 +68,6 @@ class Home extends Component {
             popupVisible: false,
             activeRow: {},
             columns: [
-                 
                 // { name: 'id', title: 'ID' },
                 { name: 'name', title: 'Campaign' },
                 { name: 'createdBy', title: 'Created By' },

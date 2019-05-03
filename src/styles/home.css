@@ -42,6 +42,7 @@
     outline: none;
 }
 
-.fas {
+.fa-edit,
+.fa-trash {
     background-color: white;
 }
