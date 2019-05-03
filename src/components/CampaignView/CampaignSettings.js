@@ -5,7 +5,6 @@ import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col
 } from 'reactstrap';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 
 const LinkButton = styled.a`
@@ -21,21 +20,42 @@ class CampaignSettings extends Component {
     constructor(props) {
         super(props)
         this.state ={
-            overlayImg: "../../images/Rivallogo.png",
-            title: this.props.titleVal,
-            image: this.props.image,
-            size: "",
-            imageId: '',
-            isChecked: true
+            campaign: this.props.selectedCampaign
         }
-        this.handleChecked = this.handleChecked.bind(this);
+        this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
+        this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChecked () {
-        this.props.setState({selectedCampaign: !this.state.isChecked});
-        console.log("triggered");
-        console.log(this.props.selectedCampaign.isActive);
+    componentDidMount() {
     }
+    handleCampaignNameChange(e){
+        this.props.setState({
+           name: e.target.value
+        })
+    }
+
+    handleEstimatedPatricipantsChange(e){
+        this.props.setState({
+           estimatedParticipants: e.target.value
+        })
+    }
+
+    handleStatusChange(e) {
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        // this.props.setState({
+        //     isActive: e.target.change
+        //  })
+        console.log(value);
+
+    }
+
+    handleSubmit(){
+        console.log(this.props.estimatedParticipants)
+        console.log(this.props.name)
+    }
+
 
     viewSummary = () => {
         this.props.setState({ viewSummary: true })
@@ -47,19 +67,22 @@ class CampaignSettings extends Component {
                         <div className="campaign-main-info">
                             <div className="input-section">
                                 <h6>Campaign Name: </h6>
-                                <input type="text" value={this.props.selectedCampaign.name} placeholder="Campaign Name..."/>
+                                <input type="text"  value={this.props.name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
                             </div>
                             <div className="input-section">
                                 <h6>Estimated Participants: </h6>
-                                <input type="text" value={this.props.selectedCampaign.estimatedParticipants}  placeholder="Estimated Participants..."/>
+                                <input type="text" 
+                                    value={this.props.estimatedParticipants} 
+                                    onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
                             </div>
                             <div className="input-section activation-switch">
+                                
+                                <h6>Status: </h6>
                                 <label className="switch">
                                     <input type="checkbox" 
-                                        onChange={this.handleChecked}
-                                        checked={this.props.isActive}
-                                        />
-
+                                    onChange={this.handleStatusChange} 
+                                    // checked={this.props.isActive} 
+                                />
                                     <span className="slider round"></span>
                                 </label>
                             </div>
@@ -75,4 +98,4 @@ class CampaignSettings extends Component {
                 )
             }
         }
-        export default CampaignSettings;
+export default CampaignSettings;

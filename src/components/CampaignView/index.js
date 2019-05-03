@@ -41,49 +41,73 @@ class CampaignView extends Component {
             selectedIndex: null,
             selectedCampaignId: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
             viewSummary: false,
-
-            // when components mount, all data is loaded in these arrays
+            // selectedCampaign as an array
             selectedCampaign: [],
-            selectedCampaignTemplate: []
+            //selectedCAmpaign as individual values
+            createdAt: "",
+            createdBy: "",
+            estimatedParticipants: "",
+            hasPrizes: "",
+            id: "",
+            isActive: "",
+            name: "",
+            template: "",
+            url: "",
+            //selectedCampaignTemplate as array
+            selectedCampaignTemplate: [],
+            //selectedCampaignTemplate as individual values
+            
         }
         this.setState = this.setState.bind(this);
     }
 
     loadCampaign() {
-        fetch('api/campaigns/' + this.state.selectedCampaignId, {
+        fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaignId, {
             method:
                 'GET',
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-type": "application/json"
             }
-            })
+        })
             .then(res => res.json())
             .then(res => {
                 sessionStorage.setItem('token', res.token)
-                this.setState({selectedCampaign: res.data})
+                console.log(res.data)
+                this.setState({
+                    selectedCampaign: res.data,
+                    createdAt: res.data.createdAt,
+                    createdBy: res.data.createdBy,
+                    estimatedParticipants: res.data.estimatedParticipants,
+                    hasPrizes: res.data.hasPrizes,
+                    id: res.data.id,
+                    isActive: res.data.isActive,
+                    name: res.data.name,
+                    template: res.data.template,
+                    url: res.data.url,
+                })
                 this.loadTemplate()
             })
-            
+
             .catch(err => {
                 console.error(err);
             })
     }
-    loadTemplate(){
-        console.log("selectedCampaignId "+ this.state.selectedCampaign.template)
-        fetch('api/template/' + this.state.selectedCampaign.template, {
+    loadTemplate() {
+        console.log("selectedCampaignId " + this.state.selectedCampaign.template)
+        fetch('http://localhost:4000/api/template/' + this.state.selectedCampaign.template, {
             method:
                 'GET',
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-type": "application/json"
             }
-            })
+        })
             .then(res => res.json())
             .then(res => {
                 sessionStorage.setItem('token', res.token)
-                this.setState({ 
-                    selectedCampaignTemplate:res.data
+                this.setState({
+                    selectedCampaignTemplate: res.data
                 })
                 // this.loadCardResults()
             })
@@ -91,7 +115,7 @@ class CampaignView extends Component {
                 console.error(err);
             })
     }
-    loadCardResults(){
+    loadCardResults() {
         fetch('http://localhost:4000/api/cardResults/' + this.state.selectedCampaign.id, {
             method:
                 'GET',
@@ -99,7 +123,7 @@ class CampaignView extends Component {
                 "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-type": "application/json"
             }
-            })
+        })
             .then(res => res.json())
             .then(res => {
                 sessionStorage.setItem('token', res.token)
@@ -109,6 +133,10 @@ class CampaignView extends Component {
             .catch(err => {
                 console.error(err);
             })
+    }
+
+    saveChanges() {
+
     }
 
     componentDidMount() {
