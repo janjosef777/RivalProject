@@ -27,12 +27,10 @@ class CreateCampaign extends Component {
         if (this.state.redirect) {
             return <Redirect to={{ 
                 pathname:'/campaignview', 
-                state: {updateId: this.state.id}
+                state: {selectedCampaignId: this.state.id}
             }}  />
         }
     }
-
-
     handleSubmit() {
 
         fetch('http://localhost:4000/api/template/', {
@@ -44,7 +42,7 @@ class CreateCampaign extends Component {
             },
             body: JSON.stringify({
                 'title': null,
-                'image': null,
+                'image': 1,
                 'size': 1
             })
         })

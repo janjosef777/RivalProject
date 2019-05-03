@@ -26,13 +26,25 @@ class CampaignSettings extends Component {
             campaign: this.props.selectedCampaign,
             showHomepage: false
         }
-        this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
-        this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+ 
         this.handleStatusChange = this.handleStatusChange.bind(this)
         this.directToHome = this.directToHome.bind(this)
+        this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
+        this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
+        this.saveChanges = this.props.saveChanges.bind(this)
     }
 
+    handleCampaignNameChange(e){
+        this.props.setState({
+           name: e.target.value
+        })
+    }
+
+    handleEstimatedPatricipantsChange(e){
+        this.props.setState({
+           estimatedParticipants: e.target.value
+        })
+    }
     handleCampaignNameChange(e){
         this.props.setState({
            name: e.target.value
@@ -55,41 +67,6 @@ class CampaignSettings extends Component {
         console.log(intValue);
     }
 
-    handleSubmit(){
-        console.log(this.props.estimatedParticipants)
-        console.log(this.props.name)
-        console.log(this.props.title)
-        console.log(this.props.overlayImg)
-        console.log(this.props.cardResults)
-        console.log(this.props.isActive)
-        console.log(this.props.template)
-        console.log(this.props.createdBy)
-
-        // fetch('http://localhost:4000/api/campaign/' + this.props.id, {
-        //     method:
-        //         'POST',
-        //     headers: {
-        //         "Authorization": "Bearer " + sessionStorage.getItem("token"),
-        //         "Content-type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         'name': this.props.title,
-        //         // 'template': this.props.templateId,
-        //         'estimated_participants': this.props.estimatedParticipants,
-        //         // 'created_at': this.props.dateNow
-        //     })
-        // })
-        //     .then(res => res.json())
-        //     .then(res => {
-        //         sessionStorage.setItem('token', res.token)
-        //         console.log(res.data)
-
-        //     })
-        //     .catch(err => {
-        //         console.error(err);
-        //     })
-
-    }
 
     directToHome() {
         this.setState({showHomepage: true})
@@ -150,8 +127,7 @@ class CampaignSettings extends Component {
                                 <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
                                 </LinkButton>
                                 <LinkButton className="icon"
-                                onClick={this.handleSubmit}
-                                data-tip="Save"
+                                onClick={this.saveChanges}
                                 >
                                 <i class="fas fa-save"></i>
                                 </LinkButton>
