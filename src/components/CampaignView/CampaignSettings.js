@@ -54,6 +54,7 @@ class CampaignSettings extends Component {
         this.props.setState({
             isActive: intValue
         })
+        console.log(intValue);
     }
 
     handleSubmit(){
@@ -130,9 +131,7 @@ class CampaignSettings extends Component {
                                     value={this.props.estimatedParticipants} 
                                     onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
                             </div>
-                            <div className="input-section activation-switch">
-                                
-                                <h6>Status: </h6>
+                            {/* <div className="input-section activation-switch">
                                 <label className="switch">
                                     <input type="checkbox" 
                                     onChange={this.handleStatusChange} 
@@ -140,7 +139,19 @@ class CampaignSettings extends Component {
                                 />
                                     <span className="slider round"></span>
                                 </label>
+                            </div> */}
+                            <div class="input-section onoffswitch">
+                                <input type="checkbox" 
+                                       name="onoffswitch" 
+                                       class="onoffswitch-checkbox" 
+                                       id="myonoffswitch" 
+                                       onChange={this.handleStatusChange}/>
+                                <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                                </label>
                             </div>
+
                         </div>
                         <div className="campaign-main-btns">
                             <Button onClick={this.viewSummary} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Campaign Summary</Button>
