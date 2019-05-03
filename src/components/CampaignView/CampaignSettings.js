@@ -129,15 +129,23 @@ class CampaignSettings extends Component {
                                 </div>
                                 <div class="input-section onoffswitch">
                                     <input type="checkbox" 
-                                        name="onoffswitch" 
-                                        class="onoffswitch-checkbox" 
-                                        id="myonoffswitch" 
-                                        onChange={this.handleStatusChange}/>
-                                    <label class="onoffswitch-label" for="myonoffswitch">
-                                    <span class="onoffswitch-inner"></span>
-                                    <span class="onoffswitch-switch"></span>
-                                    </label>
-                                </div>
+                                    onChange={this.handleStatusChange} 
+                                />
+                                    <span className="slider round"></span>
+                                </label>
+                            </div> */}
+                            <div class="input-section onoffswitch">
+                                <input type="checkbox" 
+                                       name="onoffswitch" 
+                                       class="onoffswitch-checkbox" 
+                                       id="myonoffswitch" 
+                                       onChange={this.handleStatusChange}
+                                       checked={this.props.isActive}/>
+                                <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
 
                             </div>
                             <div className="campaign-main-btns">
