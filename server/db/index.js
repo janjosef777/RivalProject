@@ -1,28 +1,29 @@
 const mysql = require('mysql');
 const env = process.env;
 
-const connectionValues = 
-{
-    host: env.AWS_HOST !== undefined ? env.DB_HOST : 'localhost',
-    user: env.AWS_USER !== undefined ? env.DB_USER : 'user',
-    password: env.AWS_PASSWORD !== undefined ? env.DB_PASS : 'password',
-    port: env.AWS_PORTE !== undefined ? env.DB_NAME : '3306',
-    database: env.AWS_DATABASE !== undefined ? env.DB_NAME : 'database'
-}
+// const connectionValues =
+// {
+//     host: env.AWS_HOST !== undefined ? env.DB_HOST : 'localhost',
+//     user: env.AWS_USER !== undefined ? env.DB_USER : 'user',
+//     password: env.AWS_PASSWORD !== undefined ? env.DB_PASS : 'password',
+//     port: env.AWS_PORTE !== undefined ? env.DB_NAME : '3306',
+//     database: env.AWS_DATABASE !== undefined ? env.DB_NAME : 'database'
+// }
 
-// const connectionValues = env.NODE_ENV == 'development' ? 
-//     {
-//         host: env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
-//         user: env.DB_USER !== undefined ? env.DB_USER : 'user',
-//         password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
-//         database: env.DB_NAME !== undefined ? env.DB_NAME : 'database'
-//     } :
-//     {
-//         host: env.AWS_HOST !== undefined ? env.DB_HOST : 'localhost',
-//         user: env.AWS_USER !== undefined ? env.DB_USER : 'user',
-//         password: env.AWS_PASSWORD !== undefined ? env.DB_PASS : 'password',
-//         port: env.AWS_PORTE !== undefined ? env.DB_NAME : '3306'
-//     }
+const connectionValues = env.NODE_ENV == 'development' ? 
+    {
+        host: env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
+        user: env.DB_USER !== undefined ? env.DB_USER : 'user',
+        password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
+        database: env.DB_NAME !== undefined ? env.DB_NAME : 'database'
+    } :
+    {
+        host: env.AWS_HOST !== undefined ? env.DB_HOST : 'localhost',
+        user: env.AWS_USER !== undefined ? env.DB_USER : 'user',
+        password: env.AWS_PASSWORD !== undefined ? env.DB_PASS : 'password',
+        port: env.AWS_PORTE !== undefined ? env.DB_NAME : '3306',
+        database: env.AWS_DATABASE !== undefined ? env.DB_NAME : 'database'
+    }
     //env.CLEARDB_DATABASE_URL;
 
 const connection = mysql.createConnection(connectionValues);
