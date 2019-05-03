@@ -32,6 +32,11 @@
     outline: none;
   }
 
+  .btn-secondary{
+    border: none;
+    background: #222;
+  }
+
   .landingpage-wrapper{
     text-align: center;
     width: 50vw;

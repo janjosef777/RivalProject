@@ -49,7 +49,7 @@ class ImagesList extends Component {
         return (
             <div>
                 <div className='image-list-wrapper'>
-                    <h2>Image Library</h2>
+                    <h3>Image Library</h3>
                     <Upload onUpload={this.onUpload.bind(this)} />
                 </div>
                 <div>

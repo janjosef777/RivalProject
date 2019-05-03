@@ -54,7 +54,7 @@ class Summary extends Component {
                         </ResultsList>
                     )}
                 </ul>
-                <Button color='secondary' onClick={() => this.props.setState({ viewSummary: false })}>Close</Button>
+                <Button onClick={() => this.props.setState({ viewSummary: false })}>Close</Button>
             </Modal>
         )
     }

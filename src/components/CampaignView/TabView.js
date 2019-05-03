@@ -55,7 +55,6 @@ class TabView extends Component {
                     <TabPane tabId="1">
                         <Row>
                             <Col sm="12">
-                                <h4>Overlay image for the scratch card</h4>
                                 <CardTemplateView
                                     overlay
                                     {...this.props}
@@ -66,7 +65,6 @@ class TabView extends Component {
                     <TabPane tabId="2">
                         <Row>
                             <Col sm="12">
-                                <h4>A collection of card results for the campaign</h4>
                                 <CardTemplateView
                                     index
                                     {...this.props}
