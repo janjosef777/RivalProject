@@ -42,8 +42,6 @@ const NavBarComponent = () => (
                     <LinkButton className="primary-button" href="/login">Login</LinkButton>
                 </EnsureLoggedIn>
                 <EnsureLoggedIn>
-                    <NavItem className="SingleLink"><Link to="/">Home</Link></NavItem>
-                    <NavItem className="SingleLink"><Link to="campaignview">Campaign View</Link></NavItem>
                     <NavItem className="SingleLink"><Link to="/logout">LogOut</Link></NavItem>
                 </EnsureLoggedIn>
             </Nav>
