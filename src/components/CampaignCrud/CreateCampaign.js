@@ -27,7 +27,7 @@ class CreateCampaign extends Component {
         if (this.state.redirect) {
             return <Redirect to={{ 
                 pathname:'/campaignview', 
-                state: {updateId: this.state.id}
+                state: {selectedCampaignId: this.state.id}
             }}  />
         }
     }

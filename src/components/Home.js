@@ -92,9 +92,8 @@ class Home extends Component {
 
 
         };
-        this.changeSelection = selection => this.setState({ selection });
+        // this.changeSelection = selection => this.setState({ selection });
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
-        this.commitChanges = this.commitChanges.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
         this.closePopup = () => {
             this.setState({ popupVisible: false, activeRow: {} });
@@ -122,18 +121,6 @@ class Home extends Component {
             .catch(err => {
                 console.error(err);
             })
-    }
-
-    commitChanges({ deleted, changed }) {
-        let { campaignItems } = this.state;
-
-        if (deleted) {
-            this.setState({
-                deleteId: deleted["0"]
-            })
-            this.toggleDeletePopup();
-        }
-        this.setState({ campaignItems });
     }
 
     toggleCreatePopup() {
@@ -164,11 +151,13 @@ class Home extends Component {
         })
     }
     myDelete(row){
+        console.log(row.id)
         this.setState({
-            selectedCampaignId : row.id,
+            deleteId : row.id,
             showDeletePopup: true
         })
     }
+
     render() {
         const {
             campaignItems,
