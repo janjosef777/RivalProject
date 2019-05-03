@@ -48,7 +48,15 @@ const db = {
     images:      require('./images'),
     prizes:      require('./prizes'),
     users:       require('./users'),
-    templates:    require('./template')
+    templates:    require('./template'),
+
+    connection: connection,
+
+    nurtureConnection: () => { 
+        if (connection.status == 'disconnected') {
+            connection.connect();
+        }
+    }
 };
 
 crudBase.init(db, connection);

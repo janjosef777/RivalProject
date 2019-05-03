@@ -24,6 +24,8 @@ module.exports = {
             if (err)
                 callback(err, false);
             else {
+                db.nurtureConnection();
+
                 db.users.add({
                     username: user.username,
                     passwordHash: hash

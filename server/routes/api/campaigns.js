@@ -2,6 +2,9 @@ const db = require('../../db');
 
 module.exports = {
     getAll: (req, res, next) => {
+
+        db.nurtureConnection();
+
         db.campaigns.getAll((err, campaigns) => {
             if (err)
                 return handleErr(err, res, 500);
@@ -12,6 +15,9 @@ module.exports = {
         });
     },
     get: (req, res, next) => {
+
+        db.nurtureConnection();
+
         const id = +req.params.id || 0;
         if (id <= 0)
             return handleErr(null, res, 404);
@@ -27,6 +33,9 @@ module.exports = {
         });
     },
     post: (req, res, next) => {
+
+        db.nurtureConnection();
+
         const campaign = req.body;
         var est_parStr = campaign.estimated_participants
         var est_parInt = parseInt(est_parStr, 10)
@@ -60,6 +69,9 @@ module.exports = {
         return handleErr("campaigns.put not implemented", res, 501);
     },
     delete: (req, res, next) => {
+
+        db.nurtureConnection();
+        
         const id = +req.params.id || 0;
         if (id <= 0)
             return handleErr(null, res, 404);

@@ -1,6 +1,8 @@
 const db = require('../../db');
 module.exports = {
     getAll: (req, res, next) => {
+
+        db.nurtureConnection();
         db.cardResults.getAll((err, cardResults) => {
             if(err)
                 return handleErr(err, res, 500);
@@ -13,6 +15,8 @@ module.exports = {
     post: (req, res, next) => {
         const cardResult = req.body
         console.log(cardResult);
+
+        db.nurtureConnection();
         db.cardResults.add(cardResults, (err,id) => {
             if (err)
                 return handleErr(err,res,500);

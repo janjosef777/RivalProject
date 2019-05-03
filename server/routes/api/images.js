@@ -21,6 +21,9 @@ module.exports = {
     },
     // get
     get: (req, res, next) => {
+
+        db.nurtureConnection();
+
         const id = +req.params.id;
         if(!(id > 0))
             return handleErr(null, res, 404);
@@ -37,6 +40,9 @@ module.exports = {
     },
     // post
     post: (req, res, next) => {
+
+        db.nurtureConnection();
+
         const tempPath = req.file.path;
         if(!/^image\b/.test(req.file.mimetype)) {
             fs.unlink(tempPath, handleErr);
@@ -86,6 +92,9 @@ module.exports = {
     },
     // delete
     delete: (req, res, next) => {
+
+        db.nurtureConnection();
+
         const id = +req.params.id;
         if(!(id > 0))
             return handleErr(null, res, 404);
