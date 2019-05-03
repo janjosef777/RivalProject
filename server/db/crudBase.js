@@ -13,12 +13,14 @@ module.exports = {
                 + 'VALUES (' + columns.map(() => '?').join(',') + ')',
             update: entry => {
                 let query = 'UPDATE ' + tableName + ' SET ';
-                let first = true;
+               
                 for(let col of Object.getOwnPropertyNames(entry)) {
-                    if(!first)
-                        query += ',';
-                    query += col + '=?';
-                    first = false;
+                    if(col == "id") {
+                        query = query.slice(0,-1);
+                        query += " WHERE " + col + "=?"
+                        break;
+                    }
+                    query += col + '=?' + ','
                 }
                 return query;
             },
@@ -53,8 +55,8 @@ module.exports = {
                     });
             },
             update(entry, callback, config = {}) {
-                try { entry = removeUnused(mapWrite ? mapWrite(entry) : entry); }
-                catch(err) { callback(err, null); return; }
+                // try { entry = removeUnused(mapWrite ? mapWrite(entry) : entry); }
+                //catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
                     () => connection.query(queries.update(entry), toArray(entry, true), (err, res) => {
                         callback(err, !err && res.affectedRows > 0 ? res.insertId || entry[primary] || true : 0);
