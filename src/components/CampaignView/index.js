@@ -32,15 +32,16 @@ class CampaignView extends Component {
         super(props)
 
         this.state = {
-            activeTab: '1', //tabl 0 is overlay, tab 1 is card results
+            activeTab: '1',
             images: [],
             cardResults: [],
             title: 'THANKS FOR PARTICIPATING!',
-            overlayImg: null, //'/uploads/IMG_20180902_150937.jpeg',
+            overlayImg: '../../images/Rivallogo.png',
             overlayImgId: ' ',
             selectedIndex: null,
             selectedCampaignId: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
             viewSummary: false,
+
             // selectedCampaign as an array
             selectedCampaign: [],
             //selectedCAmpaign as individual values
@@ -53,10 +54,14 @@ class CampaignView extends Component {
             name: "",
             template: "",
             url: "",
+
             //selectedCampaignTemplate as array
             selectedCampaignTemplate: [],
             //selectedCampaignTemplate as individual values
-            
+            selectedTemplateId: "",
+            selectedTemplateTitle: "",
+            selectedTemplateImage: "",
+            selectedImageSize: ""
         }
         this.setState = this.setState.bind(this);
     }
@@ -76,6 +81,7 @@ class CampaignView extends Component {
                 console.log(res.data)
                 this.setState({
                     selectedCampaign: res.data,
+
                     createdAt: res.data.createdAt,
                     createdBy: res.data.createdBy,
                     estimatedParticipants: res.data.estimatedParticipants,
@@ -107,14 +113,50 @@ class CampaignView extends Component {
             .then(res => {
                 sessionStorage.setItem('token', res.token)
                 this.setState({
-                    selectedCampaignTemplate: res.data
+                    selectedCampaignTemplate: res.data,
+
+                    selectedTemplateId: res.data.id,
+                    selectedTemplateTitle: res.data.title,
+                    selectedTemplateImageId: res.data.image,
+                    selectedImageSize: res.data.size
+
                 })
-                // this.loadCardResults()
+                if (res.data.title != null){
+                    this.setState({
+                        title: res.data.title
+                    })
+                }
+                this.loadTemplateImage()
             })
             .catch(err => {
                 console.error(err);
             })
     }
+
+    loadTemplateImage() {
+        fetch('http://localhost:4000/api/images/' + this.state.selectedTemplateImageId, {
+            method:
+                'GET',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                sessionStorage.setItem('token', res.token)
+                if (res.data.path != null) {
+                    this.setState({
+                        overlayImg: res.data.path
+                    })
+                }
+
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
     loadCardResults() {
         fetch('http://localhost:4000/api/cardResults/' + this.state.selectedCampaign.id, {
             method:
@@ -136,7 +178,10 @@ class CampaignView extends Component {
     }
 
     saveChanges() {
-
+        console.log(this.props.name)
+        console.log(this.props.estimatedParticipants)
+        console.log(this.props.overlayImgId)
+        console.log(this.props.title)
     }
 
     componentDidMount() {
@@ -150,7 +195,7 @@ class CampaignView extends Component {
             return (
                 <div>
                     <NavBarComponent />
-                    <CampaignSettings  {...this.state} setState={this.setState}></CampaignSettings>
+                    <CampaignSettings saveChanges={this.saveChanges}  {...this.state} setState={this.setState}></CampaignSettings>
                     <div className='content-wrapper'>
                         <div className='left-wrapper sub-wrapper'>
                             <AssetsView {...this.state} setState={this.setState} ></AssetsView>

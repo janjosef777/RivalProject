@@ -24,7 +24,7 @@ class CampaignSettings extends Component {
         }
         this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
         this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.saveChanges = this.props.saveChanges.bind(this)
     }
 
     componentDidMount() {
@@ -39,10 +39,6 @@ class CampaignSettings extends Component {
         this.props.setState({
            estimatedParticipants: e.target.value
         })
-    }
-    handleSubmit(){
-        console.log(this.props.estimatedParticipants)
-        console.log(this.props.name)
     }
 
     viewSummary = () => {
@@ -73,7 +69,7 @@ class CampaignSettings extends Component {
                             <Button onClick={this.viewSummary} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Campaign Summary</Button>
                             <LinkButton href="" target="_blank"><i class="fas fa-link"></i></LinkButton>
                             <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank"><i class="fas fa-external-link-alt"></i></LinkButton>
-                            <LinkButton onClick={this.handleSubmit}><i class="fas fa-save"></i></LinkButton>
+                            <LinkButton onClick={this.saveChanges}><i class="fas fa-save"></i></LinkButton>
                         </div>   
                     </div>
 
