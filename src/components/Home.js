@@ -69,7 +69,7 @@ class Home extends Component {
             activeRow: {},
             columns: [
                  
-                { name: 'id', title: 'ID' },
+                // { name: 'id', title: 'ID' },
                 { name: 'name', title: 'Campaign' },
                 { name: 'createdBy', title: 'Created By' },
                 { name: 'createdAt', title: 'Date Created' },
@@ -269,7 +269,7 @@ class Home extends Component {
 
                                 <SortingState
                                     defaultSorting={[
-                                        { columnName: 'id', direction: 'asc' },
+                                        // { columnName: 'id', direction: 'asc' },
                                         { columnName: 'name', direction: 'asc' },
                                         { columnName: 'created_by', direction: 'asc' },
                                         { columnName: 'url', direction: 'asc' }
