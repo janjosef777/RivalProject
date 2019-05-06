@@ -49,9 +49,10 @@ import CampaignView from './CampaignView/index';
 const getRowId = row => row.id;
 
 const DateFormatter = ({ value }) =>
-    value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
-        .replace(/T/, ' - ')
-        .replace(/\..+/, '');
+    new Date(value).toLocaleString();
+    // value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
+    //     .replace(/T/, ' - ')
+    //     .replace(/\..+/, '');
 const DateTypeProvider = props => (
     <DataTypeProvider
         formatterComponent={DateFormatter}
