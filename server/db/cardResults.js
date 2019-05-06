@@ -1,5 +1,4 @@
 let db = null;
-let connection = null;
 
 const tableName = 'card_result';
 const columns = ['title', 'image', 'campaign', 'prize'];
@@ -9,14 +8,13 @@ const queries = {
 };
 
 module.exports = Object.assign(require('./crudBase').create(tableName, columns), {
-    init(database, connect) {
-        if(!connection) {
+    init(database) {
+        if(!db) {
             db = database;
-            connection = connect;
         }
     },
     getDetailAll(campaignId, callback) {
-        db.onReady = () => connection.query(queries.getDetailAll, campaignId, (err, res) => {
+        db.onReady = () => db.connection.query(queries.getDetailAll, campaignId, (err, res) => {
             res = err ? [] : res;
             res = res.map(cardResult => {
                 if(cardResult.prize) {

@@ -23,7 +23,6 @@ class CampaignSettings extends Component {
     constructor(props) {
         super(props)
         this.state ={
-            campaign: this.props.selectedCampaign,
             showHomepage: false
         }
  
@@ -32,28 +31,19 @@ class CampaignSettings extends Component {
         this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
         this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
         this.saveChanges = this.props.saveChanges.bind(this)
+
+
     }
 
     handleCampaignNameChange(e){
         this.props.setState({
-           name: e.target.value
+           selectedCampaign_name: e.target.value
         })
     }
 
     handleEstimatedPatricipantsChange(e){
         this.props.setState({
-           estimatedParticipants: e.target.value
-        })
-    }
-    handleCampaignNameChange(e){
-        this.props.setState({
-           name: e.target.value
-        })
-    }
-
-    handleEstimatedPatricipantsChange(e){
-        this.props.setState({
-           estimatedParticipants: e.target.value
+           selectedCampaign_estimatedParticipants: e.target.value
         })
     }
 
@@ -62,7 +52,7 @@ class CampaignSettings extends Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         var intValue = value ? 1 : 0;
         this.props.setState({
-            isActive: intValue
+            selectedCampaign_isActive: intValue
         })
         console.log(intValue);
     }
@@ -98,12 +88,12 @@ class CampaignSettings extends Component {
                                 </LinkButton>
                                 <div className="input-section">
                                     <h6>Campaign Name: </h6>
-                                    <input type="text"  value={this.props.name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
+                                    <input type="text"  value={this.props.selectedCampaign_name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
                                 </div>
                                 <div className="input-section">
                                     <h6>Estimated Participants: </h6>
                                     <input type="text" 
-                                        value={this.props.estimatedParticipants} 
+                                        value={this.props.selectedCampaign_estimatedParticipants} 
                                         onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
                                 </div>
 
@@ -113,7 +103,7 @@ class CampaignSettings extends Component {
                                        class="onoffswitch-checkbox" 
                                        id="myonoffswitch" 
                                        onChange={this.handleStatusChange}
-                                       checked={this.props.isActive}/>
+                                       checked={this.props.selectedCampaign_isActive}/>
                                 <label class="onoffswitch-label" for="myonoffswitch">
                                 <span class="onoffswitch-inner"></span>
                                 <span class="onoffswitch-switch"></span>
