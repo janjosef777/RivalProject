@@ -20,7 +20,7 @@ class Login extends Component {
     }
 
     handleSubmit() {
-        fetch('/api/auth', {
+        fetch('https://boiling-reef-95628.herokuapp.com/api/auth', {
             method: 'POST',
             body: JSON.stringify({ "username": this.state.username, "password": this.state.password }),
             headers: {
