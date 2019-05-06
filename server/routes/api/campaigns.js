@@ -66,9 +66,8 @@ module.exports = {
         });
     },
     patch: (req, res, next) => {
-        // return handleErr("campaigns.put not implemented", res, 501);
         const campaign = req.body;
-        campaign.id = parseInt(req.params.id, 10);
+        campaign.id = +req.params.id;
         console.log(campaign);
         db.connect(err => {
             if(err) return handleErr(err, res, 500);

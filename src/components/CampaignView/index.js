@@ -135,8 +135,33 @@ class CampaignView extends Component {
     }
 
     saveChanges() {
+        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign_id, {
+            method:
+                'PATCH',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            },
+            body: {
+                name: this.props.selectedCampaign_name,
+                isActive: !!this.props.selectedCampaign_isActive,
+                template: {
+                    title: this.props.selectedTemplate_title,
+                    image: this.props.selectedTemplate_imageId,
+                }
+            }
+        }).then(res => {
+            if(res.status !== 200)
+                throw res;
+            return res.json();
+        }).then(json => sessionStorage.setItem('token', json.token))
+        .then(json => {
+            window.alert("Changes Saved!")
+            console.log(json);
+        }).catch(err => {
+            console.error(err);
+        });
         console.log(this.props)
-        window.alert("Changes Saved!")
         
     }
 
