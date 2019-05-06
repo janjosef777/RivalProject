@@ -48,7 +48,7 @@ class ImagesList extends Component {
         }
     }
 
-    deleteImages(imageId) {
+    deleteImages(imageId, idx) {
         fetch('http://localhost:4000/api/images/' + imageId ,{
             method: 'DELETE',
             headers: { 
@@ -59,6 +59,10 @@ class ImagesList extends Component {
             .then(res => {
                 sessionStorage.setItem('token', res.token)
 
+            }).then(() => {
+                let images = this.props.images;
+                images.splice(idx, 1);
+                this.props.setState({ images: images });
             })
             .catch(err => {
                 console.error(err);
@@ -77,7 +81,7 @@ class ImagesList extends Component {
                     <ul className="image-list">
                     {this.props.images.map((image, idx) => 
                         <li key={idx}>
-                        <button onClick={(e)=>{this.deleteImages(image.id)}} 
+                        <button onClick={(e)=>{this.deleteImages(image.id, idx)}} 
                         className="delete-img">
                                 X
                         </button>
