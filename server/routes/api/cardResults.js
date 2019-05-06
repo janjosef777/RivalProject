@@ -1,7 +1,6 @@
 const db = require('../../db');
 module.exports = {
     getAll: (req, res, next) => {
-
         
         db.cardResults.getAll((err, cardResults) => {
             if(err)

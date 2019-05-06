@@ -49,6 +49,7 @@ class ImagesList extends Component {
     }
 
     deleteImages(imageId, idx) {
+
         fetch('http://localhost:4000/api/images/' + imageId ,{
             method: 'DELETE',
             headers: { 
@@ -57,14 +58,17 @@ class ImagesList extends Component {
         })
             .then(res => res.json())
             .then(res => {
-                sessionStorage.setItem('token', res.token)
-
-            }).then(() => {
-                let images = this.props.images;
-                images.splice(idx, 1);
-                this.props.setState({ images: images });
-            })
-            .catch(err => {
+                if (res.data.deleted) {
+                    console.log(res)
+                    sessionStorage.setItem('token', res.token);
+                    let images = this.props.images;
+                    images.splice(idx, 1);
+                    this.props.setState({ images: images });
+                } else {
+                    console.log(res)
+                    alert("unable to delet image: " + res);
+                } 
+            }).catch(err => {
                 console.error(err);
             })
     }
