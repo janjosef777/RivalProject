@@ -12,15 +12,16 @@ module.exports = {
                 + 'VALUES (' + columns.map(() => '?').join(',') + ')',
             update: entry => {
                 let query = 'UPDATE ' + tableName + ' SET ';
-               
+                let first = true;
                 for(let col of Object.getOwnPropertyNames(entry)) {
-                    if(col == "id") {
-                        query = query.slice(0,-1);
-                        query += " WHERE " + col + "=?"
-                        break;
-                    }
-                    query += col + '=?' + ','
+                    if(col === primary)
+                        continue;
+                    if(!first)
+                        query += ',';
+                    query += col + '=?';
+                    first = false;
                 }
+                query += ' WHERE ' + primary + '=?';
                 return query;
             },
             replace: 'REPLACE INTO ' + tableName + ' (' + columns.join(',') + ') '
@@ -54,8 +55,8 @@ module.exports = {
                     });
             },
             update(entry, callback, config = {}) {
-                // try { entry = removeUnused(mapWrite ? mapWrite(entry) : entry); }
-                //catch(err) { callback(err, null); return; }
+                try { entry = removeUnused(mapWrite ? mapWrite(entry) : entry); }
+                catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
                     () => db.connection.query(queries.update(entry), toArray(entry, true), (err, res) => {
                         callback(err, !err && res.affectedRows > 0 ? res.insertId || entry[primary] || true : 0);
@@ -99,7 +100,7 @@ module.exports = {
 
             let trimmed = {};
             for(let col of columns) {
-                if(entry[col] !== undefined)
+                if(entry[col] !== undefined && col !== primary)
                     trimmed[col] = entry[col];
             }
             trimmed[primary] = entry[primary];
