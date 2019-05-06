@@ -50,7 +50,7 @@ class ImagesList extends Component {
 
     deleteImages(imageId, idx) {
 
-        fetch('http://localhost:4000/api/images/' + imageId ,{
+        fetch('api/images/' + imageId ,{
             method: 'DELETE',
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")

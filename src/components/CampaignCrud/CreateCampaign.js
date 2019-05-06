@@ -63,7 +63,7 @@ class CreateCampaign extends Component {
     }
 
     saveTemplate() {
-        fetch('http://localhost:4000/api/campaigns/', {
+        fetch('api/campaigns/', {
             method:
                 'POST',
             headers: {

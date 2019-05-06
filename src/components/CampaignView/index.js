@@ -57,7 +57,7 @@ class CampaignView extends Component {
 
 
     loadCampaign() {
-        fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaign_id, {
+        fetch('api/campaigns/' + this.state.selectedCampaign_id, {
             method:
                 'GET',
             headers: {
@@ -85,7 +85,7 @@ class CampaignView extends Component {
             })
     }
     loadTemplate() {
-        fetch('http://localhost:4000/api/template/' + this.state.selectedCampaign_template, {
+        fetch('api/template/' + this.state.selectedCampaign_template, {
             method:
                 'GET',
             headers: {
@@ -113,7 +113,7 @@ class CampaignView extends Component {
     }
 
     loadTemplateImage() {
-        fetch('http://localhost:4000/api/images/' + this.state.selectedTemplate_imageId, {
+        fetch('api/images/' + this.state.selectedTemplate_imageId, {
             method:
                 'GET',
             headers: {
