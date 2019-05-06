@@ -70,7 +70,7 @@ class CampaignView extends Component {
 
 
     loadCampaign() {
-        fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaignId, {
+        fetch('api/campaigns/' + this.state.selectedCampaignId, {
             method:
                 'GET',
             headers: {
@@ -103,7 +103,7 @@ class CampaignView extends Component {
             })
     }
     loadTemplate() {
-        fetch('http://localhost:4000/api/template/' + this.state.selectedCampaign.template, {
+        fetch('api/template/' + this.state.selectedCampaign.template, {
             method:
                 'GET',
             headers: {
@@ -136,7 +136,7 @@ class CampaignView extends Component {
     }
 
     loadTemplateImage() {
-        fetch('http://localhost:4000/api/images/' + this.state.selectedTemplateImageId, {
+        fetch('api/images/' + this.state.selectedTemplateImageId, {
             method:
                 'GET',
             headers: {
@@ -160,7 +160,7 @@ class CampaignView extends Component {
     }
 
     loadCardResults() {
-        fetch('http://localhost:4000/api/cardResults/' + this.state.selectedCampaign.id, {
+        fetch('api/cardResults/' + this.state.selectedCampaign.id, {
             method:
                 'GET',
             headers: {
@@ -184,7 +184,7 @@ class CampaignView extends Component {
         console.log(this.props.estimatedParticipants)
         console.log(this.props.overlayImgId)
         console.log(this.props.title)
-        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.id, {
+        fetch('api/campaigns/' + this.props.selectedCampaign.id, {
             method:
                 'PUT',
             headers: {
