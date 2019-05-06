@@ -27,6 +27,8 @@ if(env != 'development' && env != 'production')
 )
 //}
 
+console.log("commented out static folder");
+
 // Set static folder
 // app.use(express.static(path.join(__dirname, '../build')));
 
