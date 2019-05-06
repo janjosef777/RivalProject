@@ -19,10 +19,10 @@ import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
-    SelectionState,
+    // SelectionState,
     PagingState,
     IntegratedPaging,
-    IntegratedSelection,
+    // IntegratedSelection,
     SortingState,
     IntegratedSorting,
     SearchState,
@@ -68,8 +68,7 @@ class Home extends Component {
             popupVisible: false,
             activeRow: {},
             columns: [
-                 
-                { name: 'id', title: 'ID' },
+                // { name: 'id', title: 'ID' }, COLUMN FOR ID
                 { name: 'name', title: 'Campaign' },
                 { name: 'createdBy', title: 'Created By' },
                 { name: 'createdAt', title: 'Date Created' },
@@ -84,7 +83,7 @@ class Home extends Component {
                 { columnName: 'url', editingEnabled: false },
             ],
             campaignItems: [],
-            selection: [],
+            // selection: [],
             showCreatePopup: false,
             showDeletePopup: false,
             showUpdate: false,
@@ -95,12 +94,12 @@ class Home extends Component {
         };
         this.changeSelection = selection => this.setState({ selection });
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
-        this.commitChanges = this.commitChanges.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
         this.closePopup = () => {
             this.setState({ popupVisible: false, activeRow: {} });
         };
-        this.myLogger = this.myLogger.bind(this);
+        this.myUpdate = this.myUpdate.bind(this);
+        this.myDelete = this.myDelete.bind(this);
     }
 
     componentDidMount() {
@@ -108,7 +107,7 @@ class Home extends Component {
     }
 
     fetchCampaigns() {
-        fetch('http://localhost:4000/api/campaigns', {
+        fetch('api/campaigns', {
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
@@ -124,17 +123,6 @@ class Home extends Component {
             })
     }
 
-    commitChanges({ deleted, changed }) {
-        let { campaignItems } = this.state;
-
-        if (deleted) {
-            this.setState({
-                deleteId: deleted["0"]
-            })
-            this.toggleDeletePopup();
-        }
-        this.setState({ campaignItems });
-    }
 
     toggleCreatePopup() {
         this.setState({
@@ -157,26 +145,32 @@ class Home extends Component {
         }
     }
 
-    componentDidMount() {
-        this.fetchCampaigns();
-    }
-    myLogger(row){
+    myUpdate(row){
         this.setState({
             selectedCampaignId : row.id,
             showUpdate: true
+        })
+    }
+    myDelete(row){
+        this.setState({
+            deleteId: row.id,
+            showDeletePopup: true
         })
     }
     render() {
         const {
             campaignItems,
             columns,
-            selection,
+            // selection, SELECTION FUNCTIONALITY
             dateColumns,
             editingStateColumnExtensions,
             rows, popupVisible, activeRow
         } = this.state;
         const showDetails = row => {
-            this.myLogger(row)
+            this.myUpdate(row)
+        };
+        const deleteCampaign = row => {
+            this.myDelete(row)
         };
         const CellComponent = ({ children, row, ...restProps }) => (
             <TableEditColumn.Cell row={row} {...restProps}>
@@ -186,6 +180,13 @@ class Home extends Component {
                         class="fas fa-edit"
                         onExecute={() => {
                             showDetails(row);
+                        }} // action callback
+                    />
+                    <TableEditColumn.Command
+                        id="custom"
+                        class="fas fa-trash"
+                        onExecute={() => {
+                            deleteCampaign(row);
                         }} // action callback
                     />
             </TableEditColumn.Cell>
@@ -199,11 +200,12 @@ class Home extends Component {
                     <h2>Scratch & Win Campaigns</h2>
                     <div className="container">
 
-                        <span>
+                        {/* Selection functionality */}
+                        {/* <span>
                             Total rows selected:
-                    {' '}
+                            {' '}
                             {selection.length}
-                        </span>
+                        </span> */}
                         <Paper>
                             <Grid
                                 rows={campaignItems}
@@ -220,12 +222,16 @@ class Home extends Component {
                                     defaultCurrentPage={1}
                                     pageSize={4}
                                 />
-                                <SelectionState
+
+                                {/* Selection functionality */}
+                                {/* <SelectionState
                                     selection={selection}
                                     onSelectionChange={this.changeSelection}
-                                />
+                                /> */}
                                 <IntegratedPaging />
-                                <IntegratedSelection />
+
+                                {/* Selection functionality */}
+                                {/* <IntegratedSelection /> */}
 
                                 <Button
                                     variant="fab"
@@ -235,6 +241,8 @@ class Home extends Component {
                                     onClick={this.toggleCreatePopup.bind(this)}>
                                     +
                                 </Button>
+
+                                <i></i>
 
                                 {this.state.showCreatePopup ?
                                     <CreateCampaign
@@ -255,7 +263,8 @@ class Home extends Component {
 
                                 <SortingState
                                     defaultSorting={[
-                                        { columnName: 'id', direction: 'asc' },
+                                        // Column for ID
+                                        // { columnName: 'id', direction: 'asc' },
                                         { columnName: 'name', direction: 'asc' },
                                         { columnName: 'created_by', direction: 'asc' },
                                         { columnName: 'url', direction: 'asc' }
@@ -269,7 +278,6 @@ class Home extends Component {
                                 <TableEditRow />
                                 <TableEditColumn
                                     width={170}
-                                    showDeleteCommand
                                     cellComponent={CellComponent}
                                 />
                                 <Getter
@@ -285,7 +293,8 @@ class Home extends Component {
                                 />
                                 <Toolbar />
                                 <SearchPanel />
-                                <TableSelection showSelectAll />
+                                {/*  Selection Functionality */}
+                                {/* <TableSelection showSelectAll /> */}
                                 <PagingPanel />
                             </Grid>
                             <Dialog onClose={this.closePopup} open={popupVisible}>

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import SingleCardState from './SingleCardState';
+import ReactTooltip from 'react-tooltip';
+
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Container, Row, Col
@@ -20,18 +23,64 @@ class CampaignSettings extends Component {
     constructor(props) {
         super(props)
         this.state ={
-            overlayImg: "../../images/Rivallogo.png",
-            title: this.props.titleVal,
-            image: this.props.image,
-            size: "",
-            imageId: ''
+            campaign: this.props.selectedCampaign,
+            showHomepage: false
         }
-
-  
+ 
+        this.handleStatusChange = this.handleStatusChange.bind(this)
+        this.directToHome = this.directToHome.bind(this)
+        this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
+        this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
+        this.saveChanges = this.props.saveChanges.bind(this)
     }
 
-    componentDidMount() {
+    handleCampaignNameChange(e){
+        this.props.setState({
+           name: e.target.value
+        })
     }
+
+    handleEstimatedPatricipantsChange(e){
+        this.props.setState({
+           estimatedParticipants: e.target.value
+        })
+    }
+    handleCampaignNameChange(e){
+        this.props.setState({
+           name: e.target.value
+        })
+    }
+
+    handleEstimatedPatricipantsChange(e){
+        this.props.setState({
+           estimatedParticipants: e.target.value
+        })
+    }
+
+    handleStatusChange(e) {
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        var intValue = value ? 1 : 0;
+        this.props.setState({
+            isActive: intValue
+        })
+        console.log(intValue);
+    }
+
+
+    directToHome() {
+        this.setState({showHomepage: true})
+    }
+
+    renderRedirect = () => {
+        if (this.state.showHomepage) {
+            return <Redirect to={{
+                pathname: '/',
+            }}
+            />
+        }
+    }
+
 
     viewSummary = () => {
         this.props.setState({ viewSummary: true })
@@ -39,33 +88,53 @@ class CampaignSettings extends Component {
 
     render() {
         return (
-                    <div className='settings-wrapper'>
-                        <div className="campaign-main-info">
-                            <div className="input-section">
-                                <h6>Campaign Name: </h6>
-                                <input type="text" value={this.props.selectedCampaign.name} placeholder="Campaign Name..."/>
-                            </div>
-                            <div className="input-section">
-                                <h6>Estimated Participants: </h6>
-                                <input type="text" value={this.props.selectedCampaign.estimatedParticipants}  placeholder="Estimated Participants..."/>
-                            </div>
-                            <div className="input-section activation-switch">
-                                {this.props.selectedCampaign.isActive}
-                                <label className="switch">
-                                    <input type="checkbox" defaultChecked />
-                                    <span className="slider round"></span>
+                    <div>
+                        <h2>Campaign Setup</h2>
+                        <div className='settings-wrapper'>
+                            <div className="campaign-main-info">
+                                {this.renderRedirect()}
+                                <LinkButton className="icon back-icon">
+                                <i class="fas fa-arrow-left" onClick={this.directToHome}></i>
+                                </LinkButton>
+                                <div className="input-section">
+                                    <h6>Campaign Name: </h6>
+                                    <input type="text"  value={this.props.name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
+                                </div>
+                                <div className="input-section">
+                                    <h6>Estimated Participants: </h6>
+                                    <input type="text" 
+                                        value={this.props.estimatedParticipants} 
+                                        onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
+                                </div>
+
+                            <div class="input-section onoffswitch" data-tip="Activate campaign">
+                                <input type="checkbox" 
+                                       name="onoffswitch" 
+                                       class="onoffswitch-checkbox" 
+                                       id="myonoffswitch" 
+                                       onChange={this.handleStatusChange}
+                                       checked={this.props.isActive}/>
+                                <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
                                 </label>
                             </div>
-                        </div>
-                        <div className="campaign-main-btns">
-                            <Button onClick={this.viewSummary} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Campaign Summary</Button>
-                            <LinkButton href="" target="_blank"><i class="fas fa-link"></i></LinkButton>
-                            <LinkButton href="api/assignlink/par/1/camp/1" target="_blank"><i class="fas fa-external-link-alt"></i></LinkButton>
-                            <LinkButton onClick={this.handleSubmit}><i class="fas fa-save"></i></LinkButton>
-                        </div>   
-                    </div>
 
+                            </div>
+                            <div className="campaign-main-btns">
+                                <ReactTooltip />
+                                <LinkButton onClick={this.viewSummary} className="icon"><i class="fas fa-list-alt" data-tip="Campaign summary"></i></LinkButton>
+                                <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
+                                </LinkButton>
+                                <LinkButton className="icon"
+                                onClick={this.saveChanges}
+                                >
+                                <i class="fas fa-save"></i>
+                                </LinkButton>
+                            </div>   
+                        </div>
+                    </div>
                 )
             }
         }
-        export default CampaignSettings;
+export default CampaignSettings;

@@ -7,6 +7,11 @@
     margin-top: 5vh;
 }
 
+input:focus, input:active{
+    outline: none;
+    border: none;
+}
+
 
 .container {
     margin-top: 50px;
@@ -40,4 +45,22 @@
 .add-btn:focus, .add-btn:active{
     border: none;
     outline: none;
+}
+
+.fa-edit{
+    font-size: 1.5rem !important;
+    color: #54AE70 !important;
+  }
+
+.fa-trash{
+    color: #D20E27 !important;
+    font-size: 1.5rem !important;
+}
+
+.fa-edit:hover{
+    color: #222 !important;
+}
+
+.fa-trash:hover{
+    color: #222 !important;
 }
