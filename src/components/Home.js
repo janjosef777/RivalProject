@@ -192,6 +192,18 @@ class Home extends Component {
                     />
             </TableEditColumn.Cell>
         );
+
+        const TableRow = ({ row, ...restProps }) => (
+            <Table.Row
+              {...restProps}
+              // eslint-disable-next-line no-alert
+              onClick={() => showDetails(row)}
+              style={{
+                cursor: 'pointer',
+              }}
+            />
+          );
+        
         return (
 
             <div>
@@ -274,7 +286,7 @@ class Home extends Component {
                                 <IntegratedSorting />
                                 <SearchState defaultValue="" />
                                 <IntegratedFiltering />
-                                <Table />
+                                <Table rowComponent={TableRow}/>
                                 <TableHeaderRow showSortingControls />
                                 <TableEditRow />
                                 <TableEditColumn

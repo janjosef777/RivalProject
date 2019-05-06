@@ -86,6 +86,7 @@ module.exports = {
     // delete
     delete: (req, res, next) => {
         const id = +req.params.id;
+        console.log(req.params.id);
         if(!(id > 0))
             return handleErr(null, res, 404);
 
