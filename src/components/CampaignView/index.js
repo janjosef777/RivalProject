@@ -35,7 +35,6 @@ class CampaignView extends Component {
             activeTab: '1',
             images: [],
             cardResults: [],
-            dateNow: new Date().toLocaleString(),
             selectedIndex: null,
             viewSummary: false,
 
