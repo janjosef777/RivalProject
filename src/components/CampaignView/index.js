@@ -42,6 +42,7 @@ class CampaignView extends Component {
             selectedCampaign_id: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
             selectedCampaign_estimatedParticipants: "",
             selectedCampaign_isActive: "",
+            selectedCampaign_hasPrize: "",
             selectedCampaign_name: "",
             selectedCampaign_template: "",
             selectedCampaign_url: "",
