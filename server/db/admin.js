@@ -1,5 +1,4 @@
 let db = null;
-let con = null;
 
 const queries = {
     get:      'SELECT * FROM login_user WHERE is_admin=1',
@@ -9,15 +8,14 @@ const queries = {
 };
 
 module.exports = {
-    init(database, connect) {
-        if(!con) {
+    init(database) {
+        if(!db) {
             db = database;
-            con = connect;
         }
     },
     get(callback, config = {}) {
         db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-            () => con.query(queries.get, username, (err, res) => {
+            () => db.connection.query(queries.get, username, (err, res) => {
                 const admin = (res && res.length) ? res[0] : {};
                 callback(err, err ? null : admin.username);
             });
@@ -28,7 +26,7 @@ module.exports = {
                 callback(err, null);
             else {
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-                    () => con.query(queries.assign, username, (err, res) => {
+                    () => db.connection.query(queries.assign, username, (err, res) => {
                         callback(err, err ? false : res.affectedRows > 0);
                     });
             }
@@ -36,13 +34,13 @@ module.exports = {
     },
     unassign(callback, config = {}) {
         db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-            () => con.query(queries.unassign, (err, res) => {
+            () => db.connection.query(queries.unassign, (err, res) => {
                 callback(err, err ? null : res.affectedRows);
             });
     },
     delete(callback, config = {}) {
         db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-            () => con.query(queries.delete, (err, res) => {
+            () => db.connection.query(queries.delete, (err, res) => {
                 callback(err, err ? null : res.affectedRows);
             });
     }

@@ -73,8 +73,9 @@ class CreateCampaign extends Component {
             body: JSON.stringify({
                 'name': this.state.title,
                 'template': this.state.templateId,
-                'estimated_participants': this.state.estimatedParticipants,
-                'created_at': this.state.dateNow
+                'hasPrizes': this.state.hasPrizes,
+                'estimatedParticipants': this.state.estimatedParticipants,
+                'createdAt': this.state.dateNow
             })
         })
 
