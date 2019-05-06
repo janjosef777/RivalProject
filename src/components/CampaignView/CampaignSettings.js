@@ -25,8 +25,6 @@ class CampaignSettings extends Component {
         this.state ={
             showHomepage: false,
             showEstimatedParticipants: this.props.selectedCampaign_estimatedParticipants ? true : false,
-            // showEstimatedParticipants: null,
-            setEstimatedParticipants: false
         }
  
         this.handleStatusChange = this.handleStatusChange.bind(this)
@@ -61,9 +59,16 @@ class CampaignSettings extends Component {
     
     handlePrizeChange(e) {
         console.log(this.state.showEstimatedParticipants)
-        if (this.state.showEstimatedParticipants === "true" ){
-
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        console.log(value)
+        if(value === true){
+            this.setState({showEstimatedParticipants: true})
+        }else {
+            this.setState({showEstimatedParticipants: false})
         }
+
+
     }
 
     directToHome() {
@@ -77,6 +82,21 @@ class CampaignSettings extends Component {
             }}
             />
         }
+    }
+
+    componentDidMount(){
+        if(this.props.selectedCampaign_estimatedParticipants != "" || 
+           this.props.selectedCampaign_estimatedParticipants != null
+            ){
+            this.setState({
+                showEstimatedParticipants: true
+                })
+        }else{
+            this.setState({
+                showEstimatedParticipants: false
+                })  
+        }
+
     }
 
     viewSummary = () => {
@@ -98,15 +118,6 @@ class CampaignSettings extends Component {
                                     <input type="text"  value={this.props.selectedCampaign_name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
                                 </div>
 
-                                <div className="input-section estimatedParticipants">
-                                    <h6>Estimated Participants: </h6>
-                                    <input type="text" 
-                                        value={this.props.selectedCampaign_estimatedParticipants} 
-                                        onChange={this.handleEstimatedPatricipantsChange}
-                                        placeholder="Estimated Participants..."
-                                        />
-                                </div>
-
                             <div class="input-section onoffswitch" data-tip="Activate campaign">
                                 <input type="checkbox" 
                                        name="onoffswitch" 
@@ -120,18 +131,31 @@ class CampaignSettings extends Component {
                                 </label>
                             </div>
 
+
                             <div class="input-section onoffswitch-hasPrize" data-tip="Activate Prize">
                                 <input type="checkbox" 
                                        name="onoffswitch-hasPrize" 
                                        class="onoffswitch-checkbox-hasPrize" 
                                        id="myonoffswitch-hasPrize" 
                                        onChange={this.handlePrizeChange}
-                                       checked={this.setEstimatedParticipants}/>
+                                       checked={this.state.showEstimatedParticipants}/>
                                 <label class="onoffswitch-label-hasPrize" for="myonoffswitch-hasPrize">
                                 <span class="onoffswitch-inner-hasPrize"></span>
                                 <span class="onoffswitch-switch-hasPrize"></span>
                                 </label>
                             </div>
+
+                            {this.state.showEstimatedParticipants ?
+                                <div className="input-section estimatedParticipants">
+                                    <h6>Estimated Participants: </h6>
+                                    <input type="text" 
+                                        value={this.props.selectedCampaign_estimatedParticipants} 
+                                        onChange={this.handleEstimatedPatricipantsChange}
+                                        placeholder="Estimated Participants..."
+                                        />
+                                </div>
+                                : null
+                            }
 
                             </div>
                             <div className="campaign-main-btns">
