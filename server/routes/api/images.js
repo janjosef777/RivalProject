@@ -5,7 +5,7 @@ const fs = require('fs');
 const db = require('../../db');
 const urls = require('../../urls');
 const path = require('path');
-const uploadUrl = '/uploads/'; // Start with and end with a slash
+const uploadUrl = 'uploads/'; // Start with and end with a slash
 
 module.exports = {
     // get
@@ -96,6 +96,7 @@ module.exports = {
         
 
         const id = +req.params.id;
+        console.log(req.params.id);
         if(!(id > 0))
             return handleErr(null, res, 404);
 

@@ -11,7 +11,7 @@ class CreateCampaign extends Component {
         this.state = {
             id: "",
             title: "",
-            templateId: "",
+            templateId: null,
             estimatedParticipants: null,
             dateNow: new Date().toLocaleString(),
             redirect: false
@@ -33,7 +33,7 @@ class CreateCampaign extends Component {
     }
     handleSubmit() {
 
-        fetch('http://localhost:4000/api/template/', {
+        fetch('api/template/', {
             method:
                 'POST',
             headers: {
@@ -42,8 +42,8 @@ class CreateCampaign extends Component {
             },
             body: JSON.stringify({
                 'title': null,
-                'image': 1,
-                'size': 1
+                'image': null,
+                'size': null
             })
         })
             .then(res => res.json())
@@ -113,10 +113,6 @@ class CreateCampaign extends Component {
                         <FormGroup>
                             <Label for="title">Campaign Title</Label>
                             <Input type="text" id="title" value={this.state.title} onChange={this.handleTitle} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="estimatedParticipants">Estimated Participants</Label>
-                            <Input type="number" value={this.state.estimatedParticipants} onChange={this.handleParticipants} />
                         </FormGroup>
 
                         <Button
