@@ -8,13 +8,13 @@ class DeleteCampaign extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
             deleteId: this.props.deleteId
         };
         this.deleteCampaign = this.deleteCampaign.bind(this);
     }
     deleteCampaign() {
-        fetch('http://localhost:4000/api/campaigns/' + this.state.deleteId , {
+        console.log(this.state.deleteId)
+        fetch('api/campaigns/' + this.state.deleteId , {
             method:
                 'DELETE',
             headers: {

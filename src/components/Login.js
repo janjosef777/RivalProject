@@ -20,7 +20,7 @@ class Login extends Component {
     }
 
     handleSubmit() {
-        fetch('http://localhost:4000/api/auth', {
+        fetch('api/auth', {
             method: 'POST',
             body: JSON.stringify({ "username": this.state.username, "password": this.state.password }),
             headers: {
