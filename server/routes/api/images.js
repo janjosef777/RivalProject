@@ -120,24 +120,24 @@ module.exports = {
                     return handleErr(err, res, 500);
                 if(!image)
                     return handleErr(null, res, 404);
-
-                // Delete image file
-                const filepath = path.join(__dirname, '../../..', uploadUrl, image.filename);
-                fs.unlink(filepath, err => {
+                    
+                // Delete image from db
+                db.images.delete(id, (err, success) => {
                     if(err)
                         return handleErr(err, res, 500);
                     
-                    // Delete image from db
-                    db.images.delete(id, (err, success) => {
-                        if(err)
+                    // Delete image file
+                    const filepath = path.join(__dirname, '../../..', uploadUrl, image.filename);
+                    fs.unlink(filepath, err => {
+                        if (err)
                             return handleErr(err, res, 500);
-                        res.json({
-                            token: res.jwtToken,
-                            data: { id: id, deleted: success }
-                        });
-                        db.disconnect();
+                    })
+                    res.json({
+                        token: res.jwtToken,
+                        data: { id: id, deleted: success }
                     });
-                })
+                    db.disconnect();
+                });
             });
         });
     }

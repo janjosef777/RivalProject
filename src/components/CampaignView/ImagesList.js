@@ -56,9 +56,16 @@ class ImagesList extends Component {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
-            .then(res => res.json())
+            .then(res => { 
+                let contentType =res.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    return res.json()
+                } else {
+                    return res
+                } 
+            })
             .then(res => {
-                if (res.data.deleted) {
+                if (res.data && res.data.deleted) {
                     console.log(res)
                     sessionStorage.setItem('token', res.token);
                     let images = this.props.images;
@@ -67,6 +74,7 @@ class ImagesList extends Component {
                 } else {
                     console.log(res)
                     alert("unable to delet image: " + res);
+                    this.fetchImages();
                 } 
             }).catch(err => {
                 console.error(err);

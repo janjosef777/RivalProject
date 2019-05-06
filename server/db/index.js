@@ -88,11 +88,7 @@ const db = {
     images:      require('./images'),
     prizes:      require('./prizes'),
     users:       require('./users'),
-<<<<<<< HEAD
-    templates:    require('./template'),
-=======
     templates:   require('./template')
->>>>>>> master
 };
 
 crudBase.init(db);
