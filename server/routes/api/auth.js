@@ -1,4 +1,5 @@
-const auth = require('../../auth/index')
+const auth = require('../../auth/index');
+const db = require('../../db');
 
 module.exports = {
     post: (req, res, next) => {
@@ -23,7 +24,14 @@ module.exports = {
                 sendToken(token);
             }
         }
-        auth.verifyUser(user, userVerified)
+        db.connect(err => {
+            if(err) {
+                console.log(err);
+                return res.status(500).send();
+            }
+            auth.verifyUser(user, userVerified)
+            db.disconnect();
+        });
     },
     add: (req,res,next) => {
         const user = {
@@ -50,6 +58,13 @@ module.exports = {
             }
         }
 
-        auth.addUser(user, successAdd)
+        db.connect(err => {
+            if(err) {
+                console.log(err);
+                return res.status(500).send();
+            }
+            auth.addUser(user, successAdd);
+            db.disconnect();
+        });
     }
 };

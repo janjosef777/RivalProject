@@ -10,30 +10,38 @@ const uploadUrl = '/uploads/'; // Start with and end with a slash
 module.exports = {
     // get
     getAll: (req, res, next) => {
-        db.images.getAll((err, images) => {
-            if(err)
-                return handleErr(err, res, 500);
-            res.json({
-                token: res.jwtToken,
-                data: images
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.images.getAll((err, images) => {
+                if(err)
+                    return handleErr(err, res, 500);
+                res.json({
+                    token: res.jwtToken,
+                    data: images
+                });
+                db.disconnect();
             });
-        })
+        });
     },
     // get
     get: (req, res, next) => {
         const id = +req.params.id;
         if(!(id > 0))
             return handleErr(null, res, 404);
-        db.images.get(id, (err, image) => {
-            if(err)
-                return handleErr(err, res, 500);
-            if(!image)
-                return handleErr(null, res, 404);
-            res.json({
-                token: res.jwtToken,
-                data: image
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.images.get(id, (err, image) => {
+                if(err)
+                    return handleErr(err, res, 500);
+                if(!image)
+                    return handleErr(null, res, 404);
+                res.json({
+                    token: res.jwtToken,
+                    data: image
+                });
+                db.disconnect();
             });
-        })
+        });
     },
     // post
     post: (req, res, next) => {
@@ -64,16 +72,21 @@ module.exports = {
                             width: savedImg.width,
                             height: savedImg.height
                         };
-                        db.images.add(jsonImage, (err, id) => {
-                            if(err)
-                                return handleErr(err, res, 500);
-                            jsonImage.path = urls.baseUrl + uploadUrl + filename;
-                            jsonImage.id = id
+                        
+                        db.connect(err => {
+                            if(err) return handleErr(err, res, 500);
+                            db.images.add(jsonImage, (err, id) => {
+                                if(err)
+                                    return handleErr(err, res, 500);
+                                jsonImage.path = urls.baseUrl + uploadUrl + filename;
+                                jsonImage.id = id
 
-                            // Success
-                            res.json({
-                                token: res.jwtToken,
-                                data: jsonImage
+                                // Success
+                                res.json({
+                                    token: res.jwtToken,
+                                    data: jsonImage
+                                });
+                                db.disconnect();
                             });
                         });
                     });
@@ -90,27 +103,31 @@ module.exports = {
             return handleErr(null, res, 404);
 
         // Get image details
-        db.images.get(id, (err, image) => {
-            if(err)
-                return handleErr(err, res, 500);
-            if(!image)
-                return handleErr(null, res, 404);
-
-            // Delete image file
-            fs.unlink(uploadUrl + image.filename, err => {
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.images.get(id, (err, image) => {
                 if(err)
                     return handleErr(err, res, 500);
-                
-                // Delete image from db
-                db.images.delete(id, (err, success) => {
+                if(!image)
+                    return handleErr(null, res, 404);
+
+                // Delete image file
+                fs.unlink(uploadUrl + image.filename, err => {
                     if(err)
                         return handleErr(err, res, 500);
-                    res.json({
-                        token: res.jwtToken,
-                        data: { id: id, deleted: success }
+                    
+                    // Delete image from db
+                    db.images.delete(id, (err, success) => {
+                        if(err)
+                            return handleErr(err, res, 500);
+                        res.json({
+                            token: res.jwtToken,
+                            data: { id: id, deleted: success }
+                        });
+                        db.disconnect();
                     });
-                });
-            })
+                })
+            });
         });
     }
 };
