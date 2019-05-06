@@ -35,34 +35,21 @@ class CampaignView extends Component {
             activeTab: '1',
             images: [],
             cardResults: [],
-            title: 'THANKS FOR PARTICIPATING!',
-            overlayImg: '../../images/Rivallogo.png',
-            overlayImgId: ' ',
-            selectedIndex: null,
-            selectedCampaignId: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
-            viewSummary: false,
-            // selectedCampaign as an array
-            selectedCampaign: [],
-            //selectedCAmpaign as individual values
-            createdAt: "",
-            createdBy: "",
-            estimatedParticipants: "",
-            hasPrizes: "",
-            id: "",
-            isActive: "",
-            name: "",
-            template: "",
-            url: "",
-
-            //selectedCampaignTemplate as array
-            selectedCampaignTemplate: [],
-            //selectedCampaignTemplate as individual values
-            selectedTemplateId: "",
-            selectedTemplateTitle: "",
-            selectedTemplateImage: "",
-            selectedImageSize: "",
             dateNow: new Date().toLocaleString(),
-            
+            selectedIndex: null,
+            viewSummary: false,
+
+            selectedCampaign_id: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
+            selectedCampaign_estimatedParticipants: "",
+            selectedCampaign_isActive: "",
+            selectedCampaign_name: "",
+            selectedCampaign_template: "",
+            selectedCampaign_url: "",
+
+            selectedTemplate_title: "thanks for participating!",
+            selectedTemplate_image: "",
+            selectedTemplate_imageId: "",
+
         }
         this.setState = this.setState.bind(this);
         // this.saveChanges = this.saveChanges.bind(this);
@@ -70,7 +57,7 @@ class CampaignView extends Component {
 
 
     loadCampaign() {
-        fetch('api/campaigns/' + this.state.selectedCampaignId, {
+        fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaign_id, {
             method:
                 'GET',
             headers: {
@@ -83,17 +70,12 @@ class CampaignView extends Component {
                 sessionStorage.setItem('token', res.token)
                 console.log(res.data)
                 this.setState({
-                    selectedCampaign: res.data,
-
-                    createdAt: res.data.createdAt,
-                    createdBy: res.data.createdBy,
-                    estimatedParticipants: res.data.estimatedParticipants,
-                    hasPrizes: res.data.hasPrizes,
-                    id: res.data.id,
-                    isActive: res.data.isActive,
-                    name: res.data.name,
-                    template: res.data.template,
-                    url: res.data.url,
+                    selectedCampaign_id: res.data.id,
+                    selectedCampaign_estimatedParticipants: res.data.estimatedParticipants,
+                    selectedCampaign_isActive: res.data.isActive,
+                    selectedCampaign_name: res.data.name,
+                    selectedCampaign_template: res.data.template,
+                    selectedCampaign_url: res.data.url,
                 })
                 this.loadTemplate()
             })
@@ -103,7 +85,7 @@ class CampaignView extends Component {
             })
     }
     loadTemplate() {
-        fetch('api/template/' + this.state.selectedCampaign.template, {
+        fetch('http://localhost:4000/api/template/' + this.state.selectedCampaign_template, {
             method:
                 'GET',
             headers: {
@@ -115,17 +97,12 @@ class CampaignView extends Component {
             .then(res => {
                 sessionStorage.setItem('token', res.token)
                 this.setState({
-                    selectedCampaignTemplate: res.data,
-
-                    selectedTemplateId: res.data.id,
-                    selectedTemplateTitle: res.data.title,
-                    selectedTemplateImageId: res.data.image,
-                    selectedImageSize: res.data.size
+                    selectedTemplate_imageId: res.data.image
 
                 })
-                if (res.data.title != null){
+                if (res.data.title != null) {
                     this.setState({
-                        title: res.data.title
+                        selectedTemplate_title: res.data.title
                     })
                 }
                 this.loadTemplateImage()
@@ -136,7 +113,7 @@ class CampaignView extends Component {
     }
 
     loadTemplateImage() {
-        fetch('api/images/' + this.state.selectedTemplateImageId, {
+        fetch('http://localhost:4000/api/images/' + this.state.selectedTemplate_imageId, {
             method:
                 'GET',
             headers: {
@@ -149,30 +126,9 @@ class CampaignView extends Component {
                 sessionStorage.setItem('token', res.token)
                 if (res.data.path != null) {
                     this.setState({
-                        overlayImg: res.data.path
+                        selectedTemplate_image: res.data.path
                     })
                 }
-
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
-
-    loadCardResults() {
-        fetch('api/cardResults/' + this.state.selectedCampaign.id, {
-            method:
-                'GET',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token)
-                console.log(res.data)
-
             })
             .catch(err => {
                 console.error(err);
@@ -180,56 +136,12 @@ class CampaignView extends Component {
     }
 
     saveChanges() {
-        console.log(this.props.name)
-        console.log(this.props.estimatedParticipants)
-        console.log(this.props.overlayImgId)
-        console.log(this.props.title)
-        fetch('api/campaigns/' + this.props.selectedCampaign.id, {
-            method:
-                'PUT',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                'name': this.props.name,
-                'estimated_participants': this.props.estimatedParticipants,
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                //this.saveTemplate()
-            })
-            
-            .catch(err => {
-                console.error(err);
-            })
+        console.log(this.props)
+        window.alert("Changes Saved!")
         
     }
-    
-    saveTemplate(){
-        fetch('http://localhost:4000/api/templates/' + this.props.selectedTemplateId, {
-            method:
-                'PUT',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                'name': this.props.title,
-                'image':this.props.overlayImgId,
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
+
+
 
     componentDidMount() {
         this.loadCampaign()
@@ -243,7 +155,7 @@ class CampaignView extends Component {
             return (
                 <div>
                     <NavBarComponent />
-                    <CampaignSettings saveChanges={this.saveChanges}  {...this.state} setState={this.setState}></CampaignSettings>
+                    <CampaignSettings saveChanges={this.saveChanges} {...this.state} setState={this.setState}></CampaignSettings>
                     <div className='content-wrapper'>
                         <div className='left-wrapper sub-wrapper'>
                             <AssetsView {...this.state} setState={this.setState} ></AssetsView>

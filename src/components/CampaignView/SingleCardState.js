@@ -62,7 +62,7 @@ class EditableTitle extends React.Component {
 
         if (this.props.overlay) {
             this.props.setState({
-                title: e.target.value
+                selectedTemplate_title: e.target.value
             });
         } else if (this.props.index) {
             console.log(this.props.cardResults);
@@ -104,8 +104,8 @@ class SingleCardState extends React.Component {
 
     render() {
         if (this.props.overlay) {
-            this.titleVal = this.props.title;
-            this.imgSrc = this.props.overlayImg;
+            this.titleVal = this.props.selectedTemplate_title;
+            this.imgSrc = this.props.selectedTemplate_image;
             this.imgAlt = 'card overlay image';
         } else if (this.props.index) {
             // this is the case for viewing card results by index
@@ -115,7 +115,7 @@ class SingleCardState extends React.Component {
             this.imgSrc = this.props.cardResults[this.props.selectedIndex] ?
                 this.props.cardResults[this.props.selectedIndex].image : '';
         } else {
-            this.titleVal = this.props.title;
+            this.titleVal = this.props.selectedTemplate_title;
             this.imgSrc = this.props.imgSrc;
             this.imgAlt = this.props.imgAlt;
         }
@@ -143,7 +143,7 @@ class SingleCardState extends React.Component {
                     titleVal = {this.titleVal}
                     framePadding={framePadding}
                     borderStyle={borderStyle}
-                >{this.props.title}</Title>}
+                >{this.props.selectedTemplate_title}</Title>}
                 <Image
                     {...this.props}
                     width={this.props.imgWidth}
