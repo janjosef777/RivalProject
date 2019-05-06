@@ -22,7 +22,7 @@ module.exports = {
     // get
     get: (req, res, next) => {
 
-        db.nurtureConnection();
+        
 
         const id = +req.params.id;
         if(!(id > 0))
@@ -41,7 +41,7 @@ module.exports = {
     // post
     post: (req, res, next) => {
 
-        db.nurtureConnection();
+        
 
         const tempPath = req.file.path;
         if(!/^image\b/.test(req.file.mimetype)) {
@@ -93,7 +93,7 @@ module.exports = {
     // delete
     delete: (req, res, next) => {
 
-        db.nurtureConnection();
+        
 
         const id = +req.params.id;
         if(!(id > 0))
@@ -107,7 +107,8 @@ module.exports = {
                 return handleErr(null, res, 404);
 
             // Delete image file
-            fs.unlink(uploadUrl + image.filename, err => {
+            const filepath = path.join(__dirname, '../../..', uploadUrl, image.filename);
+            fs.unlink(filepath, err => {
                 if(err)
                     return handleErr(err, res, 500);
                 

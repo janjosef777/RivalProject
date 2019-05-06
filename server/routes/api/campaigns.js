@@ -3,7 +3,7 @@ const db = require('../../db');
 module.exports = {
     getAll: (req, res, next) => {
 
-        db.nurtureConnection();
+        
 
         db.campaigns.getAll((err, campaigns) => {
             if (err)
@@ -16,7 +16,7 @@ module.exports = {
     },
     get: (req, res, next) => {
 
-        db.nurtureConnection();
+        
 
         const id = +req.params.id || 0;
         if (id <= 0)
@@ -34,7 +34,7 @@ module.exports = {
     },
     post: (req, res, next) => {
 
-        db.nurtureConnection();
+        
 
         const campaign = req.body;
         var est_parStr = campaign.estimated_participants
@@ -70,7 +70,7 @@ module.exports = {
     },
     delete: (req, res, next) => {
 
-        db.nurtureConnection();
+        
         
         const id = +req.params.id || 0;
         if (id <= 0)

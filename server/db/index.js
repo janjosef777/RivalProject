@@ -1,53 +1,22 @@
 const mysql = require('mysql');
 const env = process.env;
 
-// const connectionValues =
-// {
-//     host: env.AWS_HOST !== undefined ? env.DB_HOST : 'localhost',
-//     user: env.AWS_USER !== undefined ? env.DB_USER : 'user',
-//     password: env.AWS_PASSWORD !== undefined ? env.DB_PASS : 'password',
-//     port: env.AWS_PORTE !== undefined ? env.DB_NAME : '3306',
-//     database: env.AWS_DATABASE !== undefined ? env.DB_NAME : 'database'
-// }
-
 const connectionValues = env.NODE_ENV == 'development' ? 
     {
         host: env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
         user: env.DB_USER !== undefined ? env.DB_USER : 'user',
         password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
         database: env.DB_NAME !== undefined ? env.DB_NAME : 'database'
-    } :
-    {
-        host: env.AWS_HOST !== undefined ? env.DB_HOST : 'localhost',
-        user: env.AWS_USER !== undefined ? env.DB_USER : 'user',
-        password: env.AWS_PASSWORD !== undefined ? env.DB_PASS : 'password',
-        port: env.AWS_PORT !== undefined ? env.DB_NAME : '3306',
-        database: env.AWS_DATABASE !== undefined ? env.DB_NAME : 'database'
-    }
-    //env.CLEARDB_DATABASE_URL;
+    } : env.CLEARDB_DATABASE_URL; 
+    // {
+    //     host: env.AWS_HOST !== undefined ? env.DB_HOST : 'localhost',
+    //     user: env.AWS_USER !== undefined ? env.DB_USER : 'user',
+    //     password: env.AWS_PASSWORD !== undefined ? env.DB_PASS : 'password',
+    //     port: env.AWS_PORT !== undefined ? env.DB_NAME : '3306',
+    //     database: env.AWS_DATABASE !== undefined ? env.DB_NAME : 'database'
+    // }   
 
 const connection = mysql.createConnection(connectionValues);
-
-function nurtureConnection() {
-    connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL); // Recreate the connection, since
-    // the old one cannot be reused.
-
-    connection.connect(function (err) {              // The server is either down
-        if (err) {                                     // or restarting (takes a while sometimes).
-            console.log('error when connecting to db:', err);
-            setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
-        }                                     // to avoid a hot loop, and to allow our node script to
-    });                                     // process asynchronous requests in the meantime.
-    // If you're also serving http, display a 503 error.
-    connection.on('error', function (err) {
-        console.log('db error', err);
-        if (err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-            nurtureConnection();                         // lost due to either server restart, or a
-        } else {                                      // connnection idle timeout (the wait_timeout
-            throw err;                                  // server variable configures this)
-        }
-    });
-}
 
 const queue1 = [];
 const queue2 = [];
@@ -87,8 +56,6 @@ const db = {
     prizes:      require('./prizes'),
     users:       require('./users'),
     templates:    require('./template'),
-
-    nurtureConnection: () => {}
 };
 
 crudBase.init(db, connection);
