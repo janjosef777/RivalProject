@@ -107,7 +107,7 @@ class Home extends Component {
     }
 
     fetchCampaigns() {
-        fetch('api/campaigns', {
+        fetch('http://localhost:4000/api/campaigns', {
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }

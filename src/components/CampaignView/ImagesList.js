@@ -12,11 +12,12 @@ class ImagesList extends Component {
         this.state = {}
         this.images = []
         this.deleteImages = this.deleteImages.bind(this);
+        this.fetchImages = this.fetchImages.bind(this);
     }
 
     componentDidMount() {
         console.log(localStorage.getItem("token"))
-        this.fetchImages()
+        this.fetchImages();
     }
 
     fetchImages() {
