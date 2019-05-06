@@ -11,6 +11,7 @@ module.exports = {
                     token: res.jwtToken,
                     data: campaigns
                 });
+                db.disconnect();
             });
         });
     },
@@ -35,11 +36,8 @@ module.exports = {
     },
     post: (req, res, next) => {
         const campaign = req.body;
-        var est_parStr = campaign.estimated_participants
-        var est_parInt = parseInt(est_parStr, 10)
-        campaign.estimatedParticipants = est_parInt;
-        console.log(campaign);
         campaign.createdBy = res.jwtUser;
+        console.log(campaign);
         db.connect(err => {
             if(err) return handleErr(err, res, 500);
             db.campaigns.add(campaign, (err, id) => {

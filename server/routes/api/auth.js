@@ -22,6 +22,7 @@ module.exports = {
                 //issue token
                 const token = auth.issueToken(username);
                 sendToken(token);
+                db.disconnect();
             }
         }
         db.connect(err => {
@@ -30,7 +31,6 @@ module.exports = {
                 return res.status(500).send();
             }
             auth.verifyUser(user, userVerified)
-            db.disconnect();
         });
     },
     add: (req,res,next) => {

@@ -4,7 +4,9 @@ const queue1 = []; // On created tables
 const queue2 = []; // On ready
 const states = {
     CREATED_TABLES: 1,
-    READY: 2
+    READY: 2,
+    ENDING: 3,
+    ENDED: 4
 };
 let state = 0;
 let connection = null;
@@ -14,22 +16,39 @@ const crudBase = require('./crudBase');
 const db = {
     get connection() { return connection; },
     connect(callback) {
-        connection = mysql.createConnection({
-            host:     env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
-            user:     env.DB_USER !== undefined ? env.DB_USER : 'user',
-            password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
-            database: env.DB_NAME !== undefined ? env.DB_NAME : 'database',
-        });
-        connection.connect(callback);
+        if(connection) {
+            this.disconnect(err => {
+                if(err) return callback(err);
+                this.connect(callback);
+            });
+        } else {
+            console.log('Connect db...');
+            connection = mysql.createConnection({
+                host:     env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
+                user:     env.DB_USER !== undefined ? env.DB_USER : 'user',
+                password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
+                database: env.DB_NAME !== undefined ? env.DB_NAME : 'database',
+            })
+            connection.connect(err => {
+                if(state >= states.ENDING)
+                    state = states.READY;
+                callback(err);
+            });
+        }
     },
     disconnect(callback = null) {
-        connection.end(err => {
-            if(callback)
-                callback(err);
-            else if(err)
-                console.log(err);
-            connection = null;
-        });
+        if(state < states.ENDING) {
+            state = states.ENDING;
+            console.log('Disconnect db...')
+            connection.end(err => {
+                if(callback)
+                    callback(err);
+                else if(err)
+                    console.log(err);
+                connection = null;
+                state = states.ENDED;
+            });
+        }
     },
 
     get state() { return state; },

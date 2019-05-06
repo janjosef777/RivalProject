@@ -41,9 +41,7 @@ class CreateCampaign extends Component {
                 "Content-type": "application/json"
             },
             body: JSON.stringify({
-                'title': null,
-                'image': 1,
-                'size': 1
+                'title': null
             })
         })
             .then(res => res.json())
@@ -73,8 +71,9 @@ class CreateCampaign extends Component {
             body: JSON.stringify({
                 'name': this.state.title,
                 'template': this.state.templateId,
-                'estimated_participants': this.state.estimatedParticipants,
-                'created_at': this.state.dateNow
+                'hasPrizes': this.state.hasPrizes,
+                'estimatedParticipants': this.state.estimatedParticipants,
+                'createdAt': this.state.dateNow
             })
         })
 
