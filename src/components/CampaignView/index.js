@@ -138,67 +138,7 @@ class CampaignView extends Component {
     saveChanges() {
         console.log(this.props)
         window.alert("Changes Saved!")
-        fetch('http://localhost:4000/api/testC/', {
-            method:
-                'PUT',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                'campaign': {
-                    'name': this.props.selectedCampaign_name,
-                    'estimated_participants': this.props.selectedCampaign_estimatedParticipants,
-                    'isActive': this.props.selectedCampaign_isActive,
-                },
-                'template': {
-                    'title': this.props.selectedTemplate_title,
-                    'image': this.props.selectedTemplate_imageId,
-                },
-                'id': {
-                    'campaignId': this.props.selectedCampaign_id,
-                    'templateId': this.props.selectedCampaign_template
-                }
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                fetch('http://localhost:4000/api/testT/', {
-            method:
-                'PUT',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                'campaign': {
-                    'name': this.props.selectedCampaign_name,
-                    'estimated_participants': this.props.selectedCampaign_estimatedParticipants,
-                    'isActive': this.props.selectedCampaign_isActive,
-                },
-                'template': {
-                    'title': this.props.selectedTemplate_title,
-                    'image': this.props.selectedTemplate_imageId,
-                },
-                'id': {
-                    'campaignId': this.props.selectedCampaign_id,
-                    'templateId': this.props.selectedCampaign_template
-                }
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                console.log(res.status)
-            })
-            .catch(err => {
-                console.error(err);
-            })
-            })
-            .catch(err => {
-                console.error(err);
-            })
+        
     }
 
 
