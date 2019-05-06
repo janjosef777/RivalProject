@@ -1,32 +1,37 @@
 const db = require('../../db');
 module.exports = {
     getAll: (req, res, next) => {
-        
-        db.cardResults.getAll((err, cardResults) => {
-            if(err)
-                return handleErr(err, res, 500);
-            res.json({
-                token: res.jwtToken,
-                data: cardResults
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.cardResults.getAll((err, cardResults) => {
+                if(err)
+                    return handleErr(err, res, 500);
+                res.json({
+                    token: res.jwtToken,
+                    data: cardResults
+                });
+                db.disconnect();
             });
-        })
+        });
     },
     post: (req, res, next) => {
         const cardResult = req.body
         console.log(cardResult);
-
-        
-        db.cardResults.add(cardResults, (err,id) => {
-            if (err)
-                return handleErr(err,res,500);
-            const data = {
-                id: id
-            };
-            res.json({
-                token: res.jwtToken,
-                data:data
-            })
-        })
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.cardResults.add(cardResults, (err,id) => {
+                if (err)
+                    return handleErr(err,res,500);
+                const data = {
+                    id: id
+                };
+                res.json({
+                    token: res.jwtToken,
+                    data:data
+                });
+                db.disconnect();
+            });
+        });
     }
 };
 function handleErr(err, res, status, message) {

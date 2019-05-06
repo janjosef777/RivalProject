@@ -1,4 +1,3 @@
-let connection = null;
 let db = null;
 
 module.exports = {
@@ -32,7 +31,7 @@ module.exports = {
         return {
             getAll(callback, config = {}) {
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-                    () => connection.query(queries.getAll, (err, res) => {
+                    () => db.connection.query(queries.getAll, (err, res) => {
                         res = err ? [] : res;
                         res = mapRead ? res.map(row => mapRead(row)) : res;
                         callback(err, res);
@@ -40,7 +39,7 @@ module.exports = {
             },
             get(id, callback, config = {}) {
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-                    () => connection.query(queries.get, id, (err, res) => {
+                    () => db.connection.query(queries.get, id, (err, res) => {
                         res = err || !res[0] ? null : res[0];
                         res = res && mapRead ? mapRead(res) : res;
                         callback(err, res);
@@ -50,7 +49,7 @@ module.exports = {
                 try { entry = mapWrite ? mapWrite(entry) : entry; }
                 catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-                    () => connection.query(queries.add, toArray(entry), (err, res) => {
+                    () => db.connection.query(queries.add, toArray(entry), (err, res) => {
                         callback(err, err ? 0 : res.insertId || entry[primary] || true);
                     });
             },
@@ -58,7 +57,7 @@ module.exports = {
                 // try { entry = removeUnused(mapWrite ? mapWrite(entry) : entry); }
                 //catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-                    () => connection.query(queries.update(entry), toArray(entry, true), (err, res) => {
+                    () => db.connection.query(queries.update(entry), toArray(entry, true), (err, res) => {
                         callback(err, !err && res.affectedRows > 0 ? res.insertId || entry[primary] || true : 0);
                     });
             },
@@ -66,13 +65,13 @@ module.exports = {
                 try { entry = mapWrite ? mapWrite(entry) : entry; }
                 catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-                    () => connection.query(queries.replace, toArray(entry), (err, res) => {
+                    () => db.connection.query(queries.replace, toArray(entry), (err, res) => {
                         callback(err, !err && res.affectedRows > 0 ? res.insertId || entry[primary] || true : 0);
                     });
             },
             delete(id, callback, config = {}) {
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
-                    () => connection.query(queries.delete, id, (err, res) => {
+                    () => db.connection.query(queries.delete, id, (err, res) => {
                         callback(err, err ? false : res.affectedRows > 0);
                     });
             }
@@ -107,10 +106,8 @@ module.exports = {
             return trimmed;
         }
     },
-    init(database, connect) {
-        if(!connection) {
+    init(database) {
+        if(!db)
             db = database;
-            connection = connect;
-        }
     }
 }

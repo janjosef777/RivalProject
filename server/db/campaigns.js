@@ -8,16 +8,14 @@ const columns = [ 'name',
                   'url' ];
 
 let db = null;
-let connection = null;
 
 module.exports = Object.assign(require('./crudBase').create(tableName, columns, {
     mapRead: mapRead,
     mapWrite: mapWrite
 }), {
-    init(database, connect) {
-        if(!connection) {
+    init(database) {
+        if(!db) {
             db = database;
-            connection = connect;
         }
     },
     getDetail(id, callback) {
@@ -48,13 +46,18 @@ function mapRead(campaign) {
     };
 }
 function mapWrite(campaign) {
+    if(campaign.hasPrizes && !campaign.estimatedParticipants)
+        throw new Error('Estimated participants required when has prizes is true');
+    if(!campaign.hasPrizes && campaign.estimatedParticipants)
+        throw new Error("Don't include estimated participants if hasPrizes is false");
+
     return {
         name: campaign.name,
         template: campaign.template,
         is_active: campaign.isActive ? 1 : 0,
         created_by: campaign.createdBy,
-        created_at: campaign.createdAt || new Date(),
-        estimated_participants: campaign.estimated_participants,
+        created_at: new Date(campaign.createdAt),
+        estimated_participants: campaign.hasPrizes && campaign.estimatedParticipants || 0,
         url: campaign.url
     };
 }

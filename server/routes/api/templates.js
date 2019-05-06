@@ -6,14 +6,18 @@ module.exports = {
         console.log(id)
         if (id <= 0)
             return handleErr(null, res, 404);
-        db.templates.get(id, (err, template) => {
-            if (err)
-                return handleErr(err, res, 500);
-            if (!template)
-                return handleErr(null, res, 404);
-            res.json({
-                token: res.jwtToken,
-                data: template
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.templates.get(id, (err, template) => {
+                if (err)
+                    return handleErr(err, res, 500);
+                if (!template)
+                    return handleErr(null, res, 404);
+                res.json({
+                    token: res.jwtToken,
+                    data: template
+                });
+                db.disconnect();
             });
         });
     },
@@ -22,45 +26,52 @@ module.exports = {
         const template = req.body;
         template.id = parseInt(req.params.id, 10);
         console.log(template);
-        db.templates.update(template, (err, id) => {
-            if (err)
-                return handleErr(err, res, 500);
-            if (!id)
-                return handleErr(err, res, 404, "No campaign with id " + template.id);
-            const data = {
-                id: id
-            };
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.templates.update(template, (err, id) => {
+                if (err)
+                    return handleErr(err, res, 500);
+                if (!id)
+                    return handleErr(err, res, 404, "No campaign with id " + template.id);
+                const data = {
+                    id: id
+                };
 
-            // const cardResults = req.body.cardResults;
+                // const cardResults = req.body.cardResults;
 
-            // if (cardResults && !Array.isArray(cardResults))
-            //     return handleErr(null, res, 400, "Card results needs to be an array");
+                // if (cardResults && !Array.isArray(cardResults))
+                //     return handleErr(null, res, 400, "Card results needs to be an array");
 
-            // processCardResults(id, cardResults,  'update', cardResultsData => {
+                // processCardResults(id, cardResults,  'update', cardResultsData => {
 
-            //     if (cardResultsData)
-            //         data.cardResults = cardResultsData;
-            res.json({
-                token: res.jwtToken,
-                data: data
+                //     if (cardResultsData)
+                //         data.cardResults = cardResultsData;
+                res.json({
+                    token: res.jwtToken,
+                    data: data
+                });
+                db.disconnect();
             });
         });
-
     },
     post: (req, res, next) => {
         const template = req.body
         console.log(template);
-        db.templates.add(template, (err,id) => {
-            if (err)
-                return handleErr(err,res,500);
-            const data = {
-                id: id
-            };
-            res.json({
-                token: res.jwtToken,
-                data:data
-            })
-        })
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.templates.add(template, (err,id) => {
+                if (err)
+                    return handleErr(err,res,500);
+                const data = {
+                    id: id
+                };
+                res.json({
+                    token: res.jwtToken,
+                    data:data
+                });
+                db.disconnect();
+            });
+        });
     }
 };
 function handleErr(err, res, status, message) {

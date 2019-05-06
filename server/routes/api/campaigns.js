@@ -2,15 +2,16 @@ const db = require('../../db');
 
 module.exports = {
     getAll: (req, res, next) => {
-
-        
-
-        db.campaigns.getAll((err, campaigns) => {
-            if (err)
-                return handleErr(err, res, 500);
-            res.json({
-                token: res.jwtToken,
-                data: campaigns
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.campaigns.getAll((err, campaigns) => {
+                if (err)
+                    return handleErr(err, res, 500);
+                res.json({
+                    token: res.jwtToken,
+                    data: campaigns
+                });
+                db.disconnect();
             });
         });
     },
@@ -21,14 +22,18 @@ module.exports = {
         const id = +req.params.id || 0;
         if (id <= 0)
             return handleErr(null, res, 404);
-        db.campaigns.get(id, (err, campaign) => {
-            if (err)
-                return handleErr(err, res, 500);
-            if (!campaign)
-                return handleErr(null, res, 404);
-            res.json({
-                token: res.jwtToken,
-                data: campaign
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.campaigns.get(id, (err, campaign) => {
+                if (err)
+                    return handleErr(err, res, 500);
+                if (!campaign)
+                    return handleErr(null, res, 404);
+                res.json({
+                    token: res.jwtToken,
+                    data: campaign
+                });
+                db.disconnect();
             });
         });
     },
@@ -37,32 +42,33 @@ module.exports = {
         
 
         const campaign = req.body;
-        var est_parStr = campaign.estimated_participants
-        var est_parInt = parseInt(est_parStr, 10)
-        campaign.estimatedParticipants = est_parInt;
-        console.log(campaign);
         campaign.createdBy = res.jwtUser;
-        db.campaigns.add(campaign, (err, id) => {
-            if (err)
-                return handleErr(err, res, 500);
-            const data = {
-                id: id
-            };
+        console.log(campaign);
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.campaigns.add(campaign, (err, id) => {
+                if (err)
+                    return handleErr(err, res, 500);
+                const data = {
+                    id: id
+                };
 
-            const cardResults = req.body.cardResults;
+                const cardResults = req.body.cardResults;
 
-            if (cardResults && !Array.isArray(cardResults))
-                return handleErr(null, res, 400, "Card results needs to be an array");
+                if (cardResults && !Array.isArray(cardResults))
+                    return handleErr(null, res, 400, "Card results needs to be an array");
 
-            processCardResults(id, cardResults, cardResultsData => {
-                if (cardResultsData)
-                    data.cardResults = cardResultsData;
+                processCardResults(id, cardResults, cardResultsData => {
+                    if (cardResultsData)
+                        data.cardResults = cardResultsData;
 
-                res.json({
-                    token: res.jwtToken,
-                    data: data
-                });
-            })
+                    res.json({
+                        token: res.jwtToken,
+                        data: data
+                    });
+                    db.disconnect();
+                })
+            });
         });
     },
     patch: (req, res, next) => {
@@ -70,34 +76,33 @@ module.exports = {
         const campaign = req.body;
         campaign.id = parseInt(req.params.id, 10);
         console.log(campaign);
-        db.campaigns.update(campaign, (err, id) => {
-            if (err)
-                return handleErr(err, res, 500);
-            if (!id)
-                return handleErr(err, res, 404, "No campaign with id " + campaign.id);
-            const data = {
-                id: id
-            };
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.campaigns.update(campaign, (err, id) => {
+                if (err)
+                    return handleErr(err, res, 500);
+                if (!id)
+                    return handleErr(err, res, 404, "No campaign with id " + campaign.id);
+                const data = {
+                    id: id
+                };
 
-            // const cardResults = req.body.cardResults;
+                // const cardResults = req.body.cardResults;
 
-            // if (cardResults && !Array.isArray(cardResults))
-            //     return handleErr(null, res, 400, "Card results needs to be an array");
+                // if (cardResults && !Array.isArray(cardResults))
+                //     return handleErr(null, res, 400, "Card results needs to be an array");
 
-            // processCardResults(id, cardResults,  'update', cardResultsData => {
+                // processCardResults(id, cardResults,  'update', cardResultsData => {
 
-            //     if (cardResultsData)
-            //         data.cardResults = cardResultsData;
-            res.json({
-                token: res.jwtToken,
-                data: data
+                //     if (cardResultsData)
+                //         data.cardResults = cardResultsData;
+                res.json({
+                    token: res.jwtToken,
+                    data: data
+                });
+                db.disconnect();
             });
         });
-
-    },
-
-    put: (req, res, next) => {
-        return handleErr("campaigns.put not implemented", res, 501);
     },
     delete: (req, res, next) => {
 
@@ -106,12 +111,16 @@ module.exports = {
         const id = +req.params.id || 0;
         if (id <= 0)
             return handleErr(null, res, 404);
-        db.campaigns.delete(id, (err, success) => {
-            if (err)
-                return handleErr(err, res, 500);
-            res.json({
-                token: res.jwtToken,
-                data: { id: id, deleted: success }
+        db.connect(err => {
+            if(err) return handleErr(err, res, 500);
+            db.campaigns.delete(id, (err, success) => {
+                if (err)
+                    return handleErr(err, res, 500);
+                res.json({
+                    token: res.jwtToken,
+                    data: { id: id, deleted: success }
+                });
+                db.disconnect();
             });
         });
     }
