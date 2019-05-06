@@ -9,7 +9,7 @@ const routes = {
     campaigns: require('./campaigns'),
     images: require('./images'),
     assignlink: require('./AssignCardLink'),
-    templates: require('./templates'),
+    templates: require('./overlays'),
     cardresults: require('./cardResults')
 };
 

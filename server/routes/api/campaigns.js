@@ -71,7 +71,7 @@ module.exports = {
         console.log(campaign);
         db.connect(err => {
             if(err) return handleErr(err, res, 500);
-            db.campaigns.update(campaign, (err, id) => {
+            db.campaigns.updateDetail(campaign, (err, id) => {
                 if (err)
                     return handleErr(err, res, 500);
                 if (!id)
