@@ -12,7 +12,7 @@ class ImageThumb extends Component {
 
     setImage(e) {
         if(this.props.activeTab === '1'){
-            this.props.setState({overlayImg: e.target.src, overlayImgId: e.target.alt});
+            this.props.setState({selectedTemplate_image: e.target.src,  selectedTemplate_imageId: e.target.alt});
         } else if(this.props.activeTab === '2'){
             var newArray = this.props.cardResults;
             newArray.push({
