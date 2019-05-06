@@ -198,7 +198,7 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
   }
 
 
-/* toggle-button */
+/* IS_ACTIVE toggle-button */
 
 .onoffswitch {
   position: relative; width: 100px;
@@ -245,6 +245,61 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
   margin-left: 0;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+  right: 0px; 
+}
+
+
+/* HAS PRIZE toggle-button */
+.onoffswitch-hasPrize {
+  position: relative; width: 100px;
+  -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox-hasPrize {
+  display: none;
+}
+.onoffswitch-label-hasPrize {
+  display: block; overflow: hidden; cursor: pointer;
+  border-radius: 20px;
+}
+.onoffswitch-inner-hasPrize {
+  display: block; width: 200%; margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner-hasPrize:before, 
+.onoffswitch-inner-hasPrize:after {
+  display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+  font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+}
+.onoffswitch-inner-hasPrize:before {
+  content: "PRIZE";
+  padding-left: 20px;
+  background-color: #54AE70;
+  color: #FFFFFF;
+}
+.onoffswitch-inner-hasPrize:after {
+  content: "NO PRIZE";
+  padding-right: 10px;
+  background-color: #EEEEEE; color: #999999;
+  text-align: right;
+}
+.onoffswitch-switch-hasPrize {
+  display: block; width: 18px; height: 20px;
+  margin: 6px;
+  background: #FFFFFF;
+  position: absolute; top: 0; bottom: 0;
+  right: 70px;
+  border-radius: 20px;
+  transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox-hasPrize:checked + 
+.onoffswitch-label-hasPrize 
+.onoffswitch-inner-hasPrize {
+  margin-left: 0;
+}
+.onoffswitch-checkbox-hasPrize:checked + 
+.onoffswitch-label-hasPrize 
+.onoffswitch-switch-hasPrize {
   right: 0px; 
 }
 

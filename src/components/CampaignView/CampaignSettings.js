@@ -120,6 +120,19 @@ class CampaignSettings extends Component {
                                 </label>
                             </div>
 
+                            <div class="input-section onoffswitch-hasPrize" data-tip="Activate campaign">
+                                <input type="checkbox" 
+                                       name="onoffswitch-hasPrize" 
+                                       class="onoffswitch-checkbox-hasPrize" 
+                                       id="myonoffswitch-hasPrize" 
+                                       onChange=""
+                                       checked=""/>
+                                <label class="onoffswitch-label-hasPrize" for="myonoffswitch-hasPrize">
+                                <span class="onoffswitch-inner-hasPrize"></span>
+                                <span class="onoffswitch-switch-hasPrize"></span>
+                                </label>
+                            </div>
+
                             </div>
                             <div className="campaign-main-btns">
                                 <ReactTooltip />
