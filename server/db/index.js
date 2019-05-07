@@ -20,45 +20,43 @@ const queue1 = []; // On created tables
 const queue2 = []; // On ready
 const states = {
     CREATED_TABLES: 1,
-    READY: 2,
-    ENDING: 3,
-    ENDED: 4
+    READY: 2
 };
 let state = 0;
 let connection = null;
+let tasks = 0;
 
 const crudBase = require('./crudBase');
 
 const db = {
     get connection() { return connection; },
     connect(callback) {
+        tasks++;
         if(connection) {
-            this.disconnect(err => {
-                if(err) return callback(err);
-                this.connect(callback);
-            });
+            callback();
         } else {
             console.log('Connect db...');
             connection = mysql.createConnection( connectionValues );
             connection.connect(err => {
-                if(state >= states.ENDING)
-                    state = states.READY;
                 callback(err);
             });
         }
     },
     disconnect(callback = null) {
-        if(state < states.ENDING) {
-            state = states.ENDING;
-            console.log('Disconnect db...')
-            connection.end(err => {
-                if(callback)
-                    callback(err);
-                else if(err)
-                    console.log(err);
-                connection = null;
-                state = states.ENDED;
-            });
+        if(tasks > 0) {
+            tasks--;
+            if(tasks > 0) {
+                if(callback) callback();
+            } else {
+                console.log('Disconnect db...')
+                connection.end(err => {
+                    if(callback)
+                        callback(err);
+                    else if(err)
+                        console.log(err);
+                    connection = null;
+                });
+            }
         }
     },
 

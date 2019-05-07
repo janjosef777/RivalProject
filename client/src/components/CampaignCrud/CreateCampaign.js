@@ -11,14 +11,12 @@ class CreateCampaign extends Component {
         this.state = {
             id: "",
             title: "",
-            templateId: null,
             estimatedParticipants: null,
             redirect: false
         };
         this.handleTitle = this.handleTitle.bind(this);
         this.handleParticipants = this.handleParticipants.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.saveTemplate = this.saveTemplate.bind(this);
     }
 
     renderRedirect = () => {
@@ -31,37 +29,6 @@ class CreateCampaign extends Component {
         }
     }
     handleSubmit() {
-
-        fetch('api/template/', {
-            method:
-                'POST',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                'title': null,
-                'image': null,
-                'size': null
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                this.setState({
-                    templateId: res.data.id,
-        
-                })
-                this.saveTemplate()
-            })
-            .catch(err => {
-                console.error(err);
-            })
-        
-
-    }
-
-    saveTemplate() {
         fetch('api/campaigns/', {
             method:
                 'POST',
@@ -71,7 +38,6 @@ class CreateCampaign extends Component {
             },
             body: JSON.stringify({
                 'name': this.state.title,
-                'template': this.state.templateId,
                 'hasPrizes': this.state.hasPrizes,
                 'estimatedParticipants': this.state.estimatedParticipants
             })
@@ -85,7 +51,6 @@ class CreateCampaign extends Component {
                 redirect: true
             })
         })
-        
         .catch(err => {
             console.error(err);
         })
@@ -110,7 +75,7 @@ class CreateCampaign extends Component {
                     <Form className="formCreateCampaign">
                     {this.renderRedirect()}
                         <FormGroup>
-                            <Label for="title">Campaign Title</Label>
+                            <Label htmlFor="title">Campaign Title</Label>
                             <Input type="text" id="title" value={this.state.title} onChange={this.handleTitle} />
                         </FormGroup>
 

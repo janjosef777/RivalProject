@@ -43,7 +43,7 @@ class DeleteCampaign extends Component {
                     </Button>
 
                     <Form className="formDeleteCampaign">
-                        <Label for="delete">Are you sure you want to delete this Campaign?</Label>
+                        <Label htmlFor="delete">Are you sure you want to delete this Campaign?</Label>
                         <Button
                             onClick={this.deleteCampaign}
                             color="danger">Delete</Button>
