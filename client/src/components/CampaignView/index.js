@@ -108,11 +108,7 @@ class CampaignView extends Component {
     }
 
     loadTemplateImage() {
-<<<<<<< HEAD:client/src/components/CampaignView/index.js
-        fetch('api/images/' + this.state.selectedTemplate_imageId, {
-=======
-        ApiHelper.fetch('http://localhost:4000/api/images/' + this.state.selectedTemplate_imageId, {
->>>>>>> master:src/components/CampaignView/index.js
+        ApiHelper.fetch('api/images/' + this.state.selectedTemplate_imageId, {
             method:
                 'GET',
             headers: {
