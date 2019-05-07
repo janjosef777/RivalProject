@@ -40,28 +40,32 @@ module.exports = {
         console.log(campaign);
         db.connect(err => {
             if(err) return handleErr(err, res, 500);
-            db.campaigns.add(campaign, (err, id) => {
-                if (err)
-                    return handleErr(err, res, 500);
-                const data = {
-                    id: id
-                };
-
-                const cardResults = req.body.cardResults;
-
-                if (cardResults && !Array.isArray(cardResults))
-                    return handleErr(null, res, 400, "Card results needs to be an array");
-
-                processCardResults(id, cardResults, cardResultsData => {
-                    if (cardResultsData)
-                        data.cardResults = cardResultsData;
-
-                    res.json({
-                        token: res.jwtToken,
-                        data: data
-                    });
-                    db.disconnect();
-                })
+            db.overlays.add({}, (err, overlayId) => {
+                if(err) return handleErr(err, res, 500);
+                campaign.template = overlayId;
+                db.campaigns.add(campaign, (err, id) => {
+                    if (err)
+                        return handleErr(err, res, 500);
+                    const data = {
+                        id: id
+                    };
+    
+                    const cardResults = req.body.cardResults;
+    
+                    if (cardResults && !Array.isArray(cardResults))
+                        return handleErr(null, res, 400, "Card results needs to be an array");
+    
+                    processCardResults(id, cardResults, cardResultsData => {
+                        if (cardResultsData)
+                            data.cardResults = cardResultsData;
+    
+                        res.json({
+                            token: res.jwtToken,
+                            data: data
+                        });
+                        db.disconnect();
+                    })
+                });
             });
         });
     },
