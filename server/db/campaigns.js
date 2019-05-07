@@ -23,24 +23,17 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns, 
             if(err || !campaign) {
                 callback(err, null);
             } else {
-                db.overlays.get(campaign.template, (err, overlay) => {
-                    if(err || !overlay)
-                        callback(err, null);
+                db.cardResults.getDetailAll(id, (err, cardResults) => {
+                    campaign.cardResults = cardResults;
+                    if(!campaign.template)
+                        callback(err, err ? null : campaign);
                     else {
-                        campaign.template = overlay;
-                        db.cardResults.getDetailAll(id, (err, cardResults) => {
-                            campaign.cardResults = cardResults;
-                            if(!campaign.template)
-                                callback(err, err ? null : campaign);
-                            else {
-                                db.overlays.get(campaign.template, (err, overlay) => {
-                                    campaign.template = overlay;
-                                    callback(err, err || !overlay ? null : campaign);
-                                });
-                            }
+                        db.overlays.get(campaign.template, (err, overlay) => {
+                            campaign.template = overlay;
+                            callback(err, err || !overlay ? null : campaign);
                         });
                     }
-                })
+                });
             }
         });
     },
