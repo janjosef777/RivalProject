@@ -7,7 +7,7 @@ const IMAGES_PATH = '/uploads/'
 
 module.exports = {
 
-    assignRandomCardResult(parid, campid) {
+    assignRandomCardResult(campid) {
 
         //db.cardResults.getDetail(1, (error, result) => console.log(result));
 
@@ -22,6 +22,17 @@ module.exports = {
         //     campaign: 1,
         //     prize: 1
         // }
+
+        db.query('SELECT * FROM card_result;', (error, cardResults, fields) => {
+           console.log(cardResults);
+        });
+
+        for (var i = cardResults.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = cardResults[i];
+            cardResults[i] = cardResults[j];
+            cardResults[j] = temp;
+        }
 
         return 1;
     },
