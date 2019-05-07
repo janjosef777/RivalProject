@@ -35,10 +35,11 @@
     "superagent": "^5.0.3"
   },
   "scripts": {
-    "dev": "concurrently \"nodemon ./server/server.js\" \"cd ./client && SET PORT=3100 && react-scripts start\"",
+    "dev": "concurrently \"nodemon ./server/server.js\" \"cd client/ && SET PORT=3100 && react-scripts start\"",
     "macdev": "concurrently \"nodemon ./server/server.js\" \"PORT=3100 && react-scripts start\"",
     "server": "node ./server/server.js",
-    "build": "cd ./client && react-scripts build"
+    "start": "node ./server/server.js",
+    "build": "cd client/ && npm install && npm run build"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
