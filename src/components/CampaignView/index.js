@@ -140,11 +140,7 @@ class CampaignView extends Component {
             body: JSON.stringify({
                 name: this.props.selectedCampaign_name,
                 isActive: !!this.props.selectedCampaign_isActive,
-                template: {
-                    id: this.props.selectedCampaign_template,
-                    title: this.props.selectedTemplate_title,
-                    image: this.props.selectedTemplate_imageId,
-                }
+                template: this.props.selectedCampaign_template
             })
         }).then(res => {
             if(res.status !== 200)
