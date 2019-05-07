@@ -23,7 +23,8 @@ class CampaignSettings extends Component {
     constructor(props) {
         super(props)
         this.state ={
-            showHomepage: false
+            showHomepage: false,
+            campaignId: this.props.selectedCampaign_id
         }
  
         this.handleStatusChange = this.handleStatusChange.bind(this)
@@ -31,7 +32,7 @@ class CampaignSettings extends Component {
         this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
         this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
         this.saveChanges = this.props.saveChanges.bind(this)
-
+        this.generateCard = this.generateCard.bind(this)
 
     }
 
@@ -71,10 +72,28 @@ class CampaignSettings extends Component {
         }
     }
 
+    generateCard() {
+        fetch('http://localhost:4000/assignlink/' + this.state.campaignId,{
+            method: "GET",
+            headers: { 
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                sessionStorage.setItem('token', res.token);
+                res.redirect(res);
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
 
     viewSummary = () => {
         this.props.setState({ viewSummary: true })
     }
+
 
     render() {
         return (
@@ -114,7 +133,7 @@ class CampaignSettings extends Component {
                             <div className="campaign-main-btns">
                                 <ReactTooltip />
                                 <LinkButton onClick={this.viewSummary} className="icon"><i class="fas fa-list-alt" data-tip="Campaign summary"></i></LinkButton>
-                                <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
+                                <LinkButton onClick={this.generateCard} target="_blank" className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
                                 </LinkButton>
                                 <LinkButton className="icon"
                                 onClick={this.saveChanges}

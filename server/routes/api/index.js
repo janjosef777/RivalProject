@@ -33,6 +33,7 @@ router.get("/template/:id", ensureLoggedIn,routes.templates.get);
 router.get("/cardresults", ensureLoggedIn, routes.cardresults.getAll);
 router.post("/cardresults", ensureLoggedIn, routes.cardresults.post);
 
-router.get('/assignlink/par/:parid/camp/:campid', routes.assignlink.get);
+// router.get('/assignlink/par/:parid/camp/:campid', routes.assignlink.get);
+router.get('/assignlink/camp/:campid', routes.assignlink.get);
 
 module.exports = router;

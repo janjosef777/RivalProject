@@ -6,14 +6,19 @@ const FRONTEND_BASE_URL = process.env.NODE_ENV == 'development' ? 'http://localh
 module.exports = {
 
     get: (req, res, next) => {
-        const parid = +req.params.parid;
+        // const parid = +req.params.parid;
         const campid = +req.params.campid;
 
-        if (!(parid > 0 && campid > 0)) {
+        // if (!(parid > 0 && campid > 0)) {
+        //     return //handleErr(null, res, 404);
+        // }
+
+        if (!(campid > 0)) {
             return //handleErr(null, res, 404);
         }
 
-        var cardResult = resultChooser.assignRandomCardResult(parid, campid);
+        // var cardResult = resultChooser.assignRandomCardResult(parid, campid);
+        var cardResult = resultChooser.assignRandomCardResult(campid);
 
         if (cardResult) {
             resultChooser.getCardData(cardResult, res);
