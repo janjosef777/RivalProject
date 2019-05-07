@@ -9,7 +9,7 @@ const routes = {
     campaigns: require('./campaigns'),
     images: require('./images'),
     assignlink: require('./AssignCardLink'),
-    templates: require('./templates'),
+    templates: require('./overlays'),
     cardresults: require('./cardResults')
 };
 
@@ -19,7 +19,7 @@ router.post("/auth/add", ensureLoggedIn, routes.auth.add);
 router.get("/campaigns", ensureLoggedIn, routes.campaigns.getAll);
 router.get("/campaigns/:id", ensureLoggedIn, routes.campaigns.get);
 router.post("/campaigns", ensureLoggedIn, routes.campaigns.post);
-router.put("/campaigns/:id", ensureLoggedIn, routes.campaigns.patch);
+router.patch("/campaigns/:id", ensureLoggedIn, routes.campaigns.patch);
 router.delete("/campaigns/:id", ensureLoggedIn, routes.campaigns.delete);
 
 router.get("/images", ensureLoggedIn, routes.images.getAll);

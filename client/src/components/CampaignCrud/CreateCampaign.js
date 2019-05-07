@@ -13,7 +13,6 @@ class CreateCampaign extends Component {
             title: "",
             templateId: null,
             estimatedParticipants: null,
-            dateNow: new Date().toLocaleString(),
             redirect: false
         };
         this.handleTitle = this.handleTitle.bind(this);
@@ -74,8 +73,7 @@ class CreateCampaign extends Component {
                 'name': this.state.title,
                 'template': this.state.templateId,
                 'hasPrizes': this.state.hasPrizes,
-                'estimatedParticipants': this.state.estimatedParticipants,
-                'createdAt': this.state.dateNow
+                'estimatedParticipants': this.state.estimatedParticipants
             })
         })
 

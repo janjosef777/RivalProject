@@ -25,10 +25,27 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns, 
             } else {
                 db.cardResults.getDetailAll(id, (err, cardResults) => {
                     campaign.cardResults = cardResults;
-                    callback(err, err ? null : campaign);
+                    if(!campaign.template)
+                        callback(err, err ? null : campaign);
+                    else {
+                        db.overlays.get(campaign.template, (err, overlay) => {
+                            campaign.template = overlay;
+                            callback(err, err || !overlay ? null : campaign);
+                        });
+                    }
                 });
             }
         });
+    },
+    updateDetail(entry, callback) {
+        db.overlays.replace(entry.template, (err, res) => {
+            if(err)
+                callback(err, null);
+            else {
+                entry.template = entry.template.id;
+                db.campaigns.update(entry, callback);
+            }
+        })
     }
 });
 
@@ -56,7 +73,7 @@ function mapWrite(campaign) {
         template: campaign.template,
         is_active: campaign.isActive ? 1 : 0,
         created_by: campaign.createdBy,
-        created_at: new Date(campaign.createdAt),
+        created_at: campaign.createdAt ? new Date(campaign.createdAt) : new Date(),
         estimated_participants: campaign.hasPrizes && campaign.estimatedParticipants || 0,
         url: campaign.url
     };
