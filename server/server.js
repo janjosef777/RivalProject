@@ -29,6 +29,8 @@ if(env != 'development' && env != 'production')
 
 console.log("commented out static folder");
 
+app.get('/hello', (req, res) => res.send('hello'));
+
 // Set static folder
 // app.use(express.static(path.join(__dirname, '../build')));
 
