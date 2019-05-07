@@ -75,7 +75,7 @@ class CreateCampaign extends Component {
                     <Form className="formCreateCampaign">
                     {this.renderRedirect()}
                         <FormGroup>
-                            <Label for="title">Campaign Title</Label>
+                            <Label htmlFor="title">Campaign Title</Label>
                             <Input type="text" id="title" value={this.state.title} onChange={this.handleTitle} />
                         </FormGroup>
 

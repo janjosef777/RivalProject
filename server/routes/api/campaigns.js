@@ -21,7 +21,7 @@ module.exports = {
             return handleErr(null, res, 404);
         db.connect(err => {
             if(err) return handleErr(err, res, 500);
-            db.campaigns.get(id, (err, campaign) => {
+            db.campaigns.getDetail(id, (err, campaign) => {
                 if (err)
                     return handleErr(err, res, 500);
                 if (!campaign)
