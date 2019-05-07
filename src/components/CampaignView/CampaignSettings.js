@@ -132,6 +132,7 @@ class CampaignSettings extends Component {
         return (
                     <div className="main-wrapper">
                         <div className="flex">
+                            {this.renderRedirect()}
                             <LinkButton className="icon back-icon">
                             <i class="fas fa-arrow-left" onClick={this.directToHome}></i>
                             </LinkButton>
@@ -140,8 +141,6 @@ class CampaignSettings extends Component {
 
                         <div className='settings-wrapper'>
                             <div className="campaign-main-info">
-                                {this.renderRedirect()}
-                                
                                 <div className="input-section">
                                     <h6>Campaign Name: </h6>
                                     <input type="text"  value={this.props.selectedCampaign_name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
