@@ -35,20 +35,19 @@ class CampaignView extends Component {
             activeTab: '1',
             images: [],
             cardResults: [],
-            dateNow: new Date().toLocaleString(),
             selectedIndex: null,
             viewSummary: false,
 
             selectedCampaign_id: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
-            selectedCampaign_estimatedParticipants: "",
-            selectedCampaign_isActive: "",
-            selectedCampaign_name: "",
-            selectedCampaign_template: "",
-            selectedCampaign_url: "",
+            selectedCampaign_estimatedParticipants: 0,
+            selectedCampaign_isActive: false,
+            selectedCampaign_name: null,
+            selectedCampaign_template: null,
+            selectedCampaign_url: null,
 
             selectedTemplate_title: "thanks for participating!",
-            selectedTemplate_image: "",
-            selectedTemplate_imageId: "",
+            selectedTemplate_image: null,
+            selectedTemplate_imageId: null,
 
         }
         this.setState = this.setState.bind(this);
@@ -136,8 +135,37 @@ class CampaignView extends Component {
     }
 
     saveChanges() {
+        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign_id, {
+            method:
+                'PATCH',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                name: this.props.selectedCampaign_name,
+                isActive: !!this.props.selectedCampaign_isActive,
+                template: {
+                    id: this.props.selectedCampaign_template,
+                    title: this.props.selectedTemplate_title,
+                    image: this.props.selectedTemplate_imageId,
+                }
+            })
+        }).then(res => {
+            if(res.status !== 200)
+                throw res;
+            return res.json();
+        }).then(json => {
+            sessionStorage.setItem('token', json.token);
+            return json;
+        })
+        .then(json => {
+            window.alert("Changes Saved!")
+            console.log(json);
+        }).catch(err => {
+            console.error(err);
+        });
         console.log(this.props)
-        window.alert("Changes Saved!")
         
     }
 

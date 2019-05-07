@@ -55,8 +55,12 @@ module.exports = {
                     });
             },
             update(entry, callback, config = {}) {
-                try { entry = removeUnused(mapWrite ? mapWrite(entry) : entry); }
-                catch(err) { callback(err, null); return; }
+                const id = entry[primary];
+                try {
+                    entry = mapWrite ? mapWrite(entry) : entry;
+                    entry[primary] = id;
+                    entry = removeUnused(entry);
+                } catch(err) { callback(err, null); return; }
                 db[config.onState === 1 ? 'onCreatedTables' : 'onReady'] =
                     () => db.connection.query(queries.update(entry), toArray(entry, true), (err, res) => {
                         callback(err, !err && res.affectedRows > 0 ? res.insertId || entry[primary] || true : 0);

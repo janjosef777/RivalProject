@@ -77,7 +77,7 @@ const db = {
     images:      require('./images'),
     prizes:      require('./prizes'),
     users:       require('./users'),
-    templates:   require('./template')
+    overlays:    require('./overlays')
 };
 
 crudBase.init(db);
