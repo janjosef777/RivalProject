@@ -91,7 +91,7 @@ class CampaignSettings extends Component {
 
 
     generateCard() {
-        fetch('http://localhost:4000/assignlink/' + this.state.campaignId,{
+        fetch('http://localhost:4000/api/assignlink/camp/' + this.state.campaignId,{
             method: "GET",
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
