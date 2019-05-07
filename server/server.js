@@ -33,7 +33,7 @@ app.get('/hello', (req, res) => res.send('hello'));
 app.post('/hello', (req, res) => res.send('hello'));
 
 // Set static folder
-//app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 
 
