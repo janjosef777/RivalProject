@@ -32,7 +32,7 @@ import {
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
-    Table,
+    VirtualTable,
     Toolbar,
     SearchPanel,
     TableHeaderRow,
@@ -192,7 +192,7 @@ class Home extends Component {
         );
 
         const TableRow = ({ row, ...restProps }) => (
-            <Table.Row
+            <VirtualTable.Row
               {...restProps}
               // eslint-disable-next-line no-alert
               onClick={() => showDetails(row)}
@@ -229,17 +229,12 @@ class Home extends Component {
                                 <DateTypeProvider
                                     for={dateColumns}
                                 />
-                                <PagingState
-                                    defaultCurrentPage={1}
-                                    pageSize={4}
-                                />
 
                                 {/* Selection functionality */}
                                 {/* <SelectionState
                                     selection={selection}
                                     onSelectionChange={this.changeSelection}
                                 /> */}
-                                <IntegratedPaging />
 
                                 {/* Selection functionality */}
                                 {/* <IntegratedSelection /> */}
@@ -284,7 +279,7 @@ class Home extends Component {
                                 <IntegratedSorting />
                                 <SearchState defaultValue="" />
                                 <IntegratedFiltering />
-                                <Table rowComponent={TableRow}/>
+                                <VirtualTable rowComponent={TableRow}/>
                                 <TableHeaderRow showSortingControls />
                                 <TableEditRow />
                                 <TableEditColumn
@@ -306,7 +301,6 @@ class Home extends Component {
                                 <SearchPanel />
                                 {/*  Selection Functionality */}
                                 {/* <TableSelection showSelectAll /> */}
-                                <PagingPanel />
                             </Grid>
                             <Dialog onClose={this.closePopup} open={popupVisible}>
                                 <DialogTitle id="responsive-dialog-title">Row Details</DialogTitle>
