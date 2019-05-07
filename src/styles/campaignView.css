@@ -9,8 +9,8 @@ h4{
   text-align: center;
 }
 
-h2{
-  padding: 20px 3vw;
+.main-wrapper{
+  padding: 20px 7vw !important;
 }
 
 .content-wrapper {
@@ -90,8 +90,17 @@ h2{
     color: #222;
 }
 
-.active{
+.nav-tabs .nav-link.active{
   font-weight: bold;
+  color: #fff !important;
+  background: #E8542A !important;
+  padding: 10px 15px;
+}
+
+.nav-tabs .nav-item{
+  border-top-right-radius: 5px;
+  background: rgb(242, 245, 251);
+  border-bottom: none;
 }
 
 a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
@@ -318,4 +327,17 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
 .gQJwUC{
   background: #222;
   color: #fff;
+}
+
+.kkPBwT:hover{
+  border: 2px solid #222;
+}
+
+.flex{
+  display: flex;
+  align-items: center;
+}
+
+.fa-arrow-left{
+  font-size: 1.3rem;
 }

@@ -175,7 +175,7 @@ class CampaignView extends Component {
                 <div>
                     <NavBarComponent />
                     <CampaignSettings saveChanges={this.saveChanges} {...this.state} setState={this.setState}></CampaignSettings>
-                    <div className='content-wrapper'>
+                    <div className='content-wrapper main-wrapper'>
                         <div className='left-wrapper sub-wrapper'>
                             <AssetsView {...this.state} setState={this.setState} ></AssetsView>
                         </div>

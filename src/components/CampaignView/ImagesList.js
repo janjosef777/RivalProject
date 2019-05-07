@@ -57,6 +57,7 @@ class ImagesList extends Component {
             .then(res => res.json())
             .then(res => {
                 sessionStorage.setItem('token', res.token)
+                this.fetchImages();
 
             })
             .catch(err => {

@@ -24,7 +24,9 @@ class CampaignSettings extends Component {
         super(props)
         this.state ={
             showHomepage: false,
+            campaignId: this.props.selectedCampaign_id,
             showEstimatedParticipants: this.props.selectedCampaign_estimatedParticipants ? true : false,
+
         }
  
         this.handleStatusChange = this.handleStatusChange.bind(this)
@@ -32,7 +34,9 @@ class CampaignSettings extends Component {
         this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
         this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
         this.saveChanges = this.props.saveChanges.bind(this)
+        this.generateCard = this.generateCard.bind(this)
         this.handlePrizeChange = this.handlePrizeChange.bind(this)
+
     }
 
     handleCampaignNameChange(e){
@@ -85,6 +89,25 @@ class CampaignSettings extends Component {
         }
     }
 
+
+    generateCard() {
+        fetch('http://localhost:4000/api/assignlink/camp/' + this.state.campaignId,{
+            method: "GET",
+            headers: { 
+                "Authorization": "Bearer " + sessionStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                sessionStorage.setItem('token', res.token);
+                res.redirect(res);
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+
     componentDidMount(){
         if(this.props.selectedCampaign_estimatedParticipants != "" || 
            this.props.selectedCampaign_estimatedParticipants != null
@@ -104,16 +127,20 @@ class CampaignSettings extends Component {
         this.props.setState({ viewSummary: true })
     }
 
+
     render() {
         return (
-                    <div>
-                        <h2>Campaign Setup</h2>
+                    <div className="main-wrapper">
+                        <div className="flex">
+                            {this.renderRedirect()}
+                            <LinkButton className="icon back-icon">
+                            <i class="fas fa-arrow-left" onClick={this.directToHome}></i>
+                            </LinkButton>
+                            <h2>Campaign Setup</h2>
+                        </div>
+
                         <div className='settings-wrapper'>
                             <div className="campaign-main-info">
-                                {this.renderRedirect()}
-                                <LinkButton className="icon back-icon">
-                                <i class="fas fa-arrow-left" onClick={this.directToHome}></i>
-                                </LinkButton>
                                 <div className="input-section">
                                     <h6>Campaign Name: </h6>
                                     <input type="text"  value={this.props.selectedCampaign_name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
@@ -162,7 +189,7 @@ class CampaignSettings extends Component {
                             <div className="campaign-main-btns">
                                 <ReactTooltip />
                                 <LinkButton onClick={this.viewSummary} className="icon"><i class="fas fa-list-alt" data-tip="Campaign summary"></i></LinkButton>
-                                <LinkButton href="http://localhost:4000/api/assignlink/par/1/camp/1" target="_blank" className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
+                                <LinkButton onClick={this.generateCard} target="_blank" className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
                                 </LinkButton>
                                 <LinkButton className="icon"
                                 onClick={this.saveChanges}
