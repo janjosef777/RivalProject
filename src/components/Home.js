@@ -40,24 +40,12 @@ import {
     PagingPanel,
     TableEditRow,
     TableEditColumn,
+    VirtualTable
 } from '@devexpress/dx-react-grid-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import CreateCampaign from './CampaignCrud/CreateCampaign';
 import DeleteCampaign from './CampaignCrud/DeleteCampaign';
 import CampaignView from './CampaignView/index';
-
-const getRowId = row => row.id;
-
-const DateFormatter = ({ value }) =>
-    value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
-        .replace(/T/, ' - ')
-        .replace(/\..+/, '');
-const DateTypeProvider = props => (
-    <DataTypeProvider
-        formatterComponent={DateFormatter}
-        {...props}
-    />
-);
 
 class Home extends Component {
 
@@ -203,6 +191,20 @@ class Home extends Component {
               }}
             />
           );
+
+        const getRowId = row => row.id;
+
+        const DateFormatter = ({ value }) =>
+            value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
+                .replace(/T/, ' - ')
+                .replace(/\..+/, '');
+        const DateTypeProvider = props => (
+            <DataTypeProvider
+                formatterComponent={DateFormatter}
+                {...props}
+            />
+        );
+
         
         return (
 
@@ -289,6 +291,13 @@ class Home extends Component {
                                 <Table rowComponent={TableRow}/>
                                 <TableHeaderRow showSortingControls />
                                 <TableEditRow />
+
+                            {/* VIRTUAL SCROLLING */}
+
+                                <VirtualTable />
+
+                            {/* VIRTUAL SCROLLING */} 
+                            
                                 <TableEditColumn
                                     width={170}
                                     cellComponent={CellComponent}
