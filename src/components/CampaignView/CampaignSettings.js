@@ -66,6 +66,7 @@ class CampaignSettings extends Component {
             this.setState({showEstimatedParticipants: true})
         }else {
             this.setState({showEstimatedParticipants: false})
+            this.props.setState({selectedCampaign_estimatedParticipants: null})
         }
 
 
