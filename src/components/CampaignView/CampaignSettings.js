@@ -24,7 +24,10 @@ class CampaignSettings extends Component {
         super(props)
         this.state ={
             showHomepage: false,
-            campaignId: this.props.selectedCampaign_id
+            campaignId: this.props.selectedCampaign_id,
+
+            showEstimatedParticipants: this.props.selectedCampaign_estimatedParticipants ? true : false,
+
         }
  
         this.handleStatusChange = this.handleStatusChange.bind(this)
@@ -32,7 +35,11 @@ class CampaignSettings extends Component {
         this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
         this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
         this.saveChanges = this.props.saveChanges.bind(this)
+
         this.generateCard = this.generateCard.bind(this)
+
+
+        this.handlePrizeChange = this.handlePrizeChange.bind(this)
 
     }
 
@@ -57,7 +64,21 @@ class CampaignSettings extends Component {
         })
         console.log(intValue);
     }
+    
+    handlePrizeChange(e) {
+        console.log(this.state.showEstimatedParticipants)
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        console.log(value)
+        if(value === true){
+            this.setState({showEstimatedParticipants: true})
+        }else {
+            this.setState({showEstimatedParticipants: false})
+            this.props.setState({selectedCampaign_estimatedParticipants: null})
+        }
 
+
+    }
 
     directToHome() {
         this.setState({showHomepage: true})
@@ -71,6 +92,7 @@ class CampaignSettings extends Component {
             />
         }
     }
+
 
     generateCard() {
         fetch('http://localhost:4000/assignlink/' + this.state.campaignId,{
@@ -88,6 +110,21 @@ class CampaignSettings extends Component {
             .catch(err => {
                 console.error(err);
             })
+    }
+
+    componentDidMount(){
+        if(this.props.selectedCampaign_estimatedParticipants != "" || 
+           this.props.selectedCampaign_estimatedParticipants != null
+            ){
+            this.setState({
+                showEstimatedParticipants: true
+                })
+        }else{
+            this.setState({
+                showEstimatedParticipants: false
+                })  
+        }
+
     }
 
     viewSummary = () => {
@@ -109,12 +146,6 @@ class CampaignSettings extends Component {
                                     <h6>Campaign Name: </h6>
                                     <input type="text"  value={this.props.selectedCampaign_name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
                                 </div>
-                                <div className="input-section">
-                                    <h6>Estimated Participants: </h6>
-                                    <input type="text" 
-                                        value={this.props.selectedCampaign_estimatedParticipants} 
-                                        onChange={this.handleEstimatedPatricipantsChange}  placeholder="Estimated Participants..."/>
-                                </div>
 
                             <div class="input-section onoffswitch" data-tip="Activate campaign">
                                 <input type="checkbox" 
@@ -128,6 +159,32 @@ class CampaignSettings extends Component {
                                 <span class="onoffswitch-switch"></span>
                                 </label>
                             </div>
+
+
+                            <div class="input-section onoffswitch-hasPrize" data-tip="Activate Prize">
+                                <input type="checkbox" 
+                                       name="onoffswitch-hasPrize" 
+                                       class="onoffswitch-checkbox-hasPrize" 
+                                       id="myonoffswitch-hasPrize" 
+                                       onChange={this.handlePrizeChange}
+                                       checked={this.state.showEstimatedParticipants}/>
+                                <label class="onoffswitch-label-hasPrize" for="myonoffswitch-hasPrize">
+                                <span class="onoffswitch-inner-hasPrize"></span>
+                                <span class="onoffswitch-switch-hasPrize"></span>
+                                </label>
+                            </div>
+
+                            {this.state.showEstimatedParticipants ?
+                                <div className="input-section estimatedParticipants">
+                                    <h6>Estimated Participants: </h6>
+                                    <input type="text" 
+                                        value={this.props.selectedCampaign_estimatedParticipants} 
+                                        onChange={this.handleEstimatedPatricipantsChange}
+                                        placeholder="Estimated Participants..."
+                                        />
+                                </div>
+                                : null
+                            }
 
                             </div>
                             <div className="campaign-main-btns">
