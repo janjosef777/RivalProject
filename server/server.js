@@ -33,11 +33,9 @@ app.get('/hello', (req, res) => res.send('hello'));
 app.post('/hello', (req, res) => res.send('hello'));
 
 // Set static folder
-app.use(express.static(path.join(__dirname, '../client/build')));
+//app.use(express.static(path.join(__dirname, '../client/build')));
 
-// app.get('/login', function (req, res) {
-//     res.sendFile(path.join(__dirname, '../build', 'index.html'));
-// });
+
 
 
 // Body parser middleware
@@ -45,6 +43,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", routes);
+
+// wildcard to send react client
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
+
 
 app.listen(port, function () {
     console.log("Server started on port " + port)
