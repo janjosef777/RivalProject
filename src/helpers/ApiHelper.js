@@ -11,7 +11,7 @@ const ApiHelper = {
                 }
             }).then(json => {
                 sessionStorage.setItem('token', json.token);
-                return json;
+                return json.data;
             });
     }
 }

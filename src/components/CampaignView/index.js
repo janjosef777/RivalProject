@@ -65,14 +65,13 @@ class CampaignView extends Component {
                 "Content-type": "application/json"
             }
         }).then(res => {
-                console.log(res.data)
                 this.setState({
-                    selectedCampaign_id: res.data.id,
-                    selectedCampaign_estimatedParticipants: res.data.estimatedParticipants,
-                    selectedCampaign_isActive: res.data.isActive,
-                    selectedCampaign_name: res.data.name,
-                    selectedCampaign_template: res.data.template,
-                    selectedCampaign_url: res.data.url,
+                    selectedCampaign_id: res.id,
+                    selectedCampaign_estimatedParticipants: res.estimatedParticipants,
+                    selectedCampaign_isActive: res.isActive,
+                    selectedCampaign_name: res.name,
+                    selectedCampaign_template: res.template,
+                    selectedCampaign_url: res.url,
                 })
                 this.loadTemplate()
             })
@@ -119,9 +118,9 @@ class CampaignView extends Component {
         })
             .then(res => {
                 sessionStorage.setItem('token', res.token)
-                if (res.data.path != null) {
+                if (res.path != null) {
                     this.setState({
-                        selectedTemplate_image: res.data.path
+                        selectedTemplate_image: res.path
                     })
                 }
             })

@@ -16,7 +16,6 @@ module.exports = {
         });
     },
     get: (req, res, next) => {
-        console.log('Woooooo');
         const id = +req.params.id || 0;
         if (id <= 0)
             return handleErr(null, res, 404);
