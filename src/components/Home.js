@@ -233,7 +233,7 @@ class Home extends Component {
                                 />
                                 <PagingState
                                     defaultCurrentPage={1}
-                                    pageSize={4}
+                                    pageSize={10}
                                 />
 
                                 {/* Selection functionality */}
