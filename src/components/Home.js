@@ -203,7 +203,7 @@ class Home extends Component {
                 <NavBarComponent></NavBarComponent>
                 <div className="Home">
 
-                    <h2>Scratch & Win Campaigns</h2>
+                    <h2>Scratch &amp; Win Campaigns</h2>
                     <div className="container">
 
                         {/* Selection functionality */}
