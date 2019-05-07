@@ -45,7 +45,7 @@ class CampaignView extends Component {
             selectedCampaign_template: null,
             selectedCampaign_url: null,
 
-            selectedTemplate_title: "thanks for participating!",
+            selectedTemplate_title: null,
             selectedTemplate_image: null,
             selectedTemplate_imageId: null,
 

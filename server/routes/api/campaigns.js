@@ -40,7 +40,7 @@ module.exports = {
         console.log(campaign);
         db.connect(err => {
             if(err) return handleErr(err, res, 500);
-            db.overlays.add({}, (err, overlayId) => {
+            db.overlays.add({title: 'Thanks for participating!'}, (err, overlayId) => {
                 if(err) return handleErr(err, res, 500);
                 campaign.template = overlayId;
                 db.campaigns.add(campaign, (err, id) => {
