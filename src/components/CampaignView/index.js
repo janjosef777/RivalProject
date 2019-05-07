@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import NavBarComponent from '../NavBarComponent';
 import CampaignSettings from './CampaignSettings';
 import Summary from './Summary';
+import ApiHelper from '../../helpers/ApiHelper';
 
 const LinkButton = styled.a`
     padding: 10px;   
@@ -45,7 +46,7 @@ class CampaignView extends Component {
             selectedCampaign_template: null,
             selectedCampaign_url: null,
 
-            selectedTemplate_title: "thanks for participating!",
+            selectedTemplate_title: null,
             selectedTemplate_image: null,
             selectedTemplate_imageId: null,
 
@@ -56,29 +57,24 @@ class CampaignView extends Component {
 
 
     loadCampaign() {
-        fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaign_id, {
+        ApiHelper.fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaign_id, {
             method:
                 'GET',
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-type": "application/json"
             }
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token)
-                console.log(res.data)
+        }).then(res => {
                 this.setState({
-                    selectedCampaign_id: res.data.id,
-                    selectedCampaign_estimatedParticipants: res.data.estimatedParticipants,
-                    selectedCampaign_isActive: res.data.isActive,
-                    selectedCampaign_name: res.data.name,
-                    selectedCampaign_template: res.data.template,
-                    selectedCampaign_url: res.data.url,
+                    selectedCampaign_id: res.id,
+                    selectedCampaign_estimatedParticipants: res.estimatedParticipants,
+                    selectedCampaign_isActive: res.isActive,
+                    selectedCampaign_name: res.name,
+                    selectedCampaign_template: res.template,
+                    selectedCampaign_url: res.url,
                 })
                 this.loadTemplate()
             })
-
             .catch(err => {
                 console.error(err);
             })
@@ -112,7 +108,7 @@ class CampaignView extends Component {
     }
 
     loadTemplateImage() {
-        fetch('http://localhost:4000/api/images/' + this.state.selectedTemplate_imageId, {
+        ApiHelper.fetch('http://localhost:4000/api/images/' + this.state.selectedTemplate_imageId, {
             method:
                 'GET',
             headers: {
@@ -120,12 +116,11 @@ class CampaignView extends Component {
                 "Content-type": "application/json"
             }
         })
-            .then(res => res.json())
             .then(res => {
                 sessionStorage.setItem('token', res.token)
-                if (res.data.path != null) {
+                if (res.path != null) {
                     this.setState({
-                        selectedTemplate_image: res.data.path
+                        selectedTemplate_image: res.path
                     })
                 }
             })
@@ -145,11 +140,7 @@ class CampaignView extends Component {
             body: JSON.stringify({
                 name: this.props.selectedCampaign_name,
                 isActive: !!this.props.selectedCampaign_isActive,
-                template: {
-                    id: this.props.selectedCampaign_template,
-                    title: this.props.selectedTemplate_title,
-                    image: this.props.selectedTemplate_imageId,
-                }
+                template: this.props.selectedCampaign_template
             })
         }).then(res => {
             if(res.status !== 200)
