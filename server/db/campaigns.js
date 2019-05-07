@@ -38,7 +38,7 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns, 
         });
     },
     updateDetail(entry, callback) {
-        db.overlays.replace(entry.template, (err, res) => {
+        db.overlays.update(entry.template, (err, res) => {
             if(err)
                 callback(err, null);
             else {

@@ -12,12 +12,7 @@ import {
     Getter,
 } from '@devexpress/dx-react-core';
 import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import EditIcon from '@material-ui/icons/Edit';
-import SaveIcon from '@material-ui/icons/Save';
-import CancelIcon from '@material-ui/icons/Cancel';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Fab from '@material-ui/core/Fab';
 import {
     // SelectionState,
     PagingState,
@@ -101,6 +96,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        this.setState({selectedCampaignId: null});
         this.fetchCampaigns();
     }
 
@@ -208,7 +204,7 @@ class Home extends Component {
                 <NavBarComponent></NavBarComponent>
                 <div className="Home">
 
-                    <h2>Scratch & Win Campaigns</h2>
+                    <h2>Scratch &amp; Win Campaigns</h2>
                     <div className="container">
 
                         {/* Selection functionality */}
@@ -239,14 +235,13 @@ class Home extends Component {
                                 {/* Selection functionality */}
                                 {/* <IntegratedSelection /> */}
 
-                                <Button
-                                    variant="fab"
+                                <Fab
                                     color="primary"
                                     aria-label="add"
                                     className="add-btn"
                                     onClick={this.toggleCreatePopup.bind(this)}>
                                     +
-                                </Button>
+                                </Fab>
 
                                 <i></i>
 

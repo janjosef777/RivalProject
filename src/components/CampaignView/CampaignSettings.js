@@ -153,7 +153,7 @@ class CampaignSettings extends Component {
                                        id="myonoffswitch" 
                                        onChange={this.handleStatusChange}
                                        checked={this.props.selectedCampaign_isActive}/>
-                                <label class="onoffswitch-label" for="myonoffswitch">
+                                <label class="onoffswitch-label" htmlFor="myonoffswitch">
                                 <span class="onoffswitch-inner"></span>
                                 <span class="onoffswitch-switch"></span>
                                 </label>
