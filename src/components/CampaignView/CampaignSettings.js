@@ -25,7 +25,6 @@ class CampaignSettings extends Component {
         this.state ={
             showHomepage: false,
             campaignId: this.props.selectedCampaign_id,
-
             showEstimatedParticipants: this.props.selectedCampaign_estimatedParticipants ? true : false,
 
         }
@@ -35,10 +34,7 @@ class CampaignSettings extends Component {
         this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
         this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
         this.saveChanges = this.props.saveChanges.bind(this)
-
         this.generateCard = this.generateCard.bind(this)
-
-
         this.handlePrizeChange = this.handlePrizeChange.bind(this)
 
     }
@@ -134,14 +130,18 @@ class CampaignSettings extends Component {
 
     render() {
         return (
-                    <div>
-                        <h2>Campaign Setup</h2>
+                    <div className="main-wrapper">
+                        <div className="flex">
+                            <LinkButton className="icon back-icon">
+                            <i class="fas fa-arrow-left" onClick={this.directToHome}></i>
+                            </LinkButton>
+                            <h2>Campaign Setup</h2>
+                        </div>
+
                         <div className='settings-wrapper'>
                             <div className="campaign-main-info">
                                 {this.renderRedirect()}
-                                <LinkButton className="icon back-icon">
-                                <i class="fas fa-arrow-left" onClick={this.directToHome}></i>
-                                </LinkButton>
+                                
                                 <div className="input-section">
                                     <h6>Campaign Name: </h6>
                                     <input type="text"  value={this.props.selectedCampaign_name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
