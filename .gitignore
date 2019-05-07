@@ -97,6 +97,7 @@ typings/
 
 # production
 /build
+/client/build
 
 # Uploads
 /temp-uploads
