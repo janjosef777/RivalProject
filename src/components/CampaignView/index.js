@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import NavBarComponent from '../NavBarComponent';
 import CampaignSettings from './CampaignSettings';
 import Summary from './Summary';
+import ApiHelper from '../../helpers/ApiHelper';
 
 const LinkButton = styled.a`
     padding: 10px;   
@@ -56,17 +57,14 @@ class CampaignView extends Component {
 
 
     loadCampaign() {
-        fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaign_id, {
+        ApiHelper.fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaign_id, {
             method:
                 'GET',
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-type": "application/json"
             }
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token)
+        }).then(res => {
                 console.log(res.data)
                 this.setState({
                     selectedCampaign_id: res.data.id,
@@ -78,7 +76,6 @@ class CampaignView extends Component {
                 })
                 this.loadTemplate()
             })
-
             .catch(err => {
                 console.error(err);
             })
@@ -112,7 +109,7 @@ class CampaignView extends Component {
     }
 
     loadTemplateImage() {
-        fetch('http://localhost:4000/api/images/' + this.state.selectedTemplate_imageId, {
+        ApiHelper.fetch('http://localhost:4000/api/images/' + this.state.selectedTemplate_imageId, {
             method:
                 'GET',
             headers: {
@@ -120,7 +117,6 @@ class CampaignView extends Component {
                 "Content-type": "application/json"
             }
         })
-            .then(res => res.json())
             .then(res => {
                 sessionStorage.setItem('token', res.token)
                 if (res.data.path != null) {

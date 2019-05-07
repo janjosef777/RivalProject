@@ -96,6 +96,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        this.setState({selectedCampaignId: null});
         this.fetchCampaigns();
     }
 
