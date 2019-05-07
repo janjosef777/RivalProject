@@ -32,7 +32,7 @@ import {
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
-    Table,
+    VirtualTable,
     Toolbar,
     SearchPanel,
     TableHeaderRow,
@@ -40,12 +40,22 @@ import {
     PagingPanel,
     TableEditRow,
     TableEditColumn,
-    VirtualTable
 } from '@devexpress/dx-react-grid-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import CreateCampaign from './CampaignCrud/CreateCampaign';
 import DeleteCampaign from './CampaignCrud/DeleteCampaign';
 import CampaignView from './CampaignView/index';
+
+const getRowId = row => row.id;
+
+const DateFormatter = ({ value }) =>
+    new Date(value).toLocaleString();
+const DateTypeProvider = props => (
+    <DataTypeProvider
+        formatterComponent={DateFormatter}
+        {...props}
+    />
+);
 
 class Home extends Component {
 
@@ -132,13 +142,13 @@ class Home extends Component {
         }
     }
 
-    myUpdate(row) {
+    myUpdate(row){
         this.setState({
-            selectedCampaignId: row.id,
+            selectedCampaignId : row.id,
             showUpdate: true
         })
     }
-    myDelete(row) {
+    myDelete(row){
         console.log(row.id)
         this.setState({
             deleteId: row.id,
@@ -164,49 +174,34 @@ class Home extends Component {
         const CellComponent = ({ children, row, ...restProps }) => (
             <TableEditColumn.Cell row={row} {...restProps}>
                 {children}
-                <TableEditColumn.Command
-                    id="custom"
-                    class="fas fa-edit"
-                    onExecute={() => {
-                        showDetails(row);
-                    }} // action callback
-                />
-                <TableEditColumn.Command
-                    id="custom"
-                    class="fas fa-trash"
-                    onExecute={() => {
-                        deleteCampaign(row);
-                    }} // action callback
-                />
+                    <TableEditColumn.Command
+                        id="custom"
+                        class="fas fa-edit"
+                        onExecute={() => {
+                            showDetails(row);
+                        }} // action callback
+                    />
+                    <TableEditColumn.Command
+                        id="custom"
+                        class="fas fa-trash"
+                        onExecute={() => {
+                            deleteCampaign(row);
+                        }} // action callback
+                    />
             </TableEditColumn.Cell>
         );
 
         const TableRow = ({ row, ...restProps }) => (
-            <Table.Row
-                {...restProps}
-                // eslint-disable-next-line no-alert
-                onClick={() => showDetails(row)}
-                style={{
-                    cursor: 'pointer',
-                }}
+            <VirtualTable.Row
+              {...restProps}
+              // eslint-disable-next-line no-alert
+              onClick={() => showDetails(row)}
+              style={{
+                cursor: 'pointer',
+              }}
             />
-        );
-
-        const getRowId = row => row.id;
-        const Root = props => <Grid.Root {...props} style={{ height: '90%' }} />;
-
-        const DateFormatter = ({ value }) =>
-            value.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1')
-                .replace(/T/, ' - ')
-                .replace(/\..+/, '');
-        const DateTypeProvider = props => (
-            <DataTypeProvider
-                formatterComponent={DateFormatter}
-                {...props}
-            />
-        );
-
-
+          );
+        
         return (
 
             <div>
@@ -222,15 +217,12 @@ class Home extends Component {
                             {' '}
                             {selection.length}
                         </span> */}
-                        <Paper style={{ height: "700px" }}>
+                        <Paper>
                             <Grid
                                 rows={campaignItems}
                                 columns={columns}
                                 getRowId={getRowId}
-                                rootComponent={Root}
-
                             >
-
                                 <EditingState
                                     onCommitChanges={this.commitChanges}
                                 />
@@ -243,7 +235,6 @@ class Home extends Component {
                                     selection={selection}
                                     onSelectionChange={this.changeSelection}
                                 /> */}
-
 
                                 {/* Selection functionality */}
                                 {/* <IntegratedSelection /> */}
@@ -275,6 +266,7 @@ class Home extends Component {
                                 }
 
                                 {this.renderRedirect()}
+
                                 <SortingState
                                     defaultSorting={[
                                         // Column for ID
@@ -287,16 +279,13 @@ class Home extends Component {
                                 <IntegratedSorting />
                                 <SearchState defaultValue="" />
                                 <IntegratedFiltering />
-                                <VirtualTable height="auto" rowComponent={TableRow} />
-
+                                <VirtualTable rowComponent={TableRow}/>
                                 <TableHeaderRow showSortingControls />
-
                                 <TableEditRow />
                                 <TableEditColumn
                                     width={170}
                                     cellComponent={CellComponent}
                                 />
-
                                 <Getter
                                     name="tableColumns"
                                     computed={({ tableColumns }) => {
@@ -308,7 +297,6 @@ class Home extends Component {
                                     }
                                     }
                                 />
-
                                 <Toolbar />
                                 <SearchPanel />
                                 {/*  Selection Functionality */}
