@@ -38,23 +38,11 @@
     "dev": "concurrently \"nodemon ./server/server.js\" \"cd ./client && SET PORT=3100 && react-scripts start\"",
     "macdev": "concurrently \"nodemon ./server/server.js\" \"PORT=3100 && react-scripts start\"",
     "server": "node ./server/server.js",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "cd ./client && react-scripts build"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "devDependencies": {
     "concurrently": "^4.1.0",
     "nodemon": "^1.18.11"
-  },
-  "homepage" : "https://boiling-reef-95628.herokuapp.com/app"
+  }
 }
+
