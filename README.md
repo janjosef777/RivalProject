@@ -3,6 +3,12 @@ Scratch-and-Win
 
 ![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Rivallogo.png)
 
+## Hosted Prototype
+[https://boiling-reef-95628.herokuapp.com/](https://boiling-reef-95628.herokuapp.com/)
+
+login:
+user is admin
+no password
 
 ## Overview
 
