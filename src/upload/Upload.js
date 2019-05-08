@@ -9,7 +9,6 @@ class Upload extends Component {
       uploading: false,
       uploadProgress: {}
     };
-
     this.uploadFiles = this.uploadFiles.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
   }
@@ -72,7 +71,7 @@ class Upload extends Component {
           this.props.onUpload(err, res);
         }
       };
-      req.open("POST", "http://localhost:4000/api/images");
+      req.open("POST", "api/images");
       req.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem('token'))
       req.send(formData);
     });
