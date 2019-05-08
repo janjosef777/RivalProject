@@ -19,7 +19,7 @@ class ImagesList extends Component {
     }
 
     fetchImages() {
-        ApiHelper.fetch('http://localhost:4000/api/images',{
+        ApiHelper.fetch('api/images',{
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
@@ -45,7 +45,7 @@ class ImagesList extends Component {
     }
 
     deleteImages(imageId) {
-        ApiHelper.fetch('http://localhost:4000/api/images/' + imageId ,{
+        ApiHelper.fetch('api/images/' + imageId ,{
             method: 'DELETE',
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
