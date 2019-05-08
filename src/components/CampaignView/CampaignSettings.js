@@ -7,11 +7,6 @@ import ApiHelper from '../../helpers/ApiHelper';
 
 const LinkButton = styled.a`
 padding: 10px;   
-margin: 10px;
-margin-top: 50px;
-border: 1px solid black;
-border-radius: 5px;
-background-color: #E8542A;
 `;
 
 class CampaignSettings extends Component {
