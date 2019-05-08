@@ -12,6 +12,14 @@ let tasks = 0;
 
 const crudBase = require('./crudBase');
 
+const connectionValues = env.NODE_ENV == 'development' ?
+    {
+        host: env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
+        user: env.DB_USER !== undefined ? env.DB_USER : 'user',
+        password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
+        database: env.DB_NAME !== undefined ? env.DB_NAME : 'database'
+    } : env.CLEARDB_DATABASE_URL; 
+
 const db = {
     get connection() { return connection; },
     connect(callback) {
@@ -20,12 +28,7 @@ const db = {
             callback();
         } else {
             console.log('Connect db...');
-            connection = mysql.createConnection({
-                host:     env.DB_HOST !== undefined ? env.DB_HOST : 'localhost',
-                user:     env.DB_USER !== undefined ? env.DB_USER : 'user',
-                password: env.DB_PASS !== undefined ? env.DB_PASS : 'password',
-                database: env.DB_NAME !== undefined ? env.DB_NAME : 'database',
-            })
+            connection = mysql.createConnection(connectionValues);
             connection.connect(err => {
                 callback(err);
             });

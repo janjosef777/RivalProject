@@ -29,7 +29,7 @@ class CreateCampaign extends Component {
         }
     }
     handleSubmit() {
-        ApiHelper.fetch('http://localhost:4000/api/campaigns/', {
+        ApiHelper.fetch('api/campaigns/', {
             method:
                 'POST',
             headers: {
