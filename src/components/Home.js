@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import '../styles/home.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import NavBarComponent from './NavBarComponent';
+import ApiHelper from '../helpers/ApiHelper';
 // import jwt_decode from 'jwt-decode'
 import {
     Getter,
@@ -15,8 +15,8 @@ import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import {
     // SelectionState,
-    PagingState,
-    IntegratedPaging,
+    // PagingState,
+    // IntegratedPaging,
     // IntegratedSelection,
     SortingState,
     IntegratedSorting,
@@ -31,15 +31,13 @@ import {
     Toolbar,
     SearchPanel,
     TableHeaderRow,
-    TableSelection,
-    PagingPanel,
+    // TableSelection,
+    // PagingPanel,
     TableEditRow,
     TableEditColumn,
 } from '@devexpress/dx-react-grid-material-ui';
-import { withStyles } from '@material-ui/core/styles';
 import CreateCampaign from './CampaignCrud/CreateCampaign';
 import DeleteCampaign from './CampaignCrud/DeleteCampaign';
-import CampaignView from './CampaignView/index';
 
 const getRowId = row => row.id;
 
@@ -101,16 +99,14 @@ class Home extends Component {
     }
 
     fetchCampaigns() {
-        fetch('api/campaigns', {
+        ApiHelper.fetch('api/campaigns', {
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
-            .then(res => res.json())
             .then(res => {
-                sessionStorage.setItem('token', res.token);
-                this.setState({ campaignItems: res.data });
-                console.log(res.data)
+                this.setState({ campaignItems: res });
+                console.log(res)
             })
             .catch(err => {
                 console.error(err);

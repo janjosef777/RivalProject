@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 //import Upload from '../upload/Upload';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
 import '../../styles/campaignView.css';
 import AssetsView from './AssetsView';
 import TabView from './TabView';
@@ -39,17 +35,14 @@ class CampaignView extends Component {
             selectedIndex: null,
             viewSummary: false,
 
-            selectedCampaign_id: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
-            selectedCampaign_estimatedParticipants: 0,
-            selectedCampaign_isActive: false,
-            selectedCampaign_name: null,
-            selectedCampaign_template: null,
-            selectedCampaign_url: null,
-
-            selectedTemplate_title: null,
-            selectedTemplate_image: null,
-            selectedTemplate_imageId: null,
-
+            selectedCampaign: {
+                id: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
+                name: "",
+                isActive: false,
+                hasPrizes: false
+            },
+            selectedOverlay: {},
+            selectedOverlayImage: {}
         }
         this.setState = this.setState.bind(this);
         // this.saveChanges = this.saveChanges.bind(this);
@@ -57,7 +50,7 @@ class CampaignView extends Component {
 
 
     loadCampaign() {
-        ApiHelper.fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaign_id, {
+        ApiHelper.fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaign.id, {
             method:
                 'GET',
             headers: {
@@ -65,92 +58,38 @@ class CampaignView extends Component {
                 "Content-type": "application/json"
             }
         }).then(res => {
-                this.setState({
-                    selectedCampaign_id: res.id,
-                    selectedCampaign_estimatedParticipants: res.estimatedParticipants,
-                    selectedCampaign_isActive: res.isActive,
-                    selectedCampaign_name: res.name,
-                    selectedCampaign_template: res.template,
-                    selectedCampaign_url: res.url,
-                })
-                this.loadTemplate()
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    }
-    loadTemplate() {
-        fetch('http://localhost:4000/api/template/' + this.state.selectedCampaign_template, {
-            method:
-                'GET',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token)
-                this.setState({
-                    selectedTemplate_imageId: res.data.image
+            const campaign = res;
+            const overlay = campaign.template;
+            const overlayImage = overlay.image || {};
+            delete overlay.image;
+            delete campaign.template;
 
-                })
-                if (res.data.title != null) {
-                    this.setState({
-                        selectedTemplate_title: res.data.title
-                    })
-                }
-                this.loadTemplateImage()
+            this.setState({
+                selectedCampaign: campaign,
+                selectedOverlay: overlay,
+                selectedOverlayImage: overlayImage
             })
-            .catch(err => {
-                console.error(err);
-            })
-    }
-
-    loadTemplateImage() {
-        ApiHelper.fetch('http://localhost:4000/api/images/' + this.state.selectedTemplate_imageId, {
-            method:
-                'GET',
-            headers: {
-                "Authorization": "Bearer " + sessionStorage.getItem("token"),
-                "Content-type": "application/json"
-            }
         })
-            .then(res => {
-                sessionStorage.setItem('token', res.token)
-                if (res.path != null) {
-                    this.setState({
-                        selectedTemplate_image: res.path
-                    })
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            })
+        .catch(err => {
+            console.error(err);
+        })
     }
 
     saveChanges() {
-        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign_id, {
+        const campaign = this.props.selectedCampaign;
+        const overlay = this.props.selectedOverlay;
+        const overlayImage = this.props.selectedOverlayImage;
+        overlay.image = overlayImage.id;
+        campaign.template = overlay;
+        ApiHelper.fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.id, {
             method:
                 'PATCH',
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({
-                name: this.props.selectedCampaign_name,
-                isActive: !!this.props.selectedCampaign_isActive,
-                template: this.props.selectedCampaign_template
-            })
-        }).then(res => {
-            if(res.status !== 200)
-                throw res;
-            return res.json();
+            body: JSON.stringify(campaign)
         }).then(json => {
-            sessionStorage.setItem('token', json.token);
-            return json;
-        })
-        .then(json => {
             window.alert("Changes Saved!")
             console.log(json);
         }).catch(err => {

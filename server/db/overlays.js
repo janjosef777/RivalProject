@@ -15,11 +15,16 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns, 
                 db = database;
         },
         getDetail(id, callback) {
-            db.template.get(id, (err, template) => {
-                if (err || !template) {
+            db.overlays.get(id, (err, overlay) => {
+                if (err || !overlay) {
                     callback(err, null);
+                } else if(!overlay.image) {
+                    callback(null, overlay);
                 } else {
-                    callback(err, err ? null : template)
+                    db.images.get(overlay.image, (err, image) => {
+                        overlay.image = image;
+                        callback(err, err || !image ? null : overlay);
+                    });
                 }
             });
         }

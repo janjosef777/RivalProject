@@ -5,8 +5,8 @@ const ApiHelper = {
                 switch(res.status) {
                     case 200: return res.json();
                     case 403:
-                        sessionStorage.clear();
-                        window.location.href = '/';
+                        window.location.href = '/logout';
+                        break;
                     default: throw res;
                 }
             }).then(json => {

@@ -1,20 +1,13 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Link} from 'react-router-dom';
 import EnsureLoggedIn from '../EnsureLoggedIn';
 import logo from '../images/Rivallogo.png';
 import styled from 'styled-components';
 import {
-    Collapse,
     Navbar,
-    NavbarToggler,
     NavbarBrand,
     Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
+    NavItem
 } from 'reactstrap';
 
 import '../App.css';

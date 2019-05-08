@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, Label } from 'reactstrap';
+import ApiHelper from '../../helpers/ApiHelper';
 import '../../styles/deleteCampaign.css';
 
 
@@ -14,22 +15,19 @@ class DeleteCampaign extends Component {
     }
     deleteCampaign() {
         console.log(this.state.deleteId)
-        fetch('api/campaigns/' + this.state.deleteId , {
+        ApiHelper.fetch('api/campaigns/' + this.state.deleteId , {
             method:
                 'DELETE',
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
+        }).then(res => {
+            console.log(res)
+            window.location.href ="/";
         })
-            .then(res => res.json())
-            .then(res => {
-                sessionStorage.setItem('token', res.token);
-                console.log(res.data)
-                window.location.href ="/";
-            })
-            .catch(err => {
-                console.error(err);
-            })
+        .catch(err => {
+            console.error(err);
+        })
     }
     
     

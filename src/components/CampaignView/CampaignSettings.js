@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import SingleCardState from './SingleCardState';
 import ReactTooltip from 'react-tooltip';
-
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
+import ApiHelper from '../../helpers/ApiHelper';
 
 
 const LinkButton = styled.a`
@@ -24,9 +19,7 @@ class CampaignSettings extends Component {
         super(props)
         this.state ={
             showHomepage: false,
-            campaignId: this.props.selectedCampaign_id,
-            showEstimatedParticipants: this.props.selectedCampaign_estimatedParticipants ? true : false,
-
+            showEstimatedParticipants: this.props.selectedCampaign.hasPrizes,
         }
  
         this.handleStatusChange = this.handleStatusChange.bind(this)
@@ -40,40 +33,37 @@ class CampaignSettings extends Component {
     }
 
     handleCampaignNameChange(e){
+        this.props.selectedCampaign.name = e.target.value;
         this.props.setState({
-           selectedCampaign_name: e.target.value
+           selectedCampaign: this.props.selectedCampaign
         })
     }
 
     handleEstimatedPatricipantsChange(e){
+        this.props.selectedCampaign.estimatedParticipants = e.target.value;
         this.props.setState({
-           selectedCampaign_estimatedParticipants: e.target.value
+           selectedCampaign: this.props.selectedCampaign
         })
     }
 
     handleStatusChange(e) {
         const target = e.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        var intValue = value ? 1 : 0;
+        const value = !!(target.type === 'checkbox' ? target.checked : target.value);
+        this.props.selectedCampaign.isActive = value;
         this.props.setState({
-            selectedCampaign_isActive: intValue
+            selectedCampaign: this.props.selectedCampaign
         })
-        console.log(intValue);
     }
     
     handlePrizeChange(e) {
         console.log(this.state.showEstimatedParticipants)
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        console.log(value)
-        if(value === true){
-            this.setState({showEstimatedParticipants: true})
-        }else {
-            this.setState({showEstimatedParticipants: false})
-            this.props.setState({selectedCampaign_estimatedParticipants: null})
-        }
-
-
+        console.log(value);
+        this.setState({showEstimatedParticipants: value});
+        this.props.selectedCampaign.hasPrizes = value;
+        this.props.selectedCampaign.estimatedParticipants = 0;
+        this.props.setState({selectedCampaign: this.props.selectedCampaign});
     }
 
     directToHome() {
@@ -91,16 +81,14 @@ class CampaignSettings extends Component {
 
 
     generateCard() {
-        fetch('http://localhost:4000/api/assignlink/camp/' + this.state.campaignId,{
+        ApiHelper.fetch('http://localhost:4000/api/assignlink/camp/' + this.state.campaignId,{
             method: "GET",
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
-            .then(res => res.json())
             .then(res => {
                 console.log(res);
-                sessionStorage.setItem('token', res.token);
                 res.redirect(res);
             })
             .catch(err => {
@@ -109,18 +97,9 @@ class CampaignSettings extends Component {
     }
 
     componentDidMount(){
-        if(this.props.selectedCampaign_estimatedParticipants != "" || 
-           this.props.selectedCampaign_estimatedParticipants != null
-            ){
-            this.setState({
-                showEstimatedParticipants: true
-                })
-        }else{
-            this.setState({
-                showEstimatedParticipants: false
-                })  
-        }
-
+        this.setState({
+            showEstimatedParticipants: this.props.selectedCampaign.hasPrizes
+        })
     }
 
     viewSummary = () => {
@@ -143,33 +122,33 @@ class CampaignSettings extends Component {
                             <div className="campaign-main-info">
                                 <div className="input-section">
                                     <h6>Campaign Name: </h6>
-                                    <input type="text"  value={this.props.selectedCampaign_name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
+                                    <input type="text"  value={this.props.selectedCampaign.name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
                                 </div>
 
-                            <div class="input-section onoffswitch" data-tip="Activate campaign">
+                            <div className="input-section onoffswitch" data-tip="Activate campaign">
                                 <input type="checkbox" 
                                        name="onoffswitch" 
-                                       class="onoffswitch-checkbox" 
+                                       className="onoffswitch-checkbox" 
                                        id="myonoffswitch" 
                                        onChange={this.handleStatusChange}
-                                       checked={this.props.selectedCampaign_isActive}/>
-                                <label class="onoffswitch-label" htmlFor="myonoffswitch">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
+                                       checked={this.props.selectedCampaign.isActive}/>
+                                <label className="onoffswitch-label" htmlFor="myonoffswitch">
+                                <span className="onoffswitch-inner"></span>
+                                <span className="onoffswitch-switch"></span>
                                 </label>
                             </div>
 
 
-                            <div class="input-section onoffswitch-hasPrize" data-tip="Activate Prize">
+                            <div className="input-section onoffswitch-hasPrize" data-tip="Activate Prize">
                                 <input type="checkbox" 
                                        name="onoffswitch-hasPrize" 
-                                       class="onoffswitch-checkbox-hasPrize" 
+                                       className="onoffswitch-checkbox-hasPrize" 
                                        id="myonoffswitch-hasPrize" 
                                        onChange={this.handlePrizeChange}
                                        checked={this.state.showEstimatedParticipants}/>
-                                <label class="onoffswitch-label-hasPrize" for="myonoffswitch-hasPrize">
-                                <span class="onoffswitch-inner-hasPrize"></span>
-                                <span class="onoffswitch-switch-hasPrize"></span>
+                                <label className="onoffswitch-label-hasPrize" htmlFor="myonoffswitch-hasPrize">
+                                <span className="onoffswitch-inner-hasPrize"></span>
+                                <span className="onoffswitch-switch-hasPrize"></span>
                                 </label>
                             </div>
 
@@ -177,7 +156,7 @@ class CampaignSettings extends Component {
                                 <div className="input-section estimatedParticipants">
                                     <h6>Estimated Participants: </h6>
                                     <input type="text" 
-                                        value={this.props.selectedCampaign_estimatedParticipants} 
+                                        value={this.props.selectedCampaign.estimatedParticipants} 
                                         onChange={this.handleEstimatedPatricipantsChange}
                                         placeholder="Estimated Participants..."
                                         />

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import ApiHelper from '../../helpers/ApiHelper';
 import '../../styles/createCampaign.css';
-
 
 class CreateCampaign extends Component {
 
@@ -29,7 +29,7 @@ class CreateCampaign extends Component {
         }
     }
     handleSubmit() {
-        fetch('http://localhost:4000/api/campaigns/', {
+        ApiHelper.fetch('http://localhost:4000/api/campaigns/', {
             method:
                 'POST',
             headers: {
@@ -42,12 +42,9 @@ class CreateCampaign extends Component {
                 'estimatedParticipants': this.state.estimatedParticipants
             })
         })
-
-        .then(res => res.json())
         .then(res => {
-            sessionStorage.setItem('token', res.token);
             this.setState({
-                id: res.data.id,
+                id: res.id,
                 redirect: true
             })
         })
