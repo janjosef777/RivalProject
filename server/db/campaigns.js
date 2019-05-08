@@ -52,6 +52,27 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns, 
                 });
             }
         })
+    },
+    deleteDetail(id, callback) {
+        db.cardResults.deleteDetailAll(id, err => {
+            if(err) callback(err, null);
+            else {
+                db.campaigns.get(id, (err, campaign) => {
+                    if(err || !campaign) callback(err, null);
+                    else {
+                        db.campaigns.delete(id, (err, res) => {
+                            if(err || !res) {
+                                callback(err, null);
+                            } else if(campaign.template) {
+                                db.overlays.delete(campaign.template, callback);
+                            } else {
+                                callback(null, res);
+                            }
+                        })
+                    }
+                })
+            }
+        })
     }
 });
 

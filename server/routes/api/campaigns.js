@@ -85,7 +85,7 @@ module.exports = {
             return handleErr(null, res, 404);
         db.connect(err => {
             if(err) return handleErr(err, res, 500);
-            db.campaigns.delete(id, (err, success) => {
+            db.campaigns.deleteDetail(id, (err, success) => {
                 if (err)
                     return handleErr(err, res, 500);
                 res.json({
