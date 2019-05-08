@@ -43,7 +43,13 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns, 
                 callback(err, null);
             else {
                 entry.template = entry.template.id;
-                db.campaigns.update(entry, callback);
+                db.campaigns.update(entry, (err, res) => {
+                    if(err || !res)
+                        callback(err, null);
+                    else {
+                        db.cardResults.replaceDetailAll(entry.id, entry.cardResults, callback);
+                    }
+                });
             }
         })
     }

@@ -32,7 +32,8 @@
     "reactstrap": "^8.0.0",
     "sharp": "^0.22.1",
     "styled-components": "^4.2.0",
-    "superagent": "^5.0.3"
+    "superagent": "^5.0.3",
+    "url-join": "^4.0.0"
   },
   "scripts": {
     "dev": "concurrently \"nodemon ./server/server.js\" \"SET PORT=3100 && react-scripts start\"",

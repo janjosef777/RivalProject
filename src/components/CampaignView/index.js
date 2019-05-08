@@ -61,13 +61,15 @@ class CampaignView extends Component {
             const campaign = res;
             const overlay = campaign.template;
             const overlayImage = overlay.image || {};
+            const cardResults = campaign.cardResults;
             delete overlay.image;
             delete campaign.template;
 
             this.setState({
                 selectedCampaign: campaign,
                 selectedOverlay: overlay,
-                selectedOverlayImage: overlayImage
+                selectedOverlayImage: overlayImage,
+                cardResults: cardResults
             })
         })
         .catch(err => {
@@ -76,11 +78,20 @@ class CampaignView extends Component {
     }
 
     saveChanges() {
-        const campaign = this.props.selectedCampaign;
-        const overlay = this.props.selectedOverlay;
-        const overlayImage = this.props.selectedOverlayImage;
+        const campaign = Object.assign({}, this.props.selectedCampaign);
+        const overlay = Object.assign({}, this.props.selectedOverlay);
+        const overlayImage = Object.assign({}, this.props.selectedOverlayImage);
+        const cardResults = this.props.cardResults.map(cardRes => {
+            let copy = Object.assign({}, cardRes);
+            copy.image = cardRes.image.id;
+            return copy;
+        });
         overlay.image = overlayImage.id;
         campaign.template = overlay;
+        campaign.cardResults = cardResults;
+
+        console.log(campaign);
+
         ApiHelper.fetch('api/campaigns/' + this.props.selectedCampaign.id, {
             method:
                 'PATCH',

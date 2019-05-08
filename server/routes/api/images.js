@@ -3,9 +3,9 @@ const fnHelper = require('../../io/filename-helper');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
 const db = require('../../db');
-const urls = require('../../urls');
 const path = require('path');
-const uploadUrl = 'uploads/'; // Start with and end with a slash
+const urljoin = require('url-join');
+const uploadUrl = 'uploads/';
 
 module.exports = {
     // get
@@ -78,7 +78,7 @@ module.exports = {
                             db.images.add(jsonImage, (err, id) => {
                                 if(err)
                                     return handleErr(err, res, 500);
-                                jsonImage.path = urls.baseUrl + uploadUrl + filename;
+                                jsonImage.path = urljoin(process.env.BASE_URL, uploadUrl, filename);
                                 jsonImage.id = id
 
                                 // Success

@@ -111,7 +111,7 @@ class SingleCardState extends React.Component {
                 this.props.cardResults[this.props.selectedIndex].title : '';
             this.imgAlt = 'card result image'
             this.imgSrc = this.props.cardResults[this.props.selectedIndex] ?
-                this.props.cardResults[this.props.selectedIndex].image : '';
+                this.props.cardResults[this.props.selectedIndex].image.path : '';
         } else {
             this.titleVal = this.props.selectedOverlay.title;
             this.imgSrc = this.props.imgSrc;

@@ -14,7 +14,7 @@ class SetPrize extends Component {
         this.state = {
             showForm: false,
             name: '',
-            qty: null
+            quantity: null
         }
 
         this.showForm = this.showForm.bind(this);
@@ -50,7 +50,7 @@ class SetPrize extends Component {
         var prize = this.props.cardResults[this.props.idx].prize;
         console.log(prize);
         if (prize) {
-            this.setState({name: prize.name, qty: prize.qty})
+            this.setState({name: prize.name, quantity: prize.quantity})
         }
     };
 
@@ -60,7 +60,7 @@ class SetPrize extends Component {
 
         var prize = {
             name: this.state.name,
-            qty: this.state.qty
+            quantity: this.state.quantity
         }
 
         var modifiedCardResult = this.props.cardResults[idx];
@@ -91,8 +91,8 @@ class SetPrize extends Component {
                             onChange={this.inputUpdate}
                         /><br />
                         <>Quantity: </><Input
-                            id='qty'
-                            value={this.state.qty}
+                            id='quantity'
+                            value={this.state.quantity}
                             type='number'
                             min='0'
                             onChange={this.inputUpdate}
@@ -106,7 +106,7 @@ class SetPrize extends Component {
                     return (
                         <div>
                             <>Prize Name: </><>{this.props.cardResults[this.props.idx].prize.name}</><br />
-                            <>Quantity: </><>{this.props.cardResults[this.props.idx].prize.qty}</><br />
+                            <>Quantity: </><>{this.props.cardResults[this.props.idx].prize.quantity}</><br />
                             <Button onClick={this.showForm} style={{ backgroundColor: '#E8542A', margin: '5px' }}>Edit Prize</Button>
                             <Button color='danger' onClick={this.removePrize} style={{ margin: '5px' }}>Remove Prize</Button>
                         </div>

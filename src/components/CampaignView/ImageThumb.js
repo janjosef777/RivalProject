@@ -14,7 +14,7 @@ class ImageThumb extends Component {
         } else if(this.props.activeTab === '2'){
             var newArray = this.props.cardResults;
             newArray.push({
-                image: e.target.src,
+                image: { path: e.target.src, id: e.target.alt },
                 title: '',
                 prize: null
             });

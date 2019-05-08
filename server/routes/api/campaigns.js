@@ -37,7 +37,6 @@ module.exports = {
     post: (req, res, next) => {
         const campaign = req.body;
         campaign.createdBy = res.jwtUser;
-        console.log(campaign);
         db.connect(err => {
             if(err) return handleErr(err, res, 500);
             db.overlays.add({title: 'Thanks for participating!'}, (err, overlayId) => {
@@ -49,22 +48,11 @@ module.exports = {
                     const data = {
                         id: id
                     };
-    
-                    const cardResults = req.body.cardResults;
-    
-                    if (cardResults && !Array.isArray(cardResults))
-                        return handleErr(null, res, 400, "Card results needs to be an array");
-    
-                    processCardResults(id, cardResults, cardResultsData => {
-                        if (cardResultsData)
-                            data.cardResults = cardResultsData;
-    
-                        res.json({
-                            token: res.jwtToken,
-                            data: data
-                        });
-                        db.disconnect();
-                    })
+                    res.json({
+                        token: res.jwtToken,
+                        data: data
+                    });
+                    db.disconnect();
                 });
             });
         });
@@ -83,16 +71,6 @@ module.exports = {
                 const data = {
                     id: id
                 };
-
-                // const cardResults = req.body.cardResults;
-
-                // if (cardResults && !Array.isArray(cardResults))
-                //     return handleErr(null, res, 400, "Card results needs to be an array");
-
-                // processCardResults(id, cardResults,  'update', cardResultsData => {
-
-                //     if (cardResultsData)
-                //         data.cardResults = cardResultsData;
                 res.json({
                     token: res.jwtToken,
                     data: data
@@ -125,35 +103,4 @@ function handleErr(err, res, status, message) {
         console.log(err);
     if (res)
         res.status(status).send(message);
-}
-
-function processCardResults(campaignId, cardResults, callback) {
-
-    if (!cardResults)
-        return callback(null);
-
-    const data = {
-        processed: 0,
-        successes: 0
-    };
-
-    cardResults.forEach(item => {
-        if (typeof item !== 'object') {
-            // Invalid
-            next(null, false);
-        } else {
-            item.campaign = campaignId;
-            db.cardResults.add(item, next)
-        }
-    });
-
-    function next(err, result) {
-        if (err)
-            console.log(err);
-        data.processed++;
-        data.successes += !err && !!result;
-        if (data.processed >= cardResults.length) {
-            callback(data);
-        }
-    }
 }
