@@ -1,10 +1,12 @@
+const urljoin = require('url-join');
+
 let db = null;
 
 const tableName = 'card_result';
 const columns = ['title', 'image', 'campaign', 'prize'];
 
 const queries = {
-    getDetailAll: 'SELECT r.*, p.name, p.value, p.quantity, p.id as prize_id FROM card_result r LEFT JOIN prize p ON prize=p.id WHERE campaign=?',
+    getDetailAll: 'SELECT r.*, p.name, p.value, p.quantity, p.id as prize_id, i.filename, i.width, i.height, i.id as image_id FROM card_result r LEFT JOIN prize p ON prize=p.id LEFT JOIN image i ON image=i.id WHERE campaign=?',
     deleteAll: 'DELETE FROM card_result WHERE campaign=?'
 };
 
@@ -26,9 +28,23 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns),
                         quantity: cardResult.quantity
                     };
                 }
+                if(cardResult.image) {
+                    cardResult.image = {
+                        id: cardResult.image_id,
+                        filename: cardResult.filename,
+                        path: urljoin(process.env.BASE_URL, 'uploads', filename),
+                        width: cardResult.width,
+                        height: cardResult.height
+                    };
+                }
+                delete cardResult.prize_id;
                 delete cardResult.name;
                 delete cardResult.value;
                 delete cardResult.quantity;
+                delete cardResult.image_id;
+                delete cardResult.filename;
+                delete cardResult.width;
+                delete cardResult.height;
                 return cardResult;
             })
             callback(err, res);
