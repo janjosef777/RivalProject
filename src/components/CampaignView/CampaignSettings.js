@@ -43,7 +43,6 @@ class CampaignSettings extends Component {
         this.props.setState({
            selectedCampaign: this.props.selectedCampaign
         })
-        console.log(this.props.selectedCampaign);
     }
 
     handleStatusChange(e) {
@@ -92,7 +91,7 @@ class CampaignSettings extends Component {
                 console.error(err);
             })
     }
-    
+
     viewSummary = () => {
         this.props.setState({ viewSummary: true })
     }
