@@ -38,7 +38,7 @@ class CampaignCardResults extends Component {
                                 X
                             </button>
                             <ImgThumbImg 
-                                src={cardresult.image} 
+                                src={cardresult.image.path} 
                                 onClick={(e) => {this.setSelectedIndex(idx)}}
                                 alt="Selected Prize Image" 
                             />

@@ -60,6 +60,10 @@ MySQL
 
 ![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/RivalProjectUseCase.jpg)
 
+# Updated Wireframes
+
+[https://xd.adobe.com/view/d5faf8e5-5579-4314-76cf-ceef0fc19126-a3cb/](https://xd.adobe.com/view/d5faf8e5-5579-4314-76cf-ceef0fc19126-a3cb/)
+
 # Wireframe
 
 ![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture.PNG)
