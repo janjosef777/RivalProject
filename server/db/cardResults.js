@@ -50,20 +50,45 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns),
             callback(err, res);
         });
     },
-    getDetail(id, callback) {
-        db.cardResults.get(id, (err, cardResult) => {
-            if(err || !cardResult) {
+    getRandom(campaignId, callback) {
+        db.campaigns.getDetail(campaignId, (err, campaign) => {
+            if(err || !campaign)
                 callback(err, null);
-            } else if(cardResult.prize) {
-                db.prizes.get(cardResult.prize, (err, prize) => {
-                    cardResult.prize = prize;
-                    callback(err, err || !prize ? null : cardResult);
+            else {
+                const est = campaign.estimatedParticipants || Infinity;
+                const prizeRes = [];
+                const nonPrizeRes = [];
+                let prizeCount = 0;
+                campaign.cardResults.forEach(res => {
+                    if(res.prize) {
+                        prizeRes.push(res);
+                        prizeCount += res.prize.quantity;
+                    } else {
+                        nonPrizeRes.push(res);
+                    }
                 })
-            } else {
-                cardResult.prize = null;
-                callback(null, cardResult);
+                const win = prizeCount/est > Math.random();
+                if(win) { // Win
+
+                    let prizeNo = (prizeCount * Math.random()) | 0;
+                    for(let i = 0; i < prizeRes.length; i++) {
+                        prizeNo -= prizeRes[i].prize.quantity;
+                        if(prizeNo < 0) {
+                            callback(null, prizeRes[i]);
+                            break;
+                        }
+                    }
+                } else { // Lose
+
+                    if(!nonPrizeRes.length)
+                        callback('No non-prizes exist!', null);
+                    else {
+                        const res = nonPrizeRes[(nonPrizeRes.length * Math.random()) | 0];
+                        callback(null, res);
+                    }
+                }
             }
-        })
+        });
     },
     addDetail(entry, callback) {
         if(entry.prize) {
