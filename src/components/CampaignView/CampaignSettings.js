@@ -5,8 +5,7 @@ import ReactTooltip from 'react-tooltip';
 import ApiHelper from '../../helpers/ApiHelper';
 
 
-const LinkButton = styled.a`
-padding: 10px;   
+const LinkButton = styled.a` 
 `;
 
 class CampaignSettings extends Component {

@@ -105,6 +105,7 @@ h4{
 
 a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
     color: #222;
+    
 }
 
 .nav-item{
@@ -316,6 +317,7 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover{
   background: #fff;
   border: none;
   margin: 0;
+  padding: 10px;
 }
 
 .fSwTKQ, .dbhmSH{
