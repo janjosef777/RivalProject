@@ -82,7 +82,7 @@ class CampaignView extends Component {
         const overlayImage = this.props.selectedOverlayImage;
         overlay.image = overlayImage;
         campaign.template = overlay;
-        fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.id, {
+        ApiHelper.fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.id, {
             method:
                 'PATCH',
             headers: {
@@ -90,15 +90,7 @@ class CampaignView extends Component {
                 "Content-type": "application/json"
             },
             body: JSON.stringify(campaign)
-        }).then(res => {
-            if(res.status !== 200)
-                throw res;
-            return res.json();
         }).then(json => {
-            sessionStorage.setItem('token', json.token);
-            return json;
-        })
-        .then(json => {
             window.alert("Changes Saved!")
             console.log(json);
         }).catch(err => {

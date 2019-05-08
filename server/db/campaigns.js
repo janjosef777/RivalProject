@@ -54,7 +54,7 @@ function mapRead(campaign) {
         id: campaign.id,
         name: campaign.name,
         template: campaign.template,
-        isActive: campaign.is_active,
+        isActive: !!campaign.is_active,
         createdBy: campaign.created_by,
         createdAt: campaign.created_at,
         estimatedParticipants: campaign.estimated_participants,

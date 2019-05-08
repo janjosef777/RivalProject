@@ -43,8 +43,8 @@ const db = {
                         callback(err);
                     else if(err)
                         console.log(err);
-                    connection = null;
                 });
+                connection = null;
             }
         }
     },
