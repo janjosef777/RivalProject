@@ -4,7 +4,8 @@ const tableName = 'card_result';
 const columns = ['title', 'image', 'campaign', 'prize'];
 
 const queries = {
-    getDetailAll: 'SELECT r.*, p.name, p.value, p.quantity FROM card_result r LEFT JOIN prize p ON prize=p.id WHERE campaign=?'
+    getDetailAll: 'SELECT r.*, p.name, p.value, p.quantity, p.id as prize_id FROM card_result r LEFT JOIN prize p ON prize=p.id WHERE campaign=?',
+    deleteAll: 'DELETE FROM card_result WHERE campaign=?'
 };
 
 module.exports = Object.assign(require('./crudBase').create(tableName, columns), {
@@ -19,6 +20,7 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns),
             res = res.map(cardResult => {
                 if(cardResult.prize) {
                     cardResult.prize = {
+                        id: cardResult.prize_id,
                         name: cardResult.name,
                         value: cardResult.value,
                         quantity: cardResult.quantity
@@ -46,5 +48,72 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns),
                 callback(null, cardResult);
             }
         })
+    },
+    addDetail(entry, callback) {
+        if(entry.prize) {
+            db.prizes.add(entry.prize, addResult);
+        } else {
+            addResult(null, 0);
+        }
+        function addResult(err, prizeId) {
+            if(err) callback(err, null);
+            else {
+                if(prizeId)
+                    entry.prize = prizeId;
+                db.cardResults.add(entry, callback);
+            }
+        }
+    },
+    addDetailAll(campaignId, entries, callback) {
+        let count = 0;
+        let fails = 0;
+        let firstErr = null;
+        entries.forEach(cardRes => {
+            cardRes.campaign = campaignId;
+            db.cardResults.addDetail(cardRes, multiCallback);
+        });
+        function multiCallback(err) {
+            count++
+            if(err) {
+                fails++
+                if(!firstErr)
+                    firstErr = err;
+            }
+            if(count >= entries.length) {
+                callback(firstErr, {
+                    count: count,
+                    fails: fails,
+                    successes: count - fails
+                });
+            }
+        }
+    },
+    deleteDetailAll(campaignId, callback) {
+        db.cardResults.getDetailAll(campaignId, (err, results) => {
+            if(err || !results) callback(err, null);
+            else {
+                prizeIds = [];
+                results.forEach(res => {
+                    if(res.prize)
+                        prizeIds.push(res.prize.id);
+                });
+                db.onReady = () => db.connection.query(queries.deleteAll, campaignId, (err, res) => {
+                    if(err) callback(err, null);
+                    else {
+                        db.prizes.deleteAll(prizeIds, err => {
+                            callback(err, err ? null : res.affectedRows);
+                        });
+                    }
+                });
+            }
+        });
+    },
+    replaceDetailAll(campaignId, entries, callback) {
+        db.cardResults.deleteDetailAll(campaignId, err => {
+            if(err) callback(err, null);
+            else {
+                db.cardResults.addDetailAll(campaignId, entries, callback);
+            }
+        });
     }
 });
