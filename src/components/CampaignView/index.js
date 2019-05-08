@@ -61,13 +61,15 @@ class CampaignView extends Component {
             const campaign = res;
             const overlay = campaign.template;
             const overlayImage = overlay.image || {};
+            const cardResults = campaign.cardResults;
             delete overlay.image;
             delete campaign.template;
 
             this.setState({
                 selectedCampaign: campaign,
                 selectedOverlay: overlay,
-                selectedOverlayImage: overlayImage
+                selectedOverlayImage: overlayImage,
+                cardResults: cardResults
             })
         })
         .catch(err => {
