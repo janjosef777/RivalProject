@@ -118,7 +118,7 @@ module.exports = {
                 // Delete image from db
                 db.images.delete(id, (err, success) => {
                     if (err)
-                        return handleErr(err, res, 500);
+                        return handleErr(err, res, 409, 'Image in use!');
 
                     // Delete image file
                     const filepath = path.join(__dirname, '../../..', uploadUrl, image.filename);
