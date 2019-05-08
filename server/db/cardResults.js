@@ -32,7 +32,7 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns),
                     cardResult.image = {
                         id: cardResult.image_id,
                         filename: cardResult.filename,
-                        path: urljoin(process.env.BASE_URL, 'uploads', filename),
+                        path: urljoin(process.env.BASE_URL, 'uploads/', cardResult.filename),
                         width: cardResult.width,
                         height: cardResult.height
                     };
