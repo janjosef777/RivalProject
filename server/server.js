@@ -23,7 +23,7 @@ if(env == 'development') {
         res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
         res.setHeader("Access-Control-Allow-Credentials", "true")
         next();
-})}
+})};
 
 // Set static folder
 app.use(express.static(path.join(__dirname, '../build')));
@@ -33,6 +33,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", routes);
+
+// wildcard to send react client
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
+
 
 app.listen(port, function () {
     console.log("Server started on port " + port)

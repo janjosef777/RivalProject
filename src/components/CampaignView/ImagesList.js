@@ -19,7 +19,7 @@ class ImagesList extends Component {
     }
 
     fetchImages() {
-        ApiHelper.fetch('http://localhost:4000/api/images',{
+        ApiHelper.fetch('api/images',{
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
@@ -44,17 +44,24 @@ class ImagesList extends Component {
         }
     }
 
-    deleteImages(imageId) {
-        ApiHelper.fetch('http://localhost:4000/api/images/' + imageId ,{
+    deleteImages(imageId, idx) {
+
+        ApiHelper.fetch('api/images/' + imageId, {
             method: 'DELETE',
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
             .then(res => {
-                this.fetchImages();
-            })
-            .catch(err => {
+                    console.log(res)
+                    let images = this.props.images;
+                    images.splice(idx, 1);
+                    this.props.setState({ images: images });
+            }).catch(err => {
+                if(err.status === 409) {
+                    alert("unable to delete image: " + imageId);
+                    this.fetchImages();
+                }
                 console.error(err);
             })
     }

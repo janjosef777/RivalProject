@@ -50,7 +50,7 @@ class CampaignView extends Component {
 
 
     loadCampaign() {
-        ApiHelper.fetch('http://localhost:4000/api/campaigns/' + this.state.selectedCampaign.id, {
+        ApiHelper.fetch('api/campaigns/' + this.state.selectedCampaign.id, {
             method:
                 'GET',
             headers: {
@@ -81,7 +81,7 @@ class CampaignView extends Component {
         const overlayImage = this.props.selectedOverlayImage;
         overlay.image = overlayImage.id;
         campaign.template = overlay;
-        ApiHelper.fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.id, {
+        ApiHelper.fetch('api/campaigns/' + this.props.selectedCampaign.id, {
             method:
                 'PATCH',
             headers: {
