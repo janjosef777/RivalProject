@@ -42,8 +42,8 @@ class CampaignView extends Component {
             selectedCampaign: {
                 id: this.props.location.state ? this.props.location.state.selectedCampaignId : 0
             },
-            selectedOverlay: null,
-            selectedOverlayImage: null
+            selectedOverlay: {},
+            selectedOverlayImage: {}
         }
         this.setState = this.setState.bind(this);
         // this.saveChanges = this.saveChanges.bind(this);
@@ -61,7 +61,7 @@ class CampaignView extends Component {
         }).then(res => {
             const campaign = res;
             const overlay = campaign.template;
-            const overlayImage = overlay.image;
+            const overlayImage = overlay.image || {};
             delete overlay.image;
             delete campaign.template;
 
@@ -80,7 +80,7 @@ class CampaignView extends Component {
         const campaign = this.props.selectedCampaign;
         const overlay = this.props.selectedOverlay;
         const overlayImage = this.props.selectedOverlayImage;
-        overlay.image = overlayImage;
+        overlay.image = overlayImage.id;
         campaign.template = overlay;
         ApiHelper.fetch('http://localhost:4000/api/campaigns/' + this.props.selectedCampaign.id, {
             method:

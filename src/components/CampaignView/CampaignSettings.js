@@ -24,9 +24,7 @@ class CampaignSettings extends Component {
         super(props)
         this.state ={
             showHomepage: false,
-            campaignId: this.props.selectedCampaign_id,
-            showEstimatedParticipants: this.props.selectedCampaign_estimatedParticipants ? true : false,
-
+            showEstimatedParticipants: this.props.selectedCampaign.hasPrizes,
         }
  
         this.handleStatusChange = this.handleStatusChange.bind(this)
@@ -40,40 +38,37 @@ class CampaignSettings extends Component {
     }
 
     handleCampaignNameChange(e){
+        this.props.selectedCampaign.name = e.target.value;
         this.props.setState({
-           selectedCampaign_name: e.target.value
+           selectedCampaign: this.props.selectedCampaign
         })
     }
 
     handleEstimatedPatricipantsChange(e){
+        this.props.selectedCampaign.estimatedParticipants = e.target.value;
         this.props.setState({
-           selectedCampaign_estimatedParticipants: e.target.value
+           selectedCampaign: this.props.selectedCampaign
         })
     }
 
     handleStatusChange(e) {
         const target = e.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        var intValue = value ? 1 : 0;
+        const value = !!(target.type === 'checkbox' ? target.checked : target.value);
+        this.props.selectedCampaign.isActive = value;
         this.props.setState({
-            selectedCampaign_isActive: intValue
+            selectedCampaign: this.props.selectedCampaign
         })
-        console.log(intValue);
     }
     
     handlePrizeChange(e) {
         console.log(this.state.showEstimatedParticipants)
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        console.log(value)
-        if(value === true){
-            this.setState({showEstimatedParticipants: true})
-        }else {
-            this.setState({showEstimatedParticipants: false})
-            this.props.setState({selectedCampaign_estimatedParticipants: null})
-        }
-
-
+        console.log(value);
+        this.setState({showEstimatedParticipants: value});
+        this.props.selectedCampaign.hasPrizes = value;
+        this.props.selectedCampaign.estimatedParticipants = 0;
+        this.props.setState({selectedCampaign: this.props.selectedCampaign});
     }
 
     directToHome() {
@@ -109,18 +104,9 @@ class CampaignSettings extends Component {
     }
 
     componentDidMount(){
-        if(this.props.selectedCampaign_estimatedParticipants != "" || 
-           this.props.selectedCampaign_estimatedParticipants != null
-            ){
-            this.setState({
-                showEstimatedParticipants: true
-                })
-        }else{
-            this.setState({
-                showEstimatedParticipants: false
-                })  
-        }
-
+        this.setState({
+            showEstimatedParticipants: this.props.selectedCampaign.hasPrizes
+        })
     }
 
     viewSummary = () => {
@@ -143,7 +129,7 @@ class CampaignSettings extends Component {
                             <div className="campaign-main-info">
                                 <div className="input-section">
                                     <h6>Campaign Name: </h6>
-                                    <input type="text"  value={this.props.selectedCampaign_name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
+                                    <input type="text"  value={this.props.selectedCampaign.name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
                                 </div>
 
                             <div class="input-section onoffswitch" data-tip="Activate campaign">
@@ -152,7 +138,7 @@ class CampaignSettings extends Component {
                                        class="onoffswitch-checkbox" 
                                        id="myonoffswitch" 
                                        onChange={this.handleStatusChange}
-                                       checked={this.props.selectedCampaign_isActive}/>
+                                       checked={this.props.selectedCampaign.isActive}/>
                                 <label class="onoffswitch-label" htmlFor="myonoffswitch">
                                 <span class="onoffswitch-inner"></span>
                                 <span class="onoffswitch-switch"></span>
@@ -177,7 +163,7 @@ class CampaignSettings extends Component {
                                 <div className="input-section estimatedParticipants">
                                     <h6>Estimated Participants: </h6>
                                     <input type="text" 
-                                        value={this.props.selectedCampaign_estimatedParticipants} 
+                                        value={this.props.selectedCampaign.estimatedParticipants} 
                                         onChange={this.handleEstimatedPatricipantsChange}
                                         placeholder="Estimated Participants..."
                                         />
