@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Link} from 'react-router-dom';
+import { BrowserRouter, Link} from 'react-router-dom';
 import EnsureLoggedIn from '../EnsureLoggedIn';
 import logo from '../images/Rivallogo.png';
 import styled from 'styled-components';
@@ -35,7 +35,7 @@ const NavBarComponent = () => (
                     <LinkButton className="primary-button" href="/login">Login</LinkButton>
                 </EnsureLoggedIn>
                 <EnsureLoggedIn>
-                    <NavItem className="SingleLink"><Link to="/logout">LogOut</Link></NavItem>
+                    <a className="SingleLink" href="/logout">Log Out</a>
                 </EnsureLoggedIn>
             </Nav>
         </Navbar>
