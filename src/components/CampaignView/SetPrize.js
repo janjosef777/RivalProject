@@ -14,7 +14,7 @@ class SetPrize extends Component {
         this.state = {
             showForm: false,
             name: '',
-            quantity: null
+            quantity: 0
         }
 
         this.showForm = this.showForm.bind(this);

@@ -42,7 +42,7 @@ class Summary extends Component {
                                 X
                             </button>
                             <ImgThumbImg
-                                src={cardResult.image}
+                                src={cardResult.image.path}
                                 onClick={(e) => { this.setSelectedIndex(idx) }}
                                 alt="Selected Prize Image"
                             />
