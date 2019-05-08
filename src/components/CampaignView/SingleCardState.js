@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Input} from 'reactstrap';
+import overlayInstructions from '../../images/overlay-fixed.jpg'
+import resultInstructions from '../../images/cardresult-fixed.jpg'
 
 
 const CardFrame = styled.div`
@@ -103,15 +105,15 @@ class SingleCardState extends React.Component {
     render() {
         if (this.props.overlay) {
             this.titleVal = this.props.selectedOverlay.title;
-            this.imgSrc = this.props.selectedOverlayImage.path;
+            this.imgSrc = this.props.selectedOverlayImage.path || overlayInstructions;
             this.imgAlt = 'card overlay image';
         } else if (this.props.index) {
             // this is the case for viewing card results by index
             this.titleVal = this.props.cardResults[this.props.selectedIndex] ?
-                this.props.cardResults[this.props.selectedIndex].title : '';
+            this.props.cardResults[this.props.selectedIndex].title : '';
             this.imgAlt = 'card result image'
             this.imgSrc = this.props.cardResults[this.props.selectedIndex] ?
-                this.props.cardResults[this.props.selectedIndex].image.path : '';
+                this.props.cardResults[this.props.selectedIndex].image : resultInstructions;
         } else {
             this.titleVal = this.props.selectedOverlay.title;
             this.imgSrc = this.props.imgSrc;
