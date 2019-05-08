@@ -98,36 +98,40 @@ module.exports = {
     },
     // delete
     delete: (req, res, next) => {
+
+
+
         const id = +req.params.id;
         console.log(req.params.id);
-        if(!(id > 0))
+        if (!(id > 0))
             return handleErr(null, res, 404);
 
         // Get image details
         db.connect(err => {
-            if(err) return handleErr(err, res, 500);
+            if (err) return handleErr(err, res, 500);
             db.images.get(id, (err, image) => {
-                if(err)
+                if (err)
                     return handleErr(err, res, 500);
-                if(!image)
+                if (!image)
                     return handleErr(null, res, 404);
 
-                // Delete image file
-                fs.unlink(uploadUrl + image.filename, err => {
-                    if(err)
+                // Delete image from db
+                db.images.delete(id, (err, success) => {
+                    if (err)
                         return handleErr(err, res, 500);
-                    
-                    // Delete image from db
-                    db.images.delete(id, (err, success) => {
-                        if(err)
+
+                    // Delete image file
+                    const filepath = path.join(__dirname, '../../..', uploadUrl, image.filename);
+                    fs.unlink(filepath, err => {
+                        if (err)
                             return handleErr(err, res, 500);
-                        res.json({
-                            token: res.jwtToken,
-                            data: { id: id, deleted: success }
-                        });
-                        db.disconnect();
+                    })
+                    res.json({
+                        token: res.jwtToken,
+                        data: { id: id, deleted: success }
                     });
-                })
+                    db.disconnect();
+                });
             });
         });
     }
