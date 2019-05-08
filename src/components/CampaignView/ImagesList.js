@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import Upload from '../../upload/Upload';
 import '../../styles/campaignView.css';
 import ImageThumb from './ImageThumb';
-import ReactTooltip from 'react-tooltip';
-
+import ApiHelper from '../../helpers/ApiHelper';
 
 class ImagesList extends Component {
     constructor(props) {
@@ -20,16 +19,14 @@ class ImagesList extends Component {
     }
 
     fetchImages() {
-        fetch('http://localhost:4000/api/images',{
+        ApiHelper.fetch('http://localhost:4000/api/images',{
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
-            .then(res => res.json())
             .then(res => {
                 console.log(res);
-                sessionStorage.setItem('token', res.token);
-                this.images = res.data;
+                this.images = res;
                 this.props.setState({ images: this.images })
             })
             .catch(err => {
@@ -48,17 +45,14 @@ class ImagesList extends Component {
     }
 
     deleteImages(imageId) {
-        fetch('http://localhost:4000/api/images/' + imageId ,{
+        ApiHelper.fetch('http://localhost:4000/api/images/' + imageId ,{
             method: 'DELETE',
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
-            .then(res => res.json())
             .then(res => {
-                sessionStorage.setItem('token', res.token)
                 this.fetchImages();
-
             })
             .catch(err => {
                 console.error(err);

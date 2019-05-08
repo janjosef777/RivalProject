@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 //import Upload from '../upload/Upload';
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
 import '../../styles/campaignView.css';
 import AssetsView from './AssetsView';
 import TabView from './TabView';
@@ -40,7 +36,10 @@ class CampaignView extends Component {
             viewSummary: false,
 
             selectedCampaign: {
-                id: this.props.location.state ? this.props.location.state.selectedCampaignId : 0
+                id: this.props.location.state ? this.props.location.state.selectedCampaignId : 0,
+                name: "",
+                isActive: false,
+                hasPrizes: false
             },
             selectedOverlay: {},
             selectedOverlayImage: {}

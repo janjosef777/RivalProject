@@ -99,9 +99,6 @@ class EditableTitle extends React.Component {
 }
 
 class SingleCardState extends React.Component {
-    constructor(props) {
-        super(props)       
-    }
 
     render() {
         if (this.props.overlay) {

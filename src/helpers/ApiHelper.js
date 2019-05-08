@@ -7,6 +7,7 @@ const ApiHelper = {
                     case 403:
                         sessionStorage.clear();
                         window.location.href = '/';
+                        break;
                     default: throw res;
                 }
             }).then(json => {

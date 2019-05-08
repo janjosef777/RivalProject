@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import SingleCardState from './SingleCardState';
 import ReactTooltip from 'react-tooltip';
-
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Row, Col
-} from 'reactstrap';
+import ApiHelper from '../../helpers/ApiHelper';
 
 
 const LinkButton = styled.a`
@@ -86,16 +81,14 @@ class CampaignSettings extends Component {
 
 
     generateCard() {
-        fetch('http://localhost:4000/api/assignlink/camp/' + this.state.campaignId,{
+        ApiHelper.fetch('http://localhost:4000/api/assignlink/camp/' + this.state.campaignId,{
             method: "GET",
             headers: { 
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         })
-            .then(res => res.json())
             .then(res => {
                 console.log(res);
-                sessionStorage.setItem('token', res.token);
                 res.redirect(res);
             })
             .catch(err => {
@@ -132,30 +125,30 @@ class CampaignSettings extends Component {
                                     <input type="text"  value={this.props.selectedCampaign.name} onChange={this.handleCampaignNameChange} placeholder="Campaign Name..."/>
                                 </div>
 
-                            <div class="input-section onoffswitch" data-tip="Activate campaign">
+                            <div className="input-section onoffswitch" data-tip="Activate campaign">
                                 <input type="checkbox" 
                                        name="onoffswitch" 
-                                       class="onoffswitch-checkbox" 
+                                       className="onoffswitch-checkbox" 
                                        id="myonoffswitch" 
                                        onChange={this.handleStatusChange}
                                        checked={this.props.selectedCampaign.isActive}/>
-                                <label class="onoffswitch-label" htmlFor="myonoffswitch">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
+                                <label className="onoffswitch-label" htmlFor="myonoffswitch">
+                                <span className="onoffswitch-inner"></span>
+                                <span className="onoffswitch-switch"></span>
                                 </label>
                             </div>
 
 
-                            <div class="input-section onoffswitch-hasPrize" data-tip="Activate Prize">
+                            <div className="input-section onoffswitch-hasPrize" data-tip="Activate Prize">
                                 <input type="checkbox" 
                                        name="onoffswitch-hasPrize" 
-                                       class="onoffswitch-checkbox-hasPrize" 
+                                       className="onoffswitch-checkbox-hasPrize" 
                                        id="myonoffswitch-hasPrize" 
                                        onChange={this.handlePrizeChange}
                                        checked={this.state.showEstimatedParticipants}/>
-                                <label class="onoffswitch-label-hasPrize" for="myonoffswitch-hasPrize">
-                                <span class="onoffswitch-inner-hasPrize"></span>
-                                <span class="onoffswitch-switch-hasPrize"></span>
+                                <label className="onoffswitch-label-hasPrize" htmlFor="myonoffswitch-hasPrize">
+                                <span className="onoffswitch-inner-hasPrize"></span>
+                                <span className="onoffswitch-switch-hasPrize"></span>
                                 </label>
                             </div>
 

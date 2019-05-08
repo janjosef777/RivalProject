@@ -1,30 +1,15 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
 import EnsureLoggedIn from './EnsureLoggedIn';
-import Upload from './upload/Upload';
 import Logout from './components/Logout'
 import ActiveCard from './components/CampaignView/ActiveCard';
 import CampaignView from './components/CampaignView/index';
 import CreateCampaign from './components/CampaignCrud/CreateCampaign';
 import DeleteCampaign from './components/CampaignCrud/DeleteCampaign';
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
-} from 'reactstrap';
 
 import './App.css';
-import NavBarComponent from './components/NavBarComponent';
 
 
 const CardCreatorApp = () => (

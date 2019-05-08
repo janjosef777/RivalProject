@@ -5,10 +5,6 @@ import {ImgThumbImg} from '../../styles/componentStyles';
 //const ImgThumbDivStyle = st
 
 class ImageThumb extends Component {
-    constructor(props) {
-        super(props);
-        
-    }
 
     setImage(e) {
         if(this.props.activeTab === '1'){
