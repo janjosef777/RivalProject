@@ -19,7 +19,6 @@ class CampaignSettings extends Component {
         super(props)
         this.state ={
             showHomepage: false,
-            showEstimatedParticipants: this.props.selectedCampaign.hasPrizes,
         }
  
         this.handleStatusChange = this.handleStatusChange.bind(this)
@@ -44,6 +43,7 @@ class CampaignSettings extends Component {
         this.props.setState({
            selectedCampaign: this.props.selectedCampaign
         })
+        console.log(this.props.selectedCampaign);
     }
 
     handleStatusChange(e) {
@@ -56,11 +56,8 @@ class CampaignSettings extends Component {
     }
     
     handlePrizeChange(e) {
-        console.log(this.state.showEstimatedParticipants)
         const target = e.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        console.log(value);
-        this.setState({showEstimatedParticipants: value});
+        const value = !!(target.type === 'checkbox' ? target.checked : target.value);
         this.props.selectedCampaign.hasPrizes = value;
         this.props.selectedCampaign.estimatedParticipants = 0;
         this.props.setState({selectedCampaign: this.props.selectedCampaign});
@@ -95,13 +92,7 @@ class CampaignSettings extends Component {
                 console.error(err);
             })
     }
-
-    componentDidMount(){
-        this.setState({
-            showEstimatedParticipants: this.props.selectedCampaign.hasPrizes
-        })
-    }
-
+    
     viewSummary = () => {
         this.props.setState({ viewSummary: true })
     }
@@ -145,14 +136,14 @@ class CampaignSettings extends Component {
                                        className="onoffswitch-checkbox-hasPrize" 
                                        id="myonoffswitch-hasPrize" 
                                        onChange={this.handlePrizeChange}
-                                       checked={this.state.showEstimatedParticipants}/>
+                                       checked={this.props.selectedCampaign.hasPrizes}/>
                                 <label className="onoffswitch-label-hasPrize" htmlFor="myonoffswitch-hasPrize">
                                 <span className="onoffswitch-inner-hasPrize"></span>
                                 <span className="onoffswitch-switch-hasPrize"></span>
                                 </label>
                             </div>
 
-                            {this.state.showEstimatedParticipants ?
+                            {this.props.selectedCampaign.hasPrizes ?
                                 <div className="input-section estimatedParticipants">
                                     <h6>Estimated Participants: </h6>
                                     <input type="text" 
