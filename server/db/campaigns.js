@@ -28,7 +28,7 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns, 
                     if(!campaign.template)
                         callback(err, err ? null : campaign);
                     else {
-                        db.overlays.get(campaign.template, (err, overlay) => {
+                        db.overlays.getDetail(campaign.template, (err, overlay) => {
                             campaign.template = overlay;
                             callback(err, err || !overlay ? null : campaign);
                         });
