@@ -41,6 +41,7 @@ export function loadImage(src) {
     let image = new Image()
     image.crossOrigin = 'Anonymous' // Work only if the server response headers contains [Access-Control-Allow-Origin: *]
     image.onload = () => {
+      console.log('Image happening here');
       resolve(image)
     }
     image.src = src

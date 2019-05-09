@@ -1,10 +1,11 @@
 import React from 'react'
-import throttle from 'lodash/throttle'
+import throttle from 'lodash.throttle'
 // Components
 import ScratchCardSC from './scratch-card-sc'
 import ScratchCardContentSC from './scratch-card-content-sc'
 import CanvasWrapperSC from './canvas-wrapper-sc'
 import {getOffset, loadImage} from './utils'
+import importBrush from '../images/brush.png';
 
 // accepts only one child as prop
 // if children content of this component overflow, it will be hidden
@@ -67,7 +68,7 @@ class ScratchCard extends React.Component {
     this.ctx.save()
     const {brush} = this.props
     if (brush === 'brush') {
-      if (this.brushImage === null) {
+      if (this.brushImage === null || this.brushImage === undefined) {
         let error = new Error('argument img is not a node IMG')
         console.error(error.message)
         return
@@ -161,9 +162,14 @@ class ScratchCard extends React.Component {
   recalculateOffset = throttle(() => (this.offset = getOffset(this.refs.canvas)), 40)
 
   componentDidMount() {
+    console.log('Okay1!');
+    console.log(this.props);
     if (this.props.brush === 'brush') {
-        this.brushImage = '../images/brush.png'
-      console.log(this.brushImage)
+      loadImage(importBrush).then((image) => {
+        console.log('Okay!');
+        console.log(image);
+        this.brushImage = image
+      })
     }
     this.ctx = this.refs.canvas.getContext('2d')
     this.renderForeground()
