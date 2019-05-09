@@ -32,7 +32,7 @@ class CampaignSettings extends Component {
     }
 
     handleEstimatedPatricipantsChange(e){
-        this.props.selectedCampaign.estimatedParticipants = e.target.value;
+        this.props.selectedCampaign.estimatedParticipants = Math.max(e.target.value | 0, 0);
         this.props.setState({
            selectedCampaign: this.props.selectedCampaign
         })
