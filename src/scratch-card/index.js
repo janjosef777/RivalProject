@@ -175,14 +175,6 @@ class ScratchCard extends React.Component {
     window.addEventListener('scroll', this.recalculateOffset)
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.isCleared !== prevProps.isCleared) {
-  //     if (this.props.isCleared) {
-  //       this.clearCard()
-  //     }
-  //   }
-  // }
-
   componentWillUnmount() {
     const {isCleared} = this.state
     // remove event listeners safely if they haven't been removed by this.clearCard()
