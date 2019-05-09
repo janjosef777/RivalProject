@@ -75,7 +75,7 @@ class ImagesList extends Component {
                     <ul className="image-list">
                     {this.props.images.map((image, idx) => 
                         <li key={idx}>
-                        <button onClick={(e)=>{this.deleteImages(image.id)}} 
+                        <button onClick={(e)=>{this.deleteImages(image.id, idx)}} 
                         className="delete-img">
                                 X
                         </button>
