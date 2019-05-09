@@ -17,12 +17,10 @@ class EnsureLoggedIn extends React.Component {
         if (legit !== null) {
             this.setState({
                 isLoggedIn: true
-            }, () => {
             })
         } else {
             this.setState({
                 isLoggedIn: false
-            }, () => {
             })
         }
     }
