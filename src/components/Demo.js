@@ -61,6 +61,7 @@ class Demo extends React.Component {
         // No API response yet
         if(!this.state.overlay.image.path)
             return <div>Loading...</div>;
+            console.log(this.state);
         return (
             <div>
                   <ScratchCard

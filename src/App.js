@@ -18,6 +18,7 @@ const CardCreatorApp = () => (
             <Route exact path="/demo/:campaignId" component={Demo} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/logout" component={Logout} />
+            <Route exact path="/demo" component={Demo} />
             <EnsureLoggedIn renderNav={true}>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/CreateCampaign" component={CreateCampaign} />

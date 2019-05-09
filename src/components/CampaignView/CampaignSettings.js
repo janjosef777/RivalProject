@@ -20,7 +20,6 @@ class CampaignSettings extends Component {
         this.handleCampaignNameChange = this.handleCampaignNameChange.bind(this)
         this.handleEstimatedPatricipantsChange = this.handleEstimatedPatricipantsChange.bind(this)
         this.saveChanges = this.props.saveChanges.bind(this)
-        this.generateCard = this.generateCard.bind(this)
         this.handlePrizeChange = this.handlePrizeChange.bind(this)
 
     }
@@ -67,23 +66,6 @@ class CampaignSettings extends Component {
             }}
             />
         }
-    }
-
-
-    generateCard() {
-        ApiHelper.fetch('api/assignlink/camp/' + this.state.campaignId,{
-            method: "GET",
-            headers: { 
-                "Authorization": "Bearer " + sessionStorage.getItem("token")
-            }
-        })
-            .then(res => {
-                console.log(res);
-                res.redirect(res);
-            })
-            .catch(err => {
-                console.error(err);
-            })
     }
 
     viewSummary = () => {
@@ -152,7 +134,7 @@ class CampaignSettings extends Component {
                             <div className="campaign-main-btns">
                                 <ReactTooltip />
                                 <LinkButton onClick={this.viewSummary} className="icon"><i class="fas fa-list-alt" data-tip="Campaign summary"></i></LinkButton>
-                                <LinkButton onClick={this.generateCard} target="_blank" className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
+                                <LinkButton href={"/demo/" + this.props.selectedCampaign.id} className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
                                 </LinkButton>
                                 <LinkButton className="icon"
                                 onClick={this.saveChanges}
