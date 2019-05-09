@@ -8,9 +8,6 @@ const routes = {
     auth: require('./auth'),
     campaigns: require('./campaigns'),
     images: require('./images'),
-    // assignlink: require('./AssignCardLink'),
-    // templates: require('./overlays'),
-    // cardresults: require('./cardResults'),
     random: require('./random')
 };
 
@@ -27,15 +24,6 @@ router.get("/images", ensureLoggedIn, routes.images.getAll);
 router.get("/images/:id", ensureLoggedIn, routes.images.get);
 router.post("/images", ensureLoggedIn, upload.single('image'), routes.images.post);
 router.delete("/images/:id", ensureLoggedIn, routes.images.delete);
-
-// router.post("/template", ensureLoggedIn, routes.templates.post);
-// router.get("/template/:id", ensureLoggedIn,routes.templates.get);
-
-// router.get("/cardresults", ensureLoggedIn, routes.cardresults.getAll);
-// router.post("/cardresults", ensureLoggedIn, routes.cardresults.post);
-
-// router.get('/assignlink/par/:parid/camp/:campid', routes.assignlink.get);
-// router.get('/assignlink/camp/:campid', routes.assignlink.get);
 
 router.get('/random/demo/:campaignId', routes.random.getDemo);
 
