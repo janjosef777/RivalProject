@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import '../../styles/campaignView.css';
 import styled from 'styled-components'
 import {
     Card, CardImg, CardText, CardBody,
@@ -37,7 +36,6 @@ class SetPrize extends Component {
         modifiedCardResult.prize = null;
         var newCardResultArray = this.props.cardResults;
         newCardResultArray.splice(idx, 1, modifiedCardResult);
-        console.log(modifiedCardResult)
 
         this.props.setState({
             cardResults: newCardResultArray
@@ -48,7 +46,6 @@ class SetPrize extends Component {
         this.setState({ showForm: true });
 
         var prize = this.props.cardResults[this.props.idx].prize;
-        console.log(prize);
         if (prize) {
             this.setState({name: prize.name, quantity: prize.quantity})
         }
@@ -67,7 +64,6 @@ class SetPrize extends Component {
         modifiedCardResult.prize = prize;
         var newCardResultArray = this.props.cardResults;
         newCardResultArray.splice(idx, 1, modifiedCardResult);
-        console.log(modifiedCardResult)
 
         this.props.setState({
             cardResults: newCardResultArray

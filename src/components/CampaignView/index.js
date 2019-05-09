@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import Upload from '../upload/Upload';
 import '../../styles/campaignView.css';
 import AssetsView from './AssetsView';
 import TabView from './TabView';
@@ -45,7 +44,6 @@ class CampaignView extends Component {
             selectedOverlayImage: {}
         }
         this.setState = this.setState.bind(this);
-        // this.saveChanges = this.saveChanges.bind(this);
     }
 
 
@@ -93,7 +91,6 @@ class CampaignView extends Component {
         if(campaign.hasPrizes == true && campaign.estimatedParticipants == 0) {
             window.alert("Estimated participants cannot be 0! Please enter a value")
         }
-        console.log(campaign);
 
         ApiHelper.fetch('api/campaigns/' + this.props.selectedCampaign.id, {
             method:
@@ -105,11 +102,9 @@ class CampaignView extends Component {
             body: JSON.stringify(campaign)
         }).then(json => {
             window.alert("Changes Saved!")
-            console.log(json);
         }).catch(err => {
             console.error(err);
         });
-        console.log(this.props)
         
     }
 

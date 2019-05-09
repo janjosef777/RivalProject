@@ -68,7 +68,6 @@ class EditableTitle extends React.Component {
                 selectedOverlay: this.props.selectedOverlay
             });
         } else if (this.props.index) {
-            console.log(this.props.cardResults);
             var tempCardResults = this.props.cardResults;
             var tempEntry = tempCardResults[this.props.selectedIndex];
             tempEntry.title = e.target.value;

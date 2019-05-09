@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import '../../styles/campaignView.css';
 import SingleCardState from './SingleCardState';
 
 import {
@@ -8,8 +7,7 @@ import {
 } from 'reactstrap';
 
 
-// const imgSrc = '/uploads/IMG_20180902_150937.jpeg'
-// const imgAlt = 'card overlay image'
+
 const imgWidth = 300;
 const imgHeight = 300;
 
