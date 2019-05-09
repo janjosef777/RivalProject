@@ -1,0 +1,21 @@
+.demo {
+    background-color: gray;
+    height: 100vh;
+}
+
+.demoCard {
+    border: 2px solid black;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: white;
+}
+
+.demoTitle {
+    background-color: white;
+    border: 1px solid black;
+    padding: 15px;
+    text-align: center;
+}
+

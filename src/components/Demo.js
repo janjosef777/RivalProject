@@ -2,6 +2,7 @@ import React from 'react'
 import SingleCardState from './CampaignView/SingleCardState'
 import ApiHelper from '../helpers/ApiHelper';
 import ScratchCard from '../scratch-card'
+import demoStyles from '../styles/demo.css';
 // import Flex from './scratch-card/flex'
 // import FlexItem from './scratch-card/flex/flex-item'
 
@@ -62,49 +63,58 @@ class Demo extends React.Component {
         if(!this.state.overlay.image.path)
             return <div>Loading...</div>;
             console.log(this.state);
+            console.log(this.state.result)
         return (
-            <div>
-                  <ScratchCard
-                    isCleared={this.state.isCleared}
-                    brush="brush"
-                    width={imgWidth}
-                    height={imgHeight}
-                    percentToClear={50}
-                    subRectRatio={0.7}
-                    imgURL={this.state.overlay.image.path}
-                    onClear={this.handleCleared}
-                  >
-                    <img
-                      width={imgWidth}
-                      height={imgHeight}
-                      src={this.state.result.image.path}
-                      alt="scratch card"
-                      crossOrigin="Anonymous"
-                    />
-                  </ScratchCard>
-                {/* {!this.state.isCleared &&
-                
-                <SingleCardState
-                    {...this.state} setState={this.setState}
-                    // title={title}
-                    // imgSrc={overlaySrc}
-                    // imgAlt={overlayAlt}
-                    // imgWidth={imgWidth}
-                    // imgHeight={imgHeight}
-                    // handleCleared={this.handleCleared}
-                />}   
+            <div className="demo">
+                <div className="demoCard">
+                        {this.state.isCleared ?
+                            <div className= "demoTitle">{this.state.result.title}</div>
+                            : <div className= "demoTitle">{this.state.overlay.title}</div>
+                        }
+                      
+                      <ScratchCard
+                        isCleared={this.state.isCleared}
+                        brush="brush"
+                        width={imgWidth}
+                        height={imgHeight}
+                        percentToClear={50}
+                        subRectRatio={0.7}
+                        imgURL={this.state.overlay.image.path}
+                        onClear={this.handleCleared}
+                      >
+                        <img
+                          width={imgWidth}
+                          height={imgHeight}
+                          src={this.state.result.image.path}
+                          alt="scratch card"
+                          crossOrigin="Anonymous"
+                        />
+                      </ScratchCard>
+                    {/* {!this.state.isCleared &&
 
-                {this.state.isCleared &&
-                <SingleCardState
-                    title={resultTitle}
-                    imgSrc={resultSrc}
-                    imgAlt={resultAlt}
-                    imgWidth={imgWidth}
-                    imgHeight={imgHeight}
-                    handleCleared={this.handleCleared}
-                />}  */}
+                    <SingleCardState
+                        {...this.state} setState={this.setState}
+                        // title={title}
+                        // imgSrc={overlaySrc}
+                        // imgAlt={overlayAlt}
+                        // imgWidth={imgWidth}
+                        // imgHeight={imgHeight}
+                        // handleCleared={this.handleCleared}
+                    />}   
 
-            </div>       
+                    {this.state.isCleared &&
+                    <SingleCardState
+                        title={resultTitle}
+                        imgSrc={resultSrc}
+                        imgAlt={resultAlt}
+                        imgWidth={imgWidth}
+                        imgHeight={imgHeight}
+                        handleCleared={this.handleCleared}
+                    />}  */}
+
+                </div>    
+
+            </div>   
         )        
     }
 }
