@@ -7,17 +7,13 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import NavBarComponent from './NavBarComponent';
 import ApiHelper from '../helpers/ApiHelper';
-// import jwt_decode from 'jwt-decode'
 import {
     Getter,
 } from '@devexpress/dx-react-core';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import {
-    // SelectionState,
-    // PagingState,
-    // IntegratedPaging,
-    // IntegratedSelection,
+    
     SortingState,
     IntegratedSorting,
     SearchState,
@@ -31,8 +27,6 @@ import {
     Toolbar,
     SearchPanel,
     TableHeaderRow,
-    // TableSelection,
-    // PagingPanel,
     TableEditRow,
     TableEditColumn,
 } from '@devexpress/dx-react-grid-material-ui';
@@ -59,7 +53,6 @@ class Home extends Component {
             popupVisible: false,
             activeRow: {},
             columns: [
-                // { name: 'id', title: 'ID' }, COLUMN FOR ID
                 { name: 'name', title: 'Campaign' },
                 { name: 'createdAt', title: 'Date Created' },
                 { name: 'url', title: 'URL' },
@@ -71,7 +64,6 @@ class Home extends Component {
                 { columnName: 'createdAt', editingEnabled: false },
             ],
             campaignItems: [],
-            // selection: [],
             showCreatePopup: false,
             showDeletePopup: false,
             showUpdate: false,
@@ -80,7 +72,6 @@ class Home extends Component {
 
 
         };
-        // this.changeSelection = selection => this.setState({ selection });
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
         this.closePopup = () => {
@@ -138,7 +129,6 @@ class Home extends Component {
         })
     }
     myDelete(row) {
-        console.log(row.id)
         this.setState({
             deleteId: row.id,
             showDeletePopup: true
@@ -167,14 +157,13 @@ class Home extends Component {
         const {
             campaignItems,
             columns,
-            // selection, SELECTION FUNCTIONALITY
             dateColumns,
             editingStateColumnExtensions,
             rows, popupVisible, activeRow
         } = this.state;
         const showDetails = row => {
             this.myUpdate(row)
-        };
+        }; 
         const deleteCampaign = row => {
             this.myDelete(row)
         };
@@ -204,7 +193,7 @@ class Home extends Component {
                     class="fas fa-trash"
                     onExecute={() => {
                         deleteCampaign(row);
-                    }} // action callback
+                    }} //action callback
                 />
             </TableEditColumn.Cell>
         );
@@ -212,7 +201,6 @@ class Home extends Component {
         const TableRow = ({ row, ...restProps }) => (
             <VirtualTable.Row
                 {...restProps}
-                // eslint-disable-next-line no-alert
                 onClick={() => showDetails(row)}
                 style={{
                     cursor: 'pointer',
@@ -228,13 +216,6 @@ class Home extends Component {
 
                     <h2>Scratch &amp; Win Campaigns</h2>
                     <div className="container">
-
-                        {/* Selection functionality */}
-                        {/* <span>
-                            Total rows selected:
-                            {' '}
-                            {selection.length}
-                        </span> */}
                         <Paper>
                             <Grid
                                 rows={campaignItems}
@@ -248,15 +229,7 @@ class Home extends Component {
                                     for={dateColumns}
                                 />
 
-                                {/* Selection functionality */}
-                                {/* <SelectionState
-                                    selection={selection}
-                                    onSelectionChange={this.changeSelection}
-                                /> */}
-
-                                {/* Selection functionality */}
-                                {/* <IntegratedSelection /> */}
-
+                      
                                 <Fab
                                     color="primary"
                                     aria-label="add"
@@ -286,8 +259,6 @@ class Home extends Component {
 
                                 <SortingState
                                     defaultSorting={[
-                                        // Column for ID
-                                        // { columnName: 'id', direction: 'asc' },
                                         { columnName: 'name', direction: 'asc' },
                                         { columnName: 'created_by', direction: 'asc' },
                                         { columnName: 'url', direction: 'asc' }
@@ -316,21 +287,7 @@ class Home extends Component {
                                 />
                                 <Toolbar />
                                 <SearchPanel />
-                                {/*  Selection Functionality */}
-                                {/* <TableSelection showSelectAll /> */}
                             </Grid>
-                            <Dialog onClose={this.closePopup} open={popupVisible}>
-                                <DialogTitle id="responsive-dialog-title">Row Details</DialogTitle>
-                                <DialogContent>
-                                    <DialogContentText>
-                                        {columns.map(column => (
-                                            <div key={column.name}>
-                                                <strong>{column.title}</strong>: {activeRow[column.name]}
-                                            </div>
-                                        ))}
-                                    </DialogContentText>
-                                </DialogContent>
-                            </Dialog>
                         </Paper>
                     </div>
                 </div>

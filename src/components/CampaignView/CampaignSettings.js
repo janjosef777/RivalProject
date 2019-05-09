@@ -134,7 +134,7 @@ class CampaignSettings extends Component {
                             <div className="campaign-main-btns">
                                 <ReactTooltip />
                                 <LinkButton onClick={this.viewSummary} className="icon"><i class="fas fa-list-alt" data-tip="Campaign summary"></i></LinkButton>
-                                <LinkButton href={"/link/" + this.props.selectedCampaign.id} className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
+                                <LinkButton href={"/scratch/" + this.props.selectedCampaign.id} className="icon"  data-tip="Demo link"><i class="fas fa-link"></i>
                                 </LinkButton>
                                 <LinkButton className="icon"
                                 onClick={this.saveChanges}

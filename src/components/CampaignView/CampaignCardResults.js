@@ -19,7 +19,6 @@ class CampaignCardResults extends Component {
 
     setSelectedIndex = (idx) => {
         this.props.setState({selectedIndex: idx});
-        //console.log(this.props.selectedIndex);
     }
 
     componentDidMount() {

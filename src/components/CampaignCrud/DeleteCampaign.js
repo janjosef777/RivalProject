@@ -14,7 +14,6 @@ class DeleteCampaign extends Component {
         this.deleteCampaign = this.deleteCampaign.bind(this);
     }
     deleteCampaign() {
-        console.log(this.state.deleteId)
         ApiHelper.fetch('api/campaigns/' + this.state.deleteId , {
             method:
                 'DELETE',
@@ -22,7 +21,6 @@ class DeleteCampaign extends Component {
                 "Authorization": "Bearer " + sessionStorage.getItem("token")
             }
         }).then(res => {
-            console.log(res)
             window.location.href ="/";
         })
         .catch(err => {

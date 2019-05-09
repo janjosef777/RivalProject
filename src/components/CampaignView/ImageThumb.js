@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-//import '../../styles/campaignView.css';
 import {ImgThumbImg} from '../../styles/componentStyles';
 
-//const ImgThumbDivStyle = st
 
 class ImageThumb extends Component {
 

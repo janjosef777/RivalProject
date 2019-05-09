@@ -14,18 +14,13 @@ class EnsureLoggedIn extends React.Component {
     }
     checkToken() {
         var legit = window.sessionStorage.getItem('token')
-        console.log(legit);
         if (legit !== null) {
             this.setState({
                 isLoggedIn: true
-            }, () => {
-                console.log(this.state.isLoggedIn)
             })
         } else {
             this.setState({
                 isLoggedIn: false
-            }, () => {
-                console.log(this.state.isLoggedIn)
             })
         }
     }
@@ -40,18 +35,13 @@ class EnsureLoggedIn extends React.Component {
         if (this.state.isLoggedIn == !invertCondition) {
             return this.props.children
         } else {
-            // if (gotoLogin) {
-            //     return <Redirect to='/login' />
-            //     return <Login/>
-            // } else {
-            //     return null
-            // }   
+
             if (renderNav) {
                 return <div><NavBarComponent /><Welcome /></div>
             } else {
                 return null
             }   
-            //return null         
+                   // return null
         }
     }
 }

@@ -72,3 +72,8 @@ MySQL
 ![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture4.PNG)
 ![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture5.PNG)
 ![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture6.PNG)
+
+# Installation & Deployment
+
+To install this package and start the app or to deploy it to Heroku, you can find all the instructions in the following link:
+[https://docs.google.com/document/d/1iE-NIJLleTwfvvI9jTNOrH_7nYTcgA2aY6Ffz7bruYM/edit?usp=sharing](https://docs.google.com/document/d/1iE-NIJLleTwfvvI9jTNOrH_7nYTcgA2aY6Ffz7bruYM/edit?usp=sharing)

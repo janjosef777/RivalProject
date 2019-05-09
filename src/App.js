@@ -15,7 +15,7 @@ import './App.css';
 const CardCreatorApp = () => (
     <Router>
         <Switch>
-            <Route exact path="/link/:campaignId" component={Demo} />
+            <Route exact path="/scratch/:campaignId" component={Demo} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/logout" component={Logout} />
             <EnsureLoggedIn renderNav={true}>

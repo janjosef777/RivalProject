@@ -7,6 +7,9 @@ const path = require('path');
 const urljoin = require('url-join');
 const uploadUrl = 'uploads/';
 
+const width = 300;
+const height = 300;
+
 module.exports = {
     // get
     getAll: (req, res, next) => {
@@ -63,7 +66,7 @@ module.exports = {
                         fs.unlink(tempPath, handleErr);
                         return handleErr(err, res, 500);
                     }
-                    image.toFile(dir + filename, (err, savedImg) => {
+                    image.resize(width, height).toFile(dir + filename, (err, savedImg) => {
                         fs.unlink(tempPath, handleErr);
                         if(err)
                             return handleErr(err, res, 500);
