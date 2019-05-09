@@ -4,7 +4,7 @@ import Login from './components/Login';
 import Home from './components/Home';
 import EnsureLoggedIn from './EnsureLoggedIn';
 import Logout from './components/Logout'
-import ActiveCard from './components/CampaignView/ActiveCard';
+import Demo from './components/Demo';
 import CampaignView from './components/CampaignView/index';
 import CreateCampaign from './components/CampaignCrud/CreateCampaign';
 import DeleteCampaign from './components/CampaignCrud/DeleteCampaign';
@@ -15,7 +15,7 @@ import './App.css';
 const CardCreatorApp = () => (
     <Router>
         <Switch>
-            <Route exact path="/activecard/:title/:overlaySrc/:resultTitle/:resultSrc" component={ActiveCard} />
+            <Route exact path="/demo/:campaignId" component={Demo} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/logout" component={Logout} />
             <EnsureLoggedIn renderNav={true}>
