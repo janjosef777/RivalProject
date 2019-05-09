@@ -7,17 +7,12 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import NavBarComponent from './NavBarComponent';
 import ApiHelper from '../helpers/ApiHelper';
-// import jwt_decode from 'jwt-decode'
 import {
     Getter,
 } from '@devexpress/dx-react-core';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import {
-    // SelectionState,
-    // PagingState,
-    // IntegratedPaging,
-    // IntegratedSelection,
     SortingState,
     IntegratedSorting,
     SearchState,
@@ -31,8 +26,6 @@ import {
     Toolbar,
     SearchPanel,
     TableHeaderRow,
-    // TableSelection,
-    // PagingPanel,
     TableEditRow,
     TableEditColumn,
 } from '@devexpress/dx-react-grid-material-ui';
@@ -71,7 +64,6 @@ class Home extends Component {
                 { columnName: 'createdAt', editingEnabled: false },
             ],
             campaignItems: [],
-            // selection: [],
             showCreatePopup: false,
             showDeletePopup: false,
             showUpdate: false,
@@ -80,7 +72,7 @@ class Home extends Component {
 
 
         };
-        // this.changeSelection = selection => this.setState({ selection });
+
         this.fetchCampaigns = this.fetchCampaigns.bind(this);
         this.toggleDeletePopup = this.toggleDeletePopup.bind(this);
         this.closePopup = () => {
@@ -167,7 +159,6 @@ class Home extends Component {
         const {
             campaignItems,
             columns,
-            // selection, SELECTION FUNCTIONALITY
             dateColumns,
             editingStateColumnExtensions,
             rows, popupVisible, activeRow
@@ -228,13 +219,6 @@ class Home extends Component {
 
                     <h2>Scratch &amp; Win Campaigns</h2>
                     <div className="container">
-
-                        {/* Selection functionality */}
-                        {/* <span>
-                            Total rows selected:
-                            {' '}
-                            {selection.length}
-                        </span> */}
                         <Paper>
                             <Grid
                                 rows={campaignItems}
@@ -247,15 +231,6 @@ class Home extends Component {
                                 <DateTypeProvider
                                     for={dateColumns}
                                 />
-
-                                {/* Selection functionality */}
-                                {/* <SelectionState
-                                    selection={selection}
-                                    onSelectionChange={this.changeSelection}
-                                /> */}
-
-                                {/* Selection functionality */}
-                                {/* <IntegratedSelection /> */}
 
                                 <Fab
                                     color="primary"
@@ -316,8 +291,6 @@ class Home extends Component {
                                 />
                                 <Toolbar />
                                 <SearchPanel />
-                                {/*  Selection Functionality */}
-                                {/* <TableSelection showSelectAll /> */}
                             </Grid>
                             <Dialog onClose={this.closePopup} open={popupVisible}>
                                 <DialogTitle id="responsive-dialog-title">Row Details</DialogTitle>
