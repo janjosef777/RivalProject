@@ -93,7 +93,7 @@ function mapWrite(campaign) {
     if(campaign.hasPrizes && !campaign.estimatedParticipants)
         throw new Error('Estimated participants required when has prizes is true');
     if(!campaign.hasPrizes && campaign.estimatedParticipants)
-        throw new Error("Don't include estimated participants if hasPrizes is false");
+        console.log("Warning: Ignoring campaign.estimatedParticipants because campaign.hasPrizes is false");
 
     return {
         name: campaign.name,
