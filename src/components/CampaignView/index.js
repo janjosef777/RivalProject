@@ -81,7 +81,7 @@ class CampaignView extends Component {
         const overlay = Object.assign({}, this.props.selectedOverlay);
         const overlayImage = Object.assign({}, this.props.selectedOverlayImage);
         const cardResults = this.props.cardResults.map(cardRes => {
-            hasNonPrizes = hasNonPrizes || !!cardRes.prize;
+            hasNonPrizes = hasNonPrizes || !cardRes.prize;
             let copy = Object.assign({}, cardRes);
             copy.image = cardRes.image.id;
             return copy;
@@ -90,10 +90,10 @@ class CampaignView extends Component {
         overlay.image = overlayImage.id;
         campaign.template = overlay;
         campaign.cardResults = cardResults;
-        if(campaign.hasPrizes && campaign.estimatedParticipants == 0) {
+        if(campaign.hasPrizes && campaign.estimatedParticipants <= 0) {
             window.alert("Estimated participants cannot be 0! Please enter a value")
         } else if(!hasNonPrizes) {
-            window.alert("Please add at least one non-prize card result");
+            window.alert("Please add at least one card result without a prize");
         } else {
             ApiHelper.fetch('api/campaigns/' + this.props.selectedCampaign.id, {
                 method:
