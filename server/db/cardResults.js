@@ -74,7 +74,7 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns),
                     for(let i = 0; i < prizeRes.length; i++) {
                         prizeNo -= prizeRes[i].prize.quantity;
                         if(prizeNo < 0) {
-                            callback(null, prizeRes[i]);
+                            callback(null, compose(campaign, prizeRes[i]));
                             break;
                         }
                     }
@@ -84,11 +84,25 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns),
                         callback('No non-prizes exist!', null);
                     else {
                         const res = nonPrizeRes[(nonPrizeRes.length * Math.random()) | 0];
-                        callback(null, res);
+                        callback(null, compose(campaign, res));
                     }
                 }
             }
         });
+        function compose(campaign, result) {
+            const data = {
+                name: campaign.name,
+                template: campaign.template,
+                result: result,
+                won: !!result.prize
+            };
+            delete data.template.id;
+            delete data.template.image.id;
+            delete data.result.id;
+            delete data.result.image.id;
+            delete data.result.campaign;
+            return data;
+        }
     },
     addDetail(entry, callback) {
         if(entry.prize) {

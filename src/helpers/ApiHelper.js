@@ -10,7 +10,8 @@ const ApiHelper = {
                     default: throw res;
                 }
             }).then(json => {
-                sessionStorage.setItem('token', json.token);
+                if(json.token)
+                    sessionStorage.setItem('token', json.token);
                 return json.data;
             });
     }

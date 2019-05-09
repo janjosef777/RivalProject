@@ -1,10 +1,11 @@
 import React from 'react'
-import throttle from 'lodash/throttle'
+import throttle from 'lodash.throttle'
 // Components
 import ScratchCardSC from './scratch-card-sc'
 import ScratchCardContentSC from './scratch-card-content-sc'
 import CanvasWrapperSC from './canvas-wrapper-sc'
 import {getOffset, loadImage} from './utils'
+import importBrush from '../images/brush.png';
 
 // accepts only one child as prop
 // if children content of this component overflow, it will be hidden
@@ -31,6 +32,7 @@ class ScratchCard extends React.Component {
       if (imgURL) {
         const image = new Image()
         image.src = imgURL
+        image.crossOrigin = 'Anonymous';
         image.onload = () => {
           this.ctx.drawImage(image, 0, 0, width, height)
           // setState needs to be invoked after the image loads if imgURL exists
@@ -67,7 +69,7 @@ class ScratchCard extends React.Component {
     this.ctx.save()
     const {brush} = this.props
     if (brush === 'brush') {
-      if (this.brushImage === null) {
+      if (this.brushImage === null || this.brushImage === undefined) {
         let error = new Error('argument img is not a node IMG')
         console.error(error.message)
         return
@@ -126,7 +128,6 @@ class ScratchCard extends React.Component {
 
   clearCard() {
     const {onClear = () => {}} = this.props
-
     this.refs.canvas.removeEventListener('mousedown', this.mouseScratch)
     this.refs.canvas.removeEventListener('touchstart', this.touchScratch)
     window.removeEventListener('resize', this.recalculateOffset)
@@ -162,8 +163,9 @@ class ScratchCard extends React.Component {
 
   componentDidMount() {
     if (this.props.brush === 'brush') {
-        this.brushImage = '../images/brush.png'
-      console.log(this.brushImage)
+      loadImage(importBrush).then((image) => {
+        this.brushImage = image
+      })
     }
     this.ctx = this.refs.canvas.getContext('2d')
     this.renderForeground()
@@ -171,14 +173,6 @@ class ScratchCard extends React.Component {
     this.refs.canvas.addEventListener('touchstart', this.touchScratch)
     window.addEventListener('resize', this.recalculateOffset)
     window.addEventListener('scroll', this.recalculateOffset)
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.isCleared !== prevProps.isCleared) {
-      if (this.props.isCleared) {
-        this.clearCard()
-      }
-    }
   }
 
   componentWillUnmount() {
