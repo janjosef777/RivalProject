@@ -90,11 +90,11 @@ module.exports = Object.assign(require('./crudBase').create(tableName, columns),
             }
         });
         function compose(campaign, result) {
+            result.hasWon = !!result.prize
             const data = {
                 name: campaign.name,
                 template: campaign.template,
-                result: result,
-                won: !!result.prize
+                result: result
             };
             delete data.template.id;
             delete data.template.image.id;
