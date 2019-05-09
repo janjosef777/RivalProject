@@ -14,7 +14,6 @@ class ImagesList extends Component {
     }
 
     componentDidMount() {
-        console.log(localStorage.getItem("token"))
         this.fetchImages()
     }
 
@@ -25,7 +24,6 @@ class ImagesList extends Component {
             }
         })
             .then(res => {
-                console.log(res);
                 this.images = res;
                 this.props.setState({ images: this.images })
             })
@@ -53,7 +51,6 @@ class ImagesList extends Component {
             }
         })
             .then(res => {
-                    console.log(res)
                     let images = this.props.images;
                     images.splice(idx, 1);
                     this.props.setState({ images: images });

@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-//import {Button} from 'reactstrap'
 
 
 export const ImgThumbImg = styled.img`

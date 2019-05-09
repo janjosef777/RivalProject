@@ -17,7 +17,6 @@ class Logout extends Component {
 
     logout() {
         sessionStorage.clear();
-        //window.location.href = '/';
     }
 
     componentDidMount(){
@@ -25,9 +24,6 @@ class Logout extends Component {
     }
     render(){
         return (
-            // <div>
-            //     <NavBarComponent/>
-            // </div>
             <Redirect to='/'/>
          )
     }

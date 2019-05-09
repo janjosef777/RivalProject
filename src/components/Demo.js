@@ -3,8 +3,7 @@ import SingleCardState from './CampaignView/SingleCardState'
 import ApiHelper from '../helpers/ApiHelper';
 import ScratchCard from '../scratch-card'
 import demoStyles from '../styles/demo.css';
-// import Flex from './scratch-card/flex'
-// import FlexItem from './scratch-card/flex/flex-item'
+
 
 class Demo extends React.Component {
     constructor(props) {
@@ -48,22 +47,12 @@ class Demo extends React.Component {
     }
 
     render() {
-        // const title = 'Title';
-        // const overlaySrc = 'hi.jpeg';//atob(this.props.match.params.overlaySrc);//'/uploads/IMG_20180902_150937.jpeg'
-        // const overlayAlt = 'card overlay image'
-
-        // const resultTitle = 'Yay';//atob(this.props.match.params.resultTitle);//'YOU WON A STARSHIP!'
-        // const resultSrc = 'hi.jpeg';//atob(this.props.match.params.resultSrc);//'/uploads/mark-rademaker-posterfinal-3.jpeg'
-        // const resultAlt = 'card result image'
-
         const imgWidth = 300;
         const imgHeight = 300;
 
-        // No API response yet
+       // No API response yet
         if(!this.state.overlay.image.path)
             return <div>Loading...</div>;
-            console.log(this.state);
-            console.log(this.state.result)
         return (
             <div className="demo">
                 <div className="demoCard">
@@ -90,28 +79,7 @@ class Demo extends React.Component {
                           crossOrigin="Anonymous"
                         />
                       </ScratchCard>
-                    {/* {!this.state.isCleared &&
-
-                    <SingleCardState
-                        {...this.state} setState={this.setState}
-                        // title={title}
-                        // imgSrc={overlaySrc}
-                        // imgAlt={overlayAlt}
-                        // imgWidth={imgWidth}
-                        // imgHeight={imgHeight}
-                        // handleCleared={this.handleCleared}
-                    />}   
-
-                    {this.state.isCleared &&
-                    <SingleCardState
-                        title={resultTitle}
-                        imgSrc={resultSrc}
-                        imgAlt={resultAlt}
-                        imgWidth={imgWidth}
-                        imgHeight={imgHeight}
-                        handleCleared={this.handleCleared}
-                    />}  */}
-
+                 
                 </div>    
 
             </div>   
@@ -119,32 +87,3 @@ class Demo extends React.Component {
     }
 }
 export default Demo
-        
-// <div className="App">
-//     <header className="App-header">
-//         <div className="Game">
-//             <h4 className="card-header">{title}</h4>
-//             <Flex>
-//                 <FlexItem margin="sm">
-//                     <ScratchCard
-//                         isCleared={isCleared}
-//                         brush="brush"
-//                         width={300}
-//                         height={300}
-//                         percentToClear={50}
-//                         subRectRatio={0.7}
-//                         imgURL={overlaySrc}
-//                         onClear={this.handleCleared}
-//                     >
-//                         <img
-//                             width={300}
-//                             height={300}
-//                             src={imgSrc}
-//                             alt="scratch card"
-//                         />
-//                     </ScratchCard>
-//                 </FlexItem>
-//             </Flex>
-//         </div>
-//     </header>
-// </div>

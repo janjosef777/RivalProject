@@ -22,7 +22,6 @@ module.exports = {
         });
     },
     patch: (req, res, next) => {
-        // return handleErr("campaigns.put not implemented", res, 501);
         const template = req.body;
         template.id = parseInt(req.params.id, 10);
         console.log(template);
@@ -37,15 +36,6 @@ module.exports = {
                     id: id
                 };
 
-                // const cardResults = req.body.cardResults;
-
-                // if (cardResults && !Array.isArray(cardResults))
-                //     return handleErr(null, res, 400, "Card results needs to be an array");
-
-                // processCardResults(id, cardResults,  'update', cardResultsData => {
-
-                //     if (cardResultsData)
-                //         data.cardResults = cardResultsData;
                 res.json({
                     token: res.jwtToken,
                     data: data
