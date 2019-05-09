@@ -66,8 +66,8 @@ class Demo extends React.Component {
                   <ScratchCard
                     isCleared={this.state.isCleared}
                     brush="brush"
-                    width={300}
-                    height={300}
+                    width={imgWidth}
+                    height={imgHeight}
                     percentToClear={50}
                     subRectRatio={0.7}
                     imgURL={this.state.overlay.image.path}
