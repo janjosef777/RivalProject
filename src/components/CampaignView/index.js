@@ -90,7 +90,9 @@ class CampaignView extends Component {
         overlay.image = overlayImage.id;
         campaign.template = overlay;
         campaign.cardResults = cardResults;
-
+        if(campaign.hasPrizes == true && campaign.estimatedParticipants == 0) {
+            window.alert("Estimated participants cannot be 0! Please enter a value")
+        }
         console.log(campaign);
 
         ApiHelper.fetch('api/campaigns/' + this.props.selectedCampaign.id, {
