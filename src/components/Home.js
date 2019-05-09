@@ -61,7 +61,6 @@ class Home extends Component {
             columns: [
                 // { name: 'id', title: 'ID' }, COLUMN FOR ID
                 { name: 'name', title: 'Campaign' },
-                { name: 'createdBy', title: 'Created By' },
                 { name: 'createdAt', title: 'Date Created' },
                 { name: 'url', title: 'URL' },
             ],
@@ -69,9 +68,7 @@ class Home extends Component {
             editingStateColumnExtensions: [
                 { columnName: 'id', editingEnabled: false },
                 { columnName: 'name', editingEnabled: false },
-                { columnName: 'createdBy', editingEnabled: false },
                 { columnName: 'createdAt', editingEnabled: false },
-                { columnName: 'url', editingEnabled: false },
             ],
             campaignItems: [],
             // selection: [],
@@ -94,7 +91,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.setState({selectedCampaignId: null});
+        this.setState({ selectedCampaignId: null });
         this.fetchCampaigns();
     }
 
@@ -134,18 +131,36 @@ class Home extends Component {
         }
     }
 
-    myUpdate(row){
+    myUpdate(row) {
         this.setState({
-            selectedCampaignId : row.id,
+            selectedCampaignId: row.id,
             showUpdate: true
         })
     }
-    myDelete(row){
+    myDelete(row) {
         console.log(row.id)
         this.setState({
             deleteId: row.id,
             showDeletePopup: true
         })
+    }
+    copyUrl(row) {
+        window.alert("URL Copied to clipboard!")
+        var textArea = document.createElement("textarea");
+        textArea.value = row.url;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Fallback: Copying text command was ' + msg);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+
+        document.body.removeChild(textArea);
+
     }
 
     render() {
@@ -163,37 +178,48 @@ class Home extends Component {
         const deleteCampaign = row => {
             this.myDelete(row)
         };
+        const copyDetails = row => {
+            this.copyUrl(row)
+        };
         const CellComponent = ({ children, row, ...restProps }) => (
             <TableEditColumn.Cell row={row} {...restProps}>
                 {children}
-                    <TableEditColumn.Command
-                        id="custom"
-                        class="fas fa-edit"
-                        onExecute={() => {
-                            showDetails(row);
-                        }} // action callback
-                    />
-                    <TableEditColumn.Command
-                        id="custom"
-                        class="fas fa-trash"
-                        onExecute={() => {
-                            deleteCampaign(row);
-                        }} // action callback
-                    />
+                <TableEditColumn.Command
+                    id="custom"
+                    class="fas fa-copy"
+                    onExecute={() => {
+                        copyDetails(row);
+                    }} // action callback
+                />
+                <TableEditColumn.Command
+                    id="custom"
+                    class="fas fa-edit"
+                    onExecute={() => {
+                        showDetails(row);
+                    }} // action callback
+                />
+
+                <TableEditColumn.Command
+                    id="custom"
+                    class="fas fa-trash"
+                    onExecute={() => {
+                        deleteCampaign(row);
+                    }} // action callback
+                />
             </TableEditColumn.Cell>
         );
 
         const TableRow = ({ row, ...restProps }) => (
             <VirtualTable.Row
-              {...restProps}
-              // eslint-disable-next-line no-alert
-              onClick={() => showDetails(row)}
-              style={{
-                cursor: 'pointer',
-              }}
+                {...restProps}
+                // eslint-disable-next-line no-alert
+                onClick={() => showDetails(row)}
+                style={{
+                    cursor: 'pointer',
+                }}
             />
-          );
-        
+        );
+
         return (
 
             <div>
@@ -270,7 +296,7 @@ class Home extends Component {
                                 <IntegratedSorting />
                                 <SearchState defaultValue="" />
                                 <IntegratedFiltering />
-                                <VirtualTable rowComponent={TableRow}/>
+                                <VirtualTable rowComponent={TableRow} />
                                 <TableHeaderRow showSortingControls />
                                 <TableEditRow />
                                 <TableEditColumn

@@ -53,6 +53,12 @@ input:focus, input:active{
     background-color: white;
   }
 
+  .fa-copy{
+    font-size: 1.5rem !important;
+    color: gray !important;
+    background-color: white;
+  }
+
 .fa-trash{
     color: #D20E27 !important;
     font-size: 1.5rem !important;
@@ -60,6 +66,9 @@ input:focus, input:active{
 }
 
 .fa-edit:hover{
+    color: #222 !important;
+}
+.fa-copy:hover{
     color: #222 !important;
 }
 
