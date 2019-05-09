@@ -7,8 +7,8 @@ const path = require('path');
 const urljoin = require('url-join');
 const uploadUrl = 'uploads/';
 
-const width = 600;
-const height = 600;
+const width = 300;
+const height = 300;
 
 module.exports = {
     // get
