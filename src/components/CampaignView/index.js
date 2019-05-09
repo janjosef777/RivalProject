@@ -86,7 +86,7 @@ class CampaignView extends Component {
             copy.image = cardRes.image.id;
             return copy;
         });
-        campaign.url = window.location.hostname + '/demo/' + this.props.selectedCampaign.id
+        campaign.url = window.location.hostname + '/link/' + this.props.selectedCampaign.id
         overlay.image = overlayImage.id;
         campaign.template = overlay;
         campaign.cardResults = cardResults;
