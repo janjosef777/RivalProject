@@ -27,7 +27,7 @@ class TabView extends Component {
     }
 
     componentDidMount() {
-        
+
     }
 
     render() {
@@ -70,7 +70,7 @@ class TabView extends Component {
                                     {...this.props}
                                 ></CardTemplateView>
                                 <BorderBox>
-                                    <SetPrize {...this.props} idx={this.props.selectedIndex}/>
+                                    {this.props.selectedCampaign.hasPrizes ? <SetPrize {...this.props} idx={this.props.selectedIndex} /> : null}
                                 </BorderBox>
                                 <CampaignCardResults {...this.props}></CampaignCardResults>
                             </Col>
