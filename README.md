@@ -7,8 +7,8 @@ Scratch-and-Win
 [https://boiling-reef-95628.herokuapp.com/](https://boiling-reef-95628.herokuapp.com/)
 
 login:
-user is admin
-no password
+username: admin
+password: admin
 
 ## Overview
 
@@ -36,9 +36,9 @@ MySQL
 ### Core App Features:
 
 1.	The app should support persistent storage of scratch pages - to this end users should be able to create, read, update, and delete scratch & win pages using the app.
-2.	Using the editing UI users should be able to execute the following authoring functions: a) Populate and crop a media asset (Image, GIF) that will appear under the scratch surface for a given card.  b) Customize the title message on a scratch card c) customize the completion message on a scratch card
+2.	Using the editing UI users should be able to execute the following authoring functions: a) Populate and crop a media asset that will appear under the scratch surface for a given card.  b) Customize the title message on a scratch card c) customize the completion message on a scratch card
 3.	From the inspect view the user should be able to launch a preview of the scratch card. 
-4.	From the inspect view the user should be able to publish a scratch page as a live entity that can be accessed from a URL.  Users should be able to unpublished a scratch card. 
+4.	From the inspect view the user should be able to publish a scratch page as a live entity that can be accessed from a URL.  Users should be able to unpublish a scratch card. 
 
 ### Love to have Features:
 
@@ -60,18 +60,9 @@ MySQL
 
 ![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/RivalProjectUseCase.jpg)
 
-# Updated Wireframes
+# Wireframes
 
 [https://xd.adobe.com/view/d5faf8e5-5579-4314-76cf-ceef0fc19126-a3cb/](https://xd.adobe.com/view/d5faf8e5-5579-4314-76cf-ceef0fc19126-a3cb/)
-
-# Wireframe
-
-![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture.PNG)
-![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture2.PNG)
-![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture3.PNG)
-![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture4.PNG)
-![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture5.PNG)
-![alt text](https://github.com/janjosef777/RivalProject/blob/master/md_resources/images/Capture6.PNG)
 
 # Installation & Deployment
 
