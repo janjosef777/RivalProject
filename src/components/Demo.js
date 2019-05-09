@@ -78,6 +78,7 @@ class Demo extends React.Component {
                       height={imgHeight}
                       src={this.state.result.image.path}
                       alt="scratch card"
+                      crossOrigin="Anonymous"
                     />
                   </ScratchCard>
                 {/* {!this.state.isCleared &&

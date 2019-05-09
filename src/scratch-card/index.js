@@ -32,6 +32,7 @@ class ScratchCard extends React.Component {
       if (imgURL) {
         const image = new Image()
         image.src = imgURL
+        image.crossOrigin = 'Anonymous';
         image.onload = () => {
           this.ctx.drawImage(image, 0, 0, width, height)
           // setState needs to be invoked after the image loads if imgURL exists
