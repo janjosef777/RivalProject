@@ -15,10 +15,9 @@ import './App.css';
 const CardCreatorApp = () => (
     <Router>
         <Switch>
-            <Route exact path="/demo/:campaignId" component={Demo} />
+            <Route exact path="/link/:campaignId" component={Demo} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/logout" component={Logout} />
-            <Route exact path="/demo" component={Demo} />
             <EnsureLoggedIn renderNav={true}>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/CreateCampaign" component={CreateCampaign} />
