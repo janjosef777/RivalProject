@@ -58,7 +58,7 @@ h4{
     justify-content: space-around;
     padding: 20px;
     height: 90vh;
-    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 .results-list{
