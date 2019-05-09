@@ -128,7 +128,6 @@ class ScratchCard extends React.Component {
 
   clearCard() {
     const {onClear = () => {}} = this.props
-
     this.refs.canvas.removeEventListener('mousedown', this.mouseScratch)
     this.refs.canvas.removeEventListener('touchstart', this.touchScratch)
     window.removeEventListener('resize', this.recalculateOffset)
@@ -163,12 +162,8 @@ class ScratchCard extends React.Component {
   recalculateOffset = throttle(() => (this.offset = getOffset(this.refs.canvas)), 40)
 
   componentDidMount() {
-    console.log('Okay1!');
-    console.log(this.props);
     if (this.props.brush === 'brush') {
       loadImage(importBrush).then((image) => {
-        console.log('Okay!');
-        console.log(image);
         this.brushImage = image
       })
     }
@@ -180,13 +175,13 @@ class ScratchCard extends React.Component {
     window.addEventListener('scroll', this.recalculateOffset)
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isCleared !== prevProps.isCleared) {
-      if (this.props.isCleared) {
-        this.clearCard()
-      }
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.isCleared !== prevProps.isCleared) {
+  //     if (this.props.isCleared) {
+  //       this.clearCard()
+  //     }
+  //   }
+  // }
 
   componentWillUnmount() {
     const {isCleared} = this.state
