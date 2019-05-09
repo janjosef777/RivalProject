@@ -50,7 +50,7 @@ class Demo extends React.Component {
         const imgWidth = 300;
         const imgHeight = 300;
 
-       
+       // No API response yet
         if(!this.state.overlay.image.path)
             return <div>Loading...</div>;
         return (

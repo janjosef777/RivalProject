@@ -94,7 +94,7 @@ class Home extends Component {
         })
             .then(res => {
                 this.setState({ campaignItems: res });
-       
+                console.log(res)
             })
             .catch(err => {
                 console.error(err);
@@ -163,7 +163,7 @@ class Home extends Component {
         } = this.state;
         const showDetails = row => {
             this.myUpdate(row)
-        };
+        }; 
         const deleteCampaign = row => {
             this.myDelete(row)
         };
@@ -178,14 +178,14 @@ class Home extends Component {
                     class="fas fa-copy"
                     onExecute={() => {
                         copyDetails(row);
-                    }} 
+                    }} // action callback
                 />
                 <TableEditColumn.Command
                     id="custom"
                     class="fas fa-edit"
                     onExecute={() => {
                         showDetails(row);
-                    }} 
+                    }} // action callback
                 />
 
                 <TableEditColumn.Command
@@ -193,7 +193,7 @@ class Home extends Component {
                     class="fas fa-trash"
                     onExecute={() => {
                         deleteCampaign(row);
-                    }} 
+                    }} //action callback
                 />
             </TableEditColumn.Cell>
         );
