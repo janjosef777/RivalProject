@@ -7,8 +7,8 @@ Scratch-and-Win
 [https://boiling-reef-95628.herokuapp.com/](https://boiling-reef-95628.herokuapp.com/)
 
 login:
-user is admin
-no password
+username: admin
+password: admin
 
 ## Overview
 
